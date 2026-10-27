@@ -1,0 +1,712 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ZIVA LAGOS // ATELIER FLAGSHIP STOREFRONT</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+    :root {
+      --canvas: #FAF9F5;
+      --card-bg: #FFFFFF;
+      --ink: #141413;
+      --ink-muted: #6B6862;
+      --border-subtle: rgba(20, 20, 19, 0.12);
+      --border-strong: rgba(20, 20, 19, 0.9);
+      --accent-terracotta: #C86D51;
+      --accent-gold: #D4AF37;
+      --font-serif: 'Playfair Display', Georgia, serif;
+      --font-sans: 'Plus Jakarta Sans', -apple-system, sans-serif;
+      --font-mono: 'JetBrains Mono', monospace;
+    }
+    body {
+      background-color: var(--canvas);
+      color: var(--ink);
+      font-family: var(--font-sans);
+      -webkit-font-smoothing: antialiased;
+      line-height: 1.5;
+    }
+
+    /* TOP UTILITY DISPATCH BAR */
+    .top-ticker {
+      background: var(--ink);
+      color: #FAF9F5;
+      font-size: 11px;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      padding: 10px 24px;
+      text-align: center;
+      font-family: var(--font-mono);
+      font-weight: 500;
+    }
+
+    /* NAVIGATION */
+    header {
+      border-bottom: 1px solid var(--border-subtle);
+      background: var(--canvas);
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      backdrop-filter: blur(8px);
+    }
+    .nav-container {
+      max-width: 1360px;
+      margin: 0 auto;
+      padding: 20px 32px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .nav-links {
+      display: flex;
+      gap: 28px;
+      list-style: none;
+    }
+    .nav-links a {
+      color: var(--ink);
+      text-decoration: none;
+      font-size: 12px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      font-weight: 500;
+      transition: color 0.15s ease;
+    }
+    .nav-links a:hover {
+      color: var(--accent-terracotta);
+    }
+    .brand-mark {
+      font-family: var(--font-serif);
+      font-size: 26px;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      font-weight: 700;
+      color: var(--ink);
+      text-decoration: none;
+    }
+    .nav-actions {
+      display: flex;
+      align-items: center;
+      gap: 24px;
+    }
+    .currency-pill {
+      background: rgba(20, 20, 19, 0.05);
+      border: 1px solid var(--border-subtle);
+      border-radius: 20px;
+      padding: 4px 10px;
+      font-size: 11px;
+      font-family: var(--font-mono);
+      font-weight: 600;
+      cursor: pointer;
+    }
+    .bag-trigger {
+      background: var(--ink);
+      color: var(--canvas);
+      border: none;
+      padding: 8px 16px;
+      font-size: 11px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      font-weight: 600;
+      border-radius: 2px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    /* MAIN PDP GRID */
+    .pdp-main {
+      max-width: 1360px;
+      margin: 40px auto 80px;
+      padding: 0 32px;
+      display: grid;
+      grid-template-columns: 1.15fr 0.85fr;
+      gap: 64px;
+    }
+
+    /* LEFT GALLERY */
+    .gallery-container {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+    .hero-image-wrap {
+      width: 100%;
+      height: 720px;
+      background: #EDEAE3;
+      position: relative;
+      overflow: hidden;
+      border: 1px solid var(--border-subtle);
+    }
+    .hero-image-wrap img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center;
+      transition: transform 0.4s ease;
+    }
+    .hero-image-wrap:hover img {
+      transform: scale(1.02);
+    }
+    .gallery-badge {
+      position: absolute;
+      top: 16px;
+      left: 16px;
+      background: rgba(250, 249, 245, 0.92);
+      backdrop-filter: blur(4px);
+      padding: 6px 12px;
+      font-size: 10px;
+      font-family: var(--font-mono);
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      border: 1px solid var(--border-subtle);
+      font-weight: 600;
+    }
+    .thumbnail-strip {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+    }
+    .thumb-btn {
+      height: 140px;
+      background: #EDEAE3;
+      border: 1px solid var(--border-subtle);
+      cursor: pointer;
+      overflow: hidden;
+      padding: 0;
+      position: relative;
+    }
+    .thumb-btn img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      filter: contrast(102%);
+    }
+    .thumb-btn.active {
+      border: 2px solid var(--ink);
+    }
+
+    /* RIGHT PDP DETAILS */
+    .details-container {
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+    }
+    .editorial-season {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--accent-terracotta);
+      font-weight: 600;
+    }
+    .product-headline {
+      font-family: var(--font-serif);
+      font-size: 44px;
+      line-height: 1.05;
+      font-weight: 600;
+      letter-spacing: -0.02em;
+      color: var(--ink);
+    }
+    .price-row {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      border-bottom: 1px solid var(--border-subtle);
+      padding-bottom: 16px;
+    }
+    .live-price {
+      font-family: var(--font-mono);
+      font-size: 26px;
+      font-weight: 700;
+      color: var(--ink);
+    }
+    .vat-note {
+      font-size: 12px;
+      color: var(--ink-muted);
+      letter-spacing: 0.05em;
+    }
+    .editorial-desc {
+      font-size: 15px;
+      line-height: 1.65;
+      color: #383734;
+      font-weight: 400;
+    }
+
+    /* SIZING MATRIX (MIN 48PX - 56PX THUMB ZONE) */
+    .size-section {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      padding-top: 8px;
+    }
+    .size-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      font-weight: 600;
+    }
+    .scarcity-tag {
+      color: #B54A32;
+      font-family: var(--font-mono);
+      font-size: 11px;
+      font-weight: 600;
+    }
+    .size-grid {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 8px;
+    }
+    .size-pill {
+      background: var(--card-bg);
+      border: 1px solid var(--border-subtle);
+      font-family: var(--font-mono);
+      font-size: 13px;
+      font-weight: 600;
+      height: 52px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: all 0.15s ease;
+      color: var(--ink);
+    }
+    .size-pill.active {
+      background: var(--ink);
+      color: var(--canvas);
+      border-color: var(--ink);
+    }
+    .size-pill:hover:not(.active) {
+      border-color: var(--ink);
+    }
+
+    /* PRIMARY CONVERSION ACTIONS */
+    .cta-container {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      margin-top: 12px;
+    }
+    .btn-paystack-instant {
+      background: var(--ink);
+      color: var(--canvas);
+      border: 1px solid var(--ink);
+      padding: 18px 24px;
+      font-size: 13px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      font-weight: 700;
+      font-family: var(--font-mono);
+      min-height: 58px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      transition: all 0.2s ease;
+    }
+    .btn-paystack-instant:hover {
+      background: #000;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.12);
+    }
+    .btn-add-bag {
+      background: transparent;
+      color: var(--ink);
+      border: 1px solid var(--border-strong);
+      padding: 16px 24px;
+      font-size: 13px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      font-weight: 600;
+      font-family: var(--font-mono);
+      min-height: 54px;
+      cursor: pointer;
+      transition: all 0.15s ease;
+    }
+    .btn-add-bag:hover {
+      background: rgba(20, 20, 19, 0.04);
+    }
+
+    /* TRUST SIGNALS */
+    .trust-strip {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+      border-top: 1px solid var(--border-subtle);
+      border-bottom: 1px solid var(--border-subtle);
+      padding: 16px 0;
+      margin-top: 8px;
+    }
+    .trust-item {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+    .trust-item-title {
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      font-weight: 700;
+    }
+    .trust-item-desc {
+      font-size: 11px;
+      color: var(--ink-muted);
+    }
+
+    /* TRI-MODAL SPECS ACCORDION */
+    .specs-tabs {
+      display: flex;
+      border-bottom: 1px solid var(--border-subtle);
+      margin-top: 8px;
+    }
+    .spec-tab-btn {
+      background: none;
+      border: none;
+      padding: 12px 18px 12px 0;
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      font-weight: 600;
+      cursor: pointer;
+      color: var(--ink-muted);
+      border-bottom: 2px solid transparent;
+      margin-bottom: -1px;
+    }
+    .spec-tab-btn.active {
+      color: var(--ink);
+      border-bottom: 2px solid var(--ink);
+    }
+    .spec-tab-panel {
+      padding: 16px 0;
+      font-size: 13px;
+      line-height: 1.6;
+      color: #4A4843;
+    }
+
+    /* SLIDE-OUT CART DRAWER */
+    .drawer-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background: rgba(20, 20, 19, 0.5);
+      backdrop-filter: blur(4px);
+      z-index: 100;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.25s ease;
+    }
+    .drawer-overlay.open {
+      opacity: 1;
+      pointer-events: auto;
+    }
+    .drawer-panel {
+      position: fixed;
+      top: 0;
+      right: 0;
+      width: 440px;
+      max-width: 90vw;
+      height: 100vh;
+      background: var(--canvas);
+      border-left: 1px solid var(--border-subtle);
+      z-index: 101;
+      transform: translateX(100%);
+      transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      padding: 32px;
+    }
+    .drawer-panel.open {
+      transform: translateX(0);
+    }
+    .drawer-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 1px solid var(--border-subtle);
+      padding-bottom: 16px;
+    }
+    .drawer-close {
+      background: none;
+      border: none;
+      font-size: 20px;
+      cursor: pointer;
+      color: var(--ink);
+    }
+
+    /* FOOTER */
+    footer {
+      border-top: 1px solid var(--border-subtle);
+      background: #F3F1EC;
+      padding: 48px 32px;
+      font-size: 12px;
+      color: var(--ink-muted);
+    }
+    .footer-content {
+      max-width: 1360px;
+      margin: 0 auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- TOP DISPATCH TICKER -->
+  <div class="top-ticker">
+    COMPLIMENTARY SAME-DAY ATELIER DISPATCH IN VICTORIA ISLAND & IKOYI • WORLDWIDE EXPRESS COURIER
+  </div>
+
+  <!-- NAVIGATION -->
+  <header>
+    <div class="nav-container">
+      <ul class="nav-links">
+        <li><a href="#">COLLECTIONS</a></li>
+        <li><a href="#">RESORT 2026</a></li>
+        <li><a href="#">EDITORIAL</a></li>
+        <li><a href="#">THE ATELIER</a></li>
+      </ul>
+
+      <a href="#" class="brand-mark">ZIVA LAGOS</a>
+
+      <div class="nav-actions">
+        <select class="currency-pill" id="currency-select" onchange="updateCurrency(this.value)">
+          <option value="NGN">NGN (₦)</option>
+          <option value="USD">USD ($)</option>
+          <option value="GBP">GBP (£)</option>
+        </select>
+        <button class="bag-trigger" onclick="toggleDrawer(true)">
+          <span>BAG</span>
+          <span style="background: rgba(255,255,255,0.2); padding: 1px 6px; border-radius: 10px;">1</span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- MAIN PRODUCT DETAIL EXPERIENCE -->
+  <main class="pdp-main">
+
+    <!-- LEFT VISUAL GALLERY -->
+    <div class="gallery-container">
+      <div class="hero-image-wrap">
+        <img src="/assets/ziva-pdp-dress.jpg" alt="Ziva Lagos Saffron Silk Resort Midi Dress" id="hero-img">
+        <div class="gallery-badge" id="image-badge">RESORT 2026 // LOOK 01</div>
+      </div>
+      <div class="thumbnail-strip">
+        <button class="thumb-btn active" onclick="switchImage('/assets/ziva-pdp-dress.jpg', 'RESORT 2026 // LOOK 01', this)">
+          <img src="/assets/ziva-pdp-dress.jpg" alt="Dress Full Shot">
+        </button>
+        <button class="thumb-btn" onclick="switchImage('/assets/ziva-campaign-model.jpg', 'EDITORIAL // VICTORIA ISLAND TERRACE', this)">
+          <img src="/assets/ziva-campaign-model.jpg" alt="Campaign Model">
+        </button>
+        <button class="thumb-btn" onclick="switchImage('/assets/ziva-fabric-detail.jpg', 'RAW SILK WEAVE // ATELIER CRAFT', this)">
+          <img src="/assets/ziva-fabric-detail.jpg" alt="Fabric Detail">
+        </button>
+      </div>
+    </div>
+
+    <!-- RIGHT CONVERSION & SPEC COLUMN -->
+    <div class="details-container">
+      
+      <div>
+        <div class="editorial-season">VICTORIA ISLAND ATELIER // LIMITED EDITION OF 24</div>
+        <h1 class="product-headline">THE SAFFRON SILK RESORT MIDI</h1>
+      </div>
+
+      <div class="price-row">
+        <div>
+          <div class="live-price" id="price-display">₦165,000</div>
+          <div class="vat-note">COMPLIMENTARY INSURED METROPOLITAN TRANSIT</div>
+        </div>
+        <div style="text-align: right; font-family: var(--font-mono); font-size: 11px; color: var(--accent-terracotta); font-weight: 600;">
+          ★ 4.98 (47 REVIEWS)
+        </div>
+      </div>
+
+      <p class="editorial-desc">
+        Cut from breathable raw Nigerian silk-linen and cinched with a handcrafted raffia buckle belt. Structured yet weightless, engineered for Lagos heat and global resort evenings. Each piece is hand-finished in our Victoria Island studio.
+      </p>
+
+      <!-- SIZING MATRIX -->
+      <div class="size-section">
+        <div class="size-header">
+          <span>SELECT SIZE (UK STANDARD)</span>
+          <span class="scarcity-tag" id="stock-tag">ONLY 3 PIECES REMAINING IN UK 8</span>
+        </div>
+        <div class="size-grid">
+          <button class="size-pill" onclick="selectSize('UK 6', '4 pieces available', this)">UK 6</button>
+          <button class="size-pill active" onclick="selectSize('UK 8', 'ONLY 3 PIECES REMAINING IN UK 8', this)">UK 8</button>
+          <button class="size-pill" onclick="selectSize('UK 10', '5 pieces available', this)">UK 10</button>
+          <button class="size-pill" onclick="selectSize('UK 12', '2 pieces available', this)">UK 12</button>
+          <button class="size-pill" onclick="selectSize('UK 14', 'Sold out for this release', this)">UK 14</button>
+        </div>
+      </div>
+
+      <!-- PRIMARY CONVERSION ACTIONS -->
+      <div class="cta-container">
+        <button class="btn-paystack-instant" onclick="openPaystackInstant()">
+          <span>⚡ 1-TAP PAYSTACK CHECKOUT</span>
+          <span id="cta-price">// ₦165,000</span>
+        </button>
+        <button class="btn-add-bag" onclick="toggleDrawer(true)">
+          ADD TO BAG // SLIDE DRAWER
+        </button>
+      </div>
+
+      <!-- TRUST & DELIVERY -->
+      <div class="trust-strip">
+        <div class="trust-item">
+          <span class="trust-item-title">SAME-DAY DISPATCH</span>
+          <span class="trust-item-desc">Lagos & Abuja door delivery</span>
+        </div>
+        <div class="trust-item">
+          <span class="trust-item-title">FREE EXCHANGES</span>
+          <span class="trust-item-desc">7-day complimentary window</span>
+        </div>
+        <div class="trust-item">
+          <span class="trust-item-title">INSTANT SETTLEMENT</span>
+          <span class="trust-item-desc">Paystack, Apple Pay, USSD</span>
+        </div>
+      </div>
+
+      <!-- TRI-MODAL SPECS TABS -->
+      <div>
+        <div class="specs-tabs">
+          <button class="spec-tab-btn active" onclick="switchSpec('composition', this)">COMPOSITION</button>
+          <button class="spec-tab-btn" onclick="switchSpec('sizing', this)">TAILORING</button>
+          <button class="spec-tab-btn" onclick="switchSpec('dispatch', this)">DISPATCH</button>
+        </div>
+        <div class="spec-tab-panel" id="spec-content">
+          <strong>FABRIC:</strong> 100% Raw African Silk-Linen Blend (280 GSM).<br>
+          <strong>HARDWARE:</strong> Hand-woven raffia cinch belt with natural brass closure.<br>
+          <strong>CARE:</strong> Dry clean or cold hand soak with mild organic detergent.
+        </div>
+      </div>
+
+    </div>
+
+  </main>
+
+  <!-- SLIDE-OUT CART DRAWER SIMULATION -->
+  <div class="drawer-overlay" id="drawer-overlay" onclick="toggleDrawer(false)"></div>
+  <div class="drawer-panel" id="drawer-panel">
+    <div>
+      <div class="drawer-header">
+        <span style="font-family: var(--font-serif); font-size: 18px; font-weight: 600;">YOUR ATELIER BAG</span>
+        <button class="drawer-close" onclick="toggleDrawer(false)">&times;</button>
+      </div>
+
+      <div style="display: flex; gap: 16px; margin-top: 24px; padding-bottom: 24px; border-bottom: 1px solid var(--border-subtle);">
+        <img src="/assets/ziva-pdp-dress.jpg" style="width: 80px; height: 100px; object-fit: cover;">
+        <div>
+          <div style="font-size: 13px; font-weight: 700;">THE SAFFRON SILK RESORT MIDI</div>
+          <div style="font-size: 12px; color: var(--ink-muted); margin: 4px 0;" id="drawer-selected-size">Size: UK 8</div>
+          <div style="font-family: var(--font-mono); font-size: 14px; font-weight: 700;" id="drawer-price">₦165,000</div>
+        </div>
+      </div>
+
+      <div style="margin-top: 20px; font-size: 12px; line-height: 1.6; color: var(--ink-muted);">
+        <div>✓ Complimentary Same-Day Courier (Victoria Island / Ikoyi)</div>
+        <div>✓ Zero hidden taxes or additional payment gateway fees</div>
+      </div>
+    </div>
+
+    <div>
+      <div style="display: flex; justify-content: space-between; font-weight: 700; margin-bottom: 16px; font-size: 15px;">
+        <span>SUBTOTAL</span>
+        <span id="drawer-subtotal">₦165,000</span>
+      </div>
+      <button class="btn-paystack-instant" style="width: 100%;" onclick="openPaystackInstant()">
+        PROCEED VIA PAYSTACK
+      </button>
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-content">
+      <div>
+        <strong>ZIVA LAGOS ATELIER</strong> — Victoria Island, Lagos, Nigeria.
+      </div>
+      <div style="font-family: var(--font-mono); font-size: 11px;">
+        ARCHITECTED BY BILLY BENJAMIN CONSULTING // SYSTEM v9.0-ADAPTIVE
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    const prices = {
+      NGN: { symbol: '₦', value: '165,000', raw: 165000 },
+      USD: { symbol: '$', value: '110', raw: 110 },
+      GBP: { symbol: '£', value: '88', raw: 88 }
+    };
+    let currentCurrency = 'NGN';
+
+    function updateCurrency(curr) {
+      currentCurrency = curr;
+      const p = prices[curr];
+      document.getElementById('price-display').innerText = `${p.symbol}${p.value}`;
+      document.getElementById('cta-price').innerText = `// ${p.symbol}${p.value}`;
+      document.getElementById('drawer-price').innerText = `${p.symbol}${p.value}`;
+      document.getElementById('drawer-subtotal').innerText = `${p.symbol}${p.value}`;
+    }
+
+    function switchImage(src, badgeText, btn) {
+      document.getElementById('hero-img').src = src;
+      document.getElementById('image-badge').innerText = badgeText;
+      document.querySelectorAll('.thumb-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+    }
+
+    function selectSize(size, stockMsg, btn) {
+      document.querySelectorAll('.size-pill').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      document.getElementById('stock-tag').innerText = stockMsg;
+      document.getElementById('drawer-selected-size').innerText = `Size: ${size}`;
+    }
+
+    function switchSpec(tab, btn) {
+      document.querySelectorAll('.spec-tab-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      const content = document.getElementById('spec-content');
+      if (tab === 'composition') {
+        content.innerHTML = `<strong>FABRIC:</strong> 100% Raw African Silk-Linen Blend (280 GSM).<br><strong>HARDWARE:</strong> Hand-woven raffia cinch belt with natural brass closure.<br><strong>CARE:</strong> Dry clean or cold hand soak with mild organic detergent.`;
+      } else if (tab === 'sizing') {
+        content.innerHTML = `<strong>FIT:</strong> Tailored bodice with relaxed A-line tea-length hem.<br><strong>MODEL:</strong> Model is 5'10" (178cm) and wears a UK 8.<br><strong>GRADING:</strong> Precision UK/Nigerian proportional grading.`;
+      } else if (tab === 'dispatch') {
+        content.innerHTML = `<strong>LAGOS:</strong> Same-day dispatch for orders confirmed before 2:00 PM.<br><strong>NIGERIA:</strong> 48 hours via insured DHL Express courier.<br><strong>RETURNS:</strong> 7-day complimentary door-to-door size exchange.`;
+      }
+    }
+
+    function toggleDrawer(isOpen) {
+      const overlay = document.getElementById('drawer-overlay');
+      const panel = document.getElementById('drawer-panel');
+      if (isOpen) {
+        overlay.classList.add('open');
+        panel.classList.add('open');
+      } else {
+        overlay.classList.remove('open');
+        panel.classList.remove('open');
+      }
+    }
+
+    function openPaystackInstant() {
+      alert('PAYSTACK 1-TAP MODAL TRIGGERED: Seamless payment sheet initialized for ' + prices[currentCurrency].symbol + prices[currentCurrency].value);
+    }
+  </script>
+
+</body>
+</html>
