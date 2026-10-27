@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import fs from "fs/promises";
 import path from "path";
+import nodemailer from "nodemailer";
 
 interface LeadPayload {
   founderName: string;
@@ -70,11 +71,60 @@ export async function POST(request: Request) {
       console.error("[LEAD_STORAGE_ERROR]", fsErr);
     }
 
-    // 2. Dispatch Email Notification if Resend API Key is provided
+    // 2. Dispatch Email Notification (SMTP or Resend)
+    const smtpHost = process.env.SMTP_HOST;
+    const smtpPort = parseInt(process.env.SMTP_PORT || "465", 10);
+    const smtpUser = process.env.SMTP_USER;
+    const smtpPass = process.env.SMTP_PASS;
+    const notificationEmail = process.env.NOTIFICATION_EMAIL || smtpUser || "billy@billybenjaminconsulting.online";
     const resendApiKey = process.env.RESEND_API_KEY;
-    const notificationEmail = process.env.NOTIFICATION_EMAIL || "billy@billybenjaminconsulting.online";
 
-    if (resendApiKey) {
+    const emailHtml = `
+      <div style="font-family: monospace; background: #F5F5F3; color: #0A0A0A; padding: 24px; border: 1px solid #0A0A0A; max-width: 600px; margin: 0 auto;">
+        <div style="background: #CDE570; padding: 10px 14px; font-weight: bold; border: 1px solid #0A0A0A; margin-bottom: 20px; font-size: 13px;">
+          BILLY BENJAMIN CONSULTING // FORENSIC AUDIT INTAKE CONFIRMED
+        </div>
+        <p style="font-size: 14px; line-height: 1.6;">Hello ${founderName},</p>
+        <p style="font-size: 14px; line-height: 1.6;">Your store <strong>${storeUrl}</strong> has been registered under Ticket ID: <strong style="background: #CDE570; padding: 2px 6px; border: 1px solid #0A0A0A;">${ticketId}</strong>.</p>
+        <p style="font-size: 12px; color: #333; line-height: 1.6;"><strong>Primary Bottleneck Flagged:</strong> ${primaryBottleneck}</p>
+        <p style="font-size: 13px; line-height: 1.6;">We are currently executing our dual-surface forensic teardown:</p>
+        <ul style="font-size: 12px; line-height: 1.8; color: #222;">
+          <li><strong>Surface A (The Store):</strong> LCP speed diagnostics, mobile thumb constraints, and cart checkout funnel drop-offs.</li>
+          <li><strong>Surface B (Instagram):</strong> Bio link routing, content-to-cart handoff, and offer clarity.</li>
+        </ul>
+        <p style="font-size: 13px; line-height: 1.6;">Your unredacted teardown spec will be delivered to this email within 24 hours.</p>
+        <div style="border-top: 1px solid #0A0A0A; margin-top: 24px; padding-top: 14px; font-size: 11px; color: #666;">
+          <strong>BILLY BENJAMIN CONSULTING</strong> • LAGOS // LONDON // NYC<br/>
+          <a href="https://billybenjaminconsulting.online" style="color: #0A0A0A; text-decoration: underline;">billybenjaminconsulting.online</a>
+        </div>
+      </div>
+    `;
+
+    // Attempt SMTP delivery first if credentials exist
+    if (smtpHost && smtpUser && smtpPass) {
+      try {
+        const transporter = nodemailer.createTransport({
+          host: smtpHost,
+          port: smtpPort,
+          secure: smtpPort === 465,
+          auth: {
+            user: smtpUser,
+            pass: smtpPass,
+          },
+        });
+
+        await transporter.sendMail({
+          from: `"Billy Benjamin Consulting" <${smtpUser}>`,
+          to: `${email}, ${notificationEmail}`,
+          subject: `[${ticketId}] Forensic Audit Request Registered — Billy Benjamin Consulting`,
+          text: `Hello ${founderName},\n\nYour store ${storeUrl} has been registered under Ticket ID ${ticketId}.\nYour 24-hour forensic teardown is queued.\n\nBilly Benjamin Consulting\nhttps://billybenjaminconsulting.online`,
+          html: emailHtml,
+        });
+        console.log(`[SMTP_DISPATCH_SUCCESS] Sent confirmation for ${ticketId} via ${smtpHost}`);
+      } catch (smtpErr) {
+        console.error("[SMTP_DISPATCH_ERROR]", smtpErr);
+      }
+    } else if (resendApiKey) {
       try {
         await fetch("https://api.resend.com/emails", {
           method: "POST",
@@ -86,26 +136,7 @@ export async function POST(request: Request) {
             from: "Billy Benjamin Consulting <audit@billybenjaminconsulting.online>",
             to: [email, notificationEmail],
             subject: `[${ticketId}] Forensic Audit Request Registered — Billy Benjamin Consulting`,
-            html: `
-              <div style="font-family: monospace; background: #F5F5F3; color: #0A0A0A; padding: 24px; border: 1px solid #0A0A0A;">
-                <div style="background: #CDE570; padding: 8px 12px; font-weight: bold; border: 1px solid #0A0A0A; margin-bottom: 16px;">
-                  BILLY BENJAMIN CONSULTING // FORENSIC AUDIT INTAKE CONFIRMED
-                </div>
-                <p>Hello ${founderName},</p>
-                <p>Your store URL <strong>${storeUrl}</strong> has been assigned Ticket ID <strong>${ticketId}</strong>.</p>
-                <p>We are executing a dual-surface forensic teardown:</p>
-                <ul>
-                  <li><strong>Surface A (The Store):</strong> LCP, mobile thumb constraints, and checkout funnel drops.</li>
-                  <li><strong>Surface B (Instagram):</strong> Bio link routing, content-to-cart continuity, and offer alignment.</li>
-                </ul>
-                <p>Your unredacted teardown spec will be delivered to this email within 24 hours.</p>
-                <br/>
-                <p style="font-size: 11px; color: #666;">
-                  BILLY BENJAMIN CONSULTING • LAGOS // LONDON // NYC<br/>
-                  <a href="https://billybenjaminconsulting.online">billybenjaminconsulting.online</a>
-                </p>
-              </div>
-            `,
+            html: emailHtml,
           }),
         });
       } catch (emailErr) {
