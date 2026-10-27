@@ -3,6 +3,8 @@ import fs from "fs/promises";
 import path from "path";
 import nodemailer from "nodemailer";
 
+export const dynamic = "force-dynamic";
+
 interface LeadPayload {
   founderName: string;
   email: string;
