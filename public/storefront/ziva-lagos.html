@@ -3,10 +3,10 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>ZIVA LAGOS // ATELIER FLAGSHIP STOREFRONT</title>
+  <title>ZIVA LAGOS // SUMMER CLUB RESORT CAPSULE</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
   <style>
     *, *::before, *::after {
       box-sizing: border-box;
@@ -14,63 +14,77 @@
       padding: 0;
     }
     :root {
-      --canvas: #FAF9F5;
+      --sand-bg: #FAF6F0;
       --card-bg: #FFFFFF;
-      --ink: #141413;
-      --ink-muted: #6B6862;
-      --border-subtle: rgba(20, 20, 19, 0.12);
-      --border-strong: rgba(20, 20, 19, 0.9);
-      --accent-terracotta: #C86D51;
-      --accent-gold: #D4AF37;
-      --font-serif: 'Playfair Display', Georgia, serif;
+      --terracotta: #B35438;
+      --terracotta-dark: #8F3B24;
+      --terracotta-subtle: #F6EDE8;
+      --charcoal: #1C1917;
+      --muted-brown: #78716C;
+      --border-subtle: rgba(28, 25, 23, 0.08);
+      --border-medium: rgba(28, 25, 23, 0.16);
+      --font-editorial: 'Cormorant Garamond', Georgia, serif;
       --font-sans: 'Plus Jakarta Sans', -apple-system, sans-serif;
       --font-mono: 'JetBrains Mono', monospace;
     }
     body {
-      background-color: var(--canvas);
-      color: var(--ink);
+      background-color: var(--sand-bg);
+      color: var(--charcoal);
       font-family: var(--font-sans);
       -webkit-font-smoothing: antialiased;
       line-height: 1.5;
+      overflow-x: hidden;
     }
 
-    /* TOP UTILITY DISPATCH BAR */
-    .top-ticker {
-      background: var(--ink);
-      color: #FAF9F5;
+    /* TOP ANNOUNCEMENT */
+    .announcement-bar {
+      background: var(--charcoal);
+      color: #FAF6F0;
+      font-family: var(--font-mono);
       font-size: 11px;
       letter-spacing: 0.14em;
       text-transform: uppercase;
       padding: 10px 24px;
       text-align: center;
-      font-family: var(--font-mono);
-      font-weight: 500;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 16px;
+    }
+    .announcement-bar span.pill {
+      background: var(--terracotta);
+      color: #FFF;
+      padding: 2px 8px;
+      border-radius: 12px;
+      font-size: 9px;
+      font-weight: 600;
     }
 
     /* NAVIGATION */
     header {
+      background: rgba(250, 246, 240, 0.94);
+      backdrop-filter: blur(12px);
       border-bottom: 1px solid var(--border-subtle);
-      background: var(--canvas);
       position: sticky;
       top: 0;
-      z-index: 50;
-      backdrop-filter: blur(8px);
+      z-index: 40;
+      transition: all 0.2s ease;
     }
-    .nav-container {
-      max-width: 1360px;
+    .nav-wrap {
+      max-width: 1400px;
       margin: 0 auto;
-      padding: 20px 32px;
+      padding: 18px 40px;
       display: flex;
       justify-content: space-between;
       align-items: center;
     }
-    .nav-links {
+    .nav-menu {
       display: flex;
-      gap: 28px;
+      gap: 32px;
       list-style: none;
     }
-    .nav-links a {
-      color: var(--ink);
+    .nav-menu a {
+      color: var(--charcoal);
       text-decoration: none;
       font-size: 12px;
       letter-spacing: 0.12em;
@@ -78,40 +92,61 @@
       font-weight: 500;
       transition: color 0.15s ease;
     }
-    .nav-links a:hover {
-      color: var(--accent-terracotta);
+    .nav-menu a:hover, .nav-menu a.active {
+      color: var(--terracotta);
     }
-    .brand-mark {
-      font-family: var(--font-serif);
-      font-size: 26px;
-      letter-spacing: 0.22em;
+    .brand-logo {
+      text-align: center;
+      text-decoration: none;
+      color: var(--charcoal);
+    }
+    .brand-title {
+      font-family: var(--font-editorial);
+      font-size: 30px;
+      letter-spacing: 0.28em;
       text-transform: uppercase;
       font-weight: 700;
-      color: var(--ink);
-      text-decoration: none;
+      display: block;
+      line-height: 1;
     }
-    .nav-actions {
+    .brand-sub {
+      font-family: var(--font-mono);
+      font-size: 9px;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: var(--terracotta);
+      margin-top: 4px;
+      display: block;
+      font-weight: 600;
+    }
+    .nav-right {
       display: flex;
       align-items: center;
-      gap: 24px;
+      gap: 20px;
     }
-    .currency-pill {
-      background: rgba(20, 20, 19, 0.05);
+    .currency-switch {
+      background: rgba(28, 25, 23, 0.04);
       border: 1px solid var(--border-subtle);
       border-radius: 20px;
-      padding: 4px 10px;
+      padding: 6px 12px;
       font-size: 11px;
       font-family: var(--font-mono);
       font-weight: 600;
+      color: var(--charcoal);
       cursor: pointer;
+      outline: none;
+      transition: border-color 0.15s ease;
     }
-    .bag-trigger {
-      background: var(--ink);
-      color: var(--canvas);
+    .currency-switch:hover {
+      border-color: var(--border-medium);
+    }
+    .cart-btn {
+      background: var(--charcoal);
+      color: #FAF6F0;
       border: none;
-      padding: 8px 16px;
+      padding: 10px 20px;
       font-size: 11px;
-      letter-spacing: 0.1em;
+      letter-spacing: 0.12em;
       text-transform: uppercase;
       font-weight: 600;
       border-radius: 2px;
@@ -119,191 +154,307 @@
       display: flex;
       align-items: center;
       gap: 8px;
+      transition: background 0.15s ease;
+    }
+    .cart-btn:hover {
+      background: var(--terracotta);
     }
 
-    /* MAIN PDP GRID */
-    .pdp-main {
-      max-width: 1360px;
-      margin: 40px auto 80px;
-      padding: 0 32px;
+    /* MAIN PRODUCT EXPERIENCE */
+    .pdp-container {
+      max-width: 1400px;
+      margin: 40px auto 100px;
+      padding: 0 40px;
       display: grid;
-      grid-template-columns: 1.15fr 0.85fr;
-      gap: 64px;
+      grid-template-columns: 1.18fr 0.82fr;
+      gap: 72px;
+      align-items: start;
     }
 
-    /* LEFT GALLERY */
-    .gallery-container {
+    /* GALLERY STYLING */
+    .gallery-column {
       display: flex;
       flex-direction: column;
-      gap: 16px;
+      gap: 20px;
     }
-    .hero-image-wrap {
-      width: 100%;
-      height: 720px;
-      background: #EDEAE3;
+    .main-stage {
       position: relative;
+      width: 100%;
+      height: 740px;
+      background: #EDE6DC;
+      border-radius: 4px;
       overflow: hidden;
-      border: 1px solid var(--border-subtle);
+      box-shadow: 0 12px 36px rgba(28, 25, 23, 0.06);
     }
-    .hero-image-wrap img {
+    .main-stage img {
       width: 100%;
       height: 100%;
       object-fit: cover;
-      object-position: center;
-      transition: transform 0.4s ease;
+      object-position: center 25%;
+      transition: opacity 0.35s ease, transform 0.4s ease;
     }
-    .hero-image-wrap:hover img {
-      transform: scale(1.02);
-    }
-    .gallery-badge {
+    .stage-badge {
       position: absolute;
-      top: 16px;
-      left: 16px;
-      background: rgba(250, 249, 245, 0.92);
-      backdrop-filter: blur(4px);
-      padding: 6px 12px;
-      font-size: 10px;
+      top: 20px;
+      left: 20px;
+      background: rgba(250, 246, 240, 0.92);
+      backdrop-filter: blur(8px);
+      padding: 6px 14px;
+      border-radius: 2px;
       font-family: var(--font-mono);
-      letter-spacing: 0.12em;
+      font-size: 10px;
+      letter-spacing: 0.14em;
       text-transform: uppercase;
+      color: var(--charcoal);
       border: 1px solid var(--border-subtle);
       font-weight: 600;
     }
-    .thumbnail-strip {
+    .look-counter {
+      position: absolute;
+      bottom: 20px;
+      right: 20px;
+      background: rgba(28, 25, 23, 0.85);
+      color: #FAF6F0;
+      padding: 6px 12px;
+      font-family: var(--font-mono);
+      font-size: 10px;
+      letter-spacing: 0.14em;
+      border-radius: 2px;
+    }
+
+    /* CAPSULE COLLECTION THUMBNAILS (INTERACTIVE STRIP) */
+    .capsule-strip-label {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      font-size: 11px;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      font-family: var(--font-mono);
+      color: var(--muted-brown);
+      margin-top: 4px;
+    }
+    .capsule-strip {
       display: grid;
-      grid-template-columns: repeat(3, 1fr);
+      grid-template-columns: repeat(5, 1fr);
       gap: 12px;
     }
-    .thumb-btn {
-      height: 140px;
-      background: #EDEAE3;
-      border: 1px solid var(--border-subtle);
-      cursor: pointer;
+    .capsule-thumb {
+      height: 150px;
+      background: #EDE6DC;
+      border-radius: 3px;
       overflow: hidden;
-      padding: 0;
+      border: 2px solid transparent;
+      cursor: pointer;
       position: relative;
+      padding: 0;
+      transition: all 0.2s ease;
     }
-    .thumb-btn img {
+    .capsule-thumb img {
       width: 100%;
       height: 100%;
       object-fit: cover;
-      filter: contrast(102%);
+      object-position: center 25%;
+      transition: transform 0.25s ease;
     }
-    .thumb-btn.active {
-      border: 2px solid var(--ink);
+    .capsule-thumb:hover img {
+      transform: scale(1.05);
+    }
+    .capsule-thumb.active {
+      border-color: var(--terracotta);
+      box-shadow: 0 4px 12px rgba(179, 84, 56, 0.2);
+    }
+    .capsule-thumb .thumb-tag {
+      position: absolute;
+      bottom: 6px;
+      left: 6px;
+      background: rgba(28, 25, 23, 0.8);
+      color: #FFF;
+      font-size: 9px;
+      padding: 2px 6px;
+      border-radius: 2px;
+      font-family: var(--font-mono);
     }
 
-    /* RIGHT PDP DETAILS */
-    .details-container {
+    /* DETAILS & CONVERSION COLUMN */
+    .details-column {
       display: flex;
       flex-direction: column;
       gap: 24px;
+      padding-top: 10px;
     }
-    .editorial-season {
+    .collection-header {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .collection-pill {
+      background: var(--terracotta-subtle);
+      color: var(--terracotta);
+      font-size: 11px;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      font-weight: 600;
+      padding: 4px 12px;
+      border-radius: 20px;
+      font-family: var(--font-mono);
+    }
+    .atelier-note {
       font-family: var(--font-mono);
       font-size: 11px;
-      letter-spacing: 0.18em;
-      text-transform: uppercase;
-      color: var(--accent-terracotta);
-      font-weight: 600;
-    }
-    .product-headline {
-      font-family: var(--font-serif);
-      font-size: 44px;
-      line-height: 1.05;
-      font-weight: 600;
-      letter-spacing: -0.02em;
-      color: var(--ink);
-    }
-    .price-row {
-      display: flex;
-      align-items: baseline;
-      justify-content: space-between;
-      border-bottom: 1px solid var(--border-subtle);
-      padding-bottom: 16px;
-    }
-    .live-price {
-      font-family: var(--font-mono);
-      font-size: 26px;
-      font-weight: 700;
-      color: var(--ink);
-    }
-    .vat-note {
-      font-size: 12px;
-      color: var(--ink-muted);
-      letter-spacing: 0.05em;
-    }
-    .editorial-desc {
-      font-size: 15px;
-      line-height: 1.65;
-      color: #383734;
-      font-weight: 400;
+      color: var(--muted-brown);
+      letter-spacing: 0.08em;
     }
 
-    /* SIZING MATRIX (MIN 48PX - 56PX THUMB ZONE) */
+    .garment-title {
+      font-family: var(--font-editorial);
+      font-size: 46px;
+      line-height: 1.05;
+      font-weight: 600;
+      letter-spacing: -0.01em;
+      color: var(--charcoal);
+      transition: opacity 0.2s ease;
+    }
+
+    .pricing-tier {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      padding-bottom: 20px;
+      border-bottom: 1px solid var(--border-subtle);
+    }
+    .price-value {
+      font-family: var(--font-sans);
+      font-size: 28px;
+      font-weight: 700;
+      color: var(--charcoal);
+      letter-spacing: -0.02em;
+    }
+    .price-sub {
+      font-size: 12px;
+      color: var(--muted-brown);
+      margin-top: 2px;
+    }
+    .ratings-badge {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 12px;
+      font-family: var(--font-mono);
+      color: var(--terracotta);
+      font-weight: 600;
+    }
+
+    .narrative-p {
+      font-size: 15px;
+      line-height: 1.7;
+      color: #44403C;
+      font-weight: 400;
+      transition: opacity 0.2s ease;
+    }
+
+    /* COLOR & LOOK SELECTOR */
+    .color-section {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+    .color-label {
+      font-size: 12px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      font-weight: 600;
+      display: flex;
+      justify-content: space-between;
+    }
+    .swatch-row {
+      display: flex;
+      gap: 12px;
+    }
+    .color-swatch {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      border: 2px solid transparent;
+      padding: 2px;
+      cursor: pointer;
+      transition: all 0.15s ease;
+    }
+    .color-swatch span {
+      display: block;
+      width: 100%;
+      height: 100%;
+      border-radius: 50%;
+    }
+    .color-swatch.active {
+      border-color: var(--charcoal);
+      transform: scale(1.08);
+    }
+
+    /* SIZE SELECTOR (54PX TOUCH ERGONOMICS) */
     .size-section {
       display: flex;
       flex-direction: column;
-      gap: 12px;
-      padding-top: 8px;
+      gap: 10px;
     }
-    .size-header {
+    .size-meta {
       display: flex;
       justify-content: space-between;
-      align-items: center;
       font-size: 12px;
       text-transform: uppercase;
       letter-spacing: 0.08em;
       font-weight: 600;
     }
-    .scarcity-tag {
-      color: #B54A32;
+    .urgency-badge {
+      color: var(--terracotta);
       font-family: var(--font-mono);
       font-size: 11px;
       font-weight: 600;
     }
-    .size-grid {
+    .size-buttons {
       display: grid;
       grid-template-columns: repeat(5, 1fr);
       gap: 8px;
     }
-    .size-pill {
+    .size-btn {
+      height: 52px;
       background: var(--card-bg);
-      border: 1px solid var(--border-subtle);
+      border: 1px solid var(--border-medium);
+      border-radius: 3px;
       font-family: var(--font-mono);
       font-size: 13px;
       font-weight: 600;
-      height: 52px;
+      cursor: pointer;
+      color: var(--charcoal);
+      transition: all 0.15s ease;
       display: flex;
       align-items: center;
       justify-content: center;
-      cursor: pointer;
-      transition: all 0.15s ease;
-      color: var(--ink);
     }
-    .size-pill.active {
-      background: var(--ink);
-      color: var(--canvas);
-      border-color: var(--ink);
+    .size-btn.active {
+      background: var(--charcoal);
+      color: #FAF6F0;
+      border-color: var(--charcoal);
     }
-    .size-pill:hover:not(.active) {
-      border-color: var(--ink);
+    .size-btn:hover:not(.active) {
+      border-color: var(--charcoal);
     }
 
-    /* PRIMARY CONVERSION ACTIONS */
-    .cta-container {
+    /* CHECKOUT & ACTION BUTTONS */
+    .actions-wrap {
       display: flex;
       flex-direction: column;
       gap: 12px;
-      margin-top: 12px;
+      margin-top: 8px;
     }
-    .btn-paystack-instant {
-      background: var(--ink);
-      color: var(--canvas);
-      border: 1px solid var(--ink);
+    .btn-paystack {
+      background: var(--charcoal);
+      color: #FAF6F0;
+      border: 1px solid var(--charcoal);
+      border-radius: 3px;
       padding: 18px 24px;
       font-size: 13px;
-      letter-spacing: 0.12em;
+      letter-spacing: 0.14em;
       text-transform: uppercase;
       font-weight: 700;
       font-family: var(--font-mono);
@@ -312,287 +463,373 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      gap: 10px;
+      gap: 12px;
       transition: all 0.2s ease;
     }
-    .btn-paystack-instant:hover {
-      background: #000;
-      box-shadow: 0 4px 16px rgba(0,0,0,0.12);
+    .btn-paystack:hover {
+      background: var(--terracotta);
+      border-color: var(--terracotta);
+      box-shadow: 0 6px 20px rgba(179, 84, 56, 0.24);
     }
-    .btn-add-bag {
+    .btn-drawer {
       background: transparent;
-      color: var(--ink);
-      border: 1px solid var(--border-strong);
+      color: var(--charcoal);
+      border: 1px solid var(--charcoal);
+      border-radius: 3px;
       padding: 16px 24px;
       font-size: 13px;
-      letter-spacing: 0.12em;
+      letter-spacing: 0.14em;
       text-transform: uppercase;
       font-weight: 600;
       font-family: var(--font-mono);
       min-height: 54px;
       cursor: pointer;
-      transition: all 0.15s ease;
+      transition: background 0.15s ease;
     }
-    .btn-add-bag:hover {
-      background: rgba(20, 20, 19, 0.04);
+    .btn-drawer:hover {
+      background: rgba(28, 25, 23, 0.05);
     }
 
-    /* TRUST SIGNALS */
-    .trust-strip {
+    /* VALUE PROMISES */
+    .promises-grid {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
       gap: 12px;
       border-top: 1px solid var(--border-subtle);
       border-bottom: 1px solid var(--border-subtle);
-      padding: 16px 0;
+      padding: 18px 0;
       margin-top: 8px;
     }
-    .trust-item {
+    .promise-item {
       display: flex;
       flex-direction: column;
-      gap: 4px;
+      gap: 3px;
     }
-    .trust-item-title {
+    .promise-title {
       font-size: 11px;
       text-transform: uppercase;
-      letter-spacing: 0.06em;
+      letter-spacing: 0.08em;
       font-weight: 700;
     }
-    .trust-item-desc {
+    .promise-desc {
       font-size: 11px;
-      color: var(--ink-muted);
+      color: var(--muted-brown);
+      line-height: 1.4;
     }
 
-    /* TRI-MODAL SPECS ACCORDION */
-    .specs-tabs {
+    /* SPECS ACCORDION */
+    .specs-tabs-bar {
       display: flex;
       border-bottom: 1px solid var(--border-subtle);
-      margin-top: 8px;
+      gap: 24px;
     }
-    .spec-tab-btn {
+    .spec-tab {
       background: none;
       border: none;
-      padding: 12px 18px 12px 0;
+      padding: 12px 0;
       font-size: 12px;
+      letter-spacing: 0.12em;
       text-transform: uppercase;
-      letter-spacing: 0.1em;
       font-weight: 600;
       cursor: pointer;
-      color: var(--ink-muted);
+      color: var(--muted-brown);
       border-bottom: 2px solid transparent;
       margin-bottom: -1px;
+      transition: all 0.15s ease;
     }
-    .spec-tab-btn.active {
-      color: var(--ink);
-      border-bottom: 2px solid var(--ink);
+    .spec-tab.active {
+      color: var(--charcoal);
+      border-bottom-color: var(--terracotta);
     }
-    .spec-tab-panel {
+    .spec-body {
       padding: 16px 0;
       font-size: 13px;
-      line-height: 1.6;
-      color: #4A4843;
+      line-height: 1.7;
+      color: #57534E;
     }
 
-    /* SLIDE-OUT CART DRAWER */
-    .drawer-overlay {
+    /* SLIDE CART DRAWER */
+    .drawer-scrim {
       position: fixed;
       top: 0;
       left: 0;
       width: 100vw;
       height: 100vh;
-      background: rgba(20, 20, 19, 0.5);
-      backdrop-filter: blur(4px);
+      background: rgba(28, 25, 23, 0.45);
+      backdrop-filter: blur(6px);
       z-index: 100;
       opacity: 0;
       pointer-events: none;
-      transition: opacity 0.25s ease;
+      transition: opacity 0.3s ease;
     }
-    .drawer-overlay.open {
+    .drawer-scrim.visible {
       opacity: 1;
       pointer-events: auto;
     }
-    .drawer-panel {
+    .cart-drawer {
       position: fixed;
       top: 0;
       right: 0;
       width: 440px;
       max-width: 90vw;
       height: 100vh;
-      background: var(--canvas);
+      background: var(--sand-bg);
       border-left: 1px solid var(--border-subtle);
       z-index: 101;
       transform: translateX(100%);
-      transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+      transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
       display: flex;
       flex-direction: column;
       justify-content: space-between;
-      padding: 32px;
+      padding: 36px 32px;
+      box-shadow: -10px 0 40px rgba(0,0,0,0.1);
     }
-    .drawer-panel.open {
+    .cart-drawer.visible {
       transform: translateX(0);
     }
-    .drawer-header {
+    .drawer-top {
       display: flex;
       justify-content: space-between;
       align-items: center;
       border-bottom: 1px solid var(--border-subtle);
-      padding-bottom: 16px;
+      padding-bottom: 18px;
     }
-    .drawer-close {
+    .drawer-title {
+      font-family: var(--font-editorial);
+      font-size: 22px;
+      font-weight: 600;
+      letter-spacing: 0.05em;
+    }
+    .drawer-x {
       background: none;
       border: none;
-      font-size: 20px;
+      font-size: 24px;
       cursor: pointer;
-      color: var(--ink);
+      color: var(--charcoal);
+    }
+    .drawer-item {
+      display: flex;
+      gap: 16px;
+      margin-top: 24px;
+      padding-bottom: 24px;
+      border-bottom: 1px solid var(--border-subtle);
+    }
+    .drawer-item img {
+      width: 80px;
+      height: 105px;
+      object-fit: cover;
+      object-position: center 25%;
+      border-radius: 2px;
     }
 
     /* FOOTER */
     footer {
       border-top: 1px solid var(--border-subtle);
-      background: #F3F1EC;
-      padding: 48px 32px;
-      font-size: 12px;
-      color: var(--ink-muted);
+      background: #F3ECE2;
+      padding: 60px 40px;
     }
-    .footer-content {
-      max-width: 1360px;
+    .footer-inner {
+      max-width: 1400px;
       margin: 0 auto;
       display: flex;
       justify-content: space-between;
       align-items: center;
     }
+    .footer-brand {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
   </style>
 </head>
 <body>
 
-  <!-- TOP DISPATCH TICKER -->
-  <div class="top-ticker">
-    COMPLIMENTARY SAME-DAY ATELIER DISPATCH IN VICTORIA ISLAND & IKOYI • WORLDWIDE EXPRESS COURIER
+  <!-- TOP DISPATCH ANNOUNCEMENT -->
+  <div class="announcement-bar">
+    <span>ZIVA SUMMER CLUB // RESORT CAPSULE 2026</span>
+    <span class="pill">ONLINE EXCLUSIVE</span>
+    <span>COMPLIMENTARY SAME-DAY DISPATCH TO VICTORIA ISLAND & IKOYI</span>
   </div>
 
   <!-- NAVIGATION -->
   <header>
-    <div class="nav-container">
-      <ul class="nav-links">
+    <div class="nav-wrap">
+      <ul class="nav-menu">
+        <li><a href="#" class="active">SUMMER CLUB</a></li>
         <li><a href="#">COLLECTIONS</a></li>
-        <li><a href="#">RESORT 2026</a></li>
         <li><a href="#">EDITORIAL</a></li>
-        <li><a href="#">THE ATELIER</a></li>
+        <li><a href="#">ATELIER</a></li>
       </ul>
 
-      <a href="#" class="brand-mark">ZIVA LAGOS</a>
+      <a href="#" class="brand-logo">
+        <span class="brand-title">ZIVA LAGOS</span>
+        <span class="brand-sub">SUMMER CLUB</span>
+      </a>
 
-      <div class="nav-actions">
-        <select class="currency-pill" id="currency-select" onchange="updateCurrency(this.value)">
+      <div class="nav-right">
+        <select class="currency-switch" id="currency-select" onchange="setCurrency(this.value)">
           <option value="NGN">NGN (₦)</option>
           <option value="USD">USD ($)</option>
           <option value="GBP">GBP (£)</option>
         </select>
-        <button class="bag-trigger" onclick="toggleDrawer(true)">
+        <button class="cart-btn" onclick="openDrawer()">
           <span>BAG</span>
-          <span style="background: rgba(255,255,255,0.2); padding: 1px 6px; border-radius: 10px;">1</span>
+          <span style="background: rgba(255,255,255,0.25); padding: 1px 7px; border-radius: 10px;" id="bag-count">1</span>
         </button>
       </div>
     </div>
   </header>
 
-  <!-- MAIN PRODUCT DETAIL EXPERIENCE -->
-  <main class="pdp-main">
+  <!-- MAIN PRODUCT EXPERIENCE -->
+  <main class="pdp-container">
 
-    <!-- LEFT VISUAL GALLERY -->
-    <div class="gallery-container">
-      <div class="hero-image-wrap">
-        <img src="/assets/ziva-pdp-dress.jpg" alt="Ziva Lagos Saffron Silk Resort Midi Dress" id="hero-img">
-        <div class="gallery-badge" id="image-badge">RESORT 2026 // LOOK 01</div>
+    <!-- LEFT GALLERY COLUMN -->
+    <div class="gallery-column">
+      
+      <!-- Primary Large Hero Viewport -->
+      <div class="main-stage">
+        <img src="/assets/ziva/look-01-terracotta.jpg" alt="Ziva Summer Club - The Terracotta Tiered Halter Gown" id="hero-img">
+        <div class="stage-badge" id="hero-badge">ZIVA SUMMER CLUB // LOOK 01</div>
+        <div class="look-counter" id="look-counter">01 / 05</div>
       </div>
-      <div class="thumbnail-strip">
-        <button class="thumb-btn active" onclick="switchImage('/assets/ziva-pdp-dress.jpg', 'RESORT 2026 // LOOK 01', this)">
-          <img src="/assets/ziva-pdp-dress.jpg" alt="Dress Full Shot">
-        </button>
-        <button class="thumb-btn" onclick="switchImage('/assets/ziva-campaign-model.jpg', 'EDITORIAL // VICTORIA ISLAND TERRACE', this)">
-          <img src="/assets/ziva-campaign-model.jpg" alt="Campaign Model">
-        </button>
-        <button class="thumb-btn" onclick="switchImage('/assets/ziva-fabric-detail.jpg', 'RAW SILK WEAVE // ATELIER CRAFT', this)">
-          <img src="/assets/ziva-fabric-detail.jpg" alt="Fabric Detail">
-        </button>
+
+      <!-- Interactive 5-Look Capsule Strip -->
+      <div>
+        <div class="capsule-strip-label">
+          <span>CAPSULE WARDROBE (SELECT TO SWITCH LOOK)</span>
+          <span style="color: var(--terracotta);">5 EXCLUSIVE EDITIONS</span>
+        </div>
+        <div class="capsule-strip" style="margin-top: 8px;">
+          
+          <button class="capsule-thumb active" onclick="selectLook(0, this)">
+            <img src="/assets/ziva/look-01-terracotta.jpg" alt="Look 01 Terracotta Gown">
+            <span class="thumb-tag">01 RUST</span>
+          </button>
+          
+          <button class="capsule-thumb" onclick="selectLook(1, this)">
+            <img src="/assets/ziva/look-02-cobalt.jpg" alt="Look 02 Cobalt Slip Maxi">
+            <span class="thumb-tag">02 COBALT</span>
+          </button>
+
+          <button class="capsule-thumb" onclick="selectLook(2, this)">
+            <img src="/assets/ziva/look-03-jumpsuit.jpg" alt="Look 03 Batik Jumpsuit">
+            <span class="thumb-tag">03 INDIGO</span>
+          </button>
+
+          <button class="capsule-thumb" onclick="selectLook(3, this)">
+            <img src="/assets/ziva/look-04-skirt.jpg" alt="Look 04 Resort Skirt">
+            <span class="thumb-tag">04 ENSEMBLE</span>
+          </button>
+
+          <button class="capsule-thumb" onclick="selectLook(4, this)">
+            <img src="/assets/ziva/look-05-romper.jpg" alt="Look 05 Cabana Romper">
+            <span class="thumb-tag">05 CABANA</span>
+          </button>
+
+        </div>
       </div>
+
     </div>
 
-    <!-- RIGHT CONVERSION & SPEC COLUMN -->
-    <div class="details-container">
-      
+    <!-- RIGHT DETAILS & CONVERSION COLUMN -->
+    <div class="details-column">
+
+      <!-- Header & Title -->
       <div>
-        <div class="editorial-season">VICTORIA ISLAND ATELIER // LIMITED EDITION OF 24</div>
-        <h1 class="product-headline">THE SAFFRON SILK RESORT MIDI</h1>
+        <div class="collection-header">
+          <span class="collection-pill" id="capsule-pill">RESORT CAPSULE 2026</span>
+          <span class="atelier-note">LIMITED EDITION OF 24</span>
+        </div>
+        <h1 class="garment-title" id="garment-title" style="margin-top: 10px;">
+          THE TIERED TERRACOTTA HALTER GOWN
+        </h1>
       </div>
 
-      <div class="price-row">
+      <!-- Pricing & Reviews -->
+      <div class="pricing-tier">
         <div>
-          <div class="live-price" id="price-display">₦165,000</div>
-          <div class="vat-note">COMPLIMENTARY INSURED METROPOLITAN TRANSIT</div>
+          <div class="price-value" id="display-price">₦175,000</div>
+          <div class="price-sub">COMPLIMENTARY LAGOS DISPATCH &amp; INSURANCE</div>
         </div>
-        <div style="text-align: right; font-family: var(--font-mono); font-size: 11px; color: var(--accent-terracotta); font-weight: 600;">
-          ★ 4.98 (47 REVIEWS)
+        <div class="ratings-badge">
+          <span>★ 4.98</span>
+          <span style="color: var(--muted-brown); font-size: 11px;">(52 REVIEWS)</span>
         </div>
       </div>
 
-      <p class="editorial-desc">
-        Cut from breathable raw Nigerian silk-linen and cinched with a handcrafted raffia buckle belt. Structured yet weightless, engineered for Lagos heat and global resort evenings. Each piece is hand-finished in our Victoria Island studio.
+      <!-- Narrative Copy -->
+      <p class="narrative-p" id="narrative-text">
+        Sculpted from breathable triple-tiered raw silk-chiffon in sun-drenched rust terracotta. Features an elongated halter neckline and tiered cascade silhouette designed for warm coastal evenings. Hand-finished at the Victoria Island atelier.
       </p>
 
-      <!-- SIZING MATRIX -->
-      <div class="size-section">
-        <div class="size-header">
-          <span>SELECT SIZE (UK STANDARD)</span>
-          <span class="scarcity-tag" id="stock-tag">ONLY 3 PIECES REMAINING IN UK 8</span>
+      <!-- Color Swatch Indicator -->
+      <div class="color-section">
+        <div class="color-label">
+          <span>SELECTED COLOR</span>
+          <span style="color: var(--muted-brown);" id="color-name">Sunbaked Terracotta</span>
         </div>
-        <div class="size-grid">
-          <button class="size-pill" onclick="selectSize('UK 6', '4 pieces available', this)">UK 6</button>
-          <button class="size-pill active" onclick="selectSize('UK 8', 'ONLY 3 PIECES REMAINING IN UK 8', this)">UK 8</button>
-          <button class="size-pill" onclick="selectSize('UK 10', '5 pieces available', this)">UK 10</button>
-          <button class="size-pill" onclick="selectSize('UK 12', '2 pieces available', this)">UK 12</button>
-          <button class="size-pill" onclick="selectSize('UK 14', 'Sold out for this release', this)">UK 14</button>
+        <div class="swatch-row">
+          <div class="color-swatch active" onclick="selectLook(0)"><span style="background: #B35438;"></span></div>
+          <div class="color-swatch" onclick="selectLook(1)"><span style="background: #2552B5;"></span></div>
+          <div class="color-swatch" onclick="selectLook(2)"><span style="background: #233454;"></span></div>
+          <div class="color-swatch" onclick="selectLook(3)"><span style="background: #ECE6DD; border: 1px solid #CCC;"></span></div>
+          <div class="color-swatch" onclick="selectLook(4)"><span style="background: #333F54;"></span></div>
         </div>
       </div>
 
-      <!-- PRIMARY CONVERSION ACTIONS -->
-      <div class="cta-container">
-        <button class="btn-paystack-instant" onclick="openPaystackInstant()">
-          <span>⚡ 1-TAP PAYSTACK CHECKOUT</span>
-          <span id="cta-price">// ₦165,000</span>
+      <!-- Sizing Matrix (54px Mobile Thumb Ergonomics) -->
+      <div class="size-section">
+        <div class="size-meta">
+          <span>SELECT SIZE (UK STANDARD)</span>
+          <span class="urgency-badge" id="size-urgency">ONLY 3 PIECES REMAINING IN UK 8</span>
+        </div>
+        <div class="size-buttons">
+          <button class="size-btn" onclick="setSize('UK 6', '4 pieces available', this)">UK 6</button>
+          <button class="size-btn active" onclick="setSize('UK 8', 'ONLY 3 PIECES REMAINING IN UK 8', this)">UK 8</button>
+          <button class="size-btn" onclick="setSize('UK 10', '5 pieces available', this)">UK 10</button>
+          <button class="size-btn" onclick="setSize('UK 12', '2 pieces available', this)">UK 12</button>
+          <button class="size-btn" onclick="setSize('UK 14', 'Last piece left', this)">UK 14</button>
+        </div>
+      </div>
+
+      <!-- Conversion CTAs -->
+      <div class="actions-wrap">
+        <button class="btn-paystack" onclick="triggerPaystack()">
+          <span>⚡ 1-TAP PAYSTACK EXPRESS</span>
+          <span id="cta-price-tag">// ₦175,000</span>
         </button>
-        <button class="btn-add-bag" onclick="toggleDrawer(true)">
+        <button class="btn-drawer" onclick="openDrawer()">
           ADD TO BAG // SLIDE DRAWER
         </button>
       </div>
 
-      <!-- TRUST & DELIVERY -->
-      <div class="trust-strip">
-        <div class="trust-item">
-          <span class="trust-item-title">SAME-DAY DISPATCH</span>
-          <span class="trust-item-desc">Lagos & Abuja door delivery</span>
+      <!-- Value Promises Strip -->
+      <div class="promises-grid">
+        <div class="promise-item">
+          <span class="promise-title">SAME-DAY DISPATCH</span>
+          <span class="promise-desc">Victoria Island, Ikoyi & Lekki</span>
         </div>
-        <div class="trust-item">
-          <span class="trust-item-title">FREE EXCHANGES</span>
-          <span class="trust-item-desc">7-day complimentary window</span>
+        <div class="promise-item">
+          <span class="promise-title">FREE EXCHANGES</span>
+          <span class="promise-desc">7-day doorstep size swap</span>
         </div>
-        <div class="trust-item">
-          <span class="trust-item-title">INSTANT SETTLEMENT</span>
-          <span class="trust-item-desc">Paystack, Apple Pay, USSD</span>
+        <div class="promise-item">
+          <span class="promise-title">INSTANT SETTLEMENT</span>
+          <span class="promise-desc">Paystack, Apple Pay, USSD</span>
         </div>
       </div>
 
-      <!-- TRI-MODAL SPECS TABS -->
+      <!-- Technical Tri-Modal Specs -->
       <div>
-        <div class="specs-tabs">
-          <button class="spec-tab-btn active" onclick="switchSpec('composition', this)">COMPOSITION</button>
-          <button class="spec-tab-btn" onclick="switchSpec('sizing', this)">TAILORING</button>
-          <button class="spec-tab-btn" onclick="switchSpec('dispatch', this)">DISPATCH</button>
+        <div class="specs-tabs-bar">
+          <button class="spec-tab active" onclick="setSpec('composition', this)">COMPOSITION</button>
+          <button class="spec-tab" onclick="setSpec('tailoring', this)">TAILORING</button>
+          <button class="spec-tab" onclick="setSpec('dispatch', this)">DISPATCH</button>
         </div>
-        <div class="spec-tab-panel" id="spec-content">
-          <strong>FABRIC:</strong> 100% Raw African Silk-Linen Blend (280 GSM).<br>
-          <strong>HARDWARE:</strong> Hand-woven raffia cinch belt with natural brass closure.<br>
-          <strong>CARE:</strong> Dry clean or cold hand soak with mild organic detergent.
+        <div class="spec-body" id="spec-body">
+          <strong>FABRIC:</strong> 100% Lightweight Silk-Chiffon Tiered Cascade (240 GSM).<br>
+          <strong>DETAILS:</strong> Hand-turned halter neckline with hidden nape closure.<br>
+          <strong>CARE:</strong> Dry clean or cold hand rinse with gentle botanicals.
         </div>
       </div>
 
@@ -600,36 +837,37 @@
 
   </main>
 
-  <!-- SLIDE-OUT CART DRAWER SIMULATION -->
-  <div class="drawer-overlay" id="drawer-overlay" onclick="toggleDrawer(false)"></div>
-  <div class="drawer-panel" id="drawer-panel">
+  <!-- SLIDE CART DRAWER -->
+  <div class="drawer-scrim" id="drawer-scrim" onclick="closeDrawer()"></div>
+  <div class="cart-drawer" id="cart-drawer">
     <div>
-      <div class="drawer-header">
-        <span style="font-family: var(--font-serif); font-size: 18px; font-weight: 600;">YOUR ATELIER BAG</span>
-        <button class="drawer-close" onclick="toggleDrawer(false)">&times;</button>
+      <div class="drawer-top">
+        <span class="drawer-title">YOUR RESORT BAG</span>
+        <button class="drawer-x" onclick="closeDrawer()">&times;</button>
       </div>
 
-      <div style="display: flex; gap: 16px; margin-top: 24px; padding-bottom: 24px; border-bottom: 1px solid var(--border-subtle);">
-        <img src="/assets/ziva-pdp-dress.jpg" style="width: 80px; height: 100px; object-fit: cover;">
+      <div class="drawer-item">
+        <img src="/assets/ziva/look-01-terracotta.jpg" id="drawer-item-img" alt="Selected Garment">
         <div>
-          <div style="font-size: 13px; font-weight: 700;">THE SAFFRON SILK RESORT MIDI</div>
-          <div style="font-size: 12px; color: var(--ink-muted); margin: 4px 0;" id="drawer-selected-size">Size: UK 8</div>
-          <div style="font-family: var(--font-mono); font-size: 14px; font-weight: 700;" id="drawer-price">₦165,000</div>
+          <div style="font-size: 13px; font-weight: 700;" id="drawer-item-title">THE TIERED TERRACOTTA HALTER GOWN</div>
+          <div style="font-size: 12px; color: var(--muted-brown); margin: 4px 0;" id="drawer-size-label">Size: UK 8</div>
+          <div style="font-family: var(--font-mono); font-size: 15px; font-weight: 700; color: var(--charcoal);" id="drawer-price-label">₦175,000</div>
         </div>
       </div>
 
-      <div style="margin-top: 20px; font-size: 12px; line-height: 1.6; color: var(--ink-muted);">
-        <div>✓ Complimentary Same-Day Courier (Victoria Island / Ikoyi)</div>
-        <div>✓ Zero hidden taxes or additional payment gateway fees</div>
+      <div style="margin-top: 24px; font-size: 12px; line-height: 1.6; color: var(--muted-brown);">
+        <div>✓ Dispatched directly from Victoria Island Studio</div>
+        <div>✓ Insured courier delivery included</div>
+        <div>✓ Zero hidden taxes or checkout surcharges</div>
       </div>
     </div>
 
     <div>
-      <div style="display: flex; justify-content: space-between; font-weight: 700; margin-bottom: 16px; font-size: 15px;">
-        <span>SUBTOTAL</span>
-        <span id="drawer-subtotal">₦165,000</span>
+      <div style="display: flex; justify-content: space-between; font-weight: 700; margin-bottom: 18px; font-size: 15px;">
+        <span>ESTIMATED TOTAL</span>
+        <span id="drawer-total-label">₦175,000</span>
       </div>
-      <button class="btn-paystack-instant" style="width: 100%;" onclick="openPaystackInstant()">
+      <button class="btn-paystack" style="width: 100%;" onclick="triggerPaystack()">
         PROCEED VIA PAYSTACK
       </button>
     </div>
@@ -637,74 +875,173 @@
 
   <!-- FOOTER -->
   <footer>
-    <div class="footer-content">
-      <div>
-        <strong>ZIVA LAGOS ATELIER</strong> — Victoria Island, Lagos, Nigeria.
+    <div class="footer-inner">
+      <div class="footer-brand">
+        <div style="font-family: var(--font-editorial); font-size: 20px; font-weight: 700; letter-spacing: 0.15em;">ZIVA LAGOS</div>
+        <div style="font-size: 12px; color: var(--muted-brown);">Victoria Island Atelier // Lagos, Nigeria</div>
       </div>
-      <div style="font-family: var(--font-mono); font-size: 11px;">
-        ARCHITECTED BY BILLY BENJAMIN CONSULTING // SYSTEM v9.0-ADAPTIVE
+      <div style="font-family: var(--font-mono); font-size: 11px; color: var(--muted-brown);">
+        RE-ARCHITECTED BY BILLY BENJAMIN CONSULTING // SYSTEM v9.0-ADAPTIVE
       </div>
     </div>
   </footer>
 
   <script>
-    const prices = {
-      NGN: { symbol: '₦', value: '165,000', raw: 165000 },
-      USD: { symbol: '$', value: '110', raw: 110 },
-      GBP: { symbol: '£', value: '88', raw: 88 }
-    };
+    // 5-Look Ziva Summer Club Capsule Catalog
+    const capsule = [
+      {
+        num: "01",
+        title: "THE TIERED TERRACOTTA HALTER GOWN",
+        color: "Sunbaked Terracotta",
+        badge: "ZIVA SUMMER CLUB // LOOK 01",
+        image: "/assets/ziva/look-01-terracotta.jpg",
+        prices: { NGN: "175,000", USD: "115", GBP: "92" },
+        narrative: "Sculpted from breathable triple-tiered raw silk-chiffon in sun-drenched rust terracotta. Features an elongated halter neckline and tiered cascade silhouette designed for warm coastal evenings. Hand-finished at the Victoria Island atelier.",
+        composition: "<strong>FABRIC:</strong> 100% Lightweight Silk-Chiffon Tiered Cascade (240 GSM).<br><strong>DETAILS:</strong> Hand-turned halter neckline with hidden nape closure.<br><strong>CARE:</strong> Dry clean or cold hand rinse with gentle botanicals.",
+        stock: "ONLY 3 PIECES REMAINING IN UK 8"
+      },
+      {
+        num: "02",
+        title: "THE COBALT ADIRE SLIP MAXI",
+        color: "Indigo & Cobalt Botanical",
+        badge: "ZIVA SUMMER CLUB // LOOK 02",
+        image: "/assets/ziva/look-02-cobalt.jpg",
+        prices: { NGN: "155,000", USD: "100", GBP: "82" },
+        narrative: "Fluid slip maxi dress tailored from Nigerian hand-printed cobalt adire silk. Delicate spaghetti straps, deep V-neckline, and an effortless floor-sweeping drape engineered for tropical breeze and resort celebrations.",
+        composition: "<strong>FABRIC:</strong> 100% Hand-Printed Nigerian Silk Habotai (220 GSM).<br><strong>DETAILS:</strong> Adjustable bias straps with hand-finished French seams.<br><strong>CARE:</strong> Cold hand wash inside out, lay flat in shade.",
+        stock: "4 PIECES REMAINING IN UK 8"
+      },
+      {
+        num: "03",
+        title: "THE INDIGO BATIK WRAP JUMPSUIT",
+        color: "Deep Indigo Ikat",
+        badge: "ZIVA SUMMER CLUB // LOOK 03",
+        image: "/assets/ziva/look-03-jumpsuit.jpg",
+        prices: { NGN: "145,000", USD: "95", GBP: "78" },
+        narrative: "A sharp, tailored wrap jumpsuit featuring a custom indigo geometric batik motif. Cinched waist sash with tapered jogger hems, combining architectural structure with relaxed resort poise.",
+        composition: "<strong>FABRIC:</strong> 100% Premium Cotton-Linen Twill with Natural Indigo Dye.<br><strong>DETAILS:</strong> Crossover surplice bodice, side slant pockets, elasticated ankle cuffs.<br><strong>CARE:</strong> Dry clean recommended to preserve artisanal indigo vibrancy.",
+        stock: "ONLY 2 PIECES REMAINING"
+      },
+      {
+        num: "04",
+        title: "THE RESORT PLEATED MAXI & RACER TANK",
+        color: "Ivory & Navy Motif",
+        badge: "ZIVA SUMMER CLUB // LOOK 04",
+        image: "/assets/ziva/look-04-skirt.jpg",
+        prices: { NGN: "135,000", USD: "88", GBP: "72" },
+        narrative: "Two-piece capsule ensemble pairing a structured ribbed cotton racerback tank with a high-waisted pleated midi skirt in heritage indigo tile weave. Functional deep side pockets with interior tie waistband.",
+        composition: "<strong>TOP:</strong> 95% Organic Ribbed Cotton, 5% Spandex.<br><strong>SKIRT:</strong> 100% Woven Linen-Cotton Blend (260 GSM).<br><strong>CARE:</strong> Machine wash cold gentle cycle.",
+        stock: "IN STOCK (5 PIECES AVAILABLE)"
+      },
+      {
+        num: "05",
+        title: "THE CABANA SLEEVELESS POCKET ROMPER",
+        color: "Midnight Navy Micro-Print",
+        badge: "ZIVA SUMMER CLUB // LOOK 05",
+        image: "/assets/ziva/look-05-romper.jpg",
+        prices: { NGN: "98,000", USD: "65", GBP: "52" },
+        narrative: "Casual luxury engineered for daytime lounging. High crew-neck sleeveless playsuit with elasticated drawstring waist and relaxed thigh-length shorts. Features subtle micro-geometric artisan print.",
+        composition: "<strong>FABRIC:</strong> 100% Breathable Washed Rayon-Linen.<br><strong>DETAILS:</strong> Back keyhole closure with shell button, patch pockets.<br><strong>CARE:</strong> Cold hand wash, gentle press.",
+        stock: "ONLY 1 PIECE REMAINING IN UK 8"
+      }
+    ];
+
+    let currentLookIndex = 0;
     let currentCurrency = 'NGN';
+    const currencySymbols = { NGN: '₦', USD: '$', GBP: '£' };
 
-    function updateCurrency(curr) {
+    function selectLook(index, btnEl) {
+      currentLookIndex = index;
+      const item = capsule[index];
+
+      // Update main gallery stage with smooth transition
+      const heroImg = document.getElementById('hero-img');
+      heroImg.style.opacity = '0.3';
+      setTimeout(() => {
+        heroImg.src = item.image;
+        heroImg.style.opacity = '1';
+      }, 150);
+
+      document.getElementById('hero-badge').innerText = item.badge;
+      document.getElementById('look-counter').innerText = `0${index + 1} / 05`;
+
+      // Update textual content
+      document.getElementById('garment-title').innerText = item.title;
+      document.getElementById('narrative-text').innerText = item.narrative;
+      document.getElementById('color-name').innerText = item.color;
+      document.getElementById('size-urgency').innerText = item.stock;
+
+      // Update active thumbnails
+      document.querySelectorAll('.capsule-thumb').forEach((thumb, idx) => {
+        thumb.classList.toggle('active', idx === index);
+      });
+
+      // Update active color swatches
+      document.querySelectorAll('.color-swatch').forEach((swatch, idx) => {
+        swatch.classList.toggle('active', idx === index);
+      });
+
+      // Update prices
+      renderPrices();
+
+      // Update drawer preview item
+      document.getElementById('drawer-item-img').src = item.image;
+      document.getElementById('drawer-item-title').innerText = item.title;
+    }
+
+    function renderPrices() {
+      const item = capsule[currentLookIndex];
+      const symbol = currencySymbols[currentCurrency];
+      const val = item.prices[currentCurrency];
+      
+      document.getElementById('display-price').innerText = `${symbol}${val}`;
+      document.getElementById('cta-price-tag').innerText = `// ${symbol}${val}`;
+      document.getElementById('drawer-price-label').innerText = `${symbol}${val}`;
+      document.getElementById('drawer-total-label').innerText = `${symbol}${val}`;
+    }
+
+    function setCurrency(curr) {
       currentCurrency = curr;
-      const p = prices[curr];
-      document.getElementById('price-display').innerText = `${p.symbol}${p.value}`;
-      document.getElementById('cta-price').innerText = `// ${p.symbol}${p.value}`;
-      document.getElementById('drawer-price').innerText = `${p.symbol}${p.value}`;
-      document.getElementById('drawer-subtotal').innerText = `${p.symbol}${p.value}`;
+      renderPrices();
     }
 
-    function switchImage(src, badgeText, btn) {
-      document.getElementById('hero-img').src = src;
-      document.getElementById('image-badge').innerText = badgeText;
-      document.querySelectorAll('.thumb-btn').forEach(b => b.classList.remove('active'));
+    function setSize(size, msg, btn) {
+      document.querySelectorAll('.size-btn').forEach(b => b.classList.remove('active'));
       btn.classList.add('active');
+      document.getElementById('size-urgency').innerText = msg;
+      document.getElementById('drawer-size-label').innerText = `Size: ${size}`;
     }
 
-    function selectSize(size, stockMsg, btn) {
-      document.querySelectorAll('.size-pill').forEach(b => b.classList.remove('active'));
+    function setSpec(tab, btn) {
+      document.querySelectorAll('.spec-tab').forEach(b => b.classList.remove('active'));
       btn.classList.add('active');
-      document.getElementById('stock-tag').innerText = stockMsg;
-      document.getElementById('drawer-selected-size').innerText = `Size: ${size}`;
-    }
-
-    function switchSpec(tab, btn) {
-      document.querySelectorAll('.spec-tab-btn').forEach(b => b.classList.remove('active'));
-      btn.classList.add('active');
-      const content = document.getElementById('spec-content');
+      const item = capsule[currentLookIndex];
+      const body = document.getElementById('spec-body');
+      
       if (tab === 'composition') {
-        content.innerHTML = `<strong>FABRIC:</strong> 100% Raw African Silk-Linen Blend (280 GSM).<br><strong>HARDWARE:</strong> Hand-woven raffia cinch belt with natural brass closure.<br><strong>CARE:</strong> Dry clean or cold hand soak with mild organic detergent.`;
-      } else if (tab === 'sizing') {
-        content.innerHTML = `<strong>FIT:</strong> Tailored bodice with relaxed A-line tea-length hem.<br><strong>MODEL:</strong> Model is 5'10" (178cm) and wears a UK 8.<br><strong>GRADING:</strong> Precision UK/Nigerian proportional grading.`;
+        body.innerHTML = item.composition;
+      } else if (tab === 'tailoring') {
+        body.innerHTML = `<strong>FIT:</strong> Proportional Nigerian/UK sizing.<br><strong>MODEL MEASUREMENTS:</strong> Model is 5'10" (178cm), Bust 33", Waist 25", Hips 36" wearing UK 8.<br><strong>SILHOUETTE:</strong> Engineered with relaxed coastal ease.`;
       } else if (tab === 'dispatch') {
-        content.innerHTML = `<strong>LAGOS:</strong> Same-day dispatch for orders confirmed before 2:00 PM.<br><strong>NIGERIA:</strong> 48 hours via insured DHL Express courier.<br><strong>RETURNS:</strong> 7-day complimentary door-to-door size exchange.`;
+        body.innerHTML = `<strong>LAGOS:</strong> Same-day dispatch for orders confirmed before 2:00 PM (Victoria Island, Ikoyi, Lekki Phase 1).<br><strong>NIGERIA:</strong> 24–48 hours statewide courier via DHL.<br><strong>WORLDWIDE:</strong> 3–5 business days via DHL Express.<br><strong>RETURNS:</strong> 7-day complimentary doorstep size exchange.`;
       }
     }
 
-    function toggleDrawer(isOpen) {
-      const overlay = document.getElementById('drawer-overlay');
-      const panel = document.getElementById('drawer-panel');
-      if (isOpen) {
-        overlay.classList.add('open');
-        panel.classList.add('open');
-      } else {
-        overlay.classList.remove('open');
-        panel.classList.remove('open');
-      }
+    function openDrawer() {
+      document.getElementById('drawer-scrim').classList.add('visible');
+      document.getElementById('cart-drawer').classList.add('visible');
     }
 
-    function openPaystackInstant() {
-      alert('PAYSTACK 1-TAP MODAL TRIGGERED: Seamless payment sheet initialized for ' + prices[currentCurrency].symbol + prices[currentCurrency].value);
+    function closeDrawer() {
+      document.getElementById('drawer-scrim').classList.remove('visible');
+      document.getElementById('cart-drawer').classList.remove('visible');
+    }
+
+    function triggerPaystack() {
+      const item = capsule[currentLookIndex];
+      const symbol = currencySymbols[currentCurrency];
+      const val = item.prices[currentCurrency];
+      alert(`⚡ PAYSTACK MODAL ACTIVE:\nInitializing instant 1-tap checkout for ${item.title} (${symbol}${val})\n• Card, Bank Transfer, Apple Pay & USSD enabled.`);
     }
   </script>
 
