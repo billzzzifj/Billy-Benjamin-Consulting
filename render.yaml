@@ -1,0 +1,20 @@
+services:
+  - type: web
+    name: billy-benjamin-consulting
+    runtime: node
+    plan: free
+    region: frankfurt
+    buildCommand: npm install && npm run build
+    startCommand: npm start
+    autoDeploy: true
+    envVars:
+      - key: NODE_VERSION
+        value: 20.18.0
+      - key: NODE_ENV
+        value: production
+      - key: NOTIFICATION_EMAIL
+        value: billy@billybenjaminconsulting.online
+      - key: RESEND_API_KEY
+        sync: false
+      - key: LEAD_WEBHOOK_URL
+        sync: false

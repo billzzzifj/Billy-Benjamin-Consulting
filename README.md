@@ -4,6 +4,8 @@
 **Domain:** [billybenjaminconsulting.online](https://billybenjaminconsulting.online)  
 **Coordinates:** Lagos // London // NYC  
 
+[![Deploy to Render](https://render.com/images/deploy-to-render-button.svg)](https://render.com/deploy?repo=https://github.com/billzzzifj/Billy-Benjamin-Consulting)
+
 ---
 
 ## 1. ARCHITECTURAL OVERVIEW
@@ -78,7 +80,39 @@ node scripts/followup-engine.mjs
 
 ---
 
-## 6. ENVIRONMENT VARIABLES (OPTIONAL)
+## 6. RENDER DEPLOYMENT SPECIFICATION
+
+This repository includes a native [`render.yaml`](render.yaml) Blueprint configuration for 1-click zero-config deployment to Render:
+
+### Method A: 1-Click Deploy to Render
+Click the badge at the top of this repository or navigate to:
+```
+https://render.com/deploy?repo=https://github.com/billzzzifj/Billy-Benjamin-Consulting
+```
+
+### Method B: Manual Render Web Service Setup
+1. Log into your Render dashboard at [dashboard.render.com](https://dashboard.render.com).
+2. Click **New +** -> **Web Service**.
+3. Select **Build and deploy from a Git repository** and connect `billzzzifj/Billy-Benjamin-Consulting`.
+4. Configure service settings:
+   - **Name:** `billy-benjamin-consulting`
+   - **Region:** Frankfurt (EU) or Oregon (US)
+   - **Branch:** `main`
+   - **Root Directory:** *(leave blank / default)*
+   - **Runtime:** `Node`
+   - **Build Command:** `npm install && npm run build`
+   - **Start Command:** `npm start`
+   - **Instance Type:** `Free`
+5. In **Environment Variables**, add:
+   - `NODE_VERSION`: `20.18.0`
+   - `NOTIFICATION_EMAIL`: `billy@billybenjaminconsulting.online`
+   - `RESEND_API_KEY`: *(optional Resend API key for automated email delivery)*
+   - `LEAD_WEBHOOK_URL`: *(optional webhook for real-time lead telemetry)*
+6. Click **Create Web Service**. Render will automatically clone, build, and deploy the application to your `onrender.com` subdomain with automated HTTPS.
+
+---
+
+## 7. ENVIRONMENT VARIABLES (OPTIONAL)
 Create `.env.local` to configure live email dispatch and webhooks:
 ```env
 RESEND_API_KEY=re_your_api_key_here
