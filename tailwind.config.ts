@@ -10,36 +10,49 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
-        bone: "#F5F5F3",
-        obsidian: "#0A0A0A",
-        lime: "#CDE570",
+        // PATTYZ PLACE QUIET LUXURY PALETTE
+        ivory: {
+          DEFAULT: "#F9F6F0", // Soft Canvas Background
+          dark: "#EDE7DE",    // Subtle Card Surface
+          muted: "#E2DDD4",
+        },
+        espresso: {
+          DEFAULT: "#2A221E", // Primary Typography & Deep Structures
+          light: "#3D322B",
+          soft: "#584B42",
+        },
+        caramel: {
+          DEFAULT: "#A67B5B", // Primary Accent & Action Buttons
+          hover: "#8E6647",   // Interactive Hover State
+          subtle: "#F4ECE4",  // Soft Tint / Chip Highlights
+        },
+        gold: "#C5A059",
       },
       fontFamily: {
+        serif: [
+          "Cormorant Garamond",
+          "Playfair Display",
+          "Italiana",
+          "Georgia",
+          "serif",
+        ],
+        sans: [
+          "Plus Jakarta Sans",
+          "Inter",
+          "-apple-system",
+          "BlinkMacSystemFont",
+          "sans-serif",
+        ],
         mono: [
           "JetBrains Mono",
           "SF Mono",
           "Menlo",
           "Monaco",
-          "Courier New",
           "monospace",
         ],
-        sans: [
-          "Inter",
-          "-apple-system",
-          "BlinkMacSystemFont",
-          "Segoe UI",
-          "Roboto",
-          "sans-serif",
-        ],
-        display: [
-          "Inter",
-          "Space Grotesk",
-          "-apple-system",
-          "sans-serif",
-        ],
       },
-      borderWidth: {
-        "1": "1px",
+      spacing: {
+        "48px": "48px", // Explicit 48px Mobile Touch Target Constraint
       },
     },
   },
