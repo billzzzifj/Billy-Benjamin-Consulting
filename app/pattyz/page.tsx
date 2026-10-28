@@ -7,20 +7,19 @@ import {
   Sparkles, 
   Star, 
   ShieldCheck, 
-  Calendar, 
-  Clock, 
-  MapPin, 
   Check, 
   ChevronRight, 
   ShoppingBag, 
   X, 
-  Scissors, 
-  Heart,
-  Truck
+  MapPin, 
+  Truck,
+  Plus,
+  Minus,
+  CheckCircle2
 } from "lucide-react";
 
 // =========================================================================
-// DATA ARCHITECTURE: PRODUCTS & SERVICES
+// DATA ARCHITECTURE: PRODUCTS & RAW BUNDLE CATALOG
 // =========================================================================
 interface ProductItem {
   id: string;
@@ -28,7 +27,7 @@ interface ProductItem {
   length: string;
   priceUSD: number;
   priceNGN: number;
-  category: string;
+  category: "bundles" | "wigs" | "craft";
   image: string;
   specs: string[];
   badge?: string;
@@ -36,48 +35,94 @@ interface ProductItem {
 
 const PRODUCTS: ProductItem[] = [
   {
-    id: "prod-01",
-    title: "Bone Straight Blunt Cut Bob",
-    length: "18 INCHES",
-    priceUSD: 185,
-    priceNGN: 285000,
-    category: "Signature Cut",
-    image: "/assets/pattyz/hero-portrait.jpg",
-    specs: ["Single-Donor Raw Hair", "Pre-Plucked 5x5 HD Lace", "Natural Luster & Bleached Knots"],
-    badge: "Most Requested"
-  },
-  {
-    id: "prod-02",
-    title: "Raw Cambodian Deep Wave Frontal",
-    length: "24 INCHES",
+    id: "bundle-01",
+    title: "Raw Cambodian Deep Wave Bundles + HD Closure",
+    length: "24 INCHES // 3 BUNDLES + 5X5 CLOSURE",
     priceUSD: 245,
     priceNGN: 380000,
-    category: "Luxury Texture",
-    image: "/assets/pattyz/pattyz-look-04.jpg",
-    specs: ["Steam-Textured Cuticle Intact", "13x6 Ear-to-Ear Swiss HD Lace", "Ultra-Full 250% Density"],
-    badge: "Bridal Favorite"
+    category: "bundles",
+    image: "/assets/pattyz/bundle-deep-wave-closure.jpg",
+    specs: [
+      "100% Unprocessed Single-Donor Cuticles",
+      "Includes Matching 5x5 Swiss HD Lace Closure",
+      "Steam-Textured Wave, Reversion Guaranteed"
+    ],
+    badge: "Most Requested Bundle"
   },
   {
-    id: "prod-03",
-    title: "Honey Caramel Balayage Wave",
-    length: "22 INCHES",
+    id: "bundle-02",
+    title: "Silky Bone Straight Raw Donor Bundles (Gold Edition)",
+    length: "24 INCHES // 4 FULL BUNDLES",
+    priceUSD: 260,
+    priceNGN: 400000,
+    category: "bundles",
+    image: "/assets/pattyz/bundle-bone-straight-gold.jpg",
+    specs: [
+      "Double-Drawn Full Ends Wrapped in Gold Thread",
+      "Easily Bleaches to #613 Blonde",
+      "Zero Fillers or Synthetic Fibers (380g Net Weight)"
+    ],
+    badge: "Atelier Gold Edition"
+  },
+  {
+    id: "bundle-03",
+    title: "Raw Loose Wave Luxury Bundles (3-Bundle Deal)",
+    length: "26 INCHES // 3 BUNDLES",
+    priceUSD: 230,
+    priceNGN: 355000,
+    category: "bundles",
+    image: "/assets/pattyz/bundle-loose-wave.jpg",
+    specs: [
+      "Natural S-Pattern Natural Luster Wave",
+      "Reinforced Double Machine Weft (Zero Shedding)",
+      "Holds Heated Wand Curls for 72+ Hours"
+    ],
+    badge: "Volume Staple"
+  },
+  {
+    id: "bundle-04",
+    title: "Afro Kinky Curly Virgin Bundles",
+    length: "20 INCHES // 3 BUNDLES",
+    priceUSD: 210,
+    priceNGN: 325000,
+    category: "bundles",
+    image: "/assets/pattyz/bundle-kinky-curl.jpg",
+    specs: [
+      "Authentic High-Density 3B-3C Textured Coil",
+      "Moisture-Retentive Raw Human Hair",
+      "Can Be Brushed Out for Maximum Afro Glitz"
+    ],
+    badge: "Natural Textured"
+  },
+  {
+    id: "wig-01",
+    title: "Chocolate Caramel Balayage Bob (Signature Install)",
+    length: "18 INCHES // READY-TO-WEAR UNIT",
     priceUSD: 220,
     priceNGN: 340000,
-    category: "Custom Color",
-    image: "/assets/pattyz/pattyz-look-01.jpg",
-    specs: ["Hand-Painted Caramel Highlights", "Invisible Melt HD Cap", "Pre-Styled Defined Curls"],
-    badge: "Limited Drop"
+    category: "wigs",
+    image: "/assets/pattyz/hero-portrait.jpg",
+    specs: [
+      "Pre-Plucked 13x6 Ear-to-Ear Ultra-Thin HD Lace",
+      "Custom Hand-Painted Honey Caramel Highlights",
+      "Silky Blunt Cut with Ergonomic Elastic Band"
+    ],
+    badge: "CEO Signature Melt"
   },
   {
-    id: "prod-04",
-    title: "Pattyz Place Matte Gift Vault",
-    length: "ATELIER PACKAGING",
+    id: "craft-01",
+    title: "Pattyz Place Matte Gift Presentation Vault",
+    length: "COMPLIMENTARY WITH EVERY UNIT",
     priceUSD: 0,
     priceNGN: 0,
-    category: "Tactile Craft",
+    category: "craft",
     image: "/assets/pattyz/packaging-luxury-wigs.jpg",
-    specs: ["Rigid Espresso Magnetic Box", "Gold Foil Stamped Crest", "Silk Storage Bonnet & Care Card"],
-    badge: "Complimentary"
+    specs: [
+      "Rigid Espresso Magnetic Presentation Box",
+      "Embossed Gold Foil Atelier Crest & Satin Ribbon",
+      "Includes Silk Melt Band, Storage Bag & Care Protocol"
+    ],
+    badge: "Included Free"
   }
 ];
 
@@ -88,7 +133,7 @@ const SERVICES = [
     duration: "2.5 Hours",
     priceUSD: 120,
     priceNGN: 180000,
-    desc: "Bespoke customized hairline customization, custom ear-to-ear melting, baby hair architecture, and high-glam finish."
+    desc: "Bespoke hairline customization, ear-to-ear melting with medical adhesive, baby hair contouring, and bridal glamour finish."
   },
   {
     id: "serv-02",
@@ -96,23 +141,34 @@ const SERVICES = [
     duration: "2.0 Hours",
     priceUSD: 95,
     priceNGN: 150000,
-    desc: "Precision braid-down, scalp prep, invisible lace tinting, secure glueless adhesive bond, and hot-comb silk press."
+    desc: "Precision braid-down, scalp detox prep, invisible lace tinting, secure glueless adhesive bond, and hot-comb silk press."
   },
   {
     id: "serv-03",
-    name: "Lace Maintenance & Refresh",
+    name: "Bundle Weft Construction & Sew-In",
+    duration: "3.0 Hours",
+    priceUSD: 110,
+    priceNGN: 170000,
+    desc: "Traditional flat-track sew-in using Pattyz Place raw donor bundles, invisible leave-out blending, and custom styling."
+  },
+  {
+    id: "serv-04",
+    name: "Lace Maintenance & Melt Refresh",
     duration: "1.5 Hours",
     priceUSD: 65,
     priceNGN: 100000,
-    desc: "Safe lace removal, detox scalp wash, deep moisture treatment on raw bundles, and precision hairline re-melt."
+    desc: "Safe lace removal, detox scalp wash, deep moisture mask on raw bundles, and precision hairline re-melt."
   }
 ];
 
 export default function PattyzPlacePage() {
   // Navigation & Cart State
   const [cartOpen, setCartOpen] = useState(false);
-  const [cartItems, setCartItems] = useState<ProductItem[]>([PRODUCTS[0]]);
+  const [cartItems, setCartItems] = useState<{ product: ProductItem; quantity: number }[]>([
+    { product: PRODUCTS[0], quantity: 1 }
+  ]);
   const [selectedCurrency, setSelectedCurrency] = useState<"USD" | "NGN">("USD");
+  const [catalogFilter, setCatalogFilter] = useState<"all" | "bundles" | "wigs">("all");
 
   // Booking Widget State
   const [serviceType, setServiceType] = useState<"STUDIO" | "HOME">("STUDIO");
@@ -134,6 +190,40 @@ export default function PattyzPlacePage() {
 
   const activeServiceObj = SERVICES.find(s => s.id === selectedService) || SERVICES[0];
 
+  // Cart operations
+  const addToBag = (product: ProductItem) => {
+    setCartItems(prev => {
+      const existing = prev.find(item => item.product.id === product.id);
+      if (existing) {
+        return prev.map(item => 
+          item.product.id === product.id 
+            ? { ...item, quantity: item.quantity + 1 }
+            : item
+        );
+      }
+      return [...prev, { product, quantity: 1 }];
+    });
+    setCartOpen(true);
+  };
+
+  const updateQuantity = (id: string, delta: number) => {
+    setCartItems(prev => prev.map(item => {
+      if (item.product.id === id) {
+        const newQty = item.quantity + delta;
+        return newQty > 0 ? { ...item, quantity: newQty } : null;
+      }
+      return item;
+    }).filter(Boolean) as { product: ProductItem; quantity: number }[]);
+  };
+
+  const cartSubtotalUSD = cartItems.reduce((acc, curr) => acc + (curr.product.priceUSD * curr.quantity), 0);
+  const cartSubtotalNGN = cartItems.reduce((acc, curr) => acc + (curr.product.priceNGN * curr.quantity), 0);
+  const totalItemCount = cartItems.reduce((acc, curr) => acc + curr.quantity, 0);
+
+  const filteredProducts = catalogFilter === "all" 
+    ? PRODUCTS 
+    : PRODUCTS.filter(p => p.category === catalogFilter || p.category === "craft");
+
   const handleBookingSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     setBookingConfirmed(true);
@@ -146,13 +236,13 @@ export default function PattyzPlacePage() {
           TOP ANNOUNCEMENT / ATELIER STATUS BAR
       ========================================================================= */}
       <div className="bg-[#2A221E] text-[#F9F6F0] text-xs font-mono tracking-widest uppercase py-2.5 px-4 text-center border-b border-[#2A221E]/20">
-        <div className="max-w-6xl mx-auto flex items-center justify-between">
+        <div className="max-w-7xl mx-auto flex items-center justify-between">
           <span className="hidden sm:inline-flex items-center gap-2">
             <span className="w-2 h-2 rounded-full bg-[#A67B5B] animate-pulse"></span>
-            LEKKI PHASE 1 ATELIER // APPOINTMENTS ACTIVE
+            LEKKI PHASE 1 ATELIER // FOUNDER-LED MASTER INSTALLS
           </span>
           <span className="mx-auto sm:mx-0">
-            COMPLIMENTARY RAW DONOR STORAGE BOX WITH EVERY CUSTOM WIG
+            RAW DONOR HAIR BUNDLES & BESPOKE WIGS NOW READY FOR DISPATCH
           </span>
           <div className="hidden md:flex items-center gap-3">
             <button 
@@ -173,7 +263,8 @@ export default function PattyzPlacePage() {
           
           <nav className="hidden md:flex items-center gap-8 text-xs uppercase tracking-widest font-medium">
             <a href="#hero" className="hover:text-[#A67B5B] transition-colors">The Atelier</a>
-            <a href="#gallery" className="hover:text-[#A67B5B] transition-colors">Collections</a>
+            <a href="#bundles" className="hover:text-[#A67B5B] transition-colors">Hair Bundles</a>
+            <a href="#signature-install" className="hover:text-[#A67B5B] transition-colors">Signature Melt</a>
             <a href="#booking" className="hover:text-[#A67B5B] transition-colors">Book an Install</a>
           </nav>
 
@@ -196,13 +287,13 @@ export default function PattyzPlacePage() {
             
             <button 
               onClick={() => setCartOpen(true)}
-              aria-label="Open Cart"
+              aria-label="Open Atelier Dispatch Bag"
               className="relative p-2.5 min-h-[48px] min-w-[48px] flex items-center justify-center text-[#2A221E] hover:text-[#A67B5B] transition-colors"
             >
               <ShoppingBag className="w-5 h-5 stroke-[1.5]" />
-              {cartItems.length > 0 && (
+              {totalItemCount > 0 && (
                 <span className="absolute top-2 right-2 bg-[#A67B5B] text-white text-[10px] w-4 h-4 rounded-full flex items-center justify-center font-bold">
-                  {cartItems.length}
+                  {totalItemCount}
                 </span>
               )}
             </button>
@@ -212,10 +303,10 @@ export default function PattyzPlacePage() {
       </header>
 
       {/* =========================================================================
-          SECTION 01 // THE HERO (POSITIONING & PROMINENT AESTHETIC)
+          SECTION 01 // THE HERO (POSITIONING & CEO FEATURE)
       ========================================================================= */}
       <section id="hero" className="relative w-full min-h-[88vh] flex items-center justify-center bg-[#F9F6F0] overflow-hidden pt-8 pb-16">
-        <div className="max-w-7xl mx-auto px-6 w-full grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-8 items-center">
+        <div className="max-w-7xl mx-auto px-6 w-full grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-10 items-center">
           
           {/* TEXT POSITIONING */}
           <motion.div 
@@ -226,7 +317,7 @@ export default function PattyzPlacePage() {
           >
             <div className="inline-flex items-center gap-2 text-xs font-mono tracking-widest uppercase text-[#A67B5B] mb-4">
               <Sparkles className="w-3.5 h-3.5" />
-              <span>Couture Hair Architecture // Lekki Atelier</span>
+              <span>Founder-Led Couture Hair Architecture // Lekki Atelier</span>
             </div>
 
             <h1 className="font-serif text-5xl sm:text-6xl md:text-7xl leading-[1.04] tracking-tight text-[#2A221E] font-normal mb-6">
@@ -235,10 +326,17 @@ export default function PattyzPlacePage() {
               LUXURY.
             </h1>
 
-            <p className="text-base sm:text-lg text-[#2A221E]/80 max-w-xl font-light leading-relaxed mb-10">
+            <p className="text-base sm:text-lg text-[#2A221E]/80 max-w-xl font-light leading-relaxed mb-4">
               Premium wigs, bundles, and bespoke bridal glam tailored for you. 
-              Crafted from 100% raw virgin donor tresses, finished with undetectable HD lace melted seamlessly to your skin.
+              Sourced directly from single-donor raw temples and melted seamlessly into your skin by Patty and her master team.
             </p>
+
+            <blockquote className="border-l-2 border-[#A67B5B] pl-4 py-1 text-sm italic font-serif text-[#2A221E]/70 mb-8">
+              &ldquo;Hair is sovereignty. Every bundle is hand-inspected, every closure ventilated with single knots, and every melt tailored to command presence.&rdquo;
+              <span className="block text-[11px] font-mono not-italic uppercase tracking-wider text-[#A67B5B] mt-1">
+                — Patty // Founder & Master Lace Architect
+              </span>
+            </blockquote>
 
             <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-4">
               <a 
@@ -248,45 +346,49 @@ export default function PattyzPlacePage() {
                 Book an Install
               </a>
               <a 
-                href="#gallery"
+                href="#bundles"
                 className="inline-flex items-center justify-center px-8 py-4 min-h-[48px] border border-[#2A221E] text-[#2A221E] text-xs uppercase tracking-[0.2em] font-semibold hover:bg-[#2A221E] hover:text-[#F9F6F0] transition-all text-center"
               >
                 Shop Bundles
               </a>
             </div>
 
-            <div className="mt-12 pt-8 border-t border-[#2A221E]/10 flex items-center gap-6 text-xs text-[#2A221E]/70 font-mono uppercase tracking-wider">
-              <span>● 100% Raw Donor Hair</span>
-              <span>● HD Swiss Lace</span>
-              <span>● Private Lekki Studio</span>
+            <div className="mt-12 pt-8 border-t border-[#2A221E]/10 flex flex-wrap items-center gap-6 text-xs text-[#2A221E]/70 font-mono uppercase tracking-wider">
+              <span>● Single-Donor Raw Hair</span>
+              <span>● Undetectable Swiss HD Lace</span>
+              <span>● Lekki VIP Studio Suite</span>
             </div>
           </motion.div>
 
-          {/* MASSIVE FULL-BLEED GALLERY CONTAINER */}
+          {/* MASSIVE HERO CONTAINER FEATURING PATTY (THE CEO) */}
           <motion.div 
             initial={{ opacity: 0, scale: 0.98 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 0.9, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
-            className="lg:col-span-6 relative w-full h-[540px] sm:h-[640px] lg:h-[720px] rounded-sm overflow-hidden shadow-2xl bg-[#EDE7DE]"
+            className="lg:col-span-6 relative w-full h-[560px] sm:h-[660px] lg:h-[740px] rounded-sm overflow-hidden shadow-2xl bg-[#EDE7DE]"
           >
             <Image 
-              src="/assets/pattyz/hero-portrait.jpg" 
-              alt="Pattyz Place Signature Caramel Waves Luxury Install" 
+              src="/assets/pattyz/ceo-patty.jpg" 
+              alt="Patty, Founder and CEO of Pattyz Place in Couture Atelier Foyer" 
               fill
               priority
               sizes="(max-width: 1024px) 100vw, 50vw"
-              className="object-cover object-center"
+              className="object-cover object-top"
             />
-            <div className="absolute inset-0 bg-gradient-to-t from-[#2A221E]/60 via-transparent to-transparent pointer-events-none" />
+            <div className="absolute inset-0 bg-gradient-to-t from-[#2A221E]/70 via-transparent to-transparent pointer-events-none" />
             
-            <div className="absolute bottom-6 left-6 right-6 p-6 bg-[#F9F6F0]/90 backdrop-blur-md border border-[#2A221E]/10 flex items-center justify-between">
+            <div className="absolute bottom-6 left-6 right-6 p-6 bg-[#F9F6F0]/95 backdrop-blur-md border border-[#2A221E]/10 flex items-center justify-between">
               <div>
-                <p className="text-[10px] font-mono tracking-widest uppercase text-[#A67B5B]">Atelier Specimen 01</p>
-                <h2 className="font-serif text-xl text-[#2A221E]">Chocolate Caramel High-Melt Install</h2>
+                <p className="text-[10px] font-mono tracking-widest uppercase text-[#A67B5B]">Atelier Leadership</p>
+                <h2 className="font-serif text-2xl text-[#2A221E]">Patty</h2>
+                <p className="text-xs font-mono text-[#2A221E]/70">Founder, Creative Director & Master Stylist</p>
               </div>
-              <span className="font-mono text-xs font-bold text-[#2A221E]">
-                {formatMoney(240, 370000)}
-              </span>
+              <a 
+                href="#booking"
+                className="px-4 py-2 bg-[#2A221E] text-white text-[11px] font-mono uppercase tracking-widest hover:bg-[#A67B5B] transition-colors"
+              >
+                Book with Patty &rarr;
+              </a>
             </div>
           </motion.div>
 
@@ -294,153 +396,189 @@ export default function PattyzPlacePage() {
       </section>
 
       {/* =========================================================================
-          SECTION 02 // THE GALLERY (TACTILE PRODUCT CRAFT & MASONRY)
+          SECTION 02 // THE GALLERY: RAW HAIR BUNDLES & PRODUCTS THAT ADD TO BAG
       ========================================================================= */}
-      <section id="gallery" className="py-24 px-6 max-w-7xl mx-auto border-t border-[#2A221E]/10">
+      <section id="bundles" className="py-24 px-6 max-w-7xl mx-auto border-t border-[#2A221E]/10">
         
-        <div className="flex flex-col md:flex-row md:items-end justify-between mb-16 gap-6">
+        <div className="flex flex-col md:flex-row md:items-end justify-between mb-12 gap-6">
           <div>
             <span className="text-xs font-mono tracking-widest uppercase text-[#A67B5B] block mb-2">
-              Curated Specifications // 2026 Archive
+              Tactile Hair Craft // 2026 Collection
             </span>
             <h2 className="font-serif text-4xl sm:text-5xl text-[#2A221E] font-normal tracking-tight">
-              The Wig & Bundle Atelier
+              Raw Donor Bundles & Wigs
             </h2>
           </div>
-          <p className="text-sm text-[#2A221E]/70 max-w-md font-light leading-relaxed">
-            Every unit is custom hand-plucked, bleached, and styled in our Lekki salon. 
-            Constructed with single-donor raw cuticles that can be bleached to 613 blonde while maintaining natural luster.
-          </p>
+          
+          <div className="flex items-center gap-2 bg-[#EDE7DE] p-1 rounded-none border border-[#2A221E]/10">
+            <button 
+              onClick={() => setCatalogFilter("all")}
+              className={`px-4 py-2 text-xs font-mono uppercase tracking-wider transition-all ${
+                catalogFilter === "all" ? "bg-[#2A221E] text-white" : "text-[#2A221E] hover:text-[#A67B5B]"
+              }`}
+            >
+              All Items ({PRODUCTS.length})
+            </button>
+            <button 
+              onClick={() => setCatalogFilter("bundles")}
+              className={`px-4 py-2 text-xs font-mono uppercase tracking-wider transition-all ${
+                catalogFilter === "bundles" ? "bg-[#2A221E] text-white" : "text-[#2A221E] hover:text-[#A67B5B]"
+              }`}
+            >
+              Raw Bundles (4)
+            </button>
+            <button 
+              onClick={() => setCatalogFilter("wigs")}
+              className={`px-4 py-2 text-xs font-mono uppercase tracking-wider transition-all ${
+                catalogFilter === "wigs" ? "bg-[#2A221E] text-white" : "text-[#2A221E] hover:text-[#A67B5B]"
+              }`}
+            >
+              Ready Units (1)
+            </button>
+          </div>
         </div>
 
-        {/* ASYMMETRIC MASONRY GRID */}
-        <div className="grid grid-cols-1 md:grid-cols-12 gap-8">
+        {/* ASYMMETRIC MASONRY PRODUCT GRID */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          {filteredProducts.map((product) => (
+            <motion.div 
+              key={product.id}
+              whileHover={{ y: -6 }}
+              className="bg-[#EDE7DE]/40 border border-[#2A221E]/10 rounded-sm overflow-hidden flex flex-col justify-between group transition-shadow hover:shadow-xl"
+            >
+              <div className="relative w-full h-[320px] overflow-hidden bg-[#2A221E]/5">
+                <Image 
+                  src={product.image}
+                  alt={product.title}
+                  fill
+                  sizes="(max-width: 768px) 100vw, 33vw"
+                  className="object-cover object-center group-hover:scale-105 transition-transform duration-700 ease-out"
+                />
+                {product.badge && (
+                  <span className="absolute top-4 left-4 bg-[#2A221E] text-[#F9F6F0] text-[10px] font-mono uppercase tracking-widest px-3 py-1.5 shadow-sm">
+                    {product.badge}
+                  </span>
+                )}
+              </div>
+
+              <div className="p-6 bg-[#F9F6F0] flex flex-col justify-between flex-1">
+                <div>
+                  <div className="flex items-center justify-between text-xs font-mono text-[#A67B5B] mb-2 uppercase tracking-wider">
+                    <span>{product.category}</span>
+                    <span>{product.length}</span>
+                  </div>
+                  <h3 className="font-serif text-xl text-[#2A221E] mb-3 leading-snug">
+                    {product.title}
+                  </h3>
+                  <ul className="text-xs text-[#2A221E]/70 space-y-1.5 mb-6 font-mono">
+                    {product.specs.map((spec, i) => (
+                      <li key={i} className="flex items-start gap-2">
+                        <span className="w-1.5 h-1.5 bg-[#A67B5B] rounded-full mt-1.5 flex-shrink-0"></span>
+                        <span>{spec}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+
+                <div className="flex items-center justify-between pt-4 border-t border-[#2A221E]/10">
+                  <div>
+                    <span className="text-lg font-serif font-bold text-[#2A221E] block">
+                      {formatMoney(product.priceUSD, product.priceNGN)}
+                    </span>
+                    {product.priceUSD > 0 && (
+                      <span className="text-[10px] font-mono text-[#A67B5B] block">
+                        Lekki Same-Day Ready
+                      </span>
+                    )}
+                  </div>
+
+                  {product.priceUSD > 0 ? (
+                    <button 
+                      onClick={() => addToBag(product)}
+                      className="px-5 py-2.5 min-h-[48px] bg-[#A67B5B] text-white text-xs uppercase tracking-widest font-semibold hover:bg-[#8E6647] transition-all flex items-center gap-2 shadow-sm"
+                    >
+                      <Plus className="w-3.5 h-3.5" />
+                      Add to Bag
+                    </button>
+                  ) : (
+                    <span className="text-xs font-mono uppercase tracking-wider text-[#A67B5B] font-bold">
+                      Auto-Added
+                    </span>
+                  )}
+                </div>
+              </div>
+            </motion.div>
+          ))}
+        </div>
+
+      </section>
+
+      {/* =========================================================================
+          SIGNATURE INSTALL SHOWCASE: FEATURING THE REPLACED HEADER MODEL
+      ========================================================================= */}
+      <section id="signature-install" className="py-20 px-6 bg-[#2A221E] text-[#F9F6F0]">
+        <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
           
-          {/* CARD 01: LARGE MONUMENTAL CARD */}
-          <motion.div 
-            whileHover={{ y: -6 }}
-            className="md:col-span-7 bg-[#EDE7DE]/50 border border-[#2A221E]/10 rounded-sm overflow-hidden flex flex-col justify-between group transition-shadow hover:shadow-xl"
-          >
-            <div className="relative w-full h-[420px] sm:h-[480px] overflow-hidden bg-[#2A221E]/5">
-              <Image 
-                src={PRODUCTS[0].image}
-                alt={PRODUCTS[0].title}
-                fill
-                sizes="(max-width: 768px) 100vw, 60vw"
-                className="object-cover object-top hover:scale-105 transition-transform duration-700 ease-out"
-              />
-              <span className="absolute top-4 left-4 bg-[#2A221E] text-[#F9F6F0] text-[10px] font-mono uppercase tracking-widest px-3 py-1.5">
-                {PRODUCTS[0].badge}
-              </span>
-            </div>
-
-            <div className="p-8 bg-[#F9F6F0] flex flex-col justify-between flex-1">
+          <div className="lg:col-span-5 relative w-full h-[480px] sm:h-[560px] rounded-sm overflow-hidden border border-white/10 shadow-2xl">
+            <Image 
+              src="/assets/pattyz/hero-portrait.jpg" 
+              alt="Signature Chocolate Caramel Install Hand-Plucked by Pattyz Place" 
+              fill
+              sizes="(max-width: 1024px) 100vw, 40vw"
+              className="object-cover object-top"
+            />
+            <div className="absolute bottom-4 left-4 right-4 p-4 bg-[#0A0A09]/90 backdrop-blur-md border border-white/10 flex justify-between items-center">
               <div>
-                <div className="flex items-center justify-between text-xs font-mono text-[#A67B5B] mb-2 uppercase tracking-wider">
-                  <span>{PRODUCTS[0].category}</span>
-                  <span>{PRODUCTS[0].length}</span>
-                </div>
-                <h3 className="font-serif text-2xl text-[#2A221E] mb-3">
-                  {PRODUCTS[0].title}
-                </h3>
-                <ul className="text-xs text-[#2A221E]/70 space-y-1.5 mb-6 font-mono">
-                  {PRODUCTS[0].specs.map((spec, i) => (
-                    <li key={i} className="flex items-center gap-2">
-                      <span className="w-1 h-1 bg-[#A67B5B] rounded-full"></span>
-                      {spec}
-                    </li>
-                  ))}
-                </ul>
+                <span className="text-[10px] font-mono uppercase tracking-widest text-[#A67B5B]">Atelier Masterpiece</span>
+                <h4 className="font-serif text-lg text-white">Chocolate Caramel High-Melt</h4>
               </div>
+              <span className="font-serif text-base font-bold text-[#A67B5B]">{formatMoney(220, 340000)}</span>
+            </div>
+          </div>
 
-              <div className="flex items-center justify-between pt-4 border-t border-[#2A221E]/10">
-                <span className="text-xl font-serif font-bold text-[#2A221E]">
-                  {formatMoney(PRODUCTS[0].priceUSD, PRODUCTS[0].priceNGN)}
-                </span>
-                <button 
-                  onClick={() => {
-                    setCartItems([...cartItems, PRODUCTS[0]]);
-                    setCartOpen(true);
-                  }}
-                  className="px-5 py-2.5 min-h-[48px] bg-[#2A221E] text-[#F9F6F0] text-xs uppercase tracking-widest hover:bg-[#A67B5B] transition-colors"
-                >
-                  Acquire Unit
-                </button>
+          <div className="lg:col-span-7 flex flex-col justify-center">
+            <span className="text-xs font-mono tracking-widest uppercase text-[#A67B5B] mb-3 block">
+              The Melt Standard // Undetectable Craft
+            </span>
+            <h2 className="font-serif text-4xl sm:text-5xl text-white font-normal tracking-tight mb-6 leading-tight">
+              Lace So Thin It Ceases to Exist.
+            </h2>
+            <p className="text-sm sm:text-base text-[#F9F6F0]/80 font-light leading-relaxed mb-6">
+              This signature install showcases our proprietary skin-matching HD lace technique. 
+              By single-knotting every temple strand and double-bleaching roots under organic neutralizing toners, the hairline melts imperceptibly into deep, bronze, and rich skin tones.
+            </p>
+
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-8 text-xs font-mono">
+              <div className="p-4 bg-white/5 border border-white/10">
+                <CheckCircle2 className="w-4 h-4 text-[#A67B5B] mb-2" />
+                <strong className="block text-white mb-1">Humidity & Sweat Resilient</strong>
+                <span className="text-[#F9F6F0]/60">Medical waterproof bond engineered for Lagos heat & active bridal weekends.</span>
+              </div>
+              <div className="p-4 bg-white/5 border border-white/10">
+                <CheckCircle2 className="w-4 h-4 text-[#A67B5B] mb-2" />
+                <strong className="block text-white mb-1">Pre-Customized Density</strong>
+                <span className="text-[#F9F6F0]/60">Graduated transition from 90% hairline density to full 250% bundle body.</span>
               </div>
             </div>
-          </motion.div>
 
-          {/* CARD 02: STAGGERED COLUMN */}
-          <div className="md:col-span-5 flex flex-col gap-8">
-            
-            {/* ITEM 02 */}
-            <motion.div 
-              whileHover={{ y: -4 }}
-              className="bg-[#EDE7DE]/50 border border-[#2A221E]/10 rounded-sm overflow-hidden flex flex-col group transition-shadow hover:shadow-lg"
-            >
-              <div className="relative w-full h-[260px] overflow-hidden bg-[#2A221E]/5">
-                <Image 
-                  src={PRODUCTS[1].image}
-                  alt={PRODUCTS[1].title}
-                  fill
-                  sizes="(max-width: 768px) 100vw, 40vw"
-                  className="object-cover object-center hover:scale-105 transition-transform duration-700 ease-out"
-                />
-                <span className="absolute top-3 left-3 bg-[#A67B5B] text-white text-[9px] font-mono uppercase tracking-widest px-2.5 py-1">
-                  {PRODUCTS[1].badge}
-                </span>
-              </div>
-              <div className="p-6 bg-[#F9F6F0]">
-                <div className="flex justify-between items-baseline mb-1">
-                  <span className="text-[10px] font-mono text-[#A67B5B] uppercase tracking-wider">{PRODUCTS[1].length}</span>
-                  <span className="font-serif text-lg font-bold text-[#2A221E]">{formatMoney(PRODUCTS[1].priceUSD, PRODUCTS[1].priceNGN)}</span>
-                </div>
-                <h3 className="font-serif text-lg text-[#2A221E] mb-4">{PRODUCTS[1].title}</h3>
-                <button 
-                  onClick={() => {
-                    setCartItems([...cartItems, PRODUCTS[1]]);
-                    setCartOpen(true);
-                  }}
-                  className="w-full py-2.5 min-h-[48px] border border-[#2A221E] text-[#2A221E] text-xs uppercase tracking-widest hover:bg-[#2A221E] hover:text-white transition-colors"
-                >
-                  Quick Add
-                </button>
-              </div>
-            </motion.div>
-
-            {/* ITEM 03: PACKAGING ARTIFACT */}
-            <motion.div 
-              whileHover={{ y: -4 }}
-              className="bg-[#EDE7DE]/50 border border-[#2A221E]/10 rounded-sm overflow-hidden flex flex-col group transition-shadow hover:shadow-lg"
-            >
-              <div className="relative w-full h-[260px] overflow-hidden bg-[#2A221E]/5">
-                <Image 
-                  src={PRODUCTS[3].image}
-                  alt={PRODUCTS[3].title}
-                  fill
-                  sizes="(max-width: 768px) 100vw, 40vw"
-                  className="object-cover object-center hover:scale-105 transition-transform duration-700 ease-out"
-                />
-                <span className="absolute top-3 left-3 bg-[#2A221E] text-white text-[9px] font-mono uppercase tracking-widest px-2.5 py-1">
-                  {PRODUCTS[3].badge}
-                </span>
-              </div>
-              <div className="p-6 bg-[#F9F6F0]">
-                <div className="flex justify-between items-baseline mb-1">
-                  <span className="text-[10px] font-mono text-[#A67B5B] uppercase tracking-wider">Unboxing Experience</span>
-                  <span className="font-serif text-xs font-semibold text-[#A67B5B]">Included</span>
-                </div>
-                <h3 className="font-serif text-lg text-[#2A221E] mb-2">{PRODUCTS[3].title}</h3>
-                <p className="text-xs text-[#2A221E]/70 font-mono leading-relaxed">
-                  Rigid magnetic matte espresso presentation box stamped with gold foil logo, satin storage bag & silk melt band.
-                </p>
-              </div>
-            </motion.div>
-
+            <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-4">
+              <button 
+                onClick={() => addToBag(PRODUCTS[4])}
+                className="px-8 py-4 min-h-[48px] bg-[#A67B5B] text-white text-xs uppercase tracking-[0.2em] font-semibold hover:bg-[#8E6647] transition-all flex items-center justify-center gap-2"
+              >
+                <ShoppingBag className="w-4 h-4" />
+                Acquire Finished Unit ({formatMoney(220, 340000)})
+              </button>
+              <a 
+                href="#booking"
+                className="px-8 py-4 min-h-[48px] border border-white/20 text-white text-xs uppercase tracking-[0.2em] font-semibold hover:bg-white hover:text-[#2A221E] transition-all text-center flex items-center justify-center"
+              >
+                Book This Exact Install
+              </a>
+            </div>
           </div>
 
         </div>
-
       </section>
 
       {/* =========================================================================
@@ -456,7 +594,7 @@ export default function PattyzPlacePage() {
                 Tri-Modal Proof & Telemetry
               </span>
               <h2 className="font-serif text-4xl sm:text-5xl text-[#2A221E] font-normal tracking-tight mb-6">
-                The Bridal & Installation Suite
+                The Installation Suite
               </h2>
               <p className="text-sm sm:text-base text-[#2A221E]/80 font-light leading-relaxed mb-8">
                 We believe your hair is your crown. Our installations utilize medical-grade hypoallergenic melt bonds engineered to withstand West African heat, coastal humidity, and long event weekends.
@@ -707,7 +845,7 @@ export default function PattyzPlacePage() {
                     <ChevronRight className="w-4 h-4" />
                   </button>
 
-                  {/* CRITICAL UX LAW 6 REQUIREMENT */}
+                  {/* MANDATORY UX LAW 6 REQUIREMENT */}
                   <p className="text-xs font-mono text-center text-[#2A221E]/70 mt-3">
                     * Deposit required for home service. A ₦25,000 commitment deposit secures your private date slot; balance is paid post-installation.
                   </p>
@@ -722,7 +860,7 @@ export default function PattyzPlacePage() {
       </section>
 
       {/* =========================================================================
-          SLIDE-OUT CART DRAWER (INSTANT PURCHASING & TELEMETRY)
+          SLIDE-OUT ATELIER DISPATCH BAG (INSTANT PURCHASING & TELEMETRY)
       ========================================================================= */}
       <AnimatePresence>
         {cartOpen && (
@@ -745,7 +883,7 @@ export default function PattyzPlacePage() {
                 <div>
                   <h3 className="font-serif text-xl tracking-tight">Atelier Dispatch Bag</h3>
                   <p className="text-[10px] font-mono uppercase tracking-widest text-[#A67B5B]">
-                    {cartItems.length} Reserved Item(s)
+                    {totalItemCount} Item(s) Reserved for You
                   </p>
                 </div>
                 <button 
@@ -757,39 +895,64 @@ export default function PattyzPlacePage() {
               </div>
 
               <div className="flex-1 overflow-y-auto p-6 space-y-4">
-                {cartItems.map((item, idx) => (
-                  <div key={idx} className="flex gap-4 p-4 bg-[#EDE7DE]/50 border border-[#2A221E]/10">
-                    <div className="relative w-20 h-24 bg-[#2A221E]/10 flex-shrink-0">
-                      <Image 
-                        src={item.image} 
-                        alt={item.title} 
-                        fill 
-                        className="object-cover" 
-                      />
-                    </div>
-                    <div className="flex-1 flex flex-col justify-between">
-                      <div>
-                        <span className="text-[9px] font-mono text-[#A67B5B] uppercase tracking-wider block">
-                          {item.length}
-                        </span>
-                        <h4 className="font-serif text-base text-[#2A221E] leading-snug">
-                          {item.title}
-                        </h4>
-                      </div>
-                      <span className="font-mono text-xs font-bold text-[#2A221E]">
-                        {formatMoney(item.priceUSD, item.priceNGN)}
-                      </span>
-                    </div>
+                {cartItems.length === 0 ? (
+                  <div className="py-12 text-center text-xs font-mono text-[#2A221E]/60">
+                    Your dispatch bag is currently empty.
                   </div>
-                ))}
+                ) : (
+                  cartItems.map((item) => (
+                    <div key={item.product.id} className="flex gap-4 p-4 bg-[#EDE7DE]/50 border border-[#2A221E]/10">
+                      <div className="relative w-20 h-24 bg-[#2A221E]/10 flex-shrink-0">
+                        <Image 
+                          src={item.product.image} 
+                          alt={item.product.title} 
+                          fill 
+                          className="object-cover" 
+                        />
+                      </div>
+                      <div className="flex-1 flex flex-col justify-between">
+                        <div>
+                          <span className="text-[9px] font-mono text-[#A67B5B] uppercase tracking-wider block">
+                            {item.product.length}
+                          </span>
+                          <h4 className="font-serif text-base text-[#2A221E] leading-snug">
+                            {item.product.title}
+                          </h4>
+                        </div>
+                        
+                        <div className="flex items-center justify-between pt-2">
+                          <span className="font-mono text-xs font-bold text-[#2A221E]">
+                            {formatMoney(item.product.priceUSD * item.quantity, item.product.priceNGN * item.quantity)}
+                          </span>
+
+                          <div className="flex items-center gap-2 bg-[#F9F6F0] border border-[#2A221E]/20 px-2 py-0.5">
+                            <button 
+                              onClick={() => updateQuantity(item.product.id, -1)}
+                              className="text-[#2A221E] hover:text-[#A67B5B]"
+                            >
+                              <Minus className="w-3 h-3" />
+                            </button>
+                            <span className="text-xs font-mono font-bold">{item.quantity}</span>
+                            <button 
+                              onClick={() => updateQuantity(item.product.id, 1)}
+                              className="text-[#2A221E] hover:text-[#A67B5B]"
+                            >
+                              <Plus className="w-3 h-3" />
+                            </button>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  ))
+                )}
 
                 <div className="p-4 bg-[#EDE7DE]/30 border border-[#2A221E]/10 text-xs font-mono text-[#2A221E]/80">
                   <div className="flex justify-between mb-1">
-                    <span>Lekki 3-Hr Courier:</span>
+                    <span>Lekki 3-Hr Express Courier:</span>
                     <span className="font-bold">₦2,500 ($3)</span>
                   </div>
                   <div className="flex justify-between">
-                    <span>DHL UK / US Freight:</span>
+                    <span>DHL UK & US Air Freight:</span>
                     <span className="font-bold">Calculated at Checkout</span>
                   </div>
                 </div>
@@ -797,16 +960,13 @@ export default function PattyzPlacePage() {
 
               <div className="p-6 bg-[#EDE7DE] border-t border-[#2A221E]/10 space-y-3">
                 <div className="flex justify-between items-baseline font-mono text-sm">
-                  <span>Subtotal:</span>
-                  <span className="font-serif text-xl font-bold text-[#2A221E]">
-                    {formatMoney(
-                      cartItems.reduce((acc, curr) => acc + curr.priceUSD, 0),
-                      cartItems.reduce((acc, curr) => acc + curr.priceNGN, 0)
-                    )}
+                  <span>Bag Subtotal:</span>
+                  <span className="font-serif text-2xl font-bold text-[#2A221E]">
+                    {formatMoney(cartSubtotalUSD, cartSubtotalNGN)}
                   </span>
                 </div>
                 <button 
-                  onClick={() => alert("[PAYSTACK EXPRESS] Connecting to 1-tap checkout...")}
+                  onClick={() => alert(`[PAYSTACK EXPRESS]\nConnecting to secure payment sheet for ${formatMoney(cartSubtotalUSD, cartSubtotalNGN)}...\nCards, Apple Pay & Bank Transfer active.`)}
                   className="w-full py-4 min-h-[48px] bg-[#A67B5B] text-white text-xs uppercase tracking-[0.2em] font-semibold hover:bg-[#8E6647] transition-all shadow-md text-center"
                 >
                   Paystack / Apple Pay Checkout &rarr;
@@ -831,7 +991,7 @@ export default function PattyzPlacePage() {
               Luxury Wigs & Installation Studio // Lagos
             </span>
             <p className="text-xs text-[#F9F6F0]/70 font-light leading-relaxed max-w-sm">
-              Private atelier appointments for bespoke wig construction, raw virgin hair extensions, and undetectable bridal lace melts.
+              Private atelier appointments for custom wig construction, raw virgin hair extensions, and undetectable bridal lace melts. Founded and directed by Patty.
             </p>
           </div>
 
