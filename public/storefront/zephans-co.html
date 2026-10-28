@@ -1,0 +1,760 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ZEPHANS & CO // LEKKI FLAGSHIP E-COMMERCE</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Playfair+Display:ital,wght@0,600;0,700;1,400&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+    :root {
+      --cream: #FAF7F2;
+      --card-bg: #FFFFFF;
+      --ochre: #E07A2B;
+      --ochre-dark: #BA5E19;
+      --ochre-subtle: #FDF3EB;
+      --charcoal: #181615;
+      --muted-gray: #736E6A;
+      --border-subtle: rgba(24, 22, 21, 0.08);
+      --border-medium: rgba(24, 22, 21, 0.16);
+      --font-display: 'Playfair Display', Georgia, serif;
+      --font-body: 'Plus Jakarta Sans', -apple-system, sans-serif;
+      --font-mono: 'JetBrains Mono', monospace;
+    }
+    body {
+      background-color: var(--cream);
+      color: var(--charcoal);
+      font-family: var(--font-body);
+      -webkit-font-smoothing: antialiased;
+      line-height: 1.5;
+    }
+
+    /* TOP LOGISTICS TICKER */
+    .top-bar {
+      background: var(--charcoal);
+      color: #FAF7F2;
+      font-size: 11px;
+      font-family: var(--font-mono);
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      padding: 10px 24px;
+      text-align: center;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 16px;
+    }
+    .badge-lekki {
+      background: var(--ochre);
+      color: #FFF;
+      padding: 2px 8px;
+      border-radius: 10px;
+      font-size: 9px;
+      font-weight: 700;
+    }
+
+    /* NAVIGATION */
+    header {
+      background: rgba(250, 247, 242, 0.95);
+      backdrop-filter: blur(10px);
+      border-bottom: 1px solid var(--border-subtle);
+      position: sticky;
+      top: 0;
+      z-index: 40;
+    }
+    .nav-wrap {
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 18px 40px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .nav-left {
+      display: flex;
+      gap: 28px;
+      list-style: none;
+    }
+    .nav-left a {
+      color: var(--charcoal);
+      text-decoration: none;
+      font-size: 12px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      font-weight: 600;
+      transition: color 0.15s ease;
+    }
+    .nav-left a:hover {
+      color: var(--ochre);
+    }
+    .brand-center {
+      text-align: center;
+      text-decoration: none;
+      color: var(--charcoal);
+    }
+    .brand-name {
+      font-family: var(--font-display);
+      font-size: 28px;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      font-weight: 700;
+      display: block;
+      line-height: 1;
+    }
+    .brand-tag {
+      font-family: var(--font-mono);
+      font-size: 9px;
+      letter-spacing: 0.26em;
+      text-transform: uppercase;
+      color: var(--ochre);
+      margin-top: 3px;
+      display: block;
+      font-weight: 600;
+    }
+    .nav-right {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+    }
+    .currency-select {
+      background: rgba(24, 22, 21, 0.04);
+      border: 1px solid var(--border-subtle);
+      border-radius: 20px;
+      padding: 6px 14px;
+      font-size: 11px;
+      font-family: var(--font-mono);
+      font-weight: 600;
+      color: var(--charcoal);
+      cursor: pointer;
+    }
+    .cart-btn {
+      background: var(--charcoal);
+      color: #FAF7F2;
+      border: none;
+      padding: 10px 18px;
+      font-size: 11px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      font-weight: 700;
+      border-radius: 2px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      transition: background 0.15s ease;
+    }
+    .cart-btn:hover {
+      background: var(--ochre);
+    }
+
+    /* MAIN PDP GRID */
+    .pdp-grid {
+      max-width: 1400px;
+      margin: 40px auto 90px;
+      padding: 0 40px;
+      display: grid;
+      grid-template-columns: 1.15fr 0.85fr;
+      gap: 64px;
+      align-items: start;
+    }
+
+    /* GALLERY COLUMN */
+    .gallery-col {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+    .hero-stage {
+      position: relative;
+      width: 100%;
+      height: 720px;
+      background: #EDE6DC;
+      border-radius: 4px;
+      overflow: hidden;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+    }
+    .hero-stage img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: top center;
+      transition: transform 0.3s ease;
+    }
+    .hero-stage:hover img {
+      transform: scale(1.02);
+    }
+    .hero-badge {
+      position: absolute;
+      top: 18px;
+      left: 18px;
+      background: rgba(250, 247, 242, 0.94);
+      padding: 6px 14px;
+      border-radius: 2px;
+      font-family: var(--font-mono);
+      font-size: 10px;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      font-weight: 600;
+      border: 1px solid var(--border-subtle);
+    }
+    .gallery-strip {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+    }
+    .thumb-card {
+      height: 140px;
+      background: #EDE6DC;
+      border-radius: 3px;
+      overflow: hidden;
+      border: 2px solid transparent;
+      cursor: pointer;
+      padding: 0;
+      position: relative;
+    }
+    .thumb-card img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: top center;
+    }
+    .thumb-card.active {
+      border-color: var(--ochre);
+    }
+
+    /* CONVERSION DETAILS COLUMN */
+    .details-col {
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+    }
+    .edition-tag {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--ochre);
+      font-weight: 700;
+    }
+    .product-title {
+      font-family: var(--font-display);
+      font-size: 42px;
+      line-height: 1.08;
+      font-weight: 700;
+      color: var(--charcoal);
+    }
+    .price-box {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      border-bottom: 1px solid var(--border-subtle);
+      padding-bottom: 16px;
+    }
+    .price-main {
+      font-size: 28px;
+      font-weight: 800;
+      color: var(--charcoal);
+      letter-spacing: -0.02em;
+    }
+    .rating-tag {
+      font-family: var(--font-mono);
+      font-size: 12px;
+      color: var(--ochre);
+      font-weight: 600;
+    }
+    .garment-desc {
+      font-size: 15px;
+      line-height: 1.65;
+      color: #4A4643;
+    }
+
+    /* UPFRONT SHIPPING RATE SELECTOR (DIRECT LEAK FIX) */
+    .shipping-calculator-box {
+      background: var(--ochre-subtle);
+      border: 1px solid rgba(224, 122, 43, 0.25);
+      border-radius: 4px;
+      padding: 16px 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+    .calc-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 12px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+    }
+    .calc-select {
+      background: #FFF;
+      border: 1px solid var(--border-medium);
+      border-radius: 3px;
+      padding: 10px 14px;
+      font-family: var(--font-mono);
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--charcoal);
+      cursor: pointer;
+      width: 100%;
+    }
+    .calc-output {
+      display: flex;
+      justify-content: space-between;
+      font-size: 12px;
+      font-family: var(--font-mono);
+      color: var(--ochre-dark);
+      font-weight: 700;
+    }
+
+    /* 52PX SIZE MATRIX */
+    .size-box {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+    .size-meta {
+      display: flex;
+      justify-content: space-between;
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      font-weight: 700;
+    }
+    .scarcity-alert {
+      color: #B83A20;
+      font-family: var(--font-mono);
+      font-size: 11px;
+      font-weight: 600;
+    }
+    .size-pills {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 8px;
+    }
+    .size-pill {
+      height: 52px;
+      background: var(--card-bg);
+      border: 1px solid var(--border-medium);
+      border-radius: 3px;
+      font-family: var(--font-mono);
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--charcoal);
+      cursor: pointer;
+      transition: all 0.15s ease;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .size-pill.active {
+      background: var(--charcoal);
+      color: #FFF;
+      border-color: var(--charcoal);
+    }
+    .size-pill:hover:not(.active) {
+      border-color: var(--charcoal);
+    }
+
+    /* CONVERSION BUTTONS */
+    .cta-stack {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      margin-top: 6px;
+    }
+    .btn-paystack-direct {
+      background: var(--charcoal);
+      color: #FAF7F2;
+      border: 1px solid var(--charcoal);
+      border-radius: 3px;
+      padding: 18px 24px;
+      font-size: 13px;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      font-weight: 800;
+      font-family: var(--font-mono);
+      min-height: 58px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+      transition: all 0.2s ease;
+    }
+    .btn-paystack-direct:hover {
+      background: var(--ochre);
+      border-color: var(--ochre);
+      box-shadow: 0 6px 20px rgba(224, 122, 43, 0.28);
+    }
+    .btn-bag-drawer {
+      background: transparent;
+      color: var(--charcoal);
+      border: 1px solid var(--charcoal);
+      border-radius: 3px;
+      padding: 16px 24px;
+      font-size: 13px;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      font-weight: 700;
+      font-family: var(--font-mono);
+      min-height: 54px;
+      cursor: pointer;
+      transition: background 0.15s ease;
+    }
+    .btn-bag-drawer:hover {
+      background: rgba(24, 22, 21, 0.05);
+    }
+
+    /* GUARANTEES */
+    .guarantees-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+      border-top: 1px solid var(--border-subtle);
+      border-bottom: 1px solid var(--border-subtle);
+      padding: 18px 0;
+      margin-top: 8px;
+    }
+    .g-item-title {
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      font-weight: 700;
+    }
+    .g-item-desc {
+      font-size: 11px;
+      color: var(--muted-gray);
+      margin-top: 3px;
+    }
+
+    /* SLIDE CART DRAWER */
+    .drawer-scrim {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background: rgba(24, 22, 21, 0.5);
+      backdrop-filter: blur(6px);
+      z-index: 100;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.3s ease;
+    }
+    .drawer-scrim.open {
+      opacity: 1;
+      pointer-events: auto;
+    }
+    .cart-drawer {
+      position: fixed;
+      top: 0;
+      right: 0;
+      width: 450px;
+      max-width: 90vw;
+      height: 100vh;
+      background: var(--cream);
+      border-left: 1px solid var(--border-subtle);
+      z-index: 101;
+      transform: translateX(100%);
+      transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      padding: 36px 32px;
+    }
+    .cart-drawer.open {
+      transform: translateX(0);
+    }
+
+    /* FOOTER */
+    footer {
+      border-top: 1px solid var(--border-subtle);
+      background: #F2EDE4;
+      padding: 60px 40px;
+    }
+    .footer-row {
+      max-width: 1400px;
+      margin: 0 auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- TOP LOGISTICS TICKER -->
+  <div class="top-bar">
+    <span>ZEPHANS &amp; CO // LEKKI PHASE 1 FLAGSHIP ATELIER</span>
+    <span class="badge-lekki">FREE LEKKI PICKUP</span>
+    <span>WORLDWIDE DHL EXPRESS DELIVERY TO UK, US, CANADA &amp; GHANA</span>
+  </div>
+
+  <!-- NAVIGATION -->
+  <header>
+    <div class="nav-wrap">
+      <ul class="nav-left">
+        <li><a href="#">NEW ARRIVALS</a></li>
+        <li><a href="#">CO-ORD SETS</a></li>
+        <li><a href="#">DRESSES</a></li>
+        <li><a href="#">AKWETE &amp; PRINTS</a></li>
+      </ul>
+
+      <a href="#" class="brand-center">
+        <span class="brand-name">ZEPHANS &amp; CO</span>
+        <span class="brand-tag">LAGOS // READY-TO-WEAR</span>
+      </a>
+
+      <div class="nav-right">
+        <select class="currency-select" id="curr-select" onchange="changeCurrency(this.value)">
+          <option value="NGN">NGN (₦)</option>
+          <option value="USD">USD ($)</option>
+          <option value="GBP">GBP (£)</option>
+        </select>
+        <button class="cart-btn" onclick="toggleCart(true)">
+          <span>BAG</span>
+          <span style="background: rgba(255,255,255,0.25); padding: 1px 7px; border-radius: 10px;">1</span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- MAIN PRODUCT DETAIL GRID -->
+  <main class="pdp-grid">
+
+    <!-- LEFT GALLERY -->
+    <div class="gallery-col">
+      <div class="hero-stage">
+        <img src="/assets/zephans/zephans-hero-ankara.jpg" alt="Zephans & Co Ankara Co-ord Skirt Set" id="main-hero">
+        <div class="hero-badge">LEKKI ATELIER // EDITION OF 30</div>
+      </div>
+
+      <div class="gallery-strip">
+        <button class="thumb-card active" onclick="swapImage('/assets/zephans/zephans-hero-ankara.jpg', this)">
+          <img src="/assets/zephans/zephans-hero-ankara.jpg" alt="Ankara High-Waist Set">
+        </button>
+        <button class="thumb-card" onclick="swapImage('/assets/zephans/zephans-look-02.jpg', this)">
+          <img src="/assets/zephans/zephans-look-02.jpg" alt="Resort Print Dress">
+        </button>
+        <button class="thumb-card" onclick="swapImage('/assets/ziva-fabric-detail.jpg', this)">
+          <img src="/assets/ziva-fabric-detail.jpg" alt="Artisan Weave Detail">
+        </button>
+      </div>
+    </div>
+
+    <!-- RIGHT CONVERSION DETAILS -->
+    <div class="details-col">
+
+      <div>
+        <div class="edition-tag">COLLECTION 2026 // LIMITED PIECES</div>
+        <h1 class="product-title" style="margin-top: 8px;">THE OLUWAKEMI ANKARA CO-ORD SET</h1>
+      </div>
+
+      <div class="price-box">
+        <div>
+          <div class="price-main" id="base-price">₦85,000</div>
+          <div style="font-size: 12px; color: var(--muted-gray); margin-top: 2px;">HAND-CRAFTED AT PLOT 25, LEKKI PHASE 1</div>
+        </div>
+        <div class="rating-tag">
+          ★ 4.94 (68 REVIEWS)
+        </div>
+      </div>
+
+      <p class="garment-desc">
+        A statement ready-to-wear coordinated ensemble featuring a vibrant geometric gold-and-vermilion African wax print skirt cut with structured pleats, paired with a stretch-cotton crop silhouette. Engineered for effortless day-to-evening transitions in Lagos heat.
+      </p>
+
+      <!-- UPFRONT DYNAMIC SHIPPING CALCULATOR (SOLVES 62% ABANDONMENT LEAK) -->
+      <div class="shipping-calculator-box">
+        <div class="calc-header">
+          <span>⚡ UPFRONT SHIPPING CALCULATOR</span>
+          <span style="color: var(--ochre-dark); font-family: var(--font-mono); font-size: 11px;">ZERO STEP-3 SURPRISES</span>
+        </div>
+        <select class="calc-select" id="ship-destination" onchange="calculateShipping(this.value)">
+          <option value="lekki">Lekki Phase 1, Victoria Island &amp; Ikoyi (₦2,500 // Same-Day)</option>
+          <option value="mainland">Lagos Mainland &amp; Ikeja (₦3,500 // Next-Day)</option>
+          <option value="abuja">Abuja &amp; Port Harcourt Courier (₦4,500 // 48 Hours)</option>
+          <option value="uk">United Kingdom Express DHL (£25 // 3-4 Days)</option>
+          <option value="us">United States &amp; Canada DHL ($32 // 4-5 Days)</option>
+        </select>
+        <div class="calc-output">
+          <span>DELIVERY FEE: <strong id="ship-cost">₦2,500</strong></span>
+          <span>ESTIMATED TOTAL: <strong id="total-with-ship">₦87,500</strong></span>
+        </div>
+      </div>
+
+      <!-- 52PX SIZE MATRIX -->
+      <div class="size-box">
+        <div class="size-meta">
+          <span>SELECT SIZE (UK STANDARD)</span>
+          <span class="scarcity-alert" id="stock-count">ONLY 2 SETS REMAINING IN UK 10</span>
+        </div>
+        <div class="size-pills">
+          <button class="size-pill" onclick="pickSize('UK 8', '3 sets available', this)">UK 8</button>
+          <button class="size-pill active" onclick="pickSize('UK 10', 'ONLY 2 SETS REMAINING IN UK 10', this)">UK 10</button>
+          <button class="size-pill" onclick="pickSize('UK 12', '4 sets available', this)">UK 12</button>
+          <button class="size-pill" onclick="pickSize('UK 14', '1 set left', this)">UK 14</button>
+          <button class="size-pill" onclick="pickSize('UK 16', 'Sold out for this drop', this)">UK 16</button>
+        </div>
+      </div>
+
+      <!-- PRIMARY CONVERSION CTAS -->
+      <div class="cta-stack">
+        <button class="btn-paystack-direct" onclick="triggerPaystack()">
+          <span>⚡ 1-TAP PAYSTACK EXPRESS</span>
+          <span id="cta-total">// ₦87,500</span>
+        </button>
+        <button class="btn-bag-drawer" onclick="toggleCart(true)">
+          ADD TO BAG // SLIDE DRAWER
+        </button>
+      </div>
+
+      <!-- VALUE GUARANTEES -->
+      <div class="guarantees-grid">
+        <div>
+          <div class="g-item-title">SAME-DAY DISPATCH</div>
+          <div class="g-item-desc">Orders before 1PM in Lagos</div>
+        </div>
+        <div>
+          <div class="g-item-title">SIZE EXCHANGE</div>
+          <div class="g-item-desc">7-day doorstep size swap</div>
+        </div>
+        <div>
+          <div class="g-item-title">VERIFIED PAYMENTS</div>
+          <div class="g-item-desc">Cards, USSD, Apple Pay</div>
+        </div>
+      </div>
+
+    </div>
+
+  </main>
+
+  <!-- SLIDE-OUT CART DRAWER -->
+  <div class="drawer-scrim" id="cart-scrim" onclick="toggleCart(false)"></div>
+  <div class="cart-drawer" id="cart-drawer">
+    <div>
+      <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--border-subtle); padding-bottom: 16px;">
+        <span style="font-family: var(--font-display); font-size: 20px; font-weight: 700;">YOUR SHOPPING BAG</span>
+        <button style="background: none; border: none; font-size: 24px; cursor: pointer;" onclick="toggleCart(false)">&times;</button>
+      </div>
+
+      <div style="display: flex; gap: 16px; margin-top: 24px; padding-bottom: 24px; border-bottom: 1px solid var(--border-subtle);">
+        <img src="/assets/zephans/zephans-hero-ankara.jpg" style="width: 80px; height: 105px; object-fit: cover; border-radius: 2px;">
+        <div>
+          <div style="font-size: 13px; font-weight: 700;">THE OLUWAKEMI ANKARA CO-ORD SET</div>
+          <div style="font-size: 12px; color: var(--muted-gray); margin: 4px 0;" id="drawer-size">Size: UK 10</div>
+          <div style="font-family: var(--font-mono); font-size: 14px; font-weight: 700;" id="drawer-item-price">₦85,000</div>
+        </div>
+      </div>
+
+      <div style="margin-top: 20px; font-size: 12px; line-height: 1.6; color: var(--muted-gray);">
+        <div>✓ Upfront shipping calculated transparently</div>
+        <div>✓ Insured door-to-door courier service</div>
+        <div>✓ Dispatched from Lekki Phase 1 flagship</div>
+      </div>
+    </div>
+
+    <div>
+      <div style="display: flex; justify-content: space-between; font-weight: 700; margin-bottom: 16px; font-size: 15px;">
+        <span>ESTIMATED TOTAL</span>
+        <span id="drawer-total">₦87,500</span>
+      </div>
+      <button class="btn-paystack-direct" style="width: 100%;" onclick="triggerPaystack()">
+        PROCEED VIA PAYSTACK
+      </button>
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-row">
+      <div>
+        <div style="font-family: var(--font-display); font-size: 20px; font-weight: 700; letter-spacing: 0.15em;">ZEPHANS &amp; CO</div>
+        <div style="font-size: 12px; color: var(--muted-gray); margin-top: 4px;">
+          Plot 25, Block 72 Adebisi Popoola Crescent, Lekki Phase 1, Lagos, Nigeria.
+        </div>
+      </div>
+      <div style="font-family: var(--font-mono); font-size: 11px; color: var(--muted-gray);">
+        CONVERSION ARCHITECTURE BY BILLY BENJAMIN CONSULTING // v9.0-ADAPTIVE
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    const priceData = {
+      NGN: { symbol: '₦', base: 85000, ship: { lekki: 2500, mainland: 3500, abuja: 4500, uk: 45000, us: 55000 } },
+      USD: { symbol: '$', base: 60, ship: { lekki: 2, mainland: 3, abuja: 4, uk: 30, us: 32 } },
+      GBP: { symbol: '£', base: 48, ship: { lekki: 2, mainland: 3, abuja: 4, uk: 25, us: 28 } }
+    };
+
+    let currentCurr = 'NGN';
+    let currentDest = 'lekki';
+
+    function changeCurrency(curr) {
+      currentCurr = curr;
+      renderAll();
+    }
+
+    function calculateShipping(dest) {
+      currentDest = dest;
+      renderAll();
+    }
+
+    function renderAll() {
+      const data = priceData[currentCurr];
+      const ship = data.ship[currentDest];
+      const total = data.base + ship;
+
+      document.getElementById('base-price').innerText = `${data.symbol}${data.base.toLocaleString()}`;
+      document.getElementById('ship-cost').innerText = `${data.symbol}${ship.toLocaleString()}`;
+      document.getElementById('total-with-ship').innerText = `${data.symbol}${total.toLocaleString()}`;
+      document.getElementById('cta-total').innerText = `// ${data.symbol}${total.toLocaleString()}`;
+      document.getElementById('drawer-item-price').innerText = `${data.symbol}${data.base.toLocaleString()}`;
+      document.getElementById('drawer-total').innerText = `${data.symbol}${total.toLocaleString()}`;
+    }
+
+    function pickSize(size, stockMsg, btn) {
+      document.querySelectorAll('.size-pill').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      document.getElementById('stock-count').innerText = stockMsg;
+      document.getElementById('drawer-size').innerText = `Size: ${size}`;
+    }
+
+    function swapImage(src, btn) {
+      document.getElementById('main-hero').src = src;
+      document.querySelectorAll('.thumb-card').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+    }
+
+    function toggleCart(isOpen) {
+      const scrim = document.getElementById('cart-scrim');
+      const drawer = document.getElementById('cart-drawer');
+      if (isOpen) {
+        scrim.classList.add('open');
+        drawer.classList.add('open');
+      } else {
+        scrim.classList.remove('open');
+        drawer.classList.remove('open');
+      }
+    }
+
+    function triggerPaystack() {
+      const data = priceData[currentCurr];
+      const total = data.base + data.ship[currentDest];
+      alert(`⚡ PAYSTACK MODAL ACTIVE:\nInitializing 1-tap checkout for ${data.symbol}${total.toLocaleString()}\nDestination: ${currentDest.toUpperCase()}\nZero hidden fees.`);
+    }
+
+    // Initial render
+    renderAll();
+  </script>
+
+</body>
+</html>
