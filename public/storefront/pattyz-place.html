@@ -1,0 +1,1815 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PATTYZ PLACE // THE PRIVATE ATELIER</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Italiana&family=Syne:wght@700;800;900&family=JetBrains+Mono:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+    :root {
+      --obsidian: #080807;
+      --surface-dark: #121210;
+      --surface-card: #191816;
+      --copper: #D96B27;
+      --copper-hot: #F07A30;
+      --copper-glow: rgba(217, 107, 39, 0.28);
+      --champagne: #EBE5DC;
+      --bone: #F7F4EE;
+      --muted: #8A857D;
+      --border-dark: rgba(235, 229, 220, 0.12);
+      --border-bright: rgba(235, 229, 220, 0.35);
+      --font-display: 'Italiana', Georgia, serif;
+      --font-brutal: 'Syne', -apple-system, sans-serif;
+      --font-mono: 'JetBrains Mono', monospace;
+      --font-body: 'Plus Jakarta Sans', sans-serif;
+    }
+
+    body {
+      background-color: var(--obsidian);
+      color: var(--bone);
+      font-family: var(--font-body);
+      -webkit-font-smoothing: antialiased;
+      line-height: 1.45;
+      overflow-x: hidden;
+      position: relative;
+    }
+
+    /* TACTILE ANALOG PRINT GRAIN OVERLAY */
+    body::before {
+      content: "";
+      position: fixed;
+      top: 0; left: 0; width: 100vw; height: 100vh;
+      pointer-events: none;
+      z-index: 999;
+      opacity: 0.035;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+    }
+
+    /* TOP ATELIER TELEMETRY */
+    .atelier-telemetry {
+      background: #000;
+      color: var(--champagne);
+      font-family: var(--font-mono);
+      font-size: 10px;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      padding: 9px 32px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 1px solid var(--border-dark);
+      z-index: 60;
+      position: relative;
+    }
+    .telemetry-tag {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+    .pulse-dot {
+      display: inline-block;
+      width: 7px;
+      height: 7px;
+      background: var(--copper);
+      border-radius: 50%;
+      box-shadow: 0 0 8px var(--copper);
+      margin-right: 6px;
+      animation: pulse 1.8s infinite;
+    }
+    @keyframes pulse {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.35; transform: scale(0.8); }
+    }
+    .edition-pill {
+      background: rgba(217, 107, 39, 0.15);
+      border: 1px solid var(--copper);
+      color: var(--copper);
+      padding: 2px 8px;
+      border-radius: 2px;
+      font-weight: 700;
+    }
+
+    /* KINETIC TICKER TRACK */
+    .ticker-container {
+      overflow: hidden;
+      white-space: nowrap;
+      background: var(--copper);
+      color: #FFF;
+      font-family: var(--font-brutal);
+      font-size: 12px;
+      font-weight: 900;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      padding: 8px 0;
+      border-bottom: 1px solid #000;
+    }
+    .ticker-loop {
+      display: inline-block;
+      animation: tickerRoll 26s linear infinite;
+    }
+    @keyframes tickerRoll {
+      0% { transform: translateX(0); }
+      100% { transform: translateX(-50%); }
+    }
+
+    /* HEADER ARCHITECTURE */
+    header {
+      background: rgba(8, 8, 7, 0.92);
+      backdrop-filter: blur(14px);
+      border-bottom: 1px solid var(--border-dark);
+      position: sticky;
+      top: 0;
+      z-index: 50;
+    }
+    .nav-wrap {
+      max-width: 1560px;
+      margin: 0 auto;
+      padding: 18px 36px;
+      display: grid;
+      grid-template-columns: 1fr auto 1fr;
+      align-items: center;
+    }
+    .nav-links {
+      display: flex;
+      gap: 28px;
+      list-style: none;
+    }
+    .nav-link {
+      color: var(--champagne);
+      text-decoration: none;
+      font-family: var(--font-mono);
+      font-size: 11px;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      font-weight: 600;
+      transition: color 0.15s ease;
+    }
+    .nav-link:hover, .nav-link.active {
+      color: var(--copper-hot);
+    }
+    .brand-center {
+      text-align: center;
+      text-decoration: none;
+      color: var(--bone);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    .brand-title {
+      font-family: var(--font-display);
+      font-size: 38px;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      line-height: 0.92;
+      color: #FFF;
+    }
+    .brand-sub {
+      font-family: var(--font-mono);
+      font-size: 9px;
+      letter-spacing: 0.32em;
+      text-transform: uppercase;
+      color: var(--copper);
+      margin-top: 4px;
+      font-weight: 700;
+    }
+    .nav-actions {
+      display: flex;
+      justify-content: flex-end;
+      align-items: center;
+      gap: 16px;
+    }
+    .fx-select {
+      background: transparent;
+      border: 1px solid var(--border-dark);
+      color: var(--bone);
+      padding: 6px 12px;
+      font-family: var(--font-mono);
+      font-size: 11px;
+      border-radius: 2px;
+      cursor: pointer;
+    }
+    .view-toggle-btn {
+      background: var(--surface-card);
+      border: 1px solid var(--border-dark);
+      color: var(--bone);
+      font-family: var(--font-mono);
+      font-size: 11px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      padding: 8px 14px;
+      border-radius: 2px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+    .view-toggle-btn:hover {
+      border-color: var(--copper);
+      color: var(--copper);
+    }
+    .bag-btn {
+      background: var(--copper);
+      color: #FFF;
+      border: none;
+      font-family: var(--font-mono);
+      font-size: 11px;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      font-weight: 700;
+      padding: 9px 18px;
+      cursor: pointer;
+      border-radius: 2px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      box-shadow: 0 4px 14px var(--copper-glow);
+      transition: all 0.2s ease;
+    }
+    .bag-btn:hover {
+      background: var(--copper-hot);
+      transform: translateY(-1px);
+    }
+    .bag-qty {
+      background: #FFF;
+      color: var(--obsidian);
+      font-size: 10px;
+      padding: 1px 7px;
+      border-radius: 10px;
+      font-weight: 800;
+    }
+
+    /* EDITORIAL HERO MANIFESTO */
+    .hero-manifesto {
+      max-width: 1560px;
+      margin: 0 auto;
+      padding: 40px 36px 20px;
+      display: grid;
+      grid-template-columns: 1.4fr 1fr;
+      align-items: end;
+      gap: 40px;
+      border-bottom: 1px solid var(--border-dark);
+    }
+    .hero-title-text {
+      font-family: var(--font-display);
+      font-size: clamp(42px, 5.5vw, 76px);
+      line-height: 0.95;
+      font-weight: 400;
+      color: #FFF;
+      letter-spacing: 0.02em;
+    }
+    .hero-title-text em {
+      font-style: italic;
+      color: var(--copper);
+    }
+    .hero-title-text strong {
+      font-family: var(--font-brutal);
+      font-weight: 900;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      display: block;
+      font-size: 0.65em;
+      margin-top: 8px;
+      color: var(--champagne);
+    }
+    .hero-context {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      line-height: 1.7;
+      color: var(--muted);
+      border-left: 2px solid var(--copper);
+      padding-left: 20px;
+    }
+    .hero-context span.highlight {
+      color: #FFF;
+      font-weight: 600;
+      display: block;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      margin-bottom: 4px;
+    }
+
+    /* VIEW SWITCH CONTROLS */
+    .view-tabs-bar {
+      max-width: 1560px;
+      margin: 24px auto 0;
+      padding: 0 36px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .tab-group {
+      display: flex;
+      gap: 8px;
+      background: var(--surface-dark);
+      padding: 4px;
+      border-radius: 4px;
+      border: 1px solid var(--border-dark);
+    }
+    .tab-item {
+      font-family: var(--font-mono);
+      font-size: 10px;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      padding: 8px 16px;
+      border: none;
+      background: transparent;
+      color: var(--muted);
+      cursor: pointer;
+      font-weight: 600;
+      border-radius: 2px;
+      transition: all 0.15s ease;
+    }
+    .tab-item.active {
+      background: var(--copper);
+      color: #FFF;
+    }
+    .catalog-tag {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+
+    /* ========================================================= */
+    /* VIEW A: THE ASYMMETRIC RUNWAY TAPESTRY (MAGAZINE SPREAD)  */
+    /* ========================================================= */
+    #view-runway {
+      max-width: 1560px;
+      margin: 28px auto 80px;
+      padding: 0 36px;
+    }
+    .tapestry-grid {
+      display: grid;
+      grid-template-columns: 1.18fr 0.82fr;
+      grid-template-rows: auto auto;
+      gap: 28px;
+    }
+
+    .tapestry-card {
+      position: relative;
+      background: var(--surface-card);
+      border-radius: 3px;
+      overflow: hidden;
+      border: 1px solid var(--border-dark);
+      cursor: pointer;
+      transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.3s ease, box-shadow 0.3s ease;
+    }
+    .tapestry-card:hover {
+      transform: translateY(-4px);
+      border-color: var(--copper);
+      box-shadow: 0 20px 48px rgba(0, 0, 0, 0.6);
+    }
+    .tapestry-card.card-monumental {
+      grid-column: 1 / 2;
+      grid-row: 1 / 3;
+      height: 900px;
+    }
+    .tapestry-card.card-monumental img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center 20%;
+      transition: transform 0.6s ease;
+    }
+    .tapestry-card:hover img {
+      transform: scale(1.02);
+    }
+
+    .tapestry-stack {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 24px;
+    }
+    .tapestry-card.card-secondary {
+      height: 438px;
+    }
+    .tapestry-card.card-secondary img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center 15%;
+    }
+
+    /* HUD CORNER CROSSHAIRS */
+    .hud-mark {
+      position: absolute;
+      font-family: var(--font-mono);
+      font-size: 10px;
+      color: rgba(255, 255, 255, 0.7);
+      letter-spacing: 0.1em;
+      pointer-events: none;
+      z-index: 10;
+    }
+    .hud-mark.tl { top: 16px; left: 16px; }
+    .hud-mark.tr { top: 16px; right: 16px; }
+
+    .card-edition-badge {
+      position: absolute;
+      top: 16px;
+      left: 16px;
+      background: rgba(8, 8, 7, 0.88);
+      backdrop-filter: blur(8px);
+      color: var(--champagne);
+      font-family: var(--font-mono);
+      font-size: 10px;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      padding: 6px 12px;
+      border-radius: 2px;
+      border: 1px solid var(--border-dark);
+      z-index: 10;
+    }
+    .card-footer-strip {
+      position: absolute;
+      bottom: 0; left: 0; right: 0;
+      background: linear-gradient(180deg, transparent 0%, rgba(8, 8, 7, 0.88) 35%, rgba(8, 8, 7, 0.98) 100%);
+      color: #FFF;
+      padding: 32px 24px 20px;
+      z-index: 10;
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+    }
+    .card-heading {
+      font-family: var(--font-display);
+      font-size: 28px;
+      line-height: 1.05;
+      margin-bottom: 4px;
+      letter-spacing: 0.04em;
+    }
+    .card-subtext {
+      font-family: var(--font-mono);
+      font-size: 10px;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+    .card-price-val {
+      font-family: var(--font-mono);
+      font-size: 16px;
+      font-weight: 700;
+      color: var(--copper);
+    }
+    .inspect-btn {
+      background: var(--copper);
+      color: #FFF;
+      border: none;
+      font-family: var(--font-mono);
+      font-size: 10px;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      font-weight: 700;
+      padding: 8px 14px;
+      border-radius: 2px;
+      cursor: pointer;
+      margin-top: 8px;
+      display: inline-block;
+      transition: background 0.15s ease;
+    }
+    .inspect-btn:hover {
+      background: var(--copper-hot);
+    }
+
+    /* ========================================================= */
+    /* VIEW B: THE TECHNICAL SPECIMEN STUDIO (BUYING MATRIX)     */
+    /* ========================================================= */
+    #view-studio {
+      max-width: 1560px;
+      margin: 28px auto 100px;
+      padding: 0 36px;
+      display: none;
+    }
+    .studio-layout {
+      display: grid;
+      grid-template-columns: 1.15fr 0.85fr;
+      gap: 60px;
+      align-items: start;
+    }
+    .studio-stage-container {
+      position: sticky;
+      top: 100px;
+    }
+    .specimen-stage {
+      position: relative;
+      width: 100%;
+      height: 740px;
+      background: var(--surface-dark);
+      border-radius: 4px;
+      overflow: hidden;
+      border: 1px solid var(--border-dark);
+      box-shadow: 0 16px 40px rgba(0, 0, 0, 0.45);
+    }
+    .specimen-stage img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center 20%;
+      transition: opacity 0.3s ease, transform 0.4s ease;
+    }
+    .specimen-stamp-box {
+      position: absolute;
+      bottom: 24px;
+      left: 24px;
+      background: rgba(8, 8, 7, 0.92);
+      backdrop-filter: blur(10px);
+      padding: 10px 18px;
+      border: 1px solid var(--border-bright);
+      border-radius: 2px;
+      color: #FFF;
+      font-family: var(--font-mono);
+      font-size: 11px;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      z-index: 10;
+    }
+    .specimen-stamp-box span.copper-tag {
+      color: var(--copper);
+      font-weight: 700;
+    }
+    .stage-geo {
+      position: absolute;
+      top: 24px;
+      right: 24px;
+      background: rgba(8, 8, 7, 0.88);
+      border: 1px solid var(--border-dark);
+      padding: 6px 12px;
+      font-family: var(--font-mono);
+      font-size: 10px;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--champagne);
+      z-index: 10;
+    }
+
+    /* 4-SPECIMEN RUNWAY SELECTOR DOCK */
+    .runway-dock-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: 18px;
+      margin-bottom: 10px;
+      font-family: var(--font-mono);
+      font-size: 11px;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+    .runway-dock {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 12px;
+    }
+    .runway-thumb-btn {
+      height: 130px;
+      background: var(--surface-card);
+      border-radius: 2px;
+      overflow: hidden;
+      border: 2px solid transparent;
+      cursor: pointer;
+      position: relative;
+      transition: all 0.2s ease;
+      padding: 0;
+    }
+    .runway-thumb-btn img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center 20%;
+    }
+    .runway-thumb-btn.active {
+      border-color: var(--copper);
+      box-shadow: 0 4px 14px var(--copper-glow);
+    }
+    .runway-thumb-btn span.seq-num {
+      position: absolute;
+      bottom: 6px;
+      left: 6px;
+      background: rgba(0, 0, 0, 0.85);
+      color: #FFF;
+      font-family: var(--font-mono);
+      font-size: 9px;
+      padding: 2px 6px;
+      border-radius: 2px;
+    }
+
+    /* SPECIFICATION BUYING CONSOLE */
+    .buying-console {
+      background: var(--surface-dark);
+      border: 1px solid var(--border-dark);
+      border-radius: 4px;
+      padding: 40px 36px;
+      box-shadow: 0 8px 30px rgba(0, 0, 0, 0.3);
+    }
+    .atelier-provenance-tag {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--copper);
+      font-weight: 700;
+      margin-bottom: 10px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .console-title {
+      font-family: var(--font-display);
+      font-size: clamp(34px, 3.2vw, 44px);
+      line-height: 1.05;
+      font-weight: 400;
+      color: #FFF;
+      margin-bottom: 8px;
+    }
+    .console-edition {
+      font-family: var(--font-brutal);
+      font-size: 12px;
+      font-weight: 900;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 20px;
+    }
+
+    /* PRICE & TRUST ANCHOR */
+    .console-pricing-row {
+      display: flex;
+      align-items: baseline;
+      gap: 16px;
+      padding: 16px 0;
+      border-top: 1px solid var(--border-dark);
+      border-bottom: 1px solid var(--border-dark);
+      margin-bottom: 24px;
+    }
+    .console-price-primary {
+      font-family: var(--font-brutal);
+      font-size: 36px;
+      font-weight: 900;
+      color: var(--copper);
+    }
+    .console-price-fx {
+      font-family: var(--font-mono);
+      font-size: 13px;
+      color: var(--muted);
+    }
+    .scarcity-badge {
+      margin-left: auto;
+      font-family: var(--font-mono);
+      font-size: 10px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: #FBBF24;
+      background: rgba(251, 191, 36, 0.12);
+      border: 1px solid rgba(251, 191, 36, 0.3);
+      padding: 4px 10px;
+      border-radius: 2px;
+      font-weight: 700;
+    }
+
+    .console-narrative {
+      font-size: 14px;
+      line-height: 1.65;
+      color: var(--champagne);
+      margin-bottom: 24px;
+    }
+
+    /* TEXTILE SPECIFICATION ACCORDION */
+    .spec-sheet-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      background: var(--surface-card);
+      border: 1px solid var(--border-dark);
+      padding: 16px;
+      border-radius: 3px;
+      margin-bottom: 28px;
+      font-family: var(--font-mono);
+      font-size: 11px;
+    }
+    .spec-item strong {
+      display: block;
+      color: #FFF;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      font-size: 10px;
+      margin-bottom: 2px;
+    }
+    .spec-item span {
+      color: var(--muted);
+    }
+
+    /* 54PX TACTILE SIZE MATRIX */
+    .size-console-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      font-family: var(--font-mono);
+      font-size: 11px;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      margin-bottom: 12px;
+    }
+    .size-link {
+      color: var(--copper);
+      text-decoration: underline;
+      cursor: pointer;
+    }
+    .size-matrix-grid {
+      display: grid;
+      grid-template-columns: repeat(6, 1fr);
+      gap: 8px;
+      margin-bottom: 28px;
+    }
+    .size-btn {
+      min-height: 52px;
+      background: var(--surface-card);
+      border: 1.5px solid var(--border-dark);
+      color: var(--bone);
+      font-family: var(--font-mono);
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      cursor: pointer;
+      border-radius: 2px;
+      transition: all 0.15s ease;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      gap: 2px;
+    }
+    .size-btn span.stock-label {
+      font-size: 9px;
+      font-weight: 400;
+      color: var(--muted);
+    }
+    .size-btn:hover {
+      border-color: var(--copper);
+    }
+    .size-btn.active {
+      background: var(--copper);
+      color: #FFF;
+      border-color: var(--copper);
+    }
+    .size-btn.active span.stock-label {
+      color: #FFF;
+    }
+
+    /* UPFRONT FREIGHT & COURIER ENGINE */
+    .freight-box {
+      background: #0D0D0B;
+      border: 1px solid var(--border-dark);
+      border-radius: 3px;
+      padding: 18px 20px;
+      margin-bottom: 28px;
+    }
+    .freight-title {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      font-weight: 700;
+      color: #FFF;
+      margin-bottom: 12px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .courier-stack {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+    .courier-tile {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 8px 12px;
+      background: var(--surface-card);
+      border: 1px solid var(--border-dark);
+      border-radius: 2px;
+      cursor: pointer;
+      font-family: var(--font-mono);
+      font-size: 11px;
+      transition: border-color 0.15s ease;
+    }
+    .courier-tile:hover, .courier-tile.selected {
+      border-color: var(--copper);
+      background: rgba(217, 107, 39, 0.08);
+    }
+    .courier-left-meta {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .courier-left-meta input {
+      accent-color: var(--copper);
+    }
+    .courier-price-bold {
+      font-weight: 700;
+      color: var(--bone);
+    }
+
+    /* ACTION CALL: PRIMARY BUY MATRIX */
+    .cta-container {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+    .btn-paystack-direct {
+      width: 100%;
+      min-height: 56px;
+      background: var(--copper);
+      color: #FFF;
+      border: none;
+      font-family: var(--font-brutal);
+      font-size: 15px;
+      font-weight: 900;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      border-radius: 2px;
+      cursor: pointer;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 12px;
+      box-shadow: 0 8px 24px var(--copper-glow);
+      transition: all 0.2s ease;
+    }
+    .btn-paystack-direct:hover {
+      background: var(--copper-hot);
+      transform: translateY(-2px);
+      box-shadow: 0 12px 30px var(--copper-glow);
+    }
+    .btn-bag-ghost {
+      width: 100%;
+      min-height: 52px;
+      background: transparent;
+      color: var(--bone);
+      border: 1.5px solid var(--border-bright);
+      font-family: var(--font-mono);
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      border-radius: 2px;
+      cursor: pointer;
+      transition: all 0.15s ease;
+    }
+    .btn-bag-ghost:hover {
+      background: #FFF;
+      color: var(--obsidian);
+    }
+
+    /* TRI-MODAL PROOF STRIP */
+    .trust-strip {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+      margin-top: 24px;
+      padding-top: 20px;
+      border-top: 1px solid var(--border-dark);
+      text-align: center;
+      font-family: var(--font-mono);
+      font-size: 10px;
+      color: var(--muted);
+    }
+    .trust-strip strong {
+      display: block;
+      color: var(--bone);
+      font-size: 11px;
+      margin-bottom: 2px;
+    }
+
+    /* SLIDE-OUT CART DRAWER */
+    .scrim {
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.7);
+      backdrop-filter: blur(8px);
+      z-index: 1000;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.25s ease;
+    }
+    .scrim.open { opacity: 1; pointer-events: auto; }
+    .drawer {
+      position: fixed;
+      top: 0; right: 0; bottom: 0;
+      width: 100%;
+      max-width: 480px;
+      background: var(--surface-dark);
+      z-index: 1001;
+      box-shadow: -12px 0 40px rgba(0, 0, 0, 0.5);
+      transform: translateX(100%);
+      transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+      display: flex;
+      flex-direction: column;
+      border-left: 1px solid var(--border-dark);
+    }
+    .drawer.open { transform: translateX(0); }
+    .drawer-top {
+      padding: 24px 28px;
+      background: #000;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 1px solid var(--border-dark);
+    }
+    .drawer-title {
+      font-family: var(--font-brutal);
+      font-size: 15px;
+      font-weight: 900;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+    }
+    .drawer-x {
+      background: transparent;
+      border: none;
+      color: var(--bone);
+      font-size: 24px;
+      cursor: pointer;
+    }
+    .drawer-content {
+      flex: 1;
+      overflow-y: auto;
+      padding: 24px 28px;
+    }
+    .cart-entry {
+      display: grid;
+      grid-template-columns: 80px 1fr auto;
+      gap: 16px;
+      align-items: center;
+      padding: 16px 0;
+      border-bottom: 1px solid var(--border-dark);
+    }
+    .cart-entry-img {
+      width: 80px;
+      height: 100px;
+      background: #111;
+      border-radius: 2px;
+      overflow: hidden;
+    }
+    .cart-entry-img img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+    .cart-entry-title {
+      font-family: var(--font-display);
+      font-size: 18px;
+      line-height: 1.1;
+      margin-bottom: 4px;
+    }
+    .cart-entry-meta {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      color: var(--muted);
+    }
+    .cart-entry-price {
+      font-family: var(--font-mono);
+      font-size: 14px;
+      font-weight: 700;
+      color: var(--copper);
+    }
+    .drawer-base {
+      padding: 24px 28px;
+      background: var(--surface-card);
+      border-top: 1px solid var(--border-dark);
+    }
+    .drawer-calc-row {
+      display: flex;
+      justify-content: space-between;
+      font-family: var(--font-mono);
+      font-size: 12px;
+      margin-bottom: 8px;
+      color: var(--champagne);
+    }
+    .drawer-total-row {
+      font-family: var(--font-brutal);
+      font-size: 20px;
+      font-weight: 900;
+      margin-top: 12px;
+      padding-top: 12px;
+      border-top: 1px solid var(--border-dark);
+      display: flex;
+      justify-content: space-between;
+      color: #FFF;
+    }
+
+    /* PERSISTENT FLOATING QUICK DOCK */
+    .floating-quick-dock {
+      position: fixed;
+      bottom: 24px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: rgba(8, 8, 7, 0.94);
+      backdrop-filter: blur(14px);
+      border: 1px solid var(--border-bright);
+      border-radius: 40px;
+      padding: 8px 12px 8px 24px;
+      display: flex;
+      align-items: center;
+      gap: 24px;
+      box-shadow: 0 16px 40px rgba(0, 0, 0, 0.6);
+      z-index: 80;
+    }
+    .dock-title-text {
+      font-family: var(--font-display);
+      font-size: 17px;
+      color: #FFF;
+    }
+    .dock-price-text {
+      font-family: var(--font-mono);
+      font-size: 12px;
+      color: var(--copper);
+      font-weight: 700;
+    }
+    .dock-size-trigger {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      background: rgba(255, 255, 255, 0.1);
+      color: #FFF;
+      padding: 6px 14px;
+      border-radius: 20px;
+      cursor: pointer;
+    }
+    .dock-primary-btn {
+      background: var(--copper);
+      color: #FFF;
+      border: none;
+      font-family: var(--font-brutal);
+      font-size: 12px;
+      font-weight: 900;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      padding: 12px 24px;
+      border-radius: 24px;
+      cursor: pointer;
+      transition: background 0.15s ease;
+    }
+    .dock-primary-btn:hover {
+      background: var(--copper-hot);
+    }
+
+    /* FOOTER */
+    footer {
+      background: #000;
+      color: var(--muted);
+      padding: 80px 36px 40px;
+      border-top: 1px solid var(--border-dark);
+      font-family: var(--font-mono);
+      font-size: 11px;
+    }
+    .footer-grid {
+      max-width: 1560px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 2fr 1fr 1fr 1fr;
+      gap: 40px;
+      margin-bottom: 60px;
+    }
+    .footer-heading {
+      color: #FFF;
+      font-family: var(--font-display);
+      font-size: 26px;
+      margin-bottom: 12px;
+      letter-spacing: 0.12em;
+    }
+    .footer-links-col h4 {
+      color: var(--champagne);
+      text-transform: uppercase;
+      letter-spacing: 0.16em;
+      margin-bottom: 16px;
+      font-size: 11px;
+    }
+    .footer-links-col ul {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+    .footer-links-col a {
+      color: var(--muted);
+      text-decoration: none;
+      transition: color 0.15s ease;
+    }
+    .footer-links-col a:hover {
+      color: var(--copper);
+    }
+    .footer-copyright-bar {
+      max-width: 1560px;
+      margin: 0 auto;
+      padding-top: 24px;
+      border-top: 1px solid var(--border-dark);
+      display: flex;
+      justify-content: space-between;
+      color: #555;
+    }
+
+    @media (max-width: 1024px) {
+      .nav-wrap { grid-template-columns: 1fr auto; }
+      .nav-links { display: none; }
+      .hero-manifesto { grid-template-columns: 1fr; }
+      .tapestry-grid { grid-template-columns: 1fr; }
+      .tapestry-card.card-monumental { height: 600px; }
+      .tapestry-stack { grid-template-columns: 1fr; }
+      .studio-layout { grid-template-columns: 1fr; }
+      .studio-stage-container { position: static; }
+      .footer-grid { grid-template-columns: 1fr 1fr; }
+      .floating-quick-dock { width: 92%; justify-content: space-between; gap: 12px; }
+    }
+    @media (max-width: 640px) {
+      .atelier-telemetry { display: none; }
+      .size-matrix-grid { grid-template-columns: repeat(3, 1fr); }
+      .footer-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ATELIER TELEMETRY BAR -->
+  <div class="atelier-telemetry">
+    <div class="telemetry-tag">
+      <span><span class="pulse-dot"></span>LEKKI PRIVATE SALON // COUTURE DISPATCH ACTIVE</span>
+      <span>COORDINATES: 06°26'N 03°21'E</span>
+    </div>
+    <div class="telemetry-tag">
+      <span class="edition-pill">EDITION 01 // 2026 ARCHIVE</span>
+      <span>SAME-DAY LEKKI BIKE DISPATCH WITHIN 3 HRS</span>
+    </div>
+  </div>
+
+  <!-- KINETIC RUNNING MARQUEE TICKER -->
+  <div class="ticker-container">
+    <div class="ticker-loop">
+      ✦ PATTYZ PLACE ✦ THE PRIVATE ATELIER ✦ COUTURE STATEMENT SILHOUETTES & LUXURY READY-TO-WEAR ✦ EXPRESS LEKKI SAME-DAY DISPATCH ✦ 48-HR DHL AIR FREIGHT TO LONDON & NYC ✦
+      ✦ PATTYZ PLACE ✦ THE PRIVATE ATELIER ✦ COUTURE STATEMENT SILHOUETTES & LUXURY READY-TO-WEAR ✦ EXPRESS LEKKI SAME-DAY DISPATCH ✦ 48-HR DHL AIR FREIGHT TO LONDON & NYC ✦
+    </div>
+  </div>
+
+  <!-- MAIN NAVIGATION -->
+  <header>
+    <div class="nav-wrap">
+      <ul class="nav-links">
+        <li><a href="#view-runway" class="nav-link active" onclick="activateView('runway')">01 // Runway Spread</a></li>
+        <li><a href="#view-studio" class="nav-link" onclick="activateView('studio')">02 // Specimen Studio</a></li>
+        <li><a href="#fabric-manifesto" class="nav-link">03 // Fabric Archives</a></li>
+      </ul>
+
+      <a href="#" class="brand-center">
+        <span class="brand-title">PATTYZ PLACE</span>
+        <span class="brand-sub">The Private Atelier // Lagos</span>
+      </a>
+
+      <div class="nav-actions">
+        <select class="fx-select" id="fx-select" onchange="changeCurrency(this.value)">
+          <option value="NGN">NGN (₦)</option>
+          <option value="USD">USD ($)</option>
+          <option value="GBP">GBP (£)</option>
+        </select>
+        <button class="view-toggle-btn" id="view-toggle-btn" onclick="toggleMainView()">
+          <span id="view-mode-text">Switch to Specimen PDP</span>
+        </button>
+        <button class="bag-btn" onclick="openDrawer()">
+          <span>Cart</span>
+          <span class="bag-qty" id="cart-counter">1</span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- EDITORIAL HERO MANIFESTO -->
+  <section class="hero-manifesto">
+    <div class="hero-title-text">
+      The Sculptural <em>Twilight</em> & Copper
+      <strong>Private Atelier Capsule</strong>
+    </div>
+    <div class="hero-context">
+      <span class="highlight">Bespoke Precision // Lagos 2026</span>
+      Designed for sovereign women who command room presence without negotiation. Structural raw silks, heritage Akwete hand-loomed textiles, and razor-sharp evening tailoring crafted in strictly limited numbered editions.
+    </div>
+  </section>
+
+  <!-- VIEW TABS BAR -->
+  <div class="view-tabs-bar">
+    <div class="tab-group">
+      <button class="tab-item active" id="tab-runway-btn" onclick="activateView('runway')">Runway Magazine View</button>
+      <button class="tab-item" id="tab-studio-btn" onclick="activateView('studio')">Technical Specimen PDP</button>
+    </div>
+    <div class="catalog-tag">
+      PRIVATE ATELIER ROSTER // 04 SPECIMENS READY FOR DISPATCH
+    </div>
+  </div>
+
+  <!-- ========================================================= -->
+  <!-- VIEW A: THE ASYMMETRIC RUNWAY TAPESTRY (MAGAZINE SPREAD)  -->
+  <!-- ========================================================= -->
+  <main id="view-runway">
+    <div class="tapestry-grid">
+
+      <!-- HERO MONUMENTAL CARD (SPECIMEN 01) -->
+      <article class="tapestry-card card-monumental" onclick="selectAndOpen(0)">
+        <span class="hud-mark tl">+ 06°26'N</span>
+        <span class="hud-mark tr">+ 03°21'E</span>
+        <span class="card-edition-badge">Specimen 01 // Flagship Look</span>
+        <img src="/assets/pattyz/pattyz-look-01.jpg" alt="Pattyz Place Twilight Raw Silk Draped Silhouette" loading="eager">
+        <div class="card-footer-strip">
+          <div>
+            <div class="card-subtext">Drop 01 // Twilight Edition</div>
+            <h2 class="card-heading">The Twilight Sculptural Draped Silhouette</h2>
+            <div class="card-subtext" style="margin-top: 4px;">Raw Champagne Silk // Architectural Shoulder & Drape</div>
+          </div>
+          <div style="text-align: right;">
+            <div class="card-price-val" data-ngn="135000">₦135,000</div>
+            <button class="inspect-btn">Inspect Specimen &rarr;</button>
+          </div>
+        </div>
+      </article>
+
+      <!-- SECONDARY STACK: SPECIMENS 02, 03, 04 -->
+      <div class="tapestry-stack">
+
+        <!-- SPECIMEN 02 -->
+        <article class="tapestry-card card-secondary" onclick="selectAndOpen(1)">
+          <span class="hud-mark tl">+ WAX_ARCHIVE</span>
+          <span class="card-edition-badge">Specimen 02</span>
+          <img src="/assets/pattyz/pattyz-look-02.jpg" alt="Pattyz Place Oluwakemi Wax Trouser Set" loading="lazy">
+          <div class="card-footer-strip">
+            <div>
+              <div class="card-subtext">Look 02</div>
+              <h3 class="card-heading" style="font-size: 21px;">Oluwakemi Ankara Wax Trouser Set</h3>
+            </div>
+            <div style="text-align: right;">
+              <div class="card-price-val" data-ngn="115000">₦115,000</div>
+              <button class="inspect-btn">Inspect</button>
+            </div>
+          </div>
+        </article>
+
+        <!-- SPECIMEN 03: AKWETE HAND-LOOM FABRIC SPECIMEN -->
+        <article class="tapestry-card card-secondary" onclick="selectAndOpen(2)">
+          <span class="hud-mark tl">+ LOOM_STUDY</span>
+          <span class="card-edition-badge">Specimen 03</span>
+          <img src="/assets/pattyz/pattyz-look-03-fabric.jpg" alt="Pattyz Place Akwete Hand-Loomed Selvedge Cape" loading="lazy">
+          <div class="card-footer-strip">
+            <div>
+              <div class="card-subtext">Look 03</div>
+              <h3 class="card-heading" style="font-size: 21px;">Akwete Artisan Selvedge Cape</h3>
+            </div>
+            <div style="text-align: right;">
+              <div class="card-price-val" data-ngn="125000">₦125,000</div>
+              <button class="inspect-btn">Inspect</button>
+            </div>
+          </div>
+        </article>
+
+        <!-- SPECIMEN 04: INDIGO WRAP JUMPSUIT -->
+        <article class="tapestry-card card-secondary" onclick="selectAndOpen(3)" style="grid-column: 1 / 3;">
+          <span class="hud-mark tl">+ BATIK_WRAP</span>
+          <span class="card-edition-badge">Specimen 04</span>
+          <img src="/assets/pattyz/pattyz-look-04.jpg" alt="Pattyz Place Midnight Indigo Wrap Jumpsuit" loading="lazy">
+          <div class="card-footer-strip">
+            <div>
+              <div class="card-subtext">Look 04</div>
+              <h3 class="card-heading" style="font-size: 21px;">Midnight Indigo Wrap Jumpsuit</h3>
+            </div>
+            <div style="text-align: right;">
+              <div class="card-price-val" data-ngn="105000">₦105,000</div>
+              <button class="inspect-btn">Inspect</button>
+            </div>
+          </div>
+        </article>
+
+      </div>
+    </div>
+  </main>
+
+  <!-- ========================================================= -->
+  <!-- VIEW B: THE TECHNICAL SPECIMEN STUDIO (BUYING MATRIX)     -->
+  <!-- ========================================================= -->
+  <section id="view-studio">
+    <div class="studio-layout">
+
+      <!-- LEFT: STAGE & 4-LOOK RUNWAY SELECTOR -->
+      <div class="studio-stage-container">
+        <div class="specimen-stage">
+          <img id="stage-visual" src="/assets/pattyz/pattyz-look-01.jpg" alt="Active Specimen Stage">
+          <div class="specimen-stamp-box" id="stage-stamp-box">
+            <span class="copper-tag">SPECIMEN NO. 01</span> // TWILIGHT DRAPED SILHOUETTE
+          </div>
+          <div class="stage-geo">
+            LAGOS ATELIER // SPEC #PAT-2026-TWL
+          </div>
+        </div>
+
+        <div class="runway-dock-header">
+          <span>Runway Specimen Selector (Click to Switch Look)</span>
+          <span id="dock-counter">01 / 04</span>
+        </div>
+
+        <div class="runway-dock">
+          <button class="runway-thumb-btn active" onclick="changeSpecimen(0)" title="Look 01: Twilight Draped Silhouette">
+            <img src="/assets/pattyz/pattyz-look-01.jpg" alt="Look 01">
+            <span class="seq-num">01</span>
+          </button>
+          <button class="runway-thumb-btn" onclick="changeSpecimen(1)" title="Look 02: Oluwakemi Wax Set">
+            <img src="/assets/pattyz/pattyz-look-02.jpg" alt="Look 02">
+            <span class="seq-num">02</span>
+          </button>
+          <button class="runway-thumb-btn" onclick="changeSpecimen(2)" title="Look 03: Akwete Selvedge Cape">
+            <img src="/assets/pattyz/pattyz-look-03-fabric.jpg" alt="Look 03">
+            <span class="seq-num">03</span>
+          </button>
+          <button class="runway-thumb-btn" onclick="changeSpecimen(3)" title="Look 04: Indigo Wrap Jumpsuit">
+            <img src="/assets/pattyz/pattyz-look-04.jpg" alt="Look 04">
+            <span class="seq-num">04</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- RIGHT: THE BUYING SPECIFICATION MATRIX -->
+      <div class="buying-console">
+        <div class="atelier-provenance-tag">
+          <span>● PRIVATE ATELIER DISPATCH</span>
+          <span>// LEKKI PHASE 1 SALON</span>
+        </div>
+
+        <h1 class="console-title" id="console-title">The Twilight Sculptural Draped Silhouette</h1>
+        <div class="console-edition" id="console-edition">PRIVATE CAPSULE // SPECIMEN 01</div>
+
+        <div class="console-pricing-row">
+          <div class="console-price-primary" id="console-price-primary">₦135,000</div>
+          <div class="console-price-fx" id="console-price-fx">≈ $170 USD / £135 GBP</div>
+          <div class="scarcity-badge" id="console-scarcity">⚡ ONLY 3 PIECES IN BATCH 01</div>
+        </div>
+
+        <p class="console-narrative" id="console-narrative">
+          Architectural evening statement crafted from heavyweight double-faced champagne raw silk and twilight woven jersey. Features structured dropped-shoulder volume, asymmetric fluid neck drape, and internal boned waist cincher. Hand-finished at our private salon in Lekki.
+        </p>
+
+        <!-- SPEC SHEET -->
+        <div class="spec-sheet-grid">
+          <div class="spec-item">
+            <strong>Textile Materiality</strong>
+            <span id="spec-fabric">Double-Faced Champagne Raw Silk & Heavy Jersey</span>
+          </div>
+          <div class="spec-item">
+            <strong>Cut Architecture</strong>
+            <span id="spec-cut">Asymmetric Sculptural Drape / Interior Boning</span>
+          </div>
+          <div class="spec-item">
+            <strong>Artisan Tailoring</strong>
+            <span id="spec-tailoring">Hand-Rolled Selvedge & Concealed YKK Zipper</span>
+          </div>
+          <div class="spec-item">
+            <strong>Care Standard</strong>
+            <span>Specialist Dry Clean Only</span>
+          </div>
+        </div>
+
+        <!-- 54PX TACTILE SIZE MATRIX -->
+        <div class="size-console-head">
+          <span>Select Atelier Size (UK Standard)</span>
+          <span class="size-link" onclick="alert('Pattyz Place Size Architecture:\nUK 6: Bust 32\" / Waist 25\" / Hip 35\"\nUK 8: Bust 34\" / Waist 27\" / Hip 37\"\nUK 10: Bust 36\" / Waist 29\" / Hip 39\"\nUK 12: Bust 38\" / Waist 31\" / Hip 41\"\nUK 14: Bust 40\" / Waist 33\" / Hip 43\"\nUK 16: Bust 42\" / Waist 35\" / Hip 45\"')">Size Matrix</span>
+        </div>
+
+        <div class="size-matrix-grid">
+          <button class="size-btn" onclick="chooseSize('UK 6', this)">
+            <span>UK 6</span>
+            <span class="stock-label">2 Left</span>
+          </button>
+          <button class="size-btn active" onclick="chooseSize('UK 8', this)">
+            <span>UK 8</span>
+            <span class="stock-label">3 Left</span>
+          </button>
+          <button class="size-btn" onclick="chooseSize('UK 10', this)">
+            <span>UK 10</span>
+            <span class="stock-label">4 Left</span>
+          </button>
+          <button class="size-btn" onclick="chooseSize('UK 12', this)">
+            <span>UK 12</span>
+            <span class="stock-label">Last 1</span>
+          </button>
+          <button class="size-btn" onclick="chooseSize('UK 14', this)">
+            <span>UK 14</span>
+            <span class="stock-label">2 Left</span>
+          </button>
+          <button class="size-btn" onclick="chooseSize('UK 16', this)">
+            <span>UK 16</span>
+            <span class="stock-label">3 Left</span>
+          </button>
+        </div>
+
+        <!-- UPFRONT FREIGHT & COURIER ENGINE -->
+        <div class="freight-box">
+          <div class="freight-title">
+            <span>⚡ Upfront Courier Dispatch Engine (Zero Surprises)</span>
+          </div>
+          <div class="courier-stack">
+            <label class="courier-tile selected" onclick="pickCourier('lekki', 2500, 'Same-Day 3-Hr Courier (Lekki / Ikoyi / VI)')">
+              <div class="courier-left-meta">
+                <input type="radio" name="courier-select" checked>
+                <span>Same-Day 3-Hr Courier (Lekki / Ikoyi / VI)</span>
+              </div>
+              <span class="courier-price-bold">₦2,500</span>
+            </label>
+
+            <label class="courier-tile" onclick="pickCourier('mainland', 4500, 'Next-Morning Mainland Priority (Ikeja / Yaba)')">
+              <div class="courier-left-meta">
+                <input type="radio" name="courier-select">
+                <span>Next-Morning Mainland Priority (Ikeja / Yaba)</span>
+              </div>
+              <span class="courier-price-bold">₦4,500</span>
+            </label>
+
+            <label class="courier-tile" onclick="pickCourier('air_cargo', 7500, 'Abuja & Port Harcourt Air Cargo (24-48 Hrs)')">
+              <div class="courier-left-meta">
+                <input type="radio" name="courier-select">
+                <span>Abuja & PH Air Cargo (24–48 Hrs)</span>
+              </div>
+              <span class="courier-price-bold">₦7,500</span>
+            </label>
+
+            <label class="courier-tile" onclick="pickCourier('dhl_intl', 62000, 'DHL Express Air Freight (London / NYC // 3-4 Days)')">
+              <div class="courier-left-meta">
+                <input type="radio" name="courier-select">
+                <span>UK & US DHL Express Air (3–4 Days)</span>
+              </div>
+              <span class="courier-price-bold">£32 / $45</span>
+            </label>
+          </div>
+        </div>
+
+        <!-- CTAS -->
+        <div class="cta-container">
+          <button class="btn-paystack-direct" onclick="triggerPaystack()">
+            <span>⚡ Instant Checkout (Paystack / Apple Pay)</span>
+          </button>
+          <button class="btn-bag-ghost" onclick="openDrawer()">
+            <span>Add Specimen to Bag &rarr;</span>
+          </button>
+        </div>
+
+        <!-- TRI-MODAL PROOF CHIPS -->
+        <div class="trust-strip">
+          <div>
+            <strong>Private Salon</strong>
+            Lekki Phase 1, Lagos
+          </div>
+          <div>
+            <strong>Escrow Protected</strong>
+            100% Verified Paystack
+          </div>
+          <div>
+            <strong>Doorstep Swap</strong>
+            7-Day Complimentary Exchange
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- SLIDE-OUT CART DRAWER -->
+  <div class="scrim" id="scrim" onclick="closeDrawer()"></div>
+  <aside class="drawer" id="drawer">
+    <div class="drawer-top">
+      <div class="drawer-title">Private Atelier Bag</div>
+      <button class="drawer-x" onclick="closeDrawer()">&times;</button>
+    </div>
+    <div class="drawer-content" id="drawer-content">
+      <div class="cart-entry">
+        <div class="cart-entry-img">
+          <img id="drawer-item-visual" src="/assets/pattyz/pattyz-look-01.jpg" alt="Bag Item">
+        </div>
+        <div>
+          <div class="cart-entry-title" id="drawer-item-heading">The Twilight Sculptural Draped Silhouette</div>
+          <div class="cart-entry-meta" id="drawer-item-size">Size: UK 8 // Batch 01 Atelier</div>
+          <div class="cart-entry-meta" style="color: #10B981; margin-top: 2px;">● Reserved for 15:00 min</div>
+        </div>
+        <div class="cart-entry-price" id="drawer-item-cost">₦135,000</div>
+      </div>
+    </div>
+    <div class="drawer-base">
+      <div class="drawer-calc-row">
+        <span>Garment Subtotal</span>
+        <span id="drawer-subtotal-val">₦135,000</span>
+      </div>
+      <div class="drawer-calc-row">
+        <span>Courier Freight (<span id="drawer-courier-title">Lekki Same-Day</span>)</span>
+        <span id="drawer-courier-val">₦2,500</span>
+      </div>
+      <div class="drawer-total-row">
+        <span>Total Due</span>
+        <span id="drawer-total-val">₦137,500</span>
+      </div>
+      <button class="btn-paystack-direct" style="margin-top: 18px;" onclick="triggerPaystackModal()">
+        <span>Lock Order via Paystack &rarr;</span>
+      </button>
+    </div>
+  </aside>
+
+  <!-- FLOATING QUICK DOCK -->
+  <div class="floating-quick-dock" id="quick-dock">
+    <div>
+      <div class="dock-title-text" id="dock-name">The Twilight Sculptural Silhouette</div>
+      <div class="dock-price-text" id="dock-cost">₦135,000 // Batch 01</div>
+    </div>
+    <div class="dock-size-trigger" id="dock-size-lbl" onclick="activateView('studio')">
+      Size: UK 8 ▾
+    </div>
+    <button class="dock-primary-btn" onclick="openDrawer()">
+      Instant Bag (1) &rarr;
+    </button>
+  </div>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-grid">
+      <div>
+        <div class="footer-heading">PATTYZ PLACE</div>
+        <p style="line-height: 1.7; max-width: 380px;">
+          Private Couture Atelier & Luxury Statement Silhouettes based in Lagos, Nigeria. Empowering modern women through architectural raw silks, heritage Akwete craftsmanship, and uncompromising presence.
+        </p>
+        <p style="margin-top: 16px; color: var(--champagne);">
+          Private Salon: Lekki Phase 1, Lagos, Nigeria.
+        </p>
+      </div>
+
+      <div class="footer-links-col">
+        <h4>Private Drops</h4>
+        <ul>
+          <li><a href="#" onclick="selectAndOpen(0)">01 // Twilight Draped Silhouette</a></li>
+          <li><a href="#" onclick="selectAndOpen(1)">02 // Oluwakemi Ankara Wax Set</a></li>
+          <li><a href="#" onclick="selectAndOpen(2)">03 // Akwete Artisan Selvedge Cape</a></li>
+          <li><a href="#" onclick="selectAndOpen(3)">04 // Midnight Indigo Wrap Jumpsuit</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-links-col">
+        <h4>Freight Logistics</h4>
+        <ul>
+          <li><a href="#">Lagos Same-Day Bike Courier</a></li>
+          <li><a href="#">Mainland Overnight Dispatch</a></li>
+          <li><a href="#">Abuja / PH Express Cargo</a></li>
+          <li><a href="#">DHL Express Global (UK/US)</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-links-col">
+        <h4>Client Assurance</h4>
+        <ul>
+          <li><a href="#">100% Verified Paystack Escrow</a></li>
+          <li><a href="#">7-Day Doorstep Size Swap</a></li>
+          <li><a href="#">Private Fitting Bookings</a></li>
+          <li><a href="#">WhatsApp VIP Concierge</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="footer-copyright-bar">
+      <div>© 2026 PATTYZ PLACE ATELIER. ARCHITECTED & DIGITALLY ENGINEERED BY BILLY BENJAMIN CONSULTING.</div>
+      <div>LAGOS // LONDON // NEW YORK // ACCRA</div>
+    </div>
+  </footer>
+
+  <!-- SCRIPT LOGIC -->
+  <script>
+    const SPECIMENS = [
+      {
+        id: 0,
+        name: "The Twilight Sculptural Draped Silhouette",
+        edition: "PRIVATE CAPSULE // SPECIMEN 01",
+        priceNGN: 135000,
+        priceUSD: 170,
+        priceGBP: 135,
+        img: "/assets/pattyz/pattyz-look-01.jpg",
+        stock: "⚡ ONLY 3 PIECES IN BATCH 01",
+        narrative: "Architectural evening statement crafted from heavyweight double-faced champagne raw silk and twilight woven jersey. Features structured dropped-shoulder volume, asymmetric fluid neck drape, and internal boned waist cincher. Hand-finished at our private salon in Lekki.",
+        fabric: "Double-Faced Champagne Raw Silk & Heavy Jersey",
+        cut: "Asymmetric Sculptural Drape / Interior Boning",
+        tailoring: "Hand-Rolled Selvedge & Concealed YKK Zipper",
+        stamp: "<span class='copper-tag'>SPECIMEN NO. 01</span> // TWILIGHT DRAPED SILHOUETTE"
+      },
+      {
+        id: 1,
+        name: "Oluwakemi Ankara Wax Trouser Set",
+        edition: "HERITAGE CO-ORD // SPECIMEN 02",
+        priceNGN: 115000,
+        priceUSD: 145,
+        priceGBP: 115,
+        img: "/assets/pattyz/pattyz-look-02.jpg",
+        stock: "⚡ ONLY 4 PIECES IN BATCH 01",
+        narrative: "High-voltage tailored co-ord crafted from artisan Nigerian geometric wax print. High-waisted wide-leg trousers engineered with deep concealed pockets and reinforced waistband, paired with an ergonomic structured crop bodice.",
+        fabric: "100% Cotton Nigerian Geometric Ankara Wax (290 GSM)",
+        cut: "High-Waist Wide Leg Trouser & Crop Bodice",
+        tailoring: "Concealed Rear YKK Zip & Reinforced Waist Hook",
+        stamp: "<span class='copper-tag'>SPECIMEN NO. 02</span> // OLUWAKEMI WAX SET"
+      },
+      {
+        id: 2,
+        name: "Akwete Artisan Selvedge Cape",
+        edition: "LOOM ARCHIVE // SPECIMEN 03",
+        priceNGN: 125000,
+        priceUSD: 158,
+        priceGBP: 125,
+        img: "/assets/pattyz/pattyz-look-03-fabric.jpg",
+        stock: "⚡ ONLY 2 PIECES IN BATCH 01",
+        narrative: "Heritage textile statement piece woven on traditional vertical looms in southeastern Nigeria. Heavyweight textured drape featuring geometric strip-weave motifs and raw fringed hemline.",
+        fabric: "100% Hand-Spun Raw Cotton Akwete Weave (380 GSM)",
+        cut: "Structured Cocoon Cape / Raw Fringed Hem",
+        tailoring: "Hand-Turned Horn Toggle & Bound Selvedge",
+        stamp: "<span class='copper-tag'>SPECIMEN NO. 03</span> // AKWETE ARTISAN CAPE"
+      },
+      {
+        id: 3,
+        name: "Midnight Indigo Wrap Jumpsuit",
+        edition: "BATIK CAPSULE // SPECIMEN 04",
+        priceNGN: 105000,
+        priceUSD: 132,
+        priceGBP: 105,
+        img: "/assets/pattyz/pattyz-look-04.jpg",
+        stock: "⚡ ONLY 3 PIECES IN BATCH 01",
+        narrative: "Effortless resort architecture cut from resist-dyed indigo batik. Features a surplice plunge crossover neckline, cinched self-tie belt sash, and tapered elasticized ankles tailored for high-fashion movement.",
+        fabric: "West African Indigo-Dyed Cotton Crepe",
+        cut: "Sleeveless Wrap Bodice / Tapered Cuffed Ankle",
+        tailoring: "Artisanal Resist Dyeing & Reinforced Darting",
+        stamp: "<span class='copper-tag'>SPECIMEN NO. 04</span> // INDIGO WRAP JUMPSUIT"
+      }
+    ];
+
+    let activeIdx = 0;
+    let chosenSize = "UK 8";
+    let chosenCurrency = "NGN";
+    let chosenFreightFee = 2500;
+    let chosenFreightTitle = "Lekki Same-Day (3-Hr)";
+
+    function activateView(mode) {
+      const runwayView = document.getElementById("view-runway");
+      const studioView = document.getElementById("view-studio");
+      const tabRunwayBtn = document.getElementById("tab-runway-btn");
+      const tabStudioBtn = document.getElementById("tab-studio-btn");
+      const toggleBtn = document.getElementById("view-mode-text");
+
+      if (mode === "studio") {
+        runwayView.style.display = "none";
+        studioView.style.display = "block";
+        tabRunwayBtn.classList.remove("active");
+        tabStudioBtn.classList.add("active");
+        toggleBtn.textContent = "Switch to Runway";
+        window.scrollTo({ top: studioView.offsetTop - 80, behavior: "smooth" });
+      } else {
+        runwayView.style.display = "block";
+        studioView.style.display = "none";
+        tabRunwayBtn.classList.add("active");
+        tabStudioBtn.classList.remove("active");
+        toggleBtn.textContent = "Switch to Specimen PDP";
+      }
+    }
+
+    function toggleMainView() {
+      const studioView = document.getElementById("view-studio");
+      if (studioView.style.display === "block") {
+        activateView("runway");
+      } else {
+        activateView("studio");
+      }
+    }
+
+    function selectAndOpen(idx) {
+      changeSpecimen(idx);
+      activateView("studio");
+    }
+
+    function changeSpecimen(idx) {
+      activeIdx = idx;
+      const item = SPECIMENS[idx];
+
+      const stageVisual = document.getElementById("stage-visual");
+      stageVisual.style.opacity = "0.2";
+      setTimeout(() => {
+        stageVisual.src = item.img;
+        stageVisual.style.opacity = "1";
+      }, 150);
+
+      document.getElementById("stage-stamp-box").innerHTML = item.stamp;
+      document.getElementById("dock-counter").textContent = `0${idx + 1} / 04`;
+
+      const thumbs = document.querySelectorAll(".runway-thumb-btn");
+      thumbs.forEach((thumb, i) => {
+        if (i === idx) thumb.classList.add("active");
+        else thumb.classList.remove("active");
+      });
+
+      document.getElementById("console-title").textContent = item.name;
+      document.getElementById("console-edition").textContent = item.edition;
+      document.getElementById("console-narrative").textContent = item.narrative;
+      document.getElementById("spec-fabric").textContent = item.fabric;
+      document.getElementById("spec-cut").textContent = item.cut;
+      document.getElementById("spec-tailoring").textContent = item.tailoring;
+      document.getElementById("console-scarcity").textContent = item.stock;
+
+      document.getElementById("dock-name").textContent = item.name;
+
+      renderAllPrices();
+      updateDrawerData();
+    }
+
+    function chooseSize(size, btn) {
+      chosenSize = size;
+      document.querySelectorAll(".size-btn").forEach(b => b.classList.remove("active"));
+      btn.classList.add("active");
+      document.getElementById("dock-size-lbl").textContent = `Size: ${size} ▾`;
+      updateDrawerData();
+    }
+
+    function pickCourier(type, fee, title) {
+      chosenFreightFee = fee;
+      chosenFreightTitle = title;
+      document.querySelectorAll(".courier-tile").forEach(tile => tile.classList.remove("selected"));
+      event.currentTarget.classList.add("selected");
+      event.currentTarget.querySelector("input").checked = true;
+      updateDrawerTotals();
+    }
+
+    function changeCurrency(curr) {
+      chosenCurrency = curr;
+      renderAllPrices();
+      updateDrawerTotals();
+    }
+
+    function formatAmount(amountNGN, amountUSD, amountGBP) {
+      if (chosenCurrency === "USD") return `$${amountUSD.toLocaleString()}`;
+      if (chosenCurrency === "GBP") return `£${amountGBP.toLocaleString()}`;
+      return `₦${amountNGN.toLocaleString()}`;
+    }
+
+    function renderAllPrices() {
+      const item = SPECIMENS[activeIdx];
+      const priceStr = formatAmount(item.priceNGN, item.priceUSD, item.priceGBP);
+      document.getElementById("console-price-primary").textContent = priceStr;
+      document.getElementById("dock-cost").textContent = `${priceStr} // Batch 01`;
+
+      if (chosenCurrency === "NGN") {
+        document.getElementById("console-price-fx").textContent = `≈ $${item.priceUSD} USD / £${item.priceGBP} GBP`;
+      } else if (chosenCurrency === "USD") {
+        document.getElementById("console-price-fx").textContent = `≈ ₦${item.priceNGN.toLocaleString()} NGN`;
+      } else {
+        document.getElementById("console-price-fx").textContent = `≈ ₦${item.priceNGN.toLocaleString()} NGN`;
+      }
+    }
+
+    function openDrawer() {
+      document.getElementById("scrim").classList.add("open");
+      document.getElementById("drawer").classList.add("open");
+      updateDrawerData();
+    }
+
+    function closeDrawer() {
+      document.getElementById("scrim").classList.remove("open");
+      document.getElementById("drawer").classList.remove("open");
+    }
+
+    function updateDrawerData() {
+      const item = SPECIMENS[activeIdx];
+      document.getElementById("drawer-item-visual").src = item.img;
+      document.getElementById("drawer-item-heading").textContent = item.name;
+      document.getElementById("drawer-item-size").textContent = `Size: ${chosenSize} // Batch 01 Atelier`;
+      document.getElementById("drawer-item-cost").textContent = formatAmount(item.priceNGN, item.priceUSD, item.priceGBP);
+      updateDrawerTotals();
+    }
+
+    function updateDrawerTotals() {
+      const item = SPECIMENS[activeIdx];
+      const subtotal = item.priceNGN;
+      const total = subtotal + chosenFreightFee;
+
+      document.getElementById("drawer-subtotal-val").textContent = `₦${subtotal.toLocaleString()}`;
+      document.getElementById("drawer-courier-title").textContent = chosenFreightTitle;
+      document.getElementById("drawer-courier-val").textContent = `₦${chosenFreightFee.toLocaleString()}`;
+      document.getElementById("drawer-total-val").textContent = `₦${total.toLocaleString()}`;
+    }
+
+    function triggerPaystack() {
+      openDrawer();
+    }
+
+    function triggerPaystackModal() {
+      const item = SPECIMENS[activeIdx];
+      const total = item.priceNGN + chosenFreightFee;
+      alert(`[PAYSTACK EXPRESS GATEWAY ENGAGED]\n\nAtelier Specimen: ${item.name}\nSize: ${chosenSize}\nCourier: ${chosenFreightTitle}\nTotal Amount Due: ₦${total.toLocaleString()}\n\nConnecting to Paystack Secure Checkout...`);
+    }
+
+    window.addEventListener("DOMContentLoaded", () => {
+      changeSpecimen(0);
+      renderAllPrices();
+    });
+  </script>
+</body>
+</html>
