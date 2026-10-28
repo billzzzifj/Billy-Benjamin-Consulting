@@ -3,10 +3,10 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>ZIVA LAGOS // SUMMER CLUB RESORT CAPSULE</title>
+  <title>ZIVA LAGOS // SUMMER CLUB RESORT CAPSULE '26</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;0,700;1,400;1,600&family=JetBrains+Mono:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Syne:wght@700;800;900&display=swap" rel="stylesheet">
   <style>
     *, *::before, *::after {
       box-sizing: border-box;
@@ -14,1036 +14,2137 @@
       padding: 0;
     }
     :root {
-      --sand-bg: #FAF6F0;
-      --card-bg: #FFFFFF;
+      --void: #0B0A09;
+      --charcoal: #151311;
+      --plaster: #F5EFEB;
+      --sand: #EAE1D5;
       --terracotta: #B35438;
-      --terracotta-dark: #8F3B24;
-      --terracotta-subtle: #F6EDE8;
-      --charcoal: #1C1917;
-      --muted-brown: #78716C;
-      --border-subtle: rgba(28, 25, 23, 0.08);
-      --border-medium: rgba(28, 25, 23, 0.16);
-      --font-editorial: 'Cormorant Garamond', Georgia, serif;
-      --font-sans: 'Plus Jakarta Sans', -apple-system, sans-serif;
+      --terracotta-hot: #D4502E;
+      --terracotta-glow: rgba(179, 84, 56, 0.16);
+      --cobalt: #133E7C;
+      --gold: #DDA14B;
+      --muted: #8E8379;
+      --border-dark: rgba(245, 239, 235, 0.12);
+      --border-light: rgba(21, 19, 17, 0.12);
+      --font-display: 'Syne', sans-serif;
+      --font-serif: 'Cormorant Garamond', Georgia, serif;
       --font-mono: 'JetBrains Mono', monospace;
-    }
-    body {
-      background-color: var(--sand-bg);
-      color: var(--charcoal);
-      font-family: var(--font-sans);
-      -webkit-font-smoothing: antialiased;
-      line-height: 1.5;
-      overflow-x: hidden;
+      --font-body: 'Plus Jakarta Sans', sans-serif;
     }
 
-    /* TOP ANNOUNCEMENT */
-    .announcement-bar {
-      background: var(--charcoal);
-      color: #FAF6F0;
+    body {
+      background-color: var(--plaster);
+      color: var(--void);
+      font-family: var(--font-body);
+      -webkit-font-smoothing: antialiased;
+      line-height: 1.45;
+      overflow-x: hidden;
+      position: relative;
+    }
+
+    /* SUBTLE NOISE OVERLAY FOR ANALOG EDITORIAL FEEL */
+    body::before {
+      content: "";
+      position: fixed;
+      top: 0; left: 0; width: 100vw; height: 100vh;
+      pointer-events: none;
+      z-index: 999;
+      opacity: 0.028;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+    }
+
+    /* TOP HUD METRIC BAR */
+    .telemetry-bar {
+      background: var(--void);
+      color: var(--sand);
+      font-family: var(--font-mono);
+      font-size: 10px;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      padding: 9px 28px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 1px solid var(--border-dark);
+      z-index: 60;
+      position: relative;
+    }
+    .telemetry-left, .telemetry-right {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+    }
+    .pulse-dot {
+      display: inline-block;
+      width: 7px;
+      height: 7px;
+      background: #10B981;
+      border-radius: 50%;
+      box-shadow: 0 0 8px #10B981;
+      margin-right: 6px;
+      animation: pulse 2s infinite;
+    }
+    @keyframes pulse {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.4; transform: scale(0.85); }
+    }
+    .telemetry-pill {
+      background: rgba(255, 255, 255, 0.08);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      padding: 2px 8px;
+      border-radius: 2px;
+      color: #FFF;
+      font-weight: 600;
+    }
+
+    /* KINETIC TICKER TRACKS */
+    .ticker-wrap {
+      overflow: hidden;
+      white-space: nowrap;
+      background: var(--terracotta);
+      color: var(--plaster);
+      font-family: var(--font-display);
+      font-size: 13px;
+      font-weight: 800;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      padding: 7px 0;
+      border-bottom: 1px solid rgba(0, 0, 0, 0.15);
+    }
+    .ticker-track-a {
+      display: inline-block;
+      animation: tickerRun 28s linear infinite;
+    }
+    @keyframes tickerRun {
+      0% { transform: translateX(0); }
+      100% { transform: translateX(-50%); }
+    }
+
+    /* MAIN SITE HEADER */
+    header {
+      background: rgba(245, 239, 235, 0.94);
+      backdrop-filter: blur(14px);
+      border-bottom: 1px solid var(--border-light);
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      transition: all 0.2s ease;
+    }
+    .header-grid {
+      display: grid;
+      grid-template-columns: 1fr auto 1fr;
+      align-items: center;
+      padding: 16px 36px;
+      max-width: 1560px;
+      margin: 0 auto;
+    }
+    .nav-left {
+      display: flex;
+      gap: 28px;
+      list-style: none;
+    }
+    .nav-link {
+      color: var(--void);
+      text-decoration: none;
       font-family: var(--font-mono);
       font-size: 11px;
       letter-spacing: 0.14em;
       text-transform: uppercase;
-      padding: 10px 24px;
-      text-align: center;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      gap: 16px;
-    }
-    .announcement-bar span.pill {
-      background: var(--terracotta);
-      color: #FFF;
-      padding: 2px 8px;
-      border-radius: 12px;
-      font-size: 9px;
       font-weight: 600;
-    }
-
-    /* NAVIGATION */
-    header {
-      background: rgba(250, 246, 240, 0.94);
-      backdrop-filter: blur(12px);
-      border-bottom: 1px solid var(--border-subtle);
-      position: sticky;
-      top: 0;
-      z-index: 40;
-      transition: all 0.2s ease;
-    }
-    .nav-wrap {
-      max-width: 1400px;
-      margin: 0 auto;
-      padding: 18px 40px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
-    .nav-menu {
-      display: flex;
-      gap: 32px;
-      list-style: none;
-    }
-    .nav-menu a {
-      color: var(--charcoal);
-      text-decoration: none;
-      font-size: 12px;
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
-      font-weight: 500;
       transition: color 0.15s ease;
+      position: relative;
     }
-    .nav-menu a:hover, .nav-menu a.active {
-      color: var(--terracotta);
+    .nav-link:hover, .nav-link.active {
+      color: var(--terracotta-hot);
     }
-    .brand-logo {
+    .brand-cluster {
       text-align: center;
       text-decoration: none;
-      color: var(--charcoal);
+      color: var(--void);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
     }
-    .brand-title {
-      font-family: var(--font-editorial);
-      font-size: 30px;
-      letter-spacing: 0.28em;
+    .brand-masthead {
+      font-family: var(--font-display);
+      font-size: 34px;
+      font-weight: 900;
+      letter-spacing: 0.22em;
+      line-height: 0.95;
       text-transform: uppercase;
-      font-weight: 700;
-      display: block;
-      line-height: 1;
+      color: var(--void);
     }
-    .brand-sub {
-      font-family: var(--font-mono);
-      font-size: 9px;
-      letter-spacing: 0.3em;
+    .brand-subhead {
+      font-family: var(--font-serif);
+      font-size: 13px;
+      font-style: italic;
+      letter-spacing: 0.26em;
       text-transform: uppercase;
       color: var(--terracotta);
-      margin-top: 4px;
-      display: block;
-      font-weight: 600;
+      margin-top: 3px;
     }
     .nav-right {
       display: flex;
+      justify-content: flex-end;
       align-items: center;
-      gap: 20px;
+      gap: 16px;
     }
-    .currency-switch {
-      background: rgba(28, 25, 23, 0.04);
-      border: 1px solid var(--border-subtle);
-      border-radius: 20px;
+    .currency-select {
+      background: transparent;
+      border: 1px solid var(--border-light);
       padding: 6px 12px;
-      font-size: 11px;
       font-family: var(--font-mono);
+      font-size: 11px;
       font-weight: 600;
-      color: var(--charcoal);
+      letter-spacing: 0.08em;
+      color: var(--void);
       cursor: pointer;
-      outline: none;
-      transition: border-color 0.15s ease;
+      border-radius: 2px;
     }
-    .currency-switch:hover {
-      border-color: var(--border-medium);
-    }
-    .cart-btn {
-      background: var(--charcoal);
-      color: #FAF6F0;
-      border: none;
-      padding: 10px 20px;
+    .view-switch-btn {
+      background: var(--void);
+      color: var(--plaster);
+      border: 1px solid var(--void);
+      font-family: var(--font-mono);
       font-size: 11px;
       letter-spacing: 0.12em;
       text-transform: uppercase;
-      font-weight: 600;
+      padding: 8px 14px;
       border-radius: 2px;
       cursor: pointer;
       display: flex;
       align-items: center;
       gap: 8px;
-      transition: background 0.15s ease;
+      transition: all 0.2s ease;
     }
-    .cart-btn:hover {
+    .view-switch-btn:hover {
+      background: var(--terracotta-hot);
+      border-color: var(--terracotta-hot);
+    }
+    .bag-trigger {
       background: var(--terracotta);
+      color: #FFF;
+      border: none;
+      font-family: var(--font-mono);
+      font-size: 11px;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      font-weight: 700;
+      padding: 9px 18px;
+      cursor: pointer;
+      border-radius: 2px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      box-shadow: 0 4px 14px rgba(179, 84, 56, 0.24);
+      transition: all 0.2s ease;
+    }
+    .bag-trigger:hover {
+      background: var(--terracotta-hot);
+      transform: translateY(-1px);
+    }
+    .bag-count {
+      background: #FFF;
+      color: var(--terracotta);
+      font-size: 10px;
+      padding: 1px 7px;
+      border-radius: 10px;
+      font-weight: 800;
     }
 
-    /* MAIN PRODUCT EXPERIENCE */
-    .pdp-container {
-      max-width: 1400px;
-      margin: 40px auto 100px;
-      padding: 0 40px;
+    /* EDITORIAL MANIFESTO STRIP */
+    .manifesto-strip {
+      max-width: 1560px;
+      margin: 0 auto;
+      padding: 32px 36px 16px;
       display: grid;
-      grid-template-columns: 1.18fr 0.82fr;
-      gap: 72px;
+      grid-template-columns: 1.4fr 1fr;
+      align-items: end;
+      gap: 40px;
+      border-bottom: 1px solid var(--border-light);
+    }
+    .manifesto-title {
+      font-family: var(--font-serif);
+      font-size: clamp(38px, 5.2vw, 68px);
+      line-height: 0.98;
+      font-weight: 400;
+      color: var(--void);
+      letter-spacing: -0.01em;
+    }
+    .manifesto-title em {
+      font-style: italic;
+      color: var(--terracotta);
+      font-weight: 400;
+    }
+    .manifesto-title strong {
+      font-family: var(--font-display);
+      font-weight: 900;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      display: block;
+      font-size: 0.72em;
+      margin-top: 6px;
+    }
+    .manifesto-meta {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      color: var(--muted);
+      line-height: 1.6;
+      border-left: 2px solid var(--terracotta);
+      padding-left: 18px;
+    }
+    .manifesto-meta span.highlight {
+      color: var(--void);
+      font-weight: 600;
+      display: block;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      margin-bottom: 4px;
+    }
+
+    /* MODE TOGGLE CHIPS */
+    .stage-tabs {
+      max-width: 1560px;
+      margin: 20px auto 0;
+      padding: 0 36px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .tab-pills {
+      display: flex;
+      gap: 8px;
+      background: var(--sand);
+      padding: 4px;
+      border-radius: 4px;
+    }
+    .tab-pill {
+      font-family: var(--font-mono);
+      font-size: 10px;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      padding: 8px 16px;
+      border: none;
+      background: transparent;
+      color: var(--muted);
+      cursor: pointer;
+      font-weight: 600;
+      border-radius: 2px;
+      transition: all 0.15s ease;
+    }
+    .tab-pill.active {
+      background: var(--void);
+      color: var(--plaster);
+    }
+    .capsule-counter {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+
+    /* ========================================================= */
+    /* VIEW A: THE RADICAL ASYMMETRIC RUNWAY LOOKBOOK (MAGAZINE) */
+    /* ========================================================= */
+    #view-lookbook {
+      max-width: 1560px;
+      margin: 28px auto 80px;
+      padding: 0 36px;
+    }
+    .runway-tapestry {
+      display: grid;
+      grid-template-columns: 1.15fr 0.85fr;
+      grid-template-rows: auto auto;
+      gap: 28px;
+    }
+
+    /* LOOK 01: HERO MONUMENTAL CARD */
+    .runway-card {
+      position: relative;
+      background: #DFD5C8;
+      border-radius: 3px;
+      overflow: hidden;
+      border: 1px solid var(--border-light);
+      cursor: pointer;
+      transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.3s ease;
+    }
+    .runway-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 20px 48px rgba(17, 15, 13, 0.12);
+    }
+    .runway-card.card-hero {
+      grid-column: 1 / 2;
+      grid-row: 1 / 3;
+      height: 920px;
+    }
+    .runway-card.card-hero img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center 20%;
+      transition: transform 0.6s ease;
+    }
+    .runway-card:hover img {
+      transform: scale(1.02);
+    }
+
+    /* RIGHT COLUMN STACK */
+    .card-stack {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 24px;
+    }
+    .runway-card.card-tall {
+      height: 448px;
+    }
+    .runway-card.card-tall img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center 15%;
+    }
+
+    /* RUNWAY CARD HUD & OVERLAYS */
+    .card-crosshair {
+      position: absolute;
+      font-family: var(--font-mono);
+      font-size: 10px;
+      color: rgba(255, 255, 255, 0.7);
+      letter-spacing: 0.1em;
+      pointer-events: none;
+      z-index: 10;
+    }
+    .card-crosshair.tl { top: 16px; left: 16px; }
+    .card-crosshair.tr { top: 16px; right: 16px; }
+    .card-badge {
+      position: absolute;
+      top: 16px;
+      left: 16px;
+      background: rgba(11, 10, 9, 0.88);
+      backdrop-filter: blur(8px);
+      color: #FFF;
+      font-family: var(--font-mono);
+      font-size: 10px;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      padding: 6px 12px;
+      border-radius: 2px;
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      z-index: 10;
+    }
+    .card-caption {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      background: linear-gradient(180deg, transparent 0%, rgba(11, 10, 9, 0.85) 40%, rgba(11, 10, 9, 0.96) 100%);
+      color: #FFF;
+      padding: 32px 24px 20px;
+      z-index: 10;
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+    }
+    .caption-title {
+      font-family: var(--font-serif);
+      font-size: 26px;
+      line-height: 1.05;
+      font-weight: 600;
+      margin-bottom: 4px;
+    }
+    .caption-sub {
+      font-family: var(--font-mono);
+      font-size: 10px;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--sand);
+    }
+    .caption-price {
+      font-family: var(--font-mono);
+      font-size: 16px;
+      font-weight: 700;
+      color: var(--gold);
+      letter-spacing: 0.05em;
+    }
+    .caption-action {
+      background: var(--terracotta);
+      color: #FFF;
+      border: none;
+      font-family: var(--font-mono);
+      font-size: 10px;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      font-weight: 700;
+      padding: 8px 14px;
+      border-radius: 2px;
+      cursor: pointer;
+      margin-top: 8px;
+      display: inline-block;
+      transition: background 0.15s ease;
+    }
+    .caption-action:hover {
+      background: var(--terracotta-hot);
+    }
+
+    /* ========================================================= */
+    /* VIEW B: ATELIER PDP SPECIMEN STUDIO (TACTILE BUYING MATRIX) */
+    /* ========================================================= */
+    #view-studio {
+      max-width: 1560px;
+      margin: 28px auto 100px;
+      padding: 0 36px;
+      display: none; /* Toggled via tab switch */
+    }
+    .studio-grid {
+      display: grid;
+      grid-template-columns: 1.15fr 0.85fr;
+      gap: 60px;
       align-items: start;
     }
 
-    /* GALLERY STYLING */
-    .gallery-column {
-      display: flex;
-      flex-direction: column;
-      gap: 20px;
+    /* STUDIO LEFT: STAGE & RUNWAY THUMB CAROUSEL */
+    .studio-stage-wrap {
+      position: sticky;
+      top: 100px;
     }
-    .main-stage {
+    .studio-stage {
       position: relative;
       width: 100%;
-      height: 740px;
-      background: #EDE6DC;
+      height: 760px;
+      background: #DFD5C8;
       border-radius: 4px;
       overflow: hidden;
-      box-shadow: 0 12px 36px rgba(28, 25, 23, 0.06);
+      border: 1px solid var(--border-light);
+      box-shadow: 0 16px 40px rgba(17, 15, 13, 0.08);
     }
-    .main-stage img {
+    .studio-stage img {
       width: 100%;
       height: 100%;
       object-fit: cover;
-      object-position: center 25%;
-      transition: opacity 0.35s ease, transform 0.4s ease;
+      object-position: center 20%;
+      transition: opacity 0.3s ease, transform 0.4s ease;
     }
-    .stage-badge {
+    .stage-stamp {
       position: absolute;
-      top: 20px;
-      left: 20px;
-      background: rgba(250, 246, 240, 0.92);
-      backdrop-filter: blur(8px);
-      padding: 6px 14px;
+      bottom: 24px;
+      left: 24px;
+      background: rgba(11, 10, 9, 0.9);
+      backdrop-filter: blur(10px);
+      padding: 10px 18px;
+      border: 1px solid rgba(255, 255, 255, 0.16);
       border-radius: 2px;
+      color: #FFF;
       font-family: var(--font-mono);
-      font-size: 10px;
+      font-size: 11px;
       letter-spacing: 0.14em;
       text-transform: uppercase;
-      color: var(--charcoal);
-      border: 1px solid var(--border-subtle);
-      font-weight: 600;
+      z-index: 10;
     }
-    .look-counter {
+    .stage-stamp span.gold-tag {
+      color: var(--gold);
+      font-weight: 700;
+    }
+    .stage-coords {
       position: absolute;
-      bottom: 20px;
-      right: 20px;
-      background: rgba(28, 25, 23, 0.85);
-      color: #FAF6F0;
+      top: 24px;
+      right: 24px;
+      background: rgba(245, 239, 235, 0.92);
+      backdrop-filter: blur(8px);
+      border: 1px solid var(--border-light);
       padding: 6px 12px;
       font-family: var(--font-mono);
       font-size: 10px;
-      letter-spacing: 0.14em;
-      border-radius: 2px;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--void);
+      font-weight: 600;
+      z-index: 10;
     }
 
-    /* CAPSULE COLLECTION THUMBNAILS (INTERACTIVE STRIP) */
-    .capsule-strip-label {
+    /* 5-LOOK HORIZONTAL RUNWAY STRIP */
+    .runway-strip-header {
       display: flex;
       justify-content: space-between;
-      align-items: baseline;
-      font-size: 11px;
-      letter-spacing: 0.14em;
-      text-transform: uppercase;
+      align-items: center;
+      margin-top: 18px;
+      margin-bottom: 10px;
       font-family: var(--font-mono);
-      color: var(--muted-brown);
-      margin-top: 4px;
+      font-size: 11px;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--muted);
     }
-    .capsule-strip {
+    .runway-strip {
       display: grid;
       grid-template-columns: repeat(5, 1fr);
       gap: 12px;
     }
-    .capsule-thumb {
-      height: 150px;
-      background: #EDE6DC;
-      border-radius: 3px;
+    .runway-thumb {
+      height: 140px;
+      background: #DDD2C4;
+      border-radius: 2px;
       overflow: hidden;
       border: 2px solid transparent;
       cursor: pointer;
       position: relative;
-      padding: 0;
       transition: all 0.2s ease;
+      padding: 0;
     }
-    .capsule-thumb img {
+    .runway-thumb img {
       width: 100%;
       height: 100%;
       object-fit: cover;
       object-position: center 25%;
-      transition: transform 0.25s ease;
+      transition: transform 0.3s ease;
     }
-    .capsule-thumb:hover img {
+    .runway-thumb:hover img {
       transform: scale(1.05);
     }
-    .capsule-thumb.active {
-      border-color: var(--terracotta);
-      box-shadow: 0 4px 12px rgba(179, 84, 56, 0.2);
+    .runway-thumb.active {
+      border-color: var(--terracotta-hot);
+      box-shadow: 0 4px 14px var(--terracotta-glow);
     }
-    .capsule-thumb .thumb-tag {
+    .runway-thumb span.idx {
       position: absolute;
       bottom: 6px;
       left: 6px;
-      background: rgba(28, 25, 23, 0.8);
+      background: rgba(11, 10, 9, 0.85);
       color: #FFF;
+      font-family: var(--font-mono);
       font-size: 9px;
       padding: 2px 6px;
       border-radius: 2px;
-      font-family: var(--font-mono);
     }
 
-    /* DETAILS & CONVERSION COLUMN */
-    .details-column {
-      display: flex;
-      flex-direction: column;
-      gap: 24px;
-      padding-top: 10px;
+    /* STUDIO RIGHT: BUYING SPECIFICATION MATRIX */
+    .studio-spec {
+      background: #FFF;
+      border: 1px solid var(--border-light);
+      border-radius: 4px;
+      padding: 40px 36px;
+      box-shadow: 0 8px 30px rgba(17, 15, 13, 0.04);
     }
-    .collection-header {
+    .spec-provenance {
       display: flex;
       align-items: center;
       gap: 12px;
-    }
-    .collection-pill {
-      background: var(--terracotta-subtle);
-      color: var(--terracotta);
+      font-family: var(--font-mono);
       font-size: 11px;
-      letter-spacing: 0.14em;
+      letter-spacing: 0.16em;
       text-transform: uppercase;
-      font-weight: 600;
-      padding: 4px 12px;
-      border-radius: 20px;
-      font-family: var(--font-mono);
+      color: var(--terracotta);
+      font-weight: 700;
+      margin-bottom: 12px;
     }
-    .atelier-note {
+    .spec-title {
+      font-family: var(--font-serif);
+      font-size: clamp(34px, 3.2vw, 44px);
+      line-height: 1.05;
+      font-weight: 700;
+      color: var(--void);
+      margin-bottom: 8px;
+    }
+    .spec-archetype {
+      font-family: var(--font-display);
+      font-size: 13px;
+      font-weight: 800;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 20px;
+    }
+
+    /* PRICE & TRUST ANCHOR */
+    .spec-pricing-block {
+      display: flex;
+      align-items: baseline;
+      gap: 16px;
+      padding: 16px 0;
+      border-top: 1px solid var(--border-light);
+      border-bottom: 1px solid var(--border-light);
+      margin-bottom: 24px;
+    }
+    .spec-price-main {
+      font-family: var(--font-display);
+      font-size: 36px;
+      font-weight: 900;
+      color: var(--terracotta);
+      letter-spacing: 0.02em;
+    }
+    .spec-price-fx {
       font-family: var(--font-mono);
-      font-size: 11px;
-      color: var(--muted-brown);
+      font-size: 14px;
+      color: var(--muted);
       letter-spacing: 0.08em;
     }
-
-    .garment-title {
-      font-family: var(--font-editorial);
-      font-size: 46px;
-      line-height: 1.05;
-      font-weight: 600;
-      letter-spacing: -0.01em;
-      color: var(--charcoal);
-      transition: opacity 0.2s ease;
+    .spec-stock-pulse {
+      margin-left: auto;
+      font-family: var(--font-mono);
+      font-size: 11px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: #B45309;
+      background: #FEF3C7;
+      padding: 4px 10px;
+      border-radius: 2px;
+      font-weight: 700;
     }
 
-    .pricing-tier {
+    /* PHYSICAL MATERIALITY & ATELIER NOTES */
+    .spec-narrative {
+      font-size: 14px;
+      line-height: 1.65;
+      color: #373330;
+      margin-bottom: 24px;
+    }
+    .materiality-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      background: var(--plaster);
+      border: 1px solid var(--border-light);
+      padding: 16px;
+      border-radius: 3px;
+      margin-bottom: 28px;
+      font-family: var(--font-mono);
+      font-size: 11px;
+    }
+    .mat-item strong {
+      display: block;
+      color: var(--void);
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      font-size: 10px;
+      margin-bottom: 2px;
+    }
+    .mat-item span {
+      color: var(--muted);
+    }
+
+    /* 54PX TACTILE SIZE MATRIX */
+    .size-section-header {
       display: flex;
       justify-content: space-between;
       align-items: baseline;
-      padding-bottom: 20px;
-      border-bottom: 1px solid var(--border-subtle);
-    }
-    .price-value {
-      font-family: var(--font-sans);
-      font-size: 28px;
-      font-weight: 700;
-      color: var(--charcoal);
-      letter-spacing: -0.02em;
-    }
-    .price-sub {
-      font-size: 12px;
-      color: var(--muted-brown);
-      margin-top: 2px;
-    }
-    .ratings-badge {
-      display: flex;
-      align-items: center;
-      gap: 6px;
-      font-size: 12px;
-      font-family: var(--font-mono);
-      color: var(--terracotta);
-      font-weight: 600;
-    }
-
-    .narrative-p {
-      font-size: 15px;
-      line-height: 1.7;
-      color: #44403C;
-      font-weight: 400;
-      transition: opacity 0.2s ease;
-    }
-
-    /* COLOR & LOOK SELECTOR */
-    .color-section {
-      display: flex;
-      flex-direction: column;
-      gap: 10px;
-    }
-    .color-label {
-      font-size: 12px;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      font-weight: 600;
-      display: flex;
-      justify-content: space-between;
-    }
-    .swatch-row {
-      display: flex;
-      gap: 12px;
-    }
-    .color-swatch {
-      width: 36px;
-      height: 36px;
-      border-radius: 50%;
-      border: 2px solid transparent;
-      padding: 2px;
-      cursor: pointer;
-      transition: all 0.15s ease;
-    }
-    .color-swatch span {
-      display: block;
-      width: 100%;
-      height: 100%;
-      border-radius: 50%;
-    }
-    .color-swatch.active {
-      border-color: var(--charcoal);
-      transform: scale(1.08);
-    }
-
-    /* SIZE SELECTOR (54PX TOUCH ERGONOMICS) */
-    .size-section {
-      display: flex;
-      flex-direction: column;
-      gap: 10px;
-    }
-    .size-meta {
-      display: flex;
-      justify-content: space-between;
-      font-size: 12px;
-      text-transform: uppercase;
-      letter-spacing: 0.08em;
-      font-weight: 600;
-    }
-    .urgency-badge {
-      color: var(--terracotta);
       font-family: var(--font-mono);
       font-size: 11px;
-      font-weight: 600;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      margin-bottom: 12px;
     }
-    .size-buttons {
-      display: grid;
-      grid-template-columns: repeat(5, 1fr);
-      gap: 8px;
-    }
-    .size-btn {
-      height: 52px;
-      background: var(--card-bg);
-      border: 1px solid var(--border-medium);
-      border-radius: 3px;
-      font-family: var(--font-mono);
-      font-size: 13px;
-      font-weight: 600;
+    .size-guide-link {
+      color: var(--terracotta);
+      text-decoration: underline;
       cursor: pointer;
-      color: var(--charcoal);
+    }
+    .size-matrix {
+      display: grid;
+      grid-template-columns: repeat(6, 1fr);
+      gap: 8px;
+      margin-bottom: 28px;
+    }
+    .size-pill {
+      min-height: 52px;
+      background: #FFF;
+      border: 1.5px solid var(--border-light);
+      color: var(--void);
+      font-family: var(--font-mono);
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      cursor: pointer;
+      border-radius: 2px;
       transition: all 0.15s ease;
       display: flex;
-      align-items: center;
+      flex-direction: column;
       justify-content: center;
+      align-items: center;
+      gap: 2px;
     }
-    .size-btn.active {
-      background: var(--charcoal);
-      color: #FAF6F0;
-      border-color: var(--charcoal);
+    .size-pill span.stock-hint {
+      font-size: 9px;
+      font-weight: 400;
+      color: var(--muted);
     }
-    .size-btn:hover:not(.active) {
-      border-color: var(--charcoal);
+    .size-pill:hover {
+      border-color: var(--void);
+    }
+    .size-pill.active {
+      background: var(--void);
+      color: #FFF;
+      border-color: var(--void);
+    }
+    .size-pill.active span.stock-hint {
+      color: var(--gold);
     }
 
-    /* CHECKOUT & ACTION BUTTONS */
-    .actions-wrap {
+    /* UPFRONT FREIGHT & COURIER ENGINE */
+    .courier-engine {
+      background: #FAFAFA;
+      border: 1px solid var(--border-light);
+      border-radius: 3px;
+      padding: 18px 20px;
+      margin-bottom: 28px;
+    }
+    .courier-engine-title {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-family: var(--font-mono);
+      font-size: 11px;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      font-weight: 700;
+      color: var(--void);
+      margin-bottom: 12px;
+    }
+    .courier-options {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+    .courier-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 8px 12px;
+      background: #FFF;
+      border: 1px solid var(--border-light);
+      border-radius: 2px;
+      cursor: pointer;
+      font-family: var(--font-mono);
+      font-size: 11px;
+      transition: border-color 0.15s ease;
+    }
+    .courier-row:hover, .courier-row.selected {
+      border-color: var(--terracotta);
+      background: #FFF9F6;
+    }
+    .courier-left {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .courier-radio {
+      accent-color: var(--terracotta);
+    }
+    .courier-fee {
+      font-weight: 700;
+      color: var(--void);
+    }
+
+    /* ACTION CALL: PRIMARY BUY MATRIX */
+    .action-matrix {
       display: flex;
       flex-direction: column;
       gap: 12px;
-      margin-top: 8px;
     }
-    .btn-paystack {
-      background: var(--charcoal);
-      color: #FAF6F0;
-      border: 1px solid var(--charcoal);
-      border-radius: 3px;
-      padding: 18px 24px;
-      font-size: 13px;
-      letter-spacing: 0.14em;
+    .btn-checkout-primary {
+      width: 100%;
+      min-height: 56px;
+      background: var(--terracotta);
+      color: #FFF;
+      border: none;
+      font-family: var(--font-display);
+      font-size: 15px;
+      font-weight: 900;
+      letter-spacing: 0.16em;
       text-transform: uppercase;
-      font-weight: 700;
-      font-family: var(--font-mono);
-      min-height: 58px;
+      border-radius: 2px;
       cursor: pointer;
       display: flex;
-      align-items: center;
       justify-content: center;
+      align-items: center;
       gap: 12px;
+      box-shadow: 0 8px 24px rgba(179, 84, 56, 0.3);
       transition: all 0.2s ease;
     }
-    .btn-paystack:hover {
-      background: var(--terracotta);
-      border-color: var(--terracotta);
-      box-shadow: 0 6px 20px rgba(179, 84, 56, 0.24);
+    .btn-checkout-primary:hover {
+      background: var(--terracotta-hot);
+      transform: translateY(-2px);
+      box-shadow: 0 12px 30px rgba(179, 84, 56, 0.4);
     }
-    .btn-drawer {
+    .btn-add-bag {
+      width: 100%;
+      min-height: 52px;
       background: transparent;
-      color: var(--charcoal);
-      border: 1px solid var(--charcoal);
-      border-radius: 3px;
-      padding: 16px 24px;
-      font-size: 13px;
+      color: var(--void);
+      border: 1.5px solid var(--void);
+      font-family: var(--font-mono);
+      font-size: 12px;
+      font-weight: 700;
       letter-spacing: 0.14em;
       text-transform: uppercase;
-      font-weight: 600;
-      font-family: var(--font-mono);
-      min-height: 54px;
+      border-radius: 2px;
       cursor: pointer;
-      transition: background 0.15s ease;
+      transition: all 0.15s ease;
     }
-    .btn-drawer:hover {
-      background: rgba(28, 25, 23, 0.05);
+    .btn-add-bag:hover {
+      background: var(--void);
+      color: #FFF;
     }
 
-    /* VALUE PROMISES */
-    .promises-grid {
+    /* TRI-MODAL PROOF CHIPS */
+    .proof-grid {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
       gap: 12px;
-      border-top: 1px solid var(--border-subtle);
-      border-bottom: 1px solid var(--border-subtle);
-      padding: 18px 0;
+      margin-top: 24px;
+      padding-top: 20px;
+      border-top: 1px solid var(--border-light);
+      text-align: center;
+      font-family: var(--font-mono);
+      font-size: 10px;
+      color: var(--muted);
+      letter-spacing: 0.08em;
+    }
+    .proof-item strong {
+      display: block;
+      color: var(--void);
+      font-size: 11px;
+      margin-bottom: 2px;
+    }
+
+    /* ========================================================= */
+    /* RADICAL EDITORIAL DOSSIER: THE 5 CAPSULE ARTIFACTS */
+    /* ========================================================= */
+    .capsule-dossier {
+      background: var(--void);
+      color: var(--plaster);
+      padding: 100px 36px;
+      margin-top: 80px;
+      border-top: 1px solid var(--border-dark);
+      position: relative;
+    }
+    .dossier-inner {
+      max-width: 1560px;
+      margin: 0 auto;
+    }
+    .dossier-header {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      align-items: end;
+      margin-bottom: 60px;
+      border-bottom: 1px solid var(--border-dark);
+      padding-bottom: 30px;
+    }
+    .dossier-title {
+      font-family: var(--font-display);
+      font-size: clamp(36px, 4.5vw, 64px);
+      font-weight: 900;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      line-height: 1;
+    }
+    .dossier-title span {
+      font-family: var(--font-serif);
+      font-style: italic;
+      color: var(--gold);
+      font-weight: 400;
+      display: block;
+      font-size: 0.55em;
       margin-top: 8px;
     }
-    .promise-item {
-      display: flex;
-      flex-direction: column;
-      gap: 3px;
-    }
-    .promise-title {
-      font-size: 11px;
-      text-transform: uppercase;
-      letter-spacing: 0.08em;
-      font-weight: 700;
-    }
-    .promise-desc {
-      font-size: 11px;
-      color: var(--muted-brown);
-      line-height: 1.4;
+    .dossier-summary {
+      font-family: var(--font-mono);
+      font-size: 12px;
+      line-height: 1.7;
+      color: var(--sand);
+      border-left: 1px solid var(--border-dark);
+      padding-left: 28px;
     }
 
-    /* SPECS ACCORDION */
-    .specs-tabs-bar {
-      display: flex;
-      border-bottom: 1px solid var(--border-subtle);
-      gap: 24px;
+    /* 5-SPECIMEN HORIZONTAL RUNWAY CARDS IN DARK VOID */
+    .specimen-grid {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 20px;
     }
-    .spec-tab {
-      background: none;
-      border: none;
-      padding: 12px 0;
-      font-size: 12px;
+    .specimen-tile {
+      background: #181513;
+      border: 1px solid var(--border-dark);
+      border-radius: 3px;
+      overflow: hidden;
+      cursor: pointer;
+      transition: transform 0.3s ease, border-color 0.3s ease;
+    }
+    .specimen-tile:hover {
+      transform: translateY(-6px);
+      border-color: var(--terracotta-hot);
+    }
+    .specimen-img-wrap {
+      width: 100%;
+      height: 380px;
+      overflow: hidden;
+      background: #25211E;
+      position: relative;
+    }
+    .specimen-img-wrap img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center 20%;
+      transition: transform 0.4s ease;
+    }
+    .specimen-tile:hover .specimen-img-wrap img {
+      transform: scale(1.04);
+    }
+    .specimen-number {
+      position: absolute;
+      top: 12px;
+      left: 12px;
+      background: rgba(11, 10, 9, 0.85);
+      font-family: var(--font-mono);
+      font-size: 9px;
+      color: var(--sand);
+      padding: 3px 8px;
+      border-radius: 2px;
+      letter-spacing: 0.14em;
+    }
+    .specimen-details {
+      padding: 20px 18px;
+    }
+    .specimen-tag {
+      font-family: var(--font-mono);
+      font-size: 9px;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 6px;
+    }
+    .specimen-name {
+      font-family: var(--font-serif);
+      font-size: 20px;
+      font-weight: 600;
+      color: #FFF;
+      line-height: 1.15;
+      margin-bottom: 8px;
+    }
+    .specimen-price-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      font-family: var(--font-mono);
+      margin-top: 14px;
+      padding-top: 12px;
+      border-top: 1px solid rgba(255, 255, 255, 0.08);
+    }
+    .specimen-price-tag {
+      font-size: 14px;
+      font-weight: 700;
+      color: var(--sand);
+    }
+    .specimen-select-btn {
+      background: transparent;
+      color: var(--terracotta-hot);
+      border: 1px solid var(--terracotta-hot);
+      font-size: 9px;
       letter-spacing: 0.12em;
       text-transform: uppercase;
-      font-weight: 600;
+      padding: 4px 8px;
+      border-radius: 2px;
       cursor: pointer;
-      color: var(--muted-brown);
-      border-bottom: 2px solid transparent;
-      margin-bottom: -1px;
+      font-weight: 600;
       transition: all 0.15s ease;
     }
-    .spec-tab.active {
-      color: var(--charcoal);
-      border-bottom-color: var(--terracotta);
-    }
-    .spec-body {
-      padding: 16px 0;
-      font-size: 13px;
-      line-height: 1.7;
-      color: #57534E;
+    .specimen-select-btn:hover {
+      background: var(--terracotta-hot);
+      color: #FFF;
     }
 
-    /* SLIDE CART DRAWER */
-    .drawer-scrim {
+    /* ========================================================= */
+    /* SLIDE-OUT CART DRAWER & CHECKOUT ENGINE */
+    /* ========================================================= */
+    .drawer-overlay {
       position: fixed;
-      top: 0;
-      left: 0;
-      width: 100vw;
-      height: 100vh;
-      background: rgba(28, 25, 23, 0.45);
-      backdrop-filter: blur(6px);
-      z-index: 100;
+      inset: 0;
+      background: rgba(11, 10, 9, 0.65);
+      backdrop-filter: blur(8px);
+      z-index: 1000;
       opacity: 0;
       pointer-events: none;
-      transition: opacity 0.3s ease;
+      transition: opacity 0.25s ease;
     }
-    .drawer-scrim.visible {
+    .drawer-overlay.open {
       opacity: 1;
       pointer-events: auto;
     }
     .cart-drawer {
       position: fixed;
-      top: 0;
-      right: 0;
-      width: 440px;
-      max-width: 90vw;
-      height: 100vh;
-      background: var(--sand-bg);
-      border-left: 1px solid var(--border-subtle);
-      z-index: 101;
+      top: 0; right: 0; bottom: 0;
+      width: 100%;
+      max-width: 480px;
+      background: var(--plaster);
+      z-index: 1001;
+      box-shadow: -12px 0 40px rgba(0, 0, 0, 0.25);
       transform: translateX(100%);
-      transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+      transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
       display: flex;
       flex-direction: column;
-      justify-content: space-between;
-      padding: 36px 32px;
-      box-shadow: -10px 0 40px rgba(0,0,0,0.1);
     }
-    .cart-drawer.visible {
+    .cart-drawer.open {
       transform: translateX(0);
     }
-    .drawer-top {
+    .drawer-head {
+      padding: 24px 28px;
+      background: var(--void);
+      color: #FFF;
       display: flex;
       justify-content: space-between;
       align-items: center;
-      border-bottom: 1px solid var(--border-subtle);
-      padding-bottom: 18px;
     }
-    .drawer-title {
-      font-family: var(--font-editorial);
-      font-size: 22px;
-      font-weight: 600;
-      letter-spacing: 0.05em;
+    .drawer-head-title {
+      font-family: var(--font-display);
+      font-size: 16px;
+      font-weight: 900;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
     }
-    .drawer-x {
-      background: none;
+    .drawer-close {
+      background: transparent;
       border: none;
+      color: var(--sand);
       font-size: 24px;
       cursor: pointer;
-      color: var(--charcoal);
+      line-height: 1;
+    }
+    .drawer-body {
+      flex: 1;
+      overflow-y: auto;
+      padding: 24px 28px;
     }
     .drawer-item {
-      display: flex;
+      display: grid;
+      grid-template-columns: 80px 1fr auto;
       gap: 16px;
-      margin-top: 24px;
-      padding-bottom: 24px;
-      border-bottom: 1px solid var(--border-subtle);
+      align-items: center;
+      padding: 16px 0;
+      border-bottom: 1px solid var(--border-light);
     }
-    .drawer-item img {
+    .drawer-item-img {
       width: 80px;
-      height: 105px;
-      object-fit: cover;
-      object-position: center 25%;
+      height: 100px;
+      background: #DDD;
       border-radius: 2px;
+      overflow: hidden;
     }
-
-    /* FOOTER */
-    footer {
-      border-top: 1px solid var(--border-subtle);
-      background: #F3ECE2;
-      padding: 60px 40px;
+    .drawer-item-img img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
     }
-    .footer-inner {
-      max-width: 1400px;
-      margin: 0 auto;
+    .drawer-item-name {
+      font-family: var(--font-serif);
+      font-size: 18px;
+      font-weight: 700;
+      line-height: 1.1;
+      margin-bottom: 4px;
+    }
+    .drawer-item-meta {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      color: var(--muted);
+    }
+    .drawer-item-price {
+      font-family: var(--font-mono);
+      font-size: 14px;
+      font-weight: 700;
+      color: var(--terracotta);
+    }
+    .drawer-foot {
+      padding: 24px 28px;
+      background: #FFF;
+      border-top: 1px solid var(--border-light);
+    }
+    .drawer-summary-row {
       display: flex;
       justify-content: space-between;
-      align-items: center;
+      font-family: var(--font-mono);
+      font-size: 12px;
+      margin-bottom: 8px;
     }
-    .footer-brand {
+    .drawer-summary-total {
+      font-family: var(--font-display);
+      font-size: 20px;
+      font-weight: 900;
+      margin-top: 12px;
+      padding-top: 12px;
+      border-top: 1px solid var(--border-light);
+      display: flex;
+      justify-content: space-between;
+    }
+
+    /* STICKY BOTTOM CHECKOUT TRIGGER FOR EXPLORERS */
+    .sticky-buy-dock {
+      position: fixed;
+      bottom: 24px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: rgba(11, 10, 9, 0.94);
+      backdrop-filter: blur(14px);
+      border: 1px solid rgba(255, 255, 255, 0.16);
+      border-radius: 40px;
+      padding: 8px 12px 8px 24px;
+      display: flex;
+      align-items: center;
+      gap: 24px;
+      box-shadow: 0 16px 40px rgba(0, 0, 0, 0.35);
+      z-index: 80;
+      transition: all 0.25s ease;
+    }
+    .dock-info {
       display: flex;
       flex-direction: column;
-      gap: 6px;
+    }
+    .dock-title {
+      font-family: var(--font-serif);
+      font-size: 16px;
+      font-weight: 700;
+      color: #FFF;
+      line-height: 1.1;
+    }
+    .dock-price {
+      font-family: var(--font-mono);
+      font-size: 12px;
+      color: var(--gold);
+      font-weight: 700;
+    }
+    .dock-size-pill {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      background: rgba(255, 255, 255, 0.12);
+      color: #FFF;
+      padding: 6px 12px;
+      border-radius: 20px;
+      cursor: pointer;
+    }
+    .dock-btn {
+      background: var(--terracotta);
+      color: #FFF;
+      border: none;
+      font-family: var(--font-display);
+      font-size: 12px;
+      font-weight: 900;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      padding: 12px 24px;
+      border-radius: 24px;
+      cursor: pointer;
+      transition: background 0.15s ease;
+    }
+    .dock-btn:hover {
+      background: var(--terracotta-hot);
+    }
+
+    /* FOOTER TELEMETRY & STUDIO LOCATION */
+    footer {
+      background: var(--void);
+      color: var(--muted);
+      padding: 80px 36px 40px;
+      border-top: 1px solid var(--border-dark);
+      font-family: var(--font-mono);
+      font-size: 11px;
+    }
+    .footer-inner {
+      max-width: 1560px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 2fr 1fr 1fr 1fr;
+      gap: 40px;
+      margin-bottom: 60px;
+    }
+    .footer-brand {
+      color: #FFF;
+      font-family: var(--font-display);
+      font-size: 24px;
+      font-weight: 900;
+      letter-spacing: 0.16em;
+      margin-bottom: 12px;
+    }
+    .footer-col h4 {
+      color: var(--sand);
+      text-transform: uppercase;
+      letter-spacing: 0.16em;
+      margin-bottom: 16px;
+      font-size: 11px;
+    }
+    .footer-col ul {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+    .footer-col a {
+      color: var(--muted);
+      text-decoration: none;
+      transition: color 0.15s ease;
+    }
+    .footer-col a:hover {
+      color: var(--terracotta-hot);
+    }
+    .footer-bottom {
+      max-width: 1560px;
+      margin: 0 auto;
+      padding-top: 24px;
+      border-top: 1px solid var(--border-dark);
+      display: flex;
+      justify-content: space-between;
+      color: #665F57;
+    }
+
+    /* RESPONSIVE BREAKPOINTS */
+    @media (max-width: 1024px) {
+      .header-grid { grid-template-columns: 1fr auto; }
+      .nav-left { display: none; }
+      .manifesto-strip { grid-template-columns: 1fr; }
+      .runway-tapestry { grid-template-columns: 1fr; }
+      .runway-card.card-hero { height: 600px; }
+      .card-stack { grid-template-columns: 1fr; }
+      .studio-grid { grid-template-columns: 1fr; }
+      .studio-stage-wrap { position: static; }
+      .specimen-grid { grid-template-columns: repeat(2, 1fr); }
+      .footer-inner { grid-template-columns: 1fr 1fr; }
+      .sticky-buy-dock { width: 92%; justify-content: space-between; gap: 12px; }
+    }
+    @media (max-width: 640px) {
+      .specimen-grid { grid-template-columns: 1fr; }
+      .size-matrix { grid-template-columns: repeat(3, 1fr); }
+      .telemetry-bar { display: none; }
+      .footer-inner { grid-template-columns: 1fr; }
     }
   </style>
 </head>
 <body>
 
-  <!-- TOP DISPATCH ANNOUNCEMENT -->
-  <div class="announcement-bar">
-    <span>ZIVA SUMMER CLUB // RESORT CAPSULE 2026</span>
-    <span class="pill">ONLINE EXCLUSIVE</span>
-    <span>COMPLIMENTARY SAME-DAY DISPATCH TO VICTORIA ISLAND & IKOYI</span>
+  <!-- TELEMETRY METRIC BAR -->
+  <div class="telemetry-bar">
+    <div class="telemetry-left">
+      <span><span class="pulse-dot"></span>LEKKI ATELIER DISPATCH ACTIVE</span>
+      <span>COORDINATES: 06°27'N 03°28'E</span>
+      <span>STUDIO TEMP: 31°C // RESORT HIGH TIDE</span>
+    </div>
+    <div class="telemetry-right">
+      <span class="telemetry-pill">BATCH 02 RUNWAY SPECIMEN</span>
+      <span>EST. SAME-DAY COURIER DISPATCH WITHIN 3 HRS</span>
+    </div>
   </div>
 
-  <!-- NAVIGATION -->
+  <!-- KINETIC RUNNING MARQUEE -->
+  <div class="ticker-wrap">
+    <div class="ticker-track-a">
+      ✦ ZIVA SUMMER CLUB ✦ RESORT CAPSULE 2026 ✦ CRAFTED IN LAGOS ✦ HAND-LOOMED VOILE & INDIGO BATIK ✦ EXPRESS SAME-DAY DISPATCH TO LEKKI & IKOYI ✦ 48-HR DHL AIR FREIGHT TO LONDON & NYC ✦
+      ✦ ZIVA SUMMER CLUB ✦ RESORT CAPSULE 2026 ✦ CRAFTED IN LAGOS ✦ HAND-LOOMED VOILE & INDIGO BATIK ✦ EXPRESS SAME-DAY DISPATCH TO LEKKI & IKOYI ✦ 48-HR DHL AIR FREIGHT TO LONDON & NYC ✦
+    </div>
+  </div>
+
+  <!-- MAIN NAVIGATION -->
   <header>
-    <div class="nav-wrap">
-      <ul class="nav-menu">
-        <li><a href="#" class="active">SUMMER CLUB</a></li>
-        <li><a href="#">COLLECTIONS</a></li>
-        <li><a href="#">EDITORIAL</a></li>
-        <li><a href="#">ATELIER</a></li>
+    <div class="header-grid">
+      <ul class="nav-left">
+        <li><a href="#view-lookbook" class="nav-link active" onclick="switchView('lookbook')">01 // Runway Spread</a></li>
+        <li><a href="#view-studio" class="nav-link" onclick="switchView('studio')">02 // Specimen PDP</a></li>
+        <li><a href="#dossier" class="nav-link">03 // Fabric Manifesto</a></li>
       </ul>
 
-      <a href="#" class="brand-logo">
-        <span class="brand-title">ZIVA LAGOS</span>
-        <span class="brand-sub">SUMMER CLUB</span>
+      <a href="#" class="brand-cluster">
+        <span class="brand-masthead">ZIVA LAGOS</span>
+        <span class="brand-subhead">Summer Club Atelier // Drop 04</span>
       </a>
 
       <div class="nav-right">
-        <select class="currency-switch" id="currency-select" onchange="setCurrency(this.value)">
+        <select class="currency-select" id="currency-select" onchange="updateCurrency(this.value)">
           <option value="NGN">NGN (₦)</option>
           <option value="USD">USD ($)</option>
           <option value="GBP">GBP (£)</option>
         </select>
-        <button class="cart-btn" onclick="openDrawer()">
-          <span>BAG</span>
-          <span style="background: rgba(255,255,255,0.25); padding: 1px 7px; border-radius: 10px;" id="bag-count">1</span>
+        <button class="view-switch-btn" id="toggle-view-btn" onclick="toggleMainView()">
+          <span id="view-mode-label">Switch to PDP Spec</span>
+        </button>
+        <button class="bag-trigger" onclick="openCart()">
+          <span>Cart</span>
+          <span class="bag-count" id="header-bag-count">1</span>
         </button>
       </div>
     </div>
   </header>
 
-  <!-- MAIN PRODUCT EXPERIENCE -->
-  <main class="pdp-container">
-
-    <!-- LEFT GALLERY COLUMN -->
-    <div class="gallery-column">
-      
-      <!-- Primary Large Hero Viewport -->
-      <div class="main-stage">
-        <img src="/assets/ziva/look-01-terracotta.jpg" alt="Ziva Summer Club - The Terracotta Tiered Halter Gown" id="hero-img">
-        <div class="stage-badge" id="hero-badge">ZIVA SUMMER CLUB // LOOK 01</div>
-        <div class="look-counter" id="look-counter">01 / 05</div>
-      </div>
-
-      <!-- Interactive 5-Look Capsule Strip -->
-      <div>
-        <div class="capsule-strip-label">
-          <span>CAPSULE WARDROBE (SELECT TO SWITCH LOOK)</span>
-          <span style="color: var(--terracotta);">5 EXCLUSIVE EDITIONS</span>
-        </div>
-        <div class="capsule-strip" style="margin-top: 8px;">
-          
-          <button class="capsule-thumb active" onclick="selectLook(0, this)">
-            <img src="/assets/ziva/look-01-terracotta.jpg" alt="Look 01 Terracotta Gown">
-            <span class="thumb-tag">01 RUST</span>
-          </button>
-          
-          <button class="capsule-thumb" onclick="selectLook(1, this)">
-            <img src="/assets/ziva/look-02-cobalt.jpg" alt="Look 02 Cobalt Slip Maxi">
-            <span class="thumb-tag">02 COBALT</span>
-          </button>
-
-          <button class="capsule-thumb" onclick="selectLook(2, this)">
-            <img src="/assets/ziva/look-03-jumpsuit.jpg" alt="Look 03 Batik Jumpsuit">
-            <span class="thumb-tag">03 INDIGO</span>
-          </button>
-
-          <button class="capsule-thumb" onclick="selectLook(3, this)">
-            <img src="/assets/ziva/look-04-skirt.jpg" alt="Look 04 Resort Skirt">
-            <span class="thumb-tag">04 ENSEMBLE</span>
-          </button>
-
-          <button class="capsule-thumb" onclick="selectLook(4, this)">
-            <img src="/assets/ziva/look-05-romper.jpg" alt="Look 05 Cabana Romper">
-            <span class="thumb-tag">05 CABANA</span>
-          </button>
-
-        </div>
-      </div>
-
+  <!-- EDITORIAL MANIFESTO HEADER -->
+  <section class="manifesto-strip">
+    <div class="manifesto-title">
+      The Sun-Baked <em>Sienna</em> & Indigo
+      <strong>Summer Club Resort Capsule</strong>
     </div>
-
-    <!-- RIGHT DETAILS & CONVERSION COLUMN -->
-    <div class="details-column">
-
-      <!-- Header & Title -->
-      <div>
-        <div class="collection-header">
-          <span class="collection-pill" id="capsule-pill">RESORT CAPSULE 2026</span>
-          <span class="atelier-note">LIMITED EDITION OF 24</span>
-        </div>
-        <h1 class="garment-title" id="garment-title" style="margin-top: 10px;">
-          THE TIERED TERRACOTTA HALTER GOWN
-        </h1>
-      </div>
-
-      <!-- Pricing & Reviews -->
-      <div class="pricing-tier">
-        <div>
-          <div class="price-value" id="display-price">₦175,000</div>
-          <div class="price-sub">COMPLIMENTARY LAGOS DISPATCH &amp; INSURANCE</div>
-        </div>
-        <div class="ratings-badge">
-          <span>★ 4.98</span>
-          <span style="color: var(--muted-brown); font-size: 11px;">(52 REVIEWS)</span>
-        </div>
-      </div>
-
-      <!-- Narrative Copy -->
-      <p class="narrative-p" id="narrative-text">
-        Sculpted from breathable triple-tiered raw silk-chiffon in sun-drenched rust terracotta. Features an elongated halter neckline and tiered cascade silhouette designed for warm coastal evenings. Hand-finished at the Victoria Island atelier.
-      </p>
-
-      <!-- Color Swatch Indicator -->
-      <div class="color-section">
-        <div class="color-label">
-          <span>SELECTED COLOR</span>
-          <span style="color: var(--muted-brown);" id="color-name">Sunbaked Terracotta</span>
-        </div>
-        <div class="swatch-row">
-          <div class="color-swatch active" onclick="selectLook(0)"><span style="background: #B35438;"></span></div>
-          <div class="color-swatch" onclick="selectLook(1)"><span style="background: #2552B5;"></span></div>
-          <div class="color-swatch" onclick="selectLook(2)"><span style="background: #233454;"></span></div>
-          <div class="color-swatch" onclick="selectLook(3)"><span style="background: #ECE6DD; border: 1px solid #CCC;"></span></div>
-          <div class="color-swatch" onclick="selectLook(4)"><span style="background: #333F54;"></span></div>
-        </div>
-      </div>
-
-      <!-- Sizing Matrix (54px Mobile Thumb Ergonomics) -->
-      <div class="size-section">
-        <div class="size-meta">
-          <span>SELECT SIZE (UK STANDARD)</span>
-          <span class="urgency-badge" id="size-urgency">ONLY 3 PIECES REMAINING IN UK 8</span>
-        </div>
-        <div class="size-buttons">
-          <button class="size-btn" onclick="setSize('UK 6', '4 pieces available', this)">UK 6</button>
-          <button class="size-btn active" onclick="setSize('UK 8', 'ONLY 3 PIECES REMAINING IN UK 8', this)">UK 8</button>
-          <button class="size-btn" onclick="setSize('UK 10', '5 pieces available', this)">UK 10</button>
-          <button class="size-btn" onclick="setSize('UK 12', '2 pieces available', this)">UK 12</button>
-          <button class="size-btn" onclick="setSize('UK 14', 'Last piece left', this)">UK 14</button>
-        </div>
-      </div>
-
-      <!-- Conversion CTAs -->
-      <div class="actions-wrap">
-        <button class="btn-paystack" onclick="triggerPaystack()">
-          <span>⚡ 1-TAP PAYSTACK EXPRESS</span>
-          <span id="cta-price-tag">// ₦175,000</span>
-        </button>
-        <button class="btn-drawer" onclick="openDrawer()">
-          ADD TO BAG // SLIDE DRAWER
-        </button>
-      </div>
-
-      <!-- Value Promises Strip -->
-      <div class="promises-grid">
-        <div class="promise-item">
-          <span class="promise-title">SAME-DAY DISPATCH</span>
-          <span class="promise-desc">Victoria Island, Ikoyi & Lekki</span>
-        </div>
-        <div class="promise-item">
-          <span class="promise-title">FREE EXCHANGES</span>
-          <span class="promise-desc">7-day doorstep size swap</span>
-        </div>
-        <div class="promise-item">
-          <span class="promise-title">INSTANT SETTLEMENT</span>
-          <span class="promise-desc">Paystack, Apple Pay, USSD</span>
-        </div>
-      </div>
-
-      <!-- Technical Tri-Modal Specs -->
-      <div>
-        <div class="specs-tabs-bar">
-          <button class="spec-tab active" onclick="setSpec('composition', this)">COMPOSITION</button>
-          <button class="spec-tab" onclick="setSpec('tailoring', this)">TAILORING</button>
-          <button class="spec-tab" onclick="setSpec('dispatch', this)">DISPATCH</button>
-        </div>
-        <div class="spec-body" id="spec-body">
-          <strong>FABRIC:</strong> 100% Lightweight Silk-Chiffon Tiered Cascade (240 GSM).<br>
-          <strong>DETAILS:</strong> Hand-turned halter neckline with hidden nape closure.<br>
-          <strong>CARE:</strong> Dry clean or cold hand rinse with gentle botanicals.
-        </div>
-      </div>
-
+    <div class="manifesto-meta">
+      <span class="highlight">Architectural Resort Wear // Lagos 2026</span>
+      Conceived at the intersection of Atlantic coastal leisure and West African artisanal textile heritage. Hand-dyed indigo batiks, cascading terracotta voile, and relaxed geometric cuts tailored for effortless tropical sovereignty.
     </div>
+  </section>
 
-  </main>
-
-  <!-- SLIDE CART DRAWER -->
-  <div class="drawer-scrim" id="drawer-scrim" onclick="closeDrawer()"></div>
-  <div class="cart-drawer" id="cart-drawer">
-    <div>
-      <div class="drawer-top">
-        <span class="drawer-title">YOUR RESORT BAG</span>
-        <button class="drawer-x" onclick="closeDrawer()">&times;</button>
-      </div>
-
-      <div class="drawer-item">
-        <img src="/assets/ziva/look-01-terracotta.jpg" id="drawer-item-img" alt="Selected Garment">
-        <div>
-          <div style="font-size: 13px; font-weight: 700;" id="drawer-item-title">THE TIERED TERRACOTTA HALTER GOWN</div>
-          <div style="font-size: 12px; color: var(--muted-brown); margin: 4px 0;" id="drawer-size-label">Size: UK 8</div>
-          <div style="font-family: var(--font-mono); font-size: 15px; font-weight: 700; color: var(--charcoal);" id="drawer-price-label">₦175,000</div>
-        </div>
-      </div>
-
-      <div style="margin-top: 24px; font-size: 12px; line-height: 1.6; color: var(--muted-brown);">
-        <div>✓ Dispatched directly from Victoria Island Studio</div>
-        <div>✓ Insured courier delivery included</div>
-        <div>✓ Zero hidden taxes or checkout surcharges</div>
-      </div>
+  <!-- VIEW TOGGLE CONTROLS -->
+  <div class="stage-tabs">
+    <div class="tab-pills">
+      <button class="tab-pill active" id="tab-lookbook" onclick="switchView('lookbook')">Lookbook Runway View</button>
+      <button class="tab-pill" id="tab-studio" onclick="switchView('studio')">Technical Specimen PDP</button>
     </div>
-
-    <div>
-      <div style="display: flex; justify-content: space-between; font-weight: 700; margin-bottom: 18px; font-size: 15px;">
-        <span>ESTIMATED TOTAL</span>
-        <span id="drawer-total-label">₦175,000</span>
-      </div>
-      <button class="btn-paystack" style="width: 100%;" onclick="triggerPaystack()">
-        PROCEED VIA PAYSTACK
-      </button>
+    <div class="capsule-counter">
+      CATALOG SPECIMEN // 05 OF 05 LOOKS READY FOR DISPATCH
     </div>
   </div>
 
-  <!-- FOOTER -->
+  <!-- ========================================================= -->
+  <!-- VIEW A: THE ASYMMETRIC RUNWAY TAPESTRY (MAGAZINE SPREAD)  -->
+  <!-- ========================================================= -->
+  <main id="view-lookbook">
+    <div class="runway-tapestry">
+
+      <!-- LOOK 01: HERO MONUMENTAL CARD (TERRACOTTA TIERED GOWN) -->
+      <article class="runway-card card-hero" onclick="selectAndOpenLook(0)">
+        <span class="card-crosshair tl">+ 06°27'N</span>
+        <span class="card-crosshair tr">+ 03°28'E</span>
+        <span class="card-badge">Specimen 01 // Flagship Look</span>
+        <img src="/assets/ziva/look-01-terracotta.jpg" alt="Ziva Lagos Cascading Terracotta Halter Gown" loading="eager">
+        <div class="card-caption">
+          <div>
+            <div class="caption-sub">Look 01 — Atelier Exclusive</div>
+            <h2 class="caption-title">The Cascading Terracotta Voile Gown</h2>
+            <div class="caption-sub" style="margin-top: 4px;">Tiered Halter Silhouette // Pure Siennese Drape</div>
+          </div>
+          <div style="text-align: right;">
+            <div class="caption-price" data-ngn="115000" data-usd="145" data-gbp="115">₦115,000</div>
+            <button class="caption-action">Inspect Specimen &rarr;</button>
+          </div>
+        </div>
+      </article>
+
+      <!-- RIGHT STACK: LOOK 02 & LOOK 03 -->
+      <div class="card-stack">
+
+        <!-- LOOK 02: AZURE COBALT SLIP -->
+        <article class="runway-card card-tall" onclick="selectAndOpenLook(1)">
+          <span class="card-crosshair tl">+ AZURE_DROP</span>
+          <span class="card-badge">Specimen 02</span>
+          <img src="/assets/ziva/look-02-cobalt.jpg" alt="Ziva Lagos Azure Cobalt Resort Dress" loading="lazy">
+          <div class="card-caption">
+            <div>
+              <div class="caption-sub">Look 02</div>
+              <h3 class="caption-title" style="font-size: 21px;">Azure Botanical Slip Gown</h3>
+            </div>
+            <div style="text-align: right;">
+              <div class="caption-price" data-ngn="98000" data-usd="125" data-gbp="98">₦98,000</div>
+              <button class="caption-action">Inspect</button>
+            </div>
+          </div>
+        </article>
+
+        <!-- LOOK 03: INDIGO WRAP JUMPSUIT -->
+        <article class="runway-card card-tall" onclick="selectAndOpenLook(2)">
+          <span class="card-crosshair tl">+ BATIK_CRAFT</span>
+          <span class="card-badge">Specimen 03</span>
+          <img src="/assets/ziva/look-03-jumpsuit.jpg" alt="Ziva Lagos Indigo Geometric Wrap Jumpsuit" loading="lazy">
+          <div class="card-caption">
+            <div>
+              <div class="caption-sub">Look 03</div>
+              <h3 class="caption-title" style="font-size: 21px;">Indigo Geometric Jumpsuit</h3>
+            </div>
+            <div style="text-align: right;">
+              <div class="caption-price" data-ngn="105000" data-usd="132" data-gbp="105">₦105,000</div>
+              <button class="caption-action">Inspect</button>
+            </div>
+          </div>
+        </article>
+
+        <!-- LOOK 04: IKAT GRAPHIC SPLIT SKIRT -->
+        <article class="runway-card card-tall" onclick="selectAndOpenLook(3)">
+          <span class="card-crosshair tl">+ GRAPHIC_SPLIT</span>
+          <span class="card-badge">Specimen 04</span>
+          <img src="/assets/ziva/look-04-skirt.jpg" alt="Ziva Lagos Graphic Split Maxi Skirt & White Halter" loading="lazy">
+          <div class="card-caption">
+            <div>
+              <div class="caption-sub">Look 04</div>
+              <h3 class="caption-title" style="font-size: 21px;">Ikat Split Skirt & Halter Set</h3>
+            </div>
+            <div style="text-align: right;">
+              <div class="caption-price" data-ngn="110000" data-usd="138" data-gbp="110">₦110,000</div>
+              <button class="caption-action">Inspect</button>
+            </div>
+          </div>
+        </article>
+
+        <!-- LOOK 05: ADIRE SUN ROMPER -->
+        <article class="runway-card card-tall" onclick="selectAndOpenLook(4)">
+          <span class="card-crosshair tl">+ LOUNGE_SUITE</span>
+          <span class="card-badge">Specimen 05</span>
+          <img src="/assets/ziva/look-05-romper.jpg" alt="Ziva Lagos Midnight Adire Resort Romper" loading="lazy">
+          <div class="card-caption">
+            <div>
+              <div class="caption-sub">Look 05</div>
+              <h3 class="caption-title" style="font-size: 21px;">Midnight Adire Sun Romper</h3>
+            </div>
+            <div style="text-align: right;">
+              <div class="caption-price" data-ngn="85000" data-usd="108" data-gbp="85">₦85,000</div>
+              <button class="caption-action">Inspect</button>
+            </div>
+          </div>
+        </article>
+
+      </div>
+    </div>
+  </main>
+
+  <!-- ========================================================= -->
+  <!-- VIEW B: ATELIER PDP SPECIMEN STUDIO (THE BUYING MATRIX)   -->
+  <!-- ========================================================= -->
+  <section id="view-studio">
+    <div class="studio-grid">
+
+      <!-- LEFT COLUMN: INTERACTIVE STAGE & 5-LOOK RUNWAY STRIP -->
+      <div class="studio-stage-wrap">
+        <div class="studio-stage">
+          <img id="active-stage-img" src="/assets/ziva/look-01-terracotta.jpg" alt="Active Look Stage">
+          <div class="stage-stamp" id="active-stage-stamp">
+            <span class="gold-tag">SPECIMEN NO. 01</span> // CASCADING TERRACOTTA GOWN
+          </div>
+          <div class="stage-coords">
+            LAGOS ATELIER // SPEC #ZIV-2026-RES
+          </div>
+        </div>
+
+        <div class="runway-strip-header">
+          <span>Runway Look Selector (Click to Switch Specimen)</span>
+          <span id="active-look-idx-label">01 / 05</span>
+        </div>
+
+        <!-- 5-THUMB INTERACTIVE CAROUSEL STRIP -->
+        <div class="runway-strip">
+          <button class="runway-thumb active" onclick="switchSpecimen(0)" title="Look 01: Cascading Terracotta Gown">
+            <img src="/assets/ziva/look-01-terracotta.jpg" alt="Look 01">
+            <span class="idx">01</span>
+          </button>
+          <button class="runway-thumb" onclick="switchSpecimen(1)" title="Look 02: Azure Cobalt Slip Gown">
+            <img src="/assets/ziva/look-02-cobalt.jpg" alt="Look 02">
+            <span class="idx">02</span>
+          </button>
+          <button class="runway-thumb" onclick="switchSpecimen(2)" title="Look 03: Indigo Wrap Jumpsuit">
+            <img src="/assets/ziva/look-03-jumpsuit.jpg" alt="Look 03">
+            <span class="idx">03</span>
+          </button>
+          <button class="runway-thumb" onclick="switchSpecimen(3)" title="Look 04: Graphic Split Skirt">
+            <img src="/assets/ziva/look-04-skirt.jpg" alt="Look 04">
+            <span class="idx">04</span>
+          </button>
+          <button class="runway-thumb" onclick="switchSpecimen(4)" title="Look 05: Midnight Adire Romper">
+            <img src="/assets/ziva/look-05-romper.jpg" alt="Look 05">
+            <span class="idx">05</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- RIGHT COLUMN: THE COMMERCIALLY GROUNDED BUYING SPECIFICATION -->
+      <div class="studio-spec">
+        <div class="spec-provenance">
+          <span>● ATELIER SPECIMEN DISPATCH</span>
+          <span>// LEKKI PHASE 1</span>
+        </div>
+
+        <h1 class="spec-title" id="spec-title">The Cascading Terracotta Voile Gown</h1>
+        <div class="spec-archetype" id="spec-archetype">SUMMER CLUB CAPSULE // SPECIMEN 01</div>
+
+        <div class="spec-pricing-block">
+          <div class="spec-price-main" id="spec-price-main">₦115,000</div>
+          <div class="spec-price-fx" id="spec-price-fx">≈ $145 USD / £115 GBP</div>
+          <div class="spec-stock-pulse" id="spec-stock-pulse">⚡ ONLY 3 UNITS IN BATCH 02</div>
+        </div>
+
+        <p class="spec-narrative" id="spec-narrative">
+          Engineered in sun-drenched sienna-washed lightweight cotton voile. Features four tiered cascading gathered tiers, halter cord tie, and open back detailing. Hand-tailored in our Lekki atelier with reinforced French seams designed for tropical humidity and high-fashion movement.
+        </p>
+
+        <!-- MATERIALITY & CONSTRUCTION ACCORDION -->
+        <div class="materiality-grid">
+          <div class="mat-item">
+            <strong>Fabric Weave</strong>
+            <span id="spec-mat-fabric">100% Breathable Siennese Cotton Voile</span>
+          </div>
+          <div class="mat-item">
+            <strong>Drape & Cut</strong>
+            <span id="spec-mat-cut">Cascading Tiered Maxi / Halter Back</span>
+          </div>
+          <div class="mat-item">
+            <strong>Artisan Technique</strong>
+            <span id="spec-mat-technique">Hand-Pleated Gathers & Double Stitching</span>
+          </div>
+          <div class="mat-item">
+            <strong>Care Protocol</strong>
+            <span>Dry Clean / Delicate Hand Wash Cold</span>
+          </div>
+        </div>
+
+        <!-- 54PX TACTILE SIZE MATRIX -->
+        <div class="size-section-header">
+          <span>Select Atelier Size (UK Standard)</span>
+          <span class="size-guide-link" onclick="alert('Ziva Lagos Size Architecture:\nUK 6: Bust 32\" / Waist 25\" / Hip 35\"\nUK 8: Bust 34\" / Waist 27\" / Hip 37\"\nUK 10: Bust 36\" / Waist 29\" / Hip 39\"\nUK 12: Bust 38\" / Waist 31\" / Hip 41\"\nUK 14: Bust 40\" / Waist 33\" / Hip 43\"\nUK 16: Bust 42\" / Waist 35\" / Hip 45\"')">Size Guide Matrix</span>
+        </div>
+
+        <div class="size-matrix" id="size-matrix">
+          <button class="size-pill" onclick="selectSize('UK 6', this)">
+            <span>UK 6</span>
+            <span class="stock-hint">2 Left</span>
+          </button>
+          <button class="size-pill active" onclick="selectSize('UK 8', this)">
+            <span>UK 8</span>
+            <span class="stock-hint">3 Left</span>
+          </button>
+          <button class="size-pill" onclick="selectSize('UK 10', this)">
+            <span>UK 10</span>
+            <span class="stock-hint">4 Left</span>
+          </button>
+          <button class="size-pill" onclick="selectSize('UK 12', this)">
+            <span>UK 12</span>
+            <span class="stock-hint">Last 1</span>
+          </button>
+          <button class="size-pill" onclick="selectSize('UK 14', this)">
+            <span>UK 14</span>
+            <span class="stock-hint">2 Left</span>
+          </button>
+          <button class="size-pill" onclick="selectSize('UK 16', this)">
+            <span>UK 16</span>
+            <span class="stock-hint">3 Left</span>
+          </button>
+        </div>
+
+        <!-- UPFRONT TRANSPARENT FREIGHT & COURIER ENGINE -->
+        <div class="courier-engine">
+          <div class="courier-engine-title">
+            <span>⚡ Upfront Courier Dispatch Engine (Zero Surprises)</span>
+          </div>
+          <div class="courier-options">
+            <label class="courier-row selected" onclick="selectCourier('lekki', 2500, 'Same-Day 3-Hr Courier (Lekki / Ikoyi / VI)')">
+              <div class="courier-left">
+                <input type="radio" name="courier" class="courier-radio" checked>
+                <span>Same-Day 3-Hr Courier (Lekki / Ikoyi / VI)</span>
+              </div>
+              <span class="courier-fee">₦2,500</span>
+            </label>
+
+            <label class="courier-row" onclick="selectCourier('mainland', 4500, 'Next-Morning Mainland Priority (Ikeja / Surulere / Yaba)')">
+              <div class="courier-left">
+                <input type="radio" name="courier" class="courier-radio">
+                <span>Next-Morning Mainland Priority (Ikeja / Yaba)</span>
+              </div>
+              <span class="courier-fee">₦4,500</span>
+            </label>
+
+            <label class="courier-row" onclick="selectCourier('air_cargo', 7500, 'Abuja & Port Harcourt Air Cargo (24-48 Hrs)')">
+              <div class="courier-left">
+                <input type="radio" name="courier" class="courier-radio">
+                <span>Abuja & PH Air Cargo (24–48 Hrs)</span>
+              </div>
+              <span class="courier-fee">₦7,500</span>
+            </label>
+
+            <label class="courier-row" onclick="selectCourier('dhl_intl', 62000, 'DHL Express Air Freight (London / NYC // 3-4 Days)')">
+              <div class="courier-left">
+                <input type="radio" name="courier" class="courier-radio">
+                <span>UK & US DHL Express Air (3–4 Days)</span>
+              </div>
+              <span class="courier-fee">£32 / $45</span>
+            </label>
+          </div>
+        </div>
+
+        <!-- PRIMARY CALL TO ACTION BUTTONS -->
+        <div class="action-matrix">
+          <button class="btn-checkout-primary" onclick="triggerInstantPaystack()">
+            <span>⚡ Instant Checkout (Paystack / Apple Pay)</span>
+          </button>
+          <button class="btn-add-bag" onclick="addToBagCurrent()">
+            <span>Add Specimen to Bag &rarr;</span>
+          </button>
+        </div>
+
+        <!-- TRI-MODAL PROOF CHIPS (EVALUATOR & SKEPTIC PEACE OF MIND) -->
+        <div class="proof-grid">
+          <div class="proof-item">
+            <strong>Physical Atelier</strong>
+            Plot 25 Lekki Phase 1, Lagos
+          </div>
+          <div class="proof-item">
+            <strong>Escrow Protection</strong>
+            100% Verified Paystack Gateway
+          </div>
+          <div class="proof-item">
+            <strong>Atelier Exchange</strong>
+            7-Day Complimentary Size Swap
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ========================================================= -->
+  <!-- RADICAL DOSSIER: THE 5 CAPSULE ARTIFACTS IN DARK VOID     -->
+  <!-- ========================================================= -->
+  <section class="capsule-dossier" id="dossier">
+    <div class="dossier-inner">
+      <div class="dossier-header">
+        <div class="dossier-title">
+          The 5 Capsule Specimens
+          <span>Complete Runway Roster // Hand-Loomed in Lagos</span>
+        </div>
+        <div class="dossier-summary">
+          Each specimen is crafted in strictly limited micro-batches of 25 numbered garments per silhouette. Woven with authentic West African indigo resist-dye, botanical screen prints, and rich earth-pigment cottons.
+        </div>
+      </div>
+
+      <div class="specimen-grid">
+
+        <!-- SPECIMEN 01 -->
+        <div class="specimen-tile" onclick="selectAndOpenLook(0)">
+          <div class="specimen-img-wrap">
+            <span class="specimen-number">NO. 01 / 05</span>
+            <img src="/assets/ziva/look-01-terracotta.jpg" alt="Specimen 01" loading="lazy">
+          </div>
+          <div class="specimen-details">
+            <div class="specimen-tag">Siennese Voile</div>
+            <h4 class="specimen-name">Cascading Terracotta Gown</h4>
+            <div class="specimen-price-row">
+              <span class="specimen-price-tag" data-ngn="115000">₦115,000</span>
+              <button class="specimen-select-btn">Select Specimen</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- SPECIMEN 02 -->
+        <div class="specimen-tile" onclick="selectAndOpenLook(1)">
+          <div class="specimen-img-wrap">
+            <span class="specimen-number">NO. 02 / 05</span>
+            <img src="/assets/ziva/look-02-cobalt.jpg" alt="Specimen 02" loading="lazy">
+          </div>
+          <div class="specimen-details">
+            <div class="specimen-tag">Botanical Azure</div>
+            <h4 class="specimen-name">Azure Cobalt Slip Gown</h4>
+            <div class="specimen-price-row">
+              <span class="specimen-price-tag" data-ngn="98000">₦98,000</span>
+              <button class="specimen-select-btn">Select Specimen</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- SPECIMEN 03 -->
+        <div class="specimen-tile" onclick="selectAndOpenLook(2)">
+          <div class="specimen-img-wrap">
+            <span class="specimen-number">NO. 03 / 05</span>
+            <img src="/assets/ziva/look-03-jumpsuit.jpg" alt="Specimen 03" loading="lazy">
+          </div>
+          <div class="specimen-details">
+            <div class="specimen-tag">Indigo Batik</div>
+            <h4 class="specimen-name">Indigo Geometric Jumpsuit</h4>
+            <div class="specimen-price-row">
+              <span class="specimen-price-tag" data-ngn="105000">₦105,000</span>
+              <button class="specimen-select-btn">Select Specimen</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- SPECIMEN 04 -->
+        <div class="specimen-tile" onclick="selectAndOpenLook(3)">
+          <div class="specimen-img-wrap">
+            <span class="specimen-number">NO. 04 / 05</span>
+            <img src="/assets/ziva/look-04-skirt.jpg" alt="Specimen 04" loading="lazy">
+          </div>
+          <div class="specimen-details">
+            <div class="specimen-tag">Ikat Print</div>
+            <h4 class="specimen-name">Ikat Split Maxi & Halter</h4>
+            <div class="specimen-price-row">
+              <span class="specimen-price-tag" data-ngn="110000">₦110,000</span>
+              <button class="specimen-select-btn">Select Specimen</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- SPECIMEN 05 -->
+        <div class="specimen-tile" onclick="selectAndOpenLook(4)">
+          <div class="specimen-img-wrap">
+            <span class="specimen-number">NO. 05 / 05</span>
+            <img src="/assets/ziva/look-05-romper.jpg" alt="Specimen 05" loading="lazy">
+          </div>
+          <div class="specimen-details">
+            <div class="specimen-tag">Midnight Adire</div>
+            <h4 class="specimen-name">Midnight Adire Romper</h4>
+            <div class="specimen-price-row">
+              <span class="specimen-price-tag" data-ngn="85000">₦85,000</span>
+              <button class="specimen-select-btn">Select Specimen</button>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ========================================================= -->
+  <!-- SLIDE-OUT CART DRAWER & INSTANT ORDER REVIEW              -->
+  <!-- ========================================================= -->
+  <div class="drawer-overlay" id="drawer-overlay" onclick="closeCart()"></div>
+  <aside class="cart-drawer" id="cart-drawer">
+    <div class="drawer-head">
+      <div class="drawer-head-title">Atelier Dispatch Bag</div>
+      <button class="drawer-close" onclick="closeCart()">&times;</button>
+    </div>
+    <div class="drawer-body" id="drawer-items">
+      <div class="drawer-item">
+        <div class="drawer-item-img">
+          <img id="drawer-img" src="/assets/ziva/look-01-terracotta.jpg" alt="Bag Item">
+        </div>
+        <div>
+          <div class="drawer-item-name" id="drawer-item-title">Cascading Terracotta Gown</div>
+          <div class="drawer-item-meta" id="drawer-item-meta">Size: UK 8 // Batch 02</div>
+          <div class="drawer-item-meta" style="color: #10B981; margin-top: 2px;">● Reserved for 15:00 min</div>
+        </div>
+        <div class="drawer-item-price" id="drawer-item-price">₦115,000</div>
+      </div>
+    </div>
+    <div class="drawer-foot">
+      <div class="drawer-summary-row">
+        <span>Garment Subtotal</span>
+        <span id="drawer-subtotal">₦115,000</span>
+      </div>
+      <div class="drawer-summary-row">
+        <span>Courier Freight (<span id="drawer-courier-label">Lekki Same-Day</span>)</span>
+        <span id="drawer-courier-fee">₦2,500</span>
+      </div>
+      <div class="drawer-summary-total">
+        <span>Total Due</span>
+        <span id="drawer-total">₦117,500</span>
+      </div>
+      <button class="btn-checkout-primary" style="margin-top: 18px;" onclick="triggerPaystackCheckoutModal()">
+        <span>Lock Order via Paystack &rarr;</span>
+      </button>
+    </div>
+  </aside>
+
+  <!-- STICKY FLOATING BUY DOCK (ACCELERATES REVENUE VELOCITY) -->
+  <div class="sticky-buy-dock" id="sticky-dock">
+    <div class="dock-info">
+      <div class="dock-title" id="dock-title">The Cascading Terracotta Gown</div>
+      <div class="dock-price" id="dock-price">₦115,000 // Batch 02</div>
+    </div>
+    <div class="dock-size-pill" id="dock-size" onclick="switchView('studio')">
+      Size: UK 8 ▾
+    </div>
+    <button class="dock-btn" onclick="openCart()">
+      Instant Bag (1) &rarr;
+    </button>
+  </div>
+
+  <!-- ATELIER FOOTER -->
   <footer>
     <div class="footer-inner">
-      <div class="footer-brand">
-        <div style="font-family: var(--font-editorial); font-size: 20px; font-weight: 700; letter-spacing: 0.15em;">ZIVA LAGOS</div>
-        <div style="font-size: 12px; color: var(--muted-brown);">Victoria Island Atelier // Lagos, Nigeria</div>
+      <div>
+        <div class="footer-brand">ZIVA LAGOS</div>
+        <p style="line-height: 1.7; max-width: 380px;">
+          Resort Atelier & Contemporary Ready-to-Wear design house based in Lagos, Nigeria. Empowering modern women through architectural silhouettes, artisanal West African textiles, and sun-soaked effortless sophistication.
+        </p>
+        <p style="margin-top: 16px; color: var(--sand);">
+          Atelier Flagship: Plot 25 Adebisi Popoola, Lekki Phase 1, Lagos, Nigeria.
+        </p>
       </div>
-      <div style="font-family: var(--font-mono); font-size: 11px; color: var(--muted-brown);">
-        RE-ARCHITECTED BY BILLY BENJAMIN CONSULTING // SYSTEM v9.0-ADAPTIVE
+
+      <div class="footer-col">
+        <h4>Capsule Drops</h4>
+        <ul>
+          <li><a href="#" onclick="selectAndOpenLook(0)">01 // Sienna Cascades</a></li>
+          <li><a href="#" onclick="selectAndOpenLook(1)">02 // Azure Slip Gown</a></li>
+          <li><a href="#" onclick="selectAndOpenLook(2)">03 // Indigo Jumpsuit</a></li>
+          <li><a href="#" onclick="selectAndOpenLook(3)">04 // Ikat Split Skirt</a></li>
+          <li><a href="#" onclick="selectAndOpenLook(4)">05 // Midnight Romper</a></li>
+        </ul>
       </div>
+
+      <div class="footer-col">
+        <h4>Freight Logistics</h4>
+        <ul>
+          <li><a href="#">Lagos Same-Day Bike Dispatch</a></li>
+          <li><a href="#">Mainland Overnight Courier</a></li>
+          <li><a href="#">Abuja / PH Express Cargo</a></li>
+          <li><a href="#">DHL Express Global (UK/US)</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-col">
+        <h4>Assurance</h4>
+        <ul>
+          <li><a href="#">100% Verified Paystack Escrow</a></li>
+          <li><a href="#">7-Day Size Exchange</a></li>
+          <li><a href="#">Lagos Studio Pick-Up</a></li>
+          <li><a href="#">WhatsApp VIP Concierge</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="footer-bottom">
+      <div>© 2026 ZIVA LAGOS ATELIER. REDESIGNED & DIGITALLY ARCHITECTED BY BILLY BENJAMIN CONSULTING.</div>
+      <div>LAGOS // LONDON // NEW YORK // ACCRA</div>
     </div>
   </footer>
 
+  <!-- SCRIPT LOGIC (INTERACTIVE LOOKBOOK, SPECIMEN MATRIX, FX CONVERTER) -->
   <script>
-    // 5-Look Ziva Summer Club Capsule Catalog
-    const capsule = [
+    const LOOKS = [
       {
-        num: "01",
-        title: "THE TIERED TERRACOTTA HALTER GOWN",
-        color: "Sunbaked Terracotta",
-        badge: "ZIVA SUMMER CLUB // LOOK 01",
-        image: "/assets/ziva/look-01-terracotta.jpg",
-        prices: { NGN: "175,000", USD: "115", GBP: "92" },
-        narrative: "Sculpted from breathable triple-tiered raw silk-chiffon in sun-drenched rust terracotta. Features an elongated halter neckline and tiered cascade silhouette designed for warm coastal evenings. Hand-finished at the Victoria Island atelier.",
-        composition: "<strong>FABRIC:</strong> 100% Lightweight Silk-Chiffon Tiered Cascade (240 GSM).<br><strong>DETAILS:</strong> Hand-turned halter neckline with hidden nape closure.<br><strong>CARE:</strong> Dry clean or cold hand rinse with gentle botanicals.",
-        stock: "ONLY 3 PIECES REMAINING IN UK 8"
+        id: 0,
+        name: "The Cascading Terracotta Voile Gown",
+        archetype: "SUMMER CLUB RESORT // SPECIMEN 01",
+        priceNGN: 115000,
+        priceUSD: 145,
+        priceGBP: 115,
+        img: "/assets/ziva/look-01-terracotta.jpg",
+        stock: "⚡ ONLY 3 UNITS IN BATCH 02",
+        narrative: "Engineered in sun-drenched sienna-washed lightweight cotton voile. Features four tiered gathered tiers, halter cord tie, and open back detailing. Hand-tailored in our Lekki atelier with reinforced French seams designed for tropical humidity and high-fashion movement.",
+        fabric: "100% Breathable Siennese Cotton Voile",
+        cut: "Cascading Tiered Maxi / Halter Back",
+        technique: "Hand-Pleated Gathers & Double Stitching",
+        stamp: "<span class='gold-tag'>SPECIMEN NO. 01</span> // CASCADING TERRACOTTA GOWN"
       },
       {
-        num: "02",
-        title: "THE COBALT ADIRE SLIP MAXI",
-        color: "Indigo & Cobalt Botanical",
-        badge: "ZIVA SUMMER CLUB // LOOK 02",
-        image: "/assets/ziva/look-02-cobalt.jpg",
-        prices: { NGN: "155,000", USD: "100", GBP: "82" },
-        narrative: "Fluid slip maxi dress tailored from Nigerian hand-printed cobalt adire silk. Delicate spaghetti straps, deep V-neckline, and an effortless floor-sweeping drape engineered for tropical breeze and resort celebrations.",
-        composition: "<strong>FABRIC:</strong> 100% Hand-Printed Nigerian Silk Habotai (220 GSM).<br><strong>DETAILS:</strong> Adjustable bias straps with hand-finished French seams.<br><strong>CARE:</strong> Cold hand wash inside out, lay flat in shade.",
-        stock: "4 PIECES REMAINING IN UK 8"
+        id: 1,
+        name: "Azure Cobalt Botanical Maxi Slip",
+        archetype: "SUMMER CLUB RESORT // SPECIMEN 02",
+        priceNGN: 98000,
+        priceUSD: 125,
+        priceGBP: 98,
+        img: "/assets/ziva/look-02-cobalt.jpg",
+        stock: "⚡ ONLY 5 UNITS IN BATCH 02",
+        narrative: "An intoxicating coastal silhouette cut from flowing cobalt and ivory botanical satin-finish voile. Clean spaghetti straps frame an effortless plunging neckline that gracefully pools at the ankles.",
+        fabric: "100% Lightweight Botanical Viscose Satin",
+        cut: "Bias-Cut Maxi Slip / Fluid Hemline",
+        technique: "Botanical Screen Print & French Seaming",
+        stamp: "<span class='gold-tag'>SPECIMEN NO. 02</span> // AZURE COBALT SLIP GOWN"
       },
       {
-        num: "03",
-        title: "THE INDIGO BATIK WRAP JUMPSUIT",
-        color: "Deep Indigo Ikat",
-        badge: "ZIVA SUMMER CLUB // LOOK 03",
-        image: "/assets/ziva/look-03-jumpsuit.jpg",
-        prices: { NGN: "145,000", USD: "95", GBP: "78" },
-        narrative: "A sharp, tailored wrap jumpsuit featuring a custom indigo geometric batik motif. Cinched waist sash with tapered jogger hems, combining architectural structure with relaxed resort poise.",
-        composition: "<strong>FABRIC:</strong> 100% Premium Cotton-Linen Twill with Natural Indigo Dye.<br><strong>DETAILS:</strong> Crossover surplice bodice, side slant pockets, elasticated ankle cuffs.<br><strong>CARE:</strong> Dry clean recommended to preserve artisanal indigo vibrancy.",
-        stock: "ONLY 2 PIECES REMAINING"
+        id: 2,
+        name: "Indigo Geometric Wrap Jumpsuit",
+        archetype: "SUMMER CLUB RESORT // SPECIMEN 03",
+        priceNGN: 105000,
+        priceUSD: 132,
+        priceGBP: 105,
+        img: "/assets/ziva/look-03-jumpsuit.jpg",
+        stock: "⚡ ONLY 4 UNITS IN BATCH 02",
+        narrative: "A masterclass in effortless structure. Indigo-dyed geometric tribal motifs with a plunging crossover surplice bodice, cinched self-tie belt sash, and tapered elasticized cuffs that hit delicately above strappy heels.",
+        fabric: "West African Indigo-Dyed Cotton Crepe",
+        cut: "Sleeveless Wrap Bodice / Tapered Cuffed Ankle",
+        technique: "Resist Dyeing & Tailored Dart Construction",
+        stamp: "<span class='gold-tag'>SPECIMEN NO. 03</span> // INDIGO WRAP JUMPSUIT"
       },
       {
-        num: "04",
-        title: "THE RESORT PLEATED MAXI & RACER TANK",
-        color: "Ivory & Navy Motif",
-        badge: "ZIVA SUMMER CLUB // LOOK 04",
-        image: "/assets/ziva/look-04-skirt.jpg",
-        prices: { NGN: "135,000", USD: "88", GBP: "72" },
-        narrative: "Two-piece capsule ensemble pairing a structured ribbed cotton racerback tank with a high-waisted pleated midi skirt in heritage indigo tile weave. Functional deep side pockets with interior tie waistband.",
-        composition: "<strong>TOP:</strong> 95% Organic Ribbed Cotton, 5% Spandex.<br><strong>SKIRT:</strong> 100% Woven Linen-Cotton Blend (260 GSM).<br><strong>CARE:</strong> Machine wash cold gentle cycle.",
-        stock: "IN STOCK (5 PIECES AVAILABLE)"
+        id: 3,
+        name: "Ikat Graphic Split Maxi & Halter Set",
+        archetype: "SUMMER CLUB RESORT // SPECIMEN 04",
+        priceNGN: 110000,
+        priceUSD: 138,
+        priceGBP: 110,
+        img: "/assets/ziva/look-04-skirt.jpg",
+        stock: "⚡ ONLY 3 UNITS IN BATCH 02",
+        narrative: "Two-piece resort power set. Featuring an ivory rib knit halter crop top paired with an ultra-voluminous high-waist split maxi skirt cut from midnight navy and pewter geo-ikat woven cotton with deep functional side pockets.",
+        fabric: "Geo-Ikat Woven Cotton & Compact Ribbed Knit",
+        cut: "High-Waist Gathered Maxi Skirt with Thigh Split",
+        technique: "Double-Weave Tension Looming & Hidden Pockets",
+        stamp: "<span class='gold-tag'>SPECIMEN NO. 04</span> // IKAT SPLIT SKIRT SET"
       },
       {
-        num: "05",
-        title: "THE CABANA SLEEVELESS POCKET ROMPER",
-        color: "Midnight Navy Micro-Print",
-        badge: "ZIVA SUMMER CLUB // LOOK 05",
-        image: "/assets/ziva/look-05-romper.jpg",
-        prices: { NGN: "98,000", USD: "65", GBP: "52" },
-        narrative: "Casual luxury engineered for daytime lounging. High crew-neck sleeveless playsuit with elasticated drawstring waist and relaxed thigh-length shorts. Features subtle micro-geometric artisan print.",
-        composition: "<strong>FABRIC:</strong> 100% Breathable Washed Rayon-Linen.<br><strong>DETAILS:</strong> Back keyhole closure with shell button, patch pockets.<br><strong>CARE:</strong> Cold hand wash, gentle press.",
-        stock: "ONLY 1 PIECE REMAINING IN UK 8"
+        id: 4,
+        name: "Midnight Adire Sun Romper",
+        archetype: "SUMMER CLUB RESORT // SPECIMEN 05",
+        priceNGN: 85000,
+        priceUSD: 108,
+        priceGBP: 85,
+        img: "/assets/ziva/look-05-romper.jpg",
+        stock: "⚡ ONLY 2 UNITS IN BATCH 02",
+        narrative: "The quintessential beach lounge essential. Tailored in deep indigo midnight Adire patterns with a relaxed sleeveless crewneck, elastic waist cincher, and breezy mid-thigh shorts crafted for sun-drenched coastal days.",
+        fabric: "100% Softened Indigo Adire Cotton",
+        cut: "Relaxed Fit Sleeveless Romper / Elastic Waist",
+        technique: "Artisanal Resist Printing & Bound Armholes",
+        stamp: "<span class='gold-tag'>SPECIMEN NO. 05</span> // MIDNIGHT ADIRE ROMPER"
       }
     ];
 
-    let currentLookIndex = 0;
-    let currentCurrency = 'NGN';
-    const currencySymbols = { NGN: '₦', USD: '$', GBP: '£' };
+    let currentLookIdx = 0;
+    let selectedSize = "UK 8";
+    let selectedCurrency = "NGN";
+    let selectedCourierFee = 2500;
+    let selectedCourierLabel = "Lekki Same-Day (3-Hr)";
 
-    function selectLook(index, btnEl) {
-      currentLookIndex = index;
-      const item = capsule[index];
+    function switchView(mode) {
+      const lookbookSection = document.getElementById("view-lookbook");
+      const studioSection = document.getElementById("view-studio");
+      const tabLookbook = document.getElementById("tab-lookbook");
+      const tabStudio = document.getElementById("tab-studio");
+      const toggleLabel = document.getElementById("view-mode-label");
 
-      // Update main gallery stage with smooth transition
-      const heroImg = document.getElementById('hero-img');
-      heroImg.style.opacity = '0.3';
-      setTimeout(() => {
-        heroImg.src = item.image;
-        heroImg.style.opacity = '1';
-      }, 150);
-
-      document.getElementById('hero-badge').innerText = item.badge;
-      document.getElementById('look-counter').innerText = `0${index + 1} / 05`;
-
-      // Update textual content
-      document.getElementById('garment-title').innerText = item.title;
-      document.getElementById('narrative-text').innerText = item.narrative;
-      document.getElementById('color-name').innerText = item.color;
-      document.getElementById('size-urgency').innerText = item.stock;
-
-      // Update active thumbnails
-      document.querySelectorAll('.capsule-thumb').forEach((thumb, idx) => {
-        thumb.classList.toggle('active', idx === index);
-      });
-
-      // Update active color swatches
-      document.querySelectorAll('.color-swatch').forEach((swatch, idx) => {
-        swatch.classList.toggle('active', idx === index);
-      });
-
-      // Update prices
-      renderPrices();
-
-      // Update drawer preview item
-      document.getElementById('drawer-item-img').src = item.image;
-      document.getElementById('drawer-item-title').innerText = item.title;
-    }
-
-    function renderPrices() {
-      const item = capsule[currentLookIndex];
-      const symbol = currencySymbols[currentCurrency];
-      const val = item.prices[currentCurrency];
-      
-      document.getElementById('display-price').innerText = `${symbol}${val}`;
-      document.getElementById('cta-price-tag').innerText = `// ${symbol}${val}`;
-      document.getElementById('drawer-price-label').innerText = `${symbol}${val}`;
-      document.getElementById('drawer-total-label').innerText = `${symbol}${val}`;
-    }
-
-    function setCurrency(curr) {
-      currentCurrency = curr;
-      renderPrices();
-    }
-
-    function setSize(size, msg, btn) {
-      document.querySelectorAll('.size-btn').forEach(b => b.classList.remove('active'));
-      btn.classList.add('active');
-      document.getElementById('size-urgency').innerText = msg;
-      document.getElementById('drawer-size-label').innerText = `Size: ${size}`;
-    }
-
-    function setSpec(tab, btn) {
-      document.querySelectorAll('.spec-tab').forEach(b => b.classList.remove('active'));
-      btn.classList.add('active');
-      const item = capsule[currentLookIndex];
-      const body = document.getElementById('spec-body');
-      
-      if (tab === 'composition') {
-        body.innerHTML = item.composition;
-      } else if (tab === 'tailoring') {
-        body.innerHTML = `<strong>FIT:</strong> Proportional Nigerian/UK sizing.<br><strong>MODEL MEASUREMENTS:</strong> Model is 5'10" (178cm), Bust 33", Waist 25", Hips 36" wearing UK 8.<br><strong>SILHOUETTE:</strong> Engineered with relaxed coastal ease.`;
-      } else if (tab === 'dispatch') {
-        body.innerHTML = `<strong>LAGOS:</strong> Same-day dispatch for orders confirmed before 2:00 PM (Victoria Island, Ikoyi, Lekki Phase 1).<br><strong>NIGERIA:</strong> 24–48 hours statewide courier via DHL.<br><strong>WORLDWIDE:</strong> 3–5 business days via DHL Express.<br><strong>RETURNS:</strong> 7-day complimentary doorstep size exchange.`;
+      if (mode === "studio") {
+        lookbookSection.style.display = "none";
+        studioSection.style.display = "block";
+        tabLookbook.classList.remove("active");
+        tabStudio.classList.add("active");
+        toggleLabel.textContent = "Switch to Lookbook";
+        window.scrollTo({ top: studioSection.offsetTop - 80, behavior: "smooth" });
+      } else {
+        lookbookSection.style.display = "block";
+        studioSection.style.display = "none";
+        tabLookbook.classList.add("active");
+        tabStudio.classList.remove("active");
+        toggleLabel.textContent = "Switch to PDP Spec";
       }
     }
 
-    function openDrawer() {
-      document.getElementById('drawer-scrim').classList.add('visible');
-      document.getElementById('cart-drawer').classList.add('visible');
+    function toggleMainView() {
+      const studioSection = document.getElementById("view-studio");
+      if (studioSection.style.display === "block") {
+        switchView("lookbook");
+      } else {
+        switchView("studio");
+      }
     }
 
-    function closeDrawer() {
-      document.getElementById('drawer-scrim').classList.remove('visible');
-      document.getElementById('cart-drawer').classList.remove('visible');
+    function selectAndOpenLook(idx) {
+      switchSpecimen(idx);
+      switchView("studio");
     }
 
-    function triggerPaystack() {
-      const item = capsule[currentLookIndex];
-      const symbol = currencySymbols[currentCurrency];
-      const val = item.prices[currentCurrency];
-      alert(`⚡ PAYSTACK MODAL ACTIVE:\nInitializing instant 1-tap checkout for ${item.title} (${symbol}${val})\n• Card, Bank Transfer, Apple Pay & USSD enabled.`);
+    function switchSpecimen(idx) {
+      currentLookIdx = idx;
+      const look = LOOKS[idx];
+
+      // Update stage image with smooth fade
+      const stageImg = document.getElementById("active-stage-img");
+      stageImg.style.opacity = "0.2";
+      setTimeout(() => {
+        stageImg.src = look.img;
+        stageImg.style.opacity = "1";
+      }, 150);
+
+      document.getElementById("active-stage-stamp").innerHTML = look.stamp;
+      document.getElementById("active-look-idx-label").textContent = `0${idx + 1} / 05`;
+
+      // Update thumb active state
+      const thumbs = document.querySelectorAll(".runway-thumb");
+      thumbs.forEach((thumb, i) => {
+        if (i === idx) thumb.classList.add("active");
+        else thumb.classList.remove("active");
+      });
+
+      // Update Spec Text
+      document.getElementById("spec-title").textContent = look.name;
+      document.getElementById("spec-archetype").textContent = look.archetype;
+      document.getElementById("spec-narrative").textContent = look.narrative;
+      document.getElementById("spec-mat-fabric").textContent = look.fabric;
+      document.getElementById("spec-mat-cut").textContent = look.cut;
+      document.getElementById("spec-mat-technique").textContent = look.technique;
+      document.getElementById("spec-stock-pulse").textContent = look.stock;
+
+      // Update Sticky Dock
+      document.getElementById("dock-title").textContent = look.name;
+
+      renderPrices();
+      updateCartDrawerItem();
     }
+
+    function selectSize(size, el) {
+      selectedSize = size;
+      document.querySelectorAll(".size-pill").forEach(pill => pill.classList.remove("active"));
+      el.classList.add("active");
+      document.getElementById("dock-size").textContent = `Size: ${size} ▾`;
+      updateCartDrawerItem();
+    }
+
+    function selectCourier(type, fee, label) {
+      selectedCourierFee = fee;
+      selectedCourierLabel = label;
+      document.querySelectorAll(".courier-row").forEach(row => row.classList.remove("selected"));
+      event.currentTarget.classList.add("selected");
+      event.currentTarget.querySelector("input").checked = true;
+      updateCartTotals();
+    }
+
+    function updateCurrency(curr) {
+      selectedCurrency = curr;
+      renderPrices();
+      updateCartTotals();
+    }
+
+    function formatCurrency(amountNGN, amountUSD, amountGBP) {
+      if (selectedCurrency === "USD") return `$${amountUSD.toLocaleString()}`;
+      if (selectedCurrency === "GBP") return `£${amountGBP.toLocaleString()}`;
+      return `₦${amountNGN.toLocaleString()}`;
+    }
+
+    function renderPrices() {
+      const look = LOOKS[currentLookIdx];
+      const mainPriceStr = formatCurrency(look.priceNGN, look.priceUSD, look.priceGBP);
+      document.getElementById("spec-price-main").textContent = mainPriceStr;
+      document.getElementById("dock-price").textContent = `${mainPriceStr} // Batch 02`;
+
+      if (selectedCurrency === "NGN") {
+        document.getElementById("spec-price-fx").textContent = `≈ $${look.priceUSD} USD / £${look.priceGBP} GBP`;
+      } else if (selectedCurrency === "USD") {
+        document.getElementById("spec-price-fx").textContent = `≈ ₦${look.priceNGN.toLocaleString()} NGN`;
+      } else {
+        document.getElementById("spec-price-fx").textContent = `≈ ₦${look.priceNGN.toLocaleString()} NGN`;
+      }
+    }
+
+    function openCart() {
+      document.getElementById("drawer-overlay").classList.add("open");
+      document.getElementById("cart-drawer").classList.add("open");
+      updateCartDrawerItem();
+    }
+
+    function closeCart() {
+      document.getElementById("drawer-overlay").classList.remove("open");
+      document.getElementById("cart-drawer").classList.remove("open");
+    }
+
+    function updateCartDrawerItem() {
+      const look = LOOKS[currentLookIdx];
+      document.getElementById("drawer-img").src = look.img;
+      document.getElementById("drawer-item-title").textContent = look.name;
+      document.getElementById("drawer-item-meta").textContent = `Size: ${selectedSize} // Batch 02 Atelier`;
+      document.getElementById("drawer-item-price").textContent = formatCurrency(look.priceNGN, look.priceUSD, look.priceGBP);
+      updateCartTotals();
+    }
+
+    function updateCartTotals() {
+      const look = LOOKS[currentLookIdx];
+      const subtotalNGN = look.priceNGN;
+      const totalNGN = subtotalNGN + selectedCourierFee;
+
+      document.getElementById("drawer-subtotal").textContent = `₦${subtotalNGN.toLocaleString()}`;
+      document.getElementById("drawer-courier-label").textContent = selectedCourierLabel;
+      document.getElementById("drawer-courier-fee").textContent = `₦${selectedCourierFee.toLocaleString()}`;
+      document.getElementById("drawer-total").textContent = `₦${totalNGN.toLocaleString()}`;
+    }
+
+    function addToBagCurrent() {
+      openCart();
+    }
+
+    function triggerInstantPaystack() {
+      openCart();
+    }
+
+    function triggerPaystackCheckoutModal() {
+      const look = LOOKS[currentLookIdx];
+      const totalNGN = look.priceNGN + selectedCourierFee;
+      alert(`[PAYSTACK EXPRESS GATEWAY ENGAGED]\n\nAtelier Specimen: ${look.name}\nSize: ${selectedSize}\nCourier: ${selectedCourierLabel}\nTotal Amount Due: ₦${totalNGN.toLocaleString()}\n\nConnecting to Paystack Secure Checkout...`);
+    }
+
+    // Initialize state on DOM ready
+    window.addEventListener("DOMContentLoaded", () => {
+      switchSpecimen(0);
+      renderPrices();
+    });
   </script>
-
 </body>
 </html>

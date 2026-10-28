@@ -3,10 +3,10 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>ZEPHANS & CO // LEKKI FLAGSHIP E-COMMERCE</title>
+  <title>ZEPHANS & CO // AVANT-GARDE LEKKI ATELIER</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Playfair+Display:ital,wght@0,600;0,700;1,400&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;600;700;900&family=Cormorant+Garamond:ital,wght@1,400;1,600;1,700&family=JetBrains+Mono:wght@400;500;700;800&display=swap" rel="stylesheet">
   <style>
     *, *::before, *::after {
       box-sizing: border-box;
@@ -14,474 +14,602 @@
       padding: 0;
     }
     :root {
-      --cream: #FAF7F2;
-      --card-bg: #FFFFFF;
-      --ochre: #E07A2B;
-      --ochre-dark: #BA5E19;
-      --ochre-subtle: #FDF3EB;
-      --charcoal: #181615;
-      --muted-gray: #736E6A;
-      --border-subtle: rgba(24, 22, 21, 0.08);
-      --border-medium: rgba(24, 22, 21, 0.16);
-      --font-display: 'Playfair Display', Georgia, serif;
-      --font-body: 'Plus Jakarta Sans', -apple-system, sans-serif;
+      --void: #090908;
+      --surface: #141412;
+      --surface-light: #1E1E1A;
+      --bone: #F5F3ED;
+      --bone-muted: #8E8C85;
+      --flame: #FF4013;
+      --flame-glow: rgba(255, 64, 19, 0.35);
+      --amber: #EAA838;
+      --border: 1px solid rgba(245, 243, 237, 0.14);
+      --border-bright: 1px solid rgba(245, 243, 237, 0.4);
+      --font-display: 'Space Grotesk', -apple-system, sans-serif;
+      --font-serif: 'Cormorant Garamond', Georgia, serif;
       --font-mono: 'JetBrains Mono', monospace;
     }
+
     body {
-      background-color: var(--cream);
-      color: var(--charcoal);
-      font-family: var(--font-body);
+      background-color: var(--void);
+      color: var(--bone);
+      font-family: var(--font-display);
       -webkit-font-smoothing: antialiased;
-      line-height: 1.5;
+      line-height: 1.4;
+      overflow-x: hidden;
+      background-image: radial-gradient(rgba(245, 243, 237, 0.04) 1px, transparent 1px);
+      background-size: 32px 32px;
     }
 
-    /* TOP LOGISTICS TICKER */
-    .top-bar {
-      background: var(--charcoal);
-      color: #FAF7F2;
-      font-size: 11px;
-      font-family: var(--font-mono);
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
-      padding: 10px 24px;
-      text-align: center;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      gap: 16px;
-    }
-    .badge-lekki {
-      background: var(--ochre);
+    /* KINETIC INFINITE TICKER */
+    .kinetic-ticker {
+      background: var(--flame);
       color: #FFF;
-      padding: 2px 8px;
-      border-radius: 10px;
-      font-size: 9px;
-      font-weight: 700;
+      font-family: var(--font-mono);
+      font-size: 11px;
+      font-weight: 800;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      padding: 10px 0;
+      overflow: hidden;
+      white-space: nowrap;
+      position: relative;
+      border-bottom: 1px solid #000;
+      display: flex;
+    }
+    .ticker-content {
+      display: inline-block;
+      animation: tickerLoop 25s linear infinite;
+    }
+    @keyframes tickerLoop {
+      0% { transform: translateX(0); }
+      100% { transform: translateX(-50%); }
     }
 
-    /* NAVIGATION */
+    /* AVANT-GARDE TOP NAV */
     header {
-      background: rgba(250, 247, 242, 0.95);
-      backdrop-filter: blur(10px);
-      border-bottom: 1px solid var(--border-subtle);
+      border-bottom: var(--border);
+      background: rgba(9, 9, 8, 0.88);
+      backdrop-filter: blur(14px);
       position: sticky;
       top: 0;
-      z-index: 40;
+      z-index: 50;
     }
-    .nav-wrap {
-      max-width: 1400px;
+    .nav-container {
+      max-width: 1440px;
       margin: 0 auto;
-      padding: 18px 40px;
+      padding: 20px 40px;
       display: flex;
       justify-content: space-between;
       align-items: center;
     }
-    .nav-left {
+    .brand-block {
       display: flex;
-      gap: 28px;
+      align-items: baseline;
+      gap: 16px;
+    }
+    .brand-mark {
+      font-family: var(--font-display);
+      font-size: 32px;
+      font-weight: 900;
+      letter-spacing: -0.04em;
+      text-transform: uppercase;
+      color: var(--bone);
+      text-decoration: none;
+      line-height: 1;
+    }
+    .atelier-code {
+      font-family: var(--font-mono);
+      font-size: 10px;
+      color: var(--flame);
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      font-weight: 700;
+    }
+    .nav-links {
+      display: flex;
+      gap: 32px;
       list-style: none;
     }
-    .nav-left a {
-      color: var(--charcoal);
+    .nav-links a {
+      color: var(--bone-muted);
       text-decoration: none;
-      font-size: 12px;
-      letter-spacing: 0.1em;
+      font-family: var(--font-mono);
+      font-size: 11px;
+      letter-spacing: 0.14em;
       text-transform: uppercase;
       font-weight: 600;
       transition: color 0.15s ease;
     }
-    .nav-left a:hover {
-      color: var(--ochre);
+    .nav-links a:hover, .nav-links a.active {
+      color: var(--bone);
     }
-    .brand-center {
-      text-align: center;
-      text-decoration: none;
-      color: var(--charcoal);
-    }
-    .brand-name {
-      font-family: var(--font-display);
-      font-size: 28px;
-      letter-spacing: 0.22em;
-      text-transform: uppercase;
-      font-weight: 700;
-      display: block;
-      line-height: 1;
-    }
-    .brand-tag {
-      font-family: var(--font-mono);
-      font-size: 9px;
-      letter-spacing: 0.26em;
-      text-transform: uppercase;
-      color: var(--ochre);
-      margin-top: 3px;
-      display: block;
-      font-weight: 600;
-    }
-    .nav-right {
+    .nav-actions {
       display: flex;
       align-items: center;
-      gap: 20px;
+      gap: 16px;
     }
-    .currency-select {
-      background: rgba(24, 22, 21, 0.04);
-      border: 1px solid var(--border-subtle);
-      border-radius: 20px;
+    .currency-capsule {
+      background: var(--surface);
+      border: var(--border);
+      color: var(--bone);
       padding: 6px 14px;
-      font-size: 11px;
       font-family: var(--font-mono);
-      font-weight: 600;
-      color: var(--charcoal);
-      cursor: pointer;
-    }
-    .cart-btn {
-      background: var(--charcoal);
-      color: #FAF7F2;
-      border: none;
-      padding: 10px 18px;
       font-size: 11px;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
       font-weight: 700;
       border-radius: 2px;
+      cursor: pointer;
+      outline: none;
+    }
+    .bag-trigger {
+      background: var(--bone);
+      color: var(--void);
+      border: none;
+      padding: 10px 18px;
+      font-family: var(--font-mono);
+      font-size: 11px;
+      font-weight: 800;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
       cursor: pointer;
       display: flex;
       align-items: center;
       gap: 8px;
-      transition: background 0.15s ease;
+      transition: all 0.2s ease;
     }
-    .cart-btn:hover {
-      background: var(--ochre);
+    .bag-trigger:hover {
+      background: var(--flame);
+      color: #FFF;
+      box-shadow: 0 0 20px var(--flame-glow);
     }
 
-    /* MAIN PDP GRID */
-    .pdp-grid {
-      max-width: 1400px;
-      margin: 40px auto 90px;
+    /* HERO ASYMMETRIC LOOKBOOK GRID */
+    .stage-container {
+      max-width: 1440px;
+      margin: 40px auto 100px;
       padding: 0 40px;
       display: grid;
-      grid-template-columns: 1.15fr 0.85fr;
-      gap: 64px;
+      grid-template-columns: 1.25fr 0.85fr;
+      gap: 56px;
       align-items: start;
     }
 
-    /* GALLERY COLUMN */
-    .gallery-col {
-      display: flex;
-      flex-direction: column;
-      gap: 16px;
-    }
-    .hero-stage {
+    /* LEFT EDITORIAL SPECIMEN FRAME */
+    .specimen-column {
       position: relative;
-      width: 100%;
-      height: 720px;
-      background: #EDE6DC;
-      border-radius: 4px;
-      overflow: hidden;
-      box-shadow: 0 10px 30px rgba(0,0,0,0.05);
     }
-    .hero-stage img {
+    .specimen-viewport {
+      width: 100%;
+      height: 780px;
+      background: var(--surface);
+      border: var(--border-bright);
+      position: relative;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .specimen-viewport img {
       width: 100%;
       height: 100%;
       object-fit: cover;
       object-position: top center;
-      transition: transform 0.3s ease;
+      filter: contrast(106%) brightness(98%);
+      transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.3s ease;
     }
-    .hero-stage:hover img {
-      transform: scale(1.02);
+    .specimen-viewport:hover img {
+      transform: scale(1.04);
     }
-    .hero-badge {
+
+    /* ARCHITECTURAL CORNER CROSSHAIRS */
+    .crosshair {
       position: absolute;
-      top: 18px;
-      left: 18px;
-      background: rgba(250, 247, 242, 0.94);
-      padding: 6px 14px;
-      border-radius: 2px;
+      width: 16px;
+      height: 16px;
+      border: 2px solid var(--flame);
+      z-index: 10;
+      pointer-events: none;
+    }
+    .ch-tl { top: 12px; left: 12px; border-right: none; border-bottom: none; }
+    .ch-tr { top: 12px; right: 12px; border-left: none; border-bottom: none; }
+    .ch-bl { bottom: 12px; left: 12px; border-right: none; border-top: none; }
+    .ch-br { bottom: 12px; right: 12px; border-left: none; border-top: none; }
+
+    .specimen-hud-badge {
+      position: absolute;
+      top: 24px;
+      left: 24px;
+      background: rgba(9, 9, 8, 0.9);
+      border: var(--border);
+      padding: 8px 14px;
       font-family: var(--font-mono);
       font-size: 10px;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      font-weight: 700;
+      color: var(--bone);
+      z-index: 10;
+    }
+    .specimen-serial {
+      position: absolute;
+      bottom: 24px;
+      right: 24px;
+      background: var(--flame);
+      color: #FFF;
+      padding: 6px 12px;
+      font-family: var(--font-mono);
+      font-size: 10px;
+      font-weight: 800;
       letter-spacing: 0.14em;
       text-transform: uppercase;
-      font-weight: 600;
-      border: 1px solid var(--border-subtle);
+      z-index: 10;
     }
-    .gallery-strip {
+
+    /* INTERACTIVE SPECIMEN SELECTOR BAR */
+    .specimen-bar {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
       gap: 12px;
+      margin-top: 16px;
     }
-    .thumb-card {
-      height: 140px;
-      background: #EDE6DC;
-      border-radius: 3px;
-      overflow: hidden;
-      border: 2px solid transparent;
+    .specimen-tab {
+      background: var(--surface);
+      border: var(--border);
+      height: 130px;
       cursor: pointer;
-      padding: 0;
       position: relative;
+      overflow: hidden;
+      transition: all 0.2s ease;
+      padding: 0;
     }
-    .thumb-card img {
+    .specimen-tab img {
       width: 100%;
       height: 100%;
       object-fit: cover;
       object-position: top center;
+      opacity: 0.65;
+      transition: opacity 0.2s ease, transform 0.2s ease;
     }
-    .thumb-card.active {
-      border-color: var(--ochre);
+    .specimen-tab:hover img, .specimen-tab.active img {
+      opacity: 1;
+      transform: scale(1.05);
+    }
+    .specimen-tab.active {
+      border: 2px solid var(--flame);
+      box-shadow: 0 0 20px var(--flame-glow);
+    }
+    .tab-caption {
+      position: absolute;
+      bottom: 8px;
+      left: 8px;
+      background: rgba(9, 9, 8, 0.88);
+      color: var(--bone);
+      font-family: var(--font-mono);
+      font-size: 9px;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      padding: 3px 6px;
+      text-transform: uppercase;
     }
 
-    /* CONVERSION DETAILS COLUMN */
-    .details-col {
+    /* RIGHT COMMAND CONVERSION DECK */
+    .deck-column {
       display: flex;
       flex-direction: column;
       gap: 24px;
     }
-    .edition-tag {
-      font-family: var(--font-mono);
-      font-size: 11px;
-      letter-spacing: 0.18em;
-      text-transform: uppercase;
-      color: var(--ochre);
-      font-weight: 700;
-    }
-    .product-title {
-      font-family: var(--font-display);
-      font-size: 42px;
-      line-height: 1.08;
-      font-weight: 700;
-      color: var(--charcoal);
-    }
-    .price-box {
-      display: flex;
-      justify-content: space-between;
-      align-items: baseline;
-      border-bottom: 1px solid var(--border-subtle);
-      padding-bottom: 16px;
-    }
-    .price-main {
-      font-size: 28px;
-      font-weight: 800;
-      color: var(--charcoal);
-      letter-spacing: -0.02em;
-    }
-    .rating-tag {
-      font-family: var(--font-mono);
-      font-size: 12px;
-      color: var(--ochre);
-      font-weight: 600;
-    }
-    .garment-desc {
-      font-size: 15px;
-      line-height: 1.65;
-      color: #4A4643;
-    }
 
-    /* UPFRONT SHIPPING RATE SELECTOR (DIRECT LEAK FIX) */
-    .shipping-calculator-box {
-      background: var(--ochre-subtle);
-      border: 1px solid rgba(224, 122, 43, 0.25);
-      border-radius: 4px;
-      padding: 16px 20px;
-      display: flex;
-      flex-direction: column;
-      gap: 10px;
-    }
-    .calc-header {
+    .specimen-header-tag {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      font-size: 12px;
-      font-weight: 700;
-      text-transform: uppercase;
-      letter-spacing: 0.08em;
+      border-bottom: var(--border);
+      padding-bottom: 12px;
     }
-    .calc-select {
-      background: #FFF;
-      border: 1px solid var(--border-medium);
-      border-radius: 3px;
-      padding: 10px 14px;
+    .edition-counter {
       font-family: var(--font-mono);
-      font-size: 12px;
-      font-weight: 600;
-      color: var(--charcoal);
-      cursor: pointer;
-      width: 100%;
+      font-size: 11px;
+      letter-spacing: 0.18em;
+      color: var(--flame);
+      font-weight: 800;
     }
-    .calc-output {
-      display: flex;
-      justify-content: space-between;
-      font-size: 12px;
+    .origin-stamp {
       font-family: var(--font-mono);
-      color: var(--ochre-dark);
-      font-weight: 700;
+      font-size: 11px;
+      color: var(--bone-muted);
+      letter-spacing: 0.12em;
     }
 
-    /* 52PX SIZE MATRIX */
-    .size-box {
+    .headline-wrap {
+      position: relative;
+    }
+    .garment-specimen-title {
+      font-family: var(--font-display);
+      font-size: 52px;
+      line-height: 0.92;
+      font-weight: 900;
+      text-transform: uppercase;
+      letter-spacing: -0.04em;
+      color: var(--bone);
+    }
+    .garment-subtitle-italic {
+      font-family: var(--font-serif);
+      font-style: italic;
+      font-size: 26px;
+      color: var(--amber);
+      margin-top: 6px;
+      display: block;
+      letter-spacing: 0.02em;
+    }
+
+    /* PRICE & RATINGS TIER */
+    .price-tier {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      background: var(--surface);
+      border: var(--border);
+      padding: 20px 24px;
+      border-radius: 2px;
+    }
+    .live-price-val {
+      font-family: var(--font-mono);
+      font-size: 32px;
+      font-weight: 900;
+      color: #FFF;
+      letter-spacing: -0.02em;
+    }
+    .live-price-sub {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      color: var(--bone-muted);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      margin-top: 2px;
+    }
+    .reviews-badge {
+      font-family: var(--font-mono);
+      font-size: 12px;
+      color: var(--amber);
+      font-weight: 700;
+      text-align: right;
+    }
+
+    .narrative-block {
+      font-size: 15px;
+      line-height: 1.65;
+      color: #D4D2CA;
+      font-weight: 400;
+    }
+
+    /* AVANT-GARDE UPFRONT FREIGHT & LOGISTICS BOARD (BOARDING PASS STYLE) */
+    .freight-manifest {
+      background: var(--surface);
+      border: 1px solid var(--flame);
+      padding: 20px;
+      border-radius: 2px;
+      position: relative;
+      box-shadow: 0 4px 24px rgba(255, 64, 19, 0.12);
+    }
+    .freight-title {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 12px;
+      font-family: var(--font-mono);
+      font-size: 11px;
+      font-weight: 800;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--flame);
+    }
+    .manifest-select {
+      background: var(--void);
+      border: var(--border-bright);
+      color: var(--bone);
+      width: 100%;
+      padding: 12px 14px;
+      font-family: var(--font-mono);
+      font-size: 12px;
+      font-weight: 700;
+      cursor: pointer;
+      outline: none;
+      margin-bottom: 12px;
+    }
+    .manifest-telemetry {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-family: var(--font-mono);
+      font-size: 12px;
+      border-top: 1px dashed rgba(245, 243, 237, 0.2);
+      padding-top: 10px;
+    }
+    .manifest-total {
+      font-size: 15px;
+      font-weight: 800;
+      color: #FFF;
+    }
+
+    /* 54PX TACTILE SIZE MATRICES */
+    .size-zone {
       display: flex;
       flex-direction: column;
       gap: 10px;
     }
-    .size-meta {
+    .size-hud {
       display: flex;
       justify-content: space-between;
-      font-size: 12px;
-      text-transform: uppercase;
-      letter-spacing: 0.08em;
-      font-weight: 700;
-    }
-    .scarcity-alert {
-      color: #B83A20;
       font-family: var(--font-mono);
       font-size: 11px;
-      font-weight: 600;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
     }
-    .size-pills {
+    .size-grid-tactile {
       display: grid;
       grid-template-columns: repeat(5, 1fr);
       gap: 8px;
     }
-    .size-pill {
-      height: 52px;
-      background: var(--card-bg);
-      border: 1px solid var(--border-medium);
-      border-radius: 3px;
+    .size-trigger {
+      height: 54px;
+      background: var(--surface);
+      border: var(--border);
+      color: var(--bone);
       font-family: var(--font-mono);
       font-size: 13px;
-      font-weight: 600;
-      color: var(--charcoal);
+      font-weight: 800;
       cursor: pointer;
       transition: all 0.15s ease;
       display: flex;
       align-items: center;
       justify-content: center;
     }
-    .size-pill.active {
-      background: var(--charcoal);
-      color: #FFF;
-      border-color: var(--charcoal);
+    .size-trigger.active {
+      background: var(--bone);
+      color: var(--void);
+      border-color: var(--bone);
+      box-shadow: 0 0 16px rgba(245, 243, 237, 0.4);
     }
-    .size-pill:hover:not(.active) {
-      border-color: var(--charcoal);
+    .size-trigger:hover:not(.active) {
+      border-color: var(--bone);
     }
 
-    /* CONVERSION BUTTONS */
-    .cta-stack {
+    /* HIGH-VOLTAGE CONVERSION CTAS */
+    .cta-deck {
       display: flex;
       flex-direction: column;
       gap: 12px;
-      margin-top: 6px;
+      margin-top: 8px;
     }
-    .btn-paystack-direct {
-      background: var(--charcoal);
-      color: #FAF7F2;
-      border: 1px solid var(--charcoal);
-      border-radius: 3px;
-      padding: 18px 24px;
-      font-size: 13px;
-      letter-spacing: 0.14em;
-      text-transform: uppercase;
-      font-weight: 800;
+    .btn-paystack-kinetic {
+      background: var(--flame);
+      color: #FFF;
+      border: 1px solid var(--flame);
+      padding: 20px 24px;
       font-family: var(--font-mono);
-      min-height: 58px;
+      font-size: 14px;
+      font-weight: 900;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      min-height: 60px;
       cursor: pointer;
       display: flex;
       align-items: center;
       justify-content: center;
       gap: 12px;
       transition: all 0.2s ease;
+      box-shadow: 0 8px 30px var(--flame-glow);
     }
-    .btn-paystack-direct:hover {
-      background: var(--ochre);
-      border-color: var(--ochre);
-      box-shadow: 0 6px 20px rgba(224, 122, 43, 0.28);
+    .btn-paystack-kinetic:hover {
+      background: #FFF;
+      color: var(--void);
+      border-color: #FFF;
+      box-shadow: 0 8px 36px rgba(255, 255, 255, 0.4);
     }
-    .btn-bag-drawer {
+    .btn-bag-tactile {
       background: transparent;
-      color: var(--charcoal);
-      border: 1px solid var(--charcoal);
-      border-radius: 3px;
+      color: var(--bone);
+      border: var(--border-bright);
       padding: 16px 24px;
-      font-size: 13px;
+      font-family: var(--font-mono);
+      font-size: 12px;
+      font-weight: 700;
       letter-spacing: 0.14em;
       text-transform: uppercase;
-      font-weight: 700;
-      font-family: var(--font-mono);
       min-height: 54px;
       cursor: pointer;
       transition: background 0.15s ease;
     }
-    .btn-bag-drawer:hover {
-      background: rgba(24, 22, 21, 0.05);
+    .btn-bag-tactile:hover {
+      background: var(--surface-light);
     }
 
-    /* GUARANTEES */
-    .guarantees-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 12px;
-      border-top: 1px solid var(--border-subtle);
-      border-bottom: 1px solid var(--border-subtle);
-      padding: 18px 0;
-      margin-top: 8px;
+    /* TRI-MODAL SPECS DRAWER (HUD ACCORDION) */
+    .specs-hud {
+      border-top: var(--border);
+      padding-top: 16px;
     }
-    .g-item-title {
+    .hud-tabs {
+      display: flex;
+      gap: 24px;
+      border-bottom: var(--border);
+      padding-bottom: 8px;
+    }
+    .hud-tab-btn {
+      background: none;
+      border: none;
+      font-family: var(--font-mono);
       font-size: 11px;
+      letter-spacing: 0.14em;
       text-transform: uppercase;
-      letter-spacing: 0.08em;
       font-weight: 700;
+      color: var(--bone-muted);
+      cursor: pointer;
+      position: relative;
     }
-    .g-item-desc {
-      font-size: 11px;
-      color: var(--muted-gray);
-      margin-top: 3px;
+    .hud-tab-btn.active {
+      color: var(--flame);
+    }
+    .hud-tab-btn.active::after {
+      content: '';
+      position: absolute;
+      bottom: -9px;
+      left: 0;
+      width: 100%;
+      height: 2px;
+      background: var(--flame);
+    }
+    .hud-body {
+      padding: 16px 0;
+      font-size: 13px;
+      line-height: 1.7;
+      color: #A8A59E;
+      font-family: var(--font-mono);
     }
 
-    /* SLIDE CART DRAWER */
-    .drawer-scrim {
+    /* CART SLIDE DRAWER */
+    .scrim {
       position: fixed;
       top: 0;
       left: 0;
       width: 100vw;
       height: 100vh;
-      background: rgba(24, 22, 21, 0.5);
-      backdrop-filter: blur(6px);
+      background: rgba(0, 0, 0, 0.8);
+      backdrop-filter: blur(10px);
       z-index: 100;
       opacity: 0;
       pointer-events: none;
       transition: opacity 0.3s ease;
     }
-    .drawer-scrim.open {
-      opacity: 1;
-      pointer-events: auto;
-    }
-    .cart-drawer {
+    .scrim.open { opacity: 1; pointer-events: auto; }
+    .drawer {
       position: fixed;
       top: 0;
       right: 0;
-      width: 450px;
-      max-width: 90vw;
+      width: 480px;
+      max-width: 92vw;
       height: 100vh;
-      background: var(--cream);
-      border-left: 1px solid var(--border-subtle);
+      background: var(--surface);
+      border-left: var(--border-bright);
       z-index: 101;
       transform: translateX(100%);
-      transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+      transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
       display: flex;
       flex-direction: column;
       justify-content: space-between;
-      padding: 36px 32px;
+      padding: 40px 36px;
+      box-shadow: -20px 0 60px rgba(0,0,0,0.8);
     }
-    .cart-drawer.open {
-      transform: translateX(0);
-    }
+    .drawer.open { transform: translateX(0); }
 
     /* FOOTER */
     footer {
-      border-top: 1px solid var(--border-subtle);
-      background: #F2EDE4;
+      border-top: var(--border);
+      background: var(--surface);
       padding: 60px 40px;
     }
-    .footer-row {
-      max-width: 1400px;
+    .footer-content {
+      max-width: 1440px;
       margin: 0 auto;
       display: flex;
       justify-content: space-between;
@@ -491,145 +619,170 @@
 </head>
 <body>
 
-  <!-- TOP LOGISTICS TICKER -->
-  <div class="top-bar">
-    <span>ZEPHANS &amp; CO // LEKKI PHASE 1 FLAGSHIP ATELIER</span>
-    <span class="badge-lekki">FREE LEKKI PICKUP</span>
-    <span>WORLDWIDE DHL EXPRESS DELIVERY TO UK, US, CANADA &amp; GHANA</span>
+  <!-- KINETIC RUNNING MARQUEE TICKER -->
+  <div class="kinetic-ticker">
+    <div class="ticker-content">
+      [ ZEPHANS &amp; CO // LEKKI PHASE 1 ATELIER ] • [ SPECIMEN 01: AKWETE ANKARA CO-ORD ] • [ ZERO-SURPRISE UPFRONT SHIPPING ENGINE ] • [ 1-TAP PAYSTACK &amp; APPLE PAY EXPRESS ] • [ WORLDWIDE DHL AIR FREIGHT: UK, US, CANADA, GHANA ] • [ 54PX THUMB-ZONE ERGONOMICS ] •
+    </div>
+    <div class="ticker-content">
+      [ ZEPHANS &amp; CO // LEKKI PHASE 1 ATELIER ] • [ SPECIMEN 01: AKWETE ANKARA CO-ORD ] • [ ZERO-SURPRISE UPFRONT SHIPPING ENGINE ] • [ 1-TAP PAYSTACK &amp; APPLE PAY EXPRESS ] • [ WORLDWIDE DHL AIR FREIGHT: UK, US, CANADA, GHANA ] • [ 54PX THUMB-ZONE ERGONOMICS ] •
+    </div>
   </div>
 
-  <!-- NAVIGATION -->
+  <!-- AVANT-GARDE HEADER -->
   <header>
-    <div class="nav-wrap">
-      <ul class="nav-left">
-        <li><a href="#">NEW ARRIVALS</a></li>
-        <li><a href="#">CO-ORD SETS</a></li>
-        <li><a href="#">DRESSES</a></li>
+    <div class="nav-container">
+      <div class="brand-block">
+        <a href="#" class="brand-mark">ZEPHANS &amp; CO</a>
+        <span class="atelier-code">[LEKKI // ATELIER 01]</span>
+      </div>
+
+      <ul class="nav-links">
+        <li><a href="#" class="active">SPECIMEN ARCHIVE</a></li>
         <li><a href="#">AKWETE &amp; PRINTS</a></li>
+        <li><a href="#">CO-ORD SETS</a></li>
+        <li><a href="#">MANIFEST</a></li>
       </ul>
 
-      <a href="#" class="brand-center">
-        <span class="brand-name">ZEPHANS &amp; CO</span>
-        <span class="brand-tag">LAGOS // READY-TO-WEAR</span>
-      </a>
-
-      <div class="nav-right">
-        <select class="currency-select" id="curr-select" onchange="changeCurrency(this.value)">
+      <div class="nav-actions">
+        <select class="currency-capsule" id="currency-select" onchange="updateCurrency(this.value)">
           <option value="NGN">NGN (₦)</option>
           <option value="USD">USD ($)</option>
           <option value="GBP">GBP (£)</option>
         </select>
-        <button class="cart-btn" onclick="toggleCart(true)">
-          <span>BAG</span>
-          <span style="background: rgba(255,255,255,0.25); padding: 1px 7px; border-radius: 10px;">1</span>
+        <button class="bag-trigger" onclick="toggleDrawer(true)">
+          <span>MANIFEST BAG</span>
+          <span style="background: var(--flame); color: #FFF; padding: 1px 6px; border-radius: 2px;">1</span>
         </button>
       </div>
     </div>
   </header>
 
-  <!-- MAIN PRODUCT DETAIL GRID -->
-  <main class="pdp-grid">
+  <!-- MAIN STAGE GRID -->
+  <main class="stage-container">
 
-    <!-- LEFT GALLERY -->
-    <div class="gallery-col">
-      <div class="hero-stage">
-        <img src="/assets/zephans/zephans-hero-ankara.jpg" alt="Zephans & Co Ankara Co-ord Skirt Set" id="main-hero">
-        <div class="hero-badge">LEKKI ATELIER // EDITION OF 30</div>
+    <!-- LEFT SPECIMEN DISPLAY -->
+    <div class="specimen-column">
+      
+      <div class="specimen-viewport">
+        <!-- Crosshairs -->
+        <div class="crosshair ch-tl"></div>
+        <div class="crosshair ch-tr"></div>
+        <div class="crosshair ch-bl"></div>
+        <div class="crosshair ch-br"></div>
+
+        <div class="specimen-hud-badge" id="specimen-badge">SPECIMEN // 01 LEKKI ATELIER</div>
+        <img src="/assets/zephans/zephans-hero-ankara.jpg" alt="Zephans & Co Ankara Co-ord Specimen" id="specimen-img">
+        <div class="specimen-serial" id="specimen-serial">SERIAL #ZEP-2026-AKW</div>
       </div>
 
-      <div class="gallery-strip">
-        <button class="thumb-card active" onclick="swapImage('/assets/zephans/zephans-hero-ankara.jpg', this)">
-          <img src="/assets/zephans/zephans-hero-ankara.jpg" alt="Ankara High-Waist Set">
+      <!-- Specimen Selector Strip -->
+      <div class="specimen-bar">
+        <button class="specimen-tab active" onclick="switchSpecimen(0, this)">
+          <img src="/assets/zephans/zephans-hero-ankara.jpg" alt="Look 01 Ankara Set">
+          <span class="tab-caption">01 // ANKARA CO-ORD</span>
         </button>
-        <button class="thumb-card" onclick="swapImage('/assets/zephans/zephans-look-02.jpg', this)">
-          <img src="/assets/zephans/zephans-look-02.jpg" alt="Resort Print Dress">
+        <button class="specimen-tab" onclick="switchSpecimen(1, this)">
+          <img src="/assets/zephans/zephans-fabric-detail.jpg" alt="Look 02 Akwete Weave Detail">
+          <span class="tab-caption">02 // AKWETE WEAVE</span>
         </button>
-        <button class="thumb-card" onclick="swapImage('/assets/ziva-fabric-detail.jpg', this)">
-          <img src="/assets/ziva-fabric-detail.jpg" alt="Artisan Weave Detail">
+        <button class="specimen-tab" onclick="switchSpecimen(2, this)">
+          <img src="/assets/ziva-fabric-detail.jpg" alt="Look 03 Artisan Loom Weave">
+          <span class="tab-caption">03 // ARTISAN LOOM</span>
         </button>
       </div>
+
     </div>
 
-    <!-- RIGHT CONVERSION DETAILS -->
-    <div class="details-col">
+    <!-- RIGHT COMMAND CONVERSION DECK -->
+    <div class="deck-column">
 
-      <div>
-        <div class="edition-tag">COLLECTION 2026 // LIMITED PIECES</div>
-        <h1 class="product-title" style="margin-top: 8px;">THE OLUWAKEMI ANKARA CO-ORD SET</h1>
+      <div class="specimen-header-tag">
+        <span class="edition-counter" id="specimen-edition">EDITION 01 OF 30 // LEKKI PHASE 1</span>
+        <span class="origin-stamp">COORDINATES: 06°27'N 03°28'E</span>
       </div>
 
-      <div class="price-box">
+      <div class="headline-wrap">
+        <h1 class="garment-specimen-title" id="garment-title">
+          THE OLUWAKEMI ANKARA CO-ORD
+        </h1>
+        <span class="garment-subtitle-italic" id="garment-subtitle">
+          Sculpted Pleated Wax Skirt &amp; Structured Bodice
+        </span>
+      </div>
+
+      <!-- Price & Rating Tier -->
+      <div class="price-tier">
         <div>
-          <div class="price-main" id="base-price">₦85,000</div>
-          <div style="font-size: 12px; color: var(--muted-gray); margin-top: 2px;">HAND-CRAFTED AT PLOT 25, LEKKI PHASE 1</div>
+          <div class="live-price-val" id="specimen-price">₦85,000</div>
+          <div class="live-price-sub">HAND-CRAFTED AT PLOT 25, LEKKI PHASE 1</div>
         </div>
-        <div class="rating-tag">
-          ★ 4.94 (68 REVIEWS)
+        <div class="reviews-badge">
+          <div>★ 4.96 / 5.0</div>
+          <div style="font-size: 10px; color: var(--bone-muted); margin-top: 2px;">(68 VERIFIED PATRONS)</div>
         </div>
       </div>
 
-      <p class="garment-desc">
-        A statement ready-to-wear coordinated ensemble featuring a vibrant geometric gold-and-vermilion African wax print skirt cut with structured pleats, paired with a stretch-cotton crop silhouette. Engineered for effortless day-to-evening transitions in Lagos heat.
+      <p class="narrative-block" id="narrative-text">
+        High-voltage ready-to-wear tailored from artisan Nigerian geometric wax print. Structured high-waisted pleated midi skirt engineered with architectural volume and deep concealed pockets, paired with an ergonomic crop bodice.
       </p>
 
-      <!-- UPFRONT DYNAMIC SHIPPING CALCULATOR (SOLVES 62% ABANDONMENT LEAK) -->
-      <div class="shipping-calculator-box">
-        <div class="calc-header">
-          <span>⚡ UPFRONT SHIPPING CALCULATOR</span>
-          <span style="color: var(--ochre-dark); font-family: var(--font-mono); font-size: 11px;">ZERO STEP-3 SURPRISES</span>
+      <!-- UPFRONT AIR FREIGHT & COURIER MANIFEST (THE #1 LEAK FIX) -->
+      <div class="freight-manifest">
+        <div class="freight-title">
+          <span>⚡ UPFRONT FREIGHT &amp; COURIER ENGINE</span>
+          <span style="color: var(--amber);">ZERO STEP-3 SURPRISES</span>
         </div>
-        <select class="calc-select" id="ship-destination" onchange="calculateShipping(this.value)">
-          <option value="lekki">Lekki Phase 1, Victoria Island &amp; Ikoyi (₦2,500 // Same-Day)</option>
-          <option value="mainland">Lagos Mainland &amp; Ikeja (₦3,500 // Next-Day)</option>
-          <option value="abuja">Abuja &amp; Port Harcourt Courier (₦4,500 // 48 Hours)</option>
-          <option value="uk">United Kingdom Express DHL (£25 // 3-4 Days)</option>
-          <option value="us">United States &amp; Canada DHL ($32 // 4-5 Days)</option>
+        <select class="manifest-select" id="manifest-destination" onchange="calculateFreight(this.value)">
+          <option value="lekki">LEKKI PHASE 1 &amp; VICTORIA ISLAND (SAME-DAY // ₦2,500)</option>
+          <option value="mainland">LAGOS MAINLAND &amp; IKEJA (NEXT-DAY // ₦3,500)</option>
+          <option value="nationwide">ABUJA, PORT HARCOURT &amp; STATEWIDE (48 HOURS // ₦4,500)</option>
+          <option value="uk">UNITED KINGDOM DHL AIR FREIGHT (3 DAYS // £25)</option>
+          <option value="us">UNITED STATES &amp; CANADA DHL EXPRESS (4 DAYS // $32)</option>
         </select>
-        <div class="calc-output">
-          <span>DELIVERY FEE: <strong id="ship-cost">₦2,500</strong></span>
-          <span>ESTIMATED TOTAL: <strong id="total-with-ship">₦87,500</strong></span>
+        <div class="manifest-telemetry">
+          <span>FREIGHT TARIFF: <strong id="freight-cost" style="color: var(--flame);">₦2,500</strong></span>
+          <span>LANDED CHECKOUT: <strong class="manifest-total" id="manifest-total">₦87,500</strong></span>
         </div>
       </div>
 
-      <!-- 52PX SIZE MATRIX -->
-      <div class="size-box">
-        <div class="size-meta">
-          <span>SELECT SIZE (UK STANDARD)</span>
-          <span class="scarcity-alert" id="stock-count">ONLY 2 SETS REMAINING IN UK 10</span>
+      <!-- 54PX TACTILE SIZE MATRICES -->
+      <div class="size-zone">
+        <div class="size-hud">
+          <span>SELECT SPECIMEN SIZE (UK / NGN)</span>
+          <span style="color: var(--flame);" id="scarcity-telemetry">CRITICAL: ONLY 2 PIECES REMAINING IN UK 10</span>
         </div>
-        <div class="size-pills">
-          <button class="size-pill" onclick="pickSize('UK 8', '3 sets available', this)">UK 8</button>
-          <button class="size-pill active" onclick="pickSize('UK 10', 'ONLY 2 SETS REMAINING IN UK 10', this)">UK 10</button>
-          <button class="size-pill" onclick="pickSize('UK 12', '4 sets available', this)">UK 12</button>
-          <button class="size-pill" onclick="pickSize('UK 14', '1 set left', this)">UK 14</button>
-          <button class="size-pill" onclick="pickSize('UK 16', 'Sold out for this drop', this)">UK 16</button>
+        <div class="size-grid-tactile">
+          <button class="size-trigger" onclick="selectSize('UK 8', '3 sets available', this)">UK 8</button>
+          <button class="size-trigger active" onclick="selectSize('UK 10', 'CRITICAL: ONLY 2 PIECES REMAINING IN UK 10', this)">UK 10</button>
+          <button class="size-trigger" onclick="selectSize('UK 12', '4 sets available', this)">UK 12</button>
+          <button class="size-trigger" onclick="selectSize('UK 14', '1 set left in inventory', this)">UK 14</button>
+          <button class="size-trigger" onclick="selectSize('UK 16', 'Inventory exhausted for this drop', this)">UK 16</button>
         </div>
       </div>
 
-      <!-- PRIMARY CONVERSION CTAS -->
-      <div class="cta-stack">
-        <button class="btn-paystack-direct" onclick="triggerPaystack()">
+      <!-- HIGH-VOLTAGE CONVERSION CTAS -->
+      <div class="cta-deck">
+        <button class="btn-paystack-kinetic" onclick="triggerPaystack()">
           <span>⚡ 1-TAP PAYSTACK EXPRESS</span>
-          <span id="cta-total">// ₦87,500</span>
+          <span id="cta-landed-price">// ₦87,500</span>
         </button>
-        <button class="btn-bag-drawer" onclick="toggleCart(true)">
-          ADD TO BAG // SLIDE DRAWER
+        <button class="btn-bag-tactile" onclick="toggleDrawer(true)">
+          ADD TO MANIFEST BAG // SLIDE DRAWER
         </button>
       </div>
 
-      <!-- VALUE GUARANTEES -->
-      <div class="guarantees-grid">
-        <div>
-          <div class="g-item-title">SAME-DAY DISPATCH</div>
-          <div class="g-item-desc">Orders before 1PM in Lagos</div>
+      <!-- TRI-MODAL HUD ACCORDION -->
+      <div class="specs-hud">
+        <div class="hud-tabs">
+          <button class="hud-tab-btn active" onclick="switchHud('material', this)">01 // MATERIAL</button>
+          <button class="hud-tab-btn" onclick="switchHud('tailoring', this)">02 // TAILORING</button>
+          <button class="hud-tab-btn" onclick="switchHud('courier', this)">03 // COURIER TERMS</button>
         </div>
-        <div>
-          <div class="g-item-title">SIZE EXCHANGE</div>
-          <div class="g-item-desc">7-day doorstep size swap</div>
-        </div>
-        <div>
-          <div class="g-item-title">VERIFIED PAYMENTS</div>
-          <div class="g-item-desc">Cards, USSD, Apple Pay</div>
+        <div class="hud-body" id="hud-body">
+          <strong>TEXTILE:</strong> 100% Cotton Nigerian Geometric Ankara Wax (290 GSM).<br>
+          <strong>HARDWARE:</strong> Concealed rear YKK zip with reinforced hook-and-eye waist.<br>
+          <strong>STUDIO:</strong> Plot 25, Block 72 Adebisi Popoola Crescent, Lekki Phase 1, Lagos.
         </div>
       </div>
 
@@ -637,106 +790,184 @@
 
   </main>
 
-  <!-- SLIDE-OUT CART DRAWER -->
-  <div class="drawer-scrim" id="cart-scrim" onclick="toggleCart(false)"></div>
-  <div class="cart-drawer" id="cart-drawer">
+  <!-- CART SLIDE DRAWER -->
+  <div class="scrim" id="scrim" onclick="toggleDrawer(false)"></div>
+  <div class="drawer" id="drawer">
     <div>
-      <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--border-subtle); padding-bottom: 16px;">
-        <span style="font-family: var(--font-display); font-size: 20px; font-weight: 700;">YOUR SHOPPING BAG</span>
-        <button style="background: none; border: none; font-size: 24px; cursor: pointer;" onclick="toggleCart(false)">&times;</button>
+      <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: var(--border); padding-bottom: 20px;">
+        <span style="font-family: var(--font-display); font-size: 22px; font-weight: 900; letter-spacing: -0.02em;">MANIFEST BAG</span>
+        <button style="background: none; border: none; color: var(--bone); font-size: 28px; cursor: pointer;" onclick="toggleDrawer(false)">&times;</button>
       </div>
 
-      <div style="display: flex; gap: 16px; margin-top: 24px; padding-bottom: 24px; border-bottom: 1px solid var(--border-subtle);">
-        <img src="/assets/zephans/zephans-hero-ankara.jpg" style="width: 80px; height: 105px; object-fit: cover; border-radius: 2px;">
+      <div style="display: flex; gap: 18px; margin-top: 24px; padding-bottom: 24px; border-bottom: var(--border);">
+        <img src="/assets/zephans/zephans-hero-ankara.jpg" id="drawer-img" style="width: 85px; height: 110px; object-fit: cover; border: var(--border);">
         <div>
-          <div style="font-size: 13px; font-weight: 700;">THE OLUWAKEMI ANKARA CO-ORD SET</div>
-          <div style="font-size: 12px; color: var(--muted-gray); margin: 4px 0;" id="drawer-size">Size: UK 10</div>
-          <div style="font-family: var(--font-mono); font-size: 14px; font-weight: 700;" id="drawer-item-price">₦85,000</div>
+          <div style="font-size: 14px; font-weight: 800; text-transform: uppercase;" id="drawer-title">THE OLUWAKEMI ANKARA CO-ORD</div>
+          <div style="font-family: var(--font-mono); font-size: 12px; color: var(--bone-muted); margin: 6px 0;" id="drawer-size-tag">SIZE: UK 10</div>
+          <div style="font-family: var(--font-mono); font-size: 16px; font-weight: 800; color: var(--flame);" id="drawer-base-price">₦85,000</div>
         </div>
       </div>
 
-      <div style="margin-top: 20px; font-size: 12px; line-height: 1.6; color: var(--muted-gray);">
-        <div>✓ Upfront shipping calculated transparently</div>
-        <div>✓ Insured door-to-door courier service</div>
-        <div>✓ Dispatched from Lekki Phase 1 flagship</div>
+      <div style="margin-top: 24px; font-family: var(--font-mono); font-size: 12px; line-height: 1.8; color: var(--bone-muted);">
+        <div>✓ Upfront freight calculated with zero step-3 surprises</div>
+        <div>✓ Dispatched directly from Lekki Phase 1 Flagship</div>
+        <div>✓ 7-Day complimentary doorstep size exchange guarantee</div>
       </div>
     </div>
 
     <div>
-      <div style="display: flex; justify-content: space-between; font-weight: 700; margin-bottom: 16px; font-size: 15px;">
-        <span>ESTIMATED TOTAL</span>
-        <span id="drawer-total">₦87,500</span>
+      <div style="display: flex; justify-content: space-between; font-family: var(--font-mono); font-weight: 800; font-size: 16px; margin-bottom: 20px; border-top: var(--border); padding-top: 16px;">
+        <span>LANDED TOTAL</span>
+        <span id="drawer-total" style="color: #FFF;">₦87,500</span>
       </div>
-      <button class="btn-paystack-direct" style="width: 100%;" onclick="triggerPaystack()">
+      <button class="btn-paystack-kinetic" style="width: 100%;" onclick="triggerPaystack()">
         PROCEED VIA PAYSTACK
       </button>
     </div>
   </div>
 
-  <!-- FOOTER -->
+  <!-- AVANT-GARDE FOOTER -->
   <footer>
-    <div class="footer-row">
+    <div class="footer-content">
       <div>
-        <div style="font-family: var(--font-display); font-size: 20px; font-weight: 700; letter-spacing: 0.15em;">ZEPHANS &amp; CO</div>
-        <div style="font-size: 12px; color: var(--muted-gray); margin-top: 4px;">
+        <div style="font-family: var(--font-display); font-size: 24px; font-weight: 900; letter-spacing: -0.02em;">ZEPHANS &amp; CO</div>
+        <div style="font-family: var(--font-mono); font-size: 11px; color: var(--bone-muted); margin-top: 4px;">
           Plot 25, Block 72 Adebisi Popoola Crescent, Lekki Phase 1, Lagos, Nigeria.
         </div>
       </div>
-      <div style="font-family: var(--font-mono); font-size: 11px; color: var(--muted-gray);">
-        CONVERSION ARCHITECTURE BY BILLY BENJAMIN CONSULTING // v9.0-ADAPTIVE
+      <div style="font-family: var(--font-mono); font-size: 11px; color: var(--bone-muted); text-align: right;">
+        CONVERSION ARCHITECTURE DIRECTED BY BILLY BENJAMIN CONSULTING // v9.0-ADAPTIVE
       </div>
     </div>
   </footer>
 
   <script>
-    const priceData = {
-      NGN: { symbol: '₦', base: 85000, ship: { lekki: 2500, mainland: 3500, abuja: 4500, uk: 45000, us: 55000 } },
-      USD: { symbol: '$', base: 60, ship: { lekki: 2, mainland: 3, abuja: 4, uk: 30, us: 32 } },
-      GBP: { symbol: '£', base: 48, ship: { lekki: 2, mainland: 3, abuja: 4, uk: 25, us: 28 } }
+    const specimens = [
+      {
+        num: "01",
+        title: "THE OLUWAKEMI ANKARA CO-ORD",
+        subtitle: "Sculpted Pleated Wax Skirt & Structured Bodice",
+        badge: "SPECIMEN // 01 LEKKI ATELIER",
+        serial: "SERIAL #ZEP-2026-AKW",
+        edition: "EDITION 01 OF 30 // LEKKI PHASE 1",
+        image: "/assets/zephans/zephans-hero-ankara.jpg",
+        prices: { NGN: 85000, USD: 60, GBP: 48 },
+        narrative: "High-voltage ready-to-wear tailored from artisan Nigerian geometric wax print. Structured high-waisted pleated midi skirt engineered with architectural volume and deep concealed pockets, paired with an ergonomic crop bodice.",
+        material: "<strong>TEXTILE:</strong> 100% Cotton Nigerian Geometric Ankara Wax (290 GSM).<br><strong>HARDWARE:</strong> Concealed rear YKK zip with reinforced hook-and-eye waist.<br><strong>STUDIO:</strong> Plot 25, Block 72 Adebisi Popoola Crescent, Lekki Phase 1, Lagos."
+      },
+      {
+        num: "02",
+        title: "THE AKWETE TEXTILE SPECIMEN",
+        subtitle: "Artisanal Southeastern Nigerian Hand-Loom Weave",
+        badge: "SPECIMEN // 02 ATELIER WEAVE",
+        serial: "SERIAL #ZEP-2026-AKW2",
+        edition: "EDITION 02 OF 20 // LEKKI PHASE 1",
+        image: "/assets/zephans/zephans-fabric-detail.jpg",
+        prices: { NGN: 95000, USD: 68, GBP: 54 },
+        narrative: "Macro tactile study of our hand-loomed heritage cotton weave. Structured geometrical motifs crafted on traditional Nigerian upright looms, celebrating authentic textile craftsmanship without synthetic adulteration.",
+        material: "<strong>TEXTILE:</strong> 100% Hand-Spun Nigerian Artisan Cotton (340 GSM).<br><strong>HARDWARE:</strong> Hand-finished selvedge edge.<br><strong>STUDIO:</strong> Cut and finished in Lekki Phase 1 studio."
+      },
+      {
+        num: "03",
+        title: "THE ARTISAN LOOM WEAVE CAPE",
+        subtitle: "Monochrome Heritage Akwete Textile Architecture",
+        badge: "SPECIMEN // 03 ATELIER WEAVE",
+        serial: "SERIAL #ZEP-2026-LOM",
+        edition: "EDITION 03 OF 15 // LEKKI PHASE 1",
+        image: "/assets/ziva-fabric-detail.jpg",
+        prices: { NGN: 110000, USD: 78, GBP: 62 },
+        narrative: "Artisanal textile statement piece woven on traditional vertical looms in southeastern Nigeria. Heavyweight textured drape featuring geometric strip-weave motifs and raw fringed hemline.",
+        material: "<strong>TEXTILE:</strong> 100% Hand-Spun Raw Cotton Akwete Weave (380 GSM).<br><strong>HARDWARE:</strong> Hand-turned horn toggle closure.<br><strong>STUDIO:</strong> Hand-finished at Lekki Phase 1 atelier."
+      }
+    ];
+
+    const tariffs = {
+      NGN: { symbol: '₦', lekki: 2500, mainland: 3500, nationwide: 4500, uk: 45000, us: 55000 },
+      USD: { symbol: '$', lekki: 2, mainland: 3, nationwide: 4, uk: 30, us: 32 },
+      GBP: { symbol: '£', lekki: 2, mainland: 3, nationwide: 4, uk: 25, us: 28 }
     };
 
-    let currentCurr = 'NGN';
-    let currentDest = 'lekki';
+    let currentSpecimen = 0;
+    let currentCurrency = 'NGN';
+    let currentDestination = 'lekki';
 
-    function changeCurrency(curr) {
-      currentCurr = curr;
-      renderAll();
+    function switchSpecimen(idx, btn) {
+      currentSpecimen = idx;
+      const item = specimens[idx];
+
+      const img = document.getElementById('specimen-img');
+      img.style.opacity = '0.2';
+      setTimeout(() => {
+        img.src = item.image;
+        img.style.opacity = '1';
+      }, 150);
+
+      document.getElementById('specimen-badge').innerText = item.badge;
+      document.getElementById('specimen-serial').innerText = item.serial;
+      document.getElementById('specimen-edition').innerText = item.edition;
+      document.getElementById('garment-title').innerText = item.title;
+      document.getElementById('garment-subtitle').innerText = item.subtitle;
+      document.getElementById('narrative-text').innerText = item.narrative;
+      document.getElementById('drawer-img').src = item.image;
+      document.getElementById('drawer-title').innerText = item.title;
+
+      document.querySelectorAll('.specimen-tab').forEach((t, i) => {
+        t.classList.toggle('active', i === idx);
+      });
+
+      renderAllTelemetry();
     }
 
-    function calculateShipping(dest) {
-      currentDest = dest;
-      renderAll();
+    function updateCurrency(curr) {
+      currentCurrency = curr;
+      renderAllTelemetry();
     }
 
-    function renderAll() {
-      const data = priceData[currentCurr];
-      const ship = data.ship[currentDest];
-      const total = data.base + ship;
-
-      document.getElementById('base-price').innerText = `${data.symbol}${data.base.toLocaleString()}`;
-      document.getElementById('ship-cost').innerText = `${data.symbol}${ship.toLocaleString()}`;
-      document.getElementById('total-with-ship').innerText = `${data.symbol}${total.toLocaleString()}`;
-      document.getElementById('cta-total').innerText = `// ${data.symbol}${total.toLocaleString()}`;
-      document.getElementById('drawer-item-price').innerText = `${data.symbol}${data.base.toLocaleString()}`;
-      document.getElementById('drawer-total').innerText = `${data.symbol}${total.toLocaleString()}`;
+    function calculateFreight(dest) {
+      currentDestination = dest;
+      renderAllTelemetry();
     }
 
-    function pickSize(size, stockMsg, btn) {
-      document.querySelectorAll('.size-pill').forEach(b => b.classList.remove('active'));
+    function renderAllTelemetry() {
+      const item = specimens[currentSpecimen];
+      const tariff = tariffs[currentCurrency];
+      const base = item.prices[currentCurrency];
+      const freight = tariff[currentDestination];
+      const total = base + freight;
+
+      document.getElementById('specimen-price').innerText = `${tariff.symbol}${base.toLocaleString()}`;
+      document.getElementById('freight-cost').innerText = `${tariff.symbol}${freight.toLocaleString()}`;
+      document.getElementById('manifest-total').innerText = `${tariff.symbol}${total.toLocaleString()}`;
+      document.getElementById('cta-landed-price').innerText = `// ${tariff.symbol}${total.toLocaleString()}`;
+      document.getElementById('drawer-base-price').innerText = `${tariff.symbol}${base.toLocaleString()}`;
+      document.getElementById('drawer-total').innerText = `${tariff.symbol}${total.toLocaleString()}`;
+    }
+
+    function selectSize(size, msg, btn) {
+      document.querySelectorAll('.size-trigger').forEach(b => b.classList.remove('active'));
       btn.classList.add('active');
-      document.getElementById('stock-count').innerText = stockMsg;
-      document.getElementById('drawer-size').innerText = `Size: ${size}`;
+      document.getElementById('scarcity-telemetry').innerText = msg;
+      document.getElementById('drawer-size-tag').innerText = `SIZE: ${size}`;
     }
 
-    function swapImage(src, btn) {
-      document.getElementById('main-hero').src = src;
-      document.querySelectorAll('.thumb-card').forEach(b => b.classList.remove('active'));
+    function switchHud(tab, btn) {
+      document.querySelectorAll('.hud-tab-btn').forEach(b => b.classList.remove('active'));
       btn.classList.add('active');
+      const item = specimens[currentSpecimen];
+      const body = document.getElementById('hud-body');
+
+      if (tab === 'material') {
+        body.innerHTML = item.material;
+      } else if (tab === 'tailoring') {
+        body.innerHTML = `<strong>FIT ARCHITECTURE:</strong> Proportional Nigerian/UK grading with structured waist volume.<br><strong>MODEL SPECS:</strong> Model is 5'9" (175cm), Bust 34", Waist 26", Hips 38" wearing UK 10.<br><strong>CLOSURE:</strong> Reinforced internal hook with hidden spine zip.`;
+      } else if (tab === 'courier') {
+        body.innerHTML = `<strong>LEKKI &amp; ISLAND:</strong> Dispatched within 3 hours for orders placed before 1:00 PM.<br><strong>AIR FREIGHT:</strong> Direct DHL Express departure from Murtala Muhammed Airport (LOS) to UK (LHR) and US (JFK).<br><strong>EXCHANGES:</strong> 7-Day complimentary doorstep size swap.`;
+      }
     }
 
-    function toggleCart(isOpen) {
-      const scrim = document.getElementById('cart-scrim');
-      const drawer = document.getElementById('cart-drawer');
+    function toggleDrawer(isOpen) {
+      const scrim = document.getElementById('scrim');
+      const drawer = document.getElementById('drawer');
       if (isOpen) {
         scrim.classList.add('open');
         drawer.classList.add('open');
@@ -747,13 +978,14 @@
     }
 
     function triggerPaystack() {
-      const data = priceData[currentCurr];
-      const total = data.base + data.ship[currentDest];
-      alert(`⚡ PAYSTACK MODAL ACTIVE:\nInitializing 1-tap checkout for ${data.symbol}${total.toLocaleString()}\nDestination: ${currentDest.toUpperCase()}\nZero hidden fees.`);
+      const item = specimens[currentSpecimen];
+      const tariff = tariffs[currentCurrency];
+      const total = item.prices[currentCurrency] + tariff[currentDestination];
+      alert(`⚡ PAYSTACK MODAL INITIALIZED:\n• Garment: ${item.title}\n• Landed Total: ${tariff.symbol}${total.toLocaleString()}\n• Delivery: ${currentDestination.toUpperCase()}\n• Paystack, Apple Pay, Cards & USSD active.`);
     }
 
-    // Initial render
-    renderAll();
+    // Initialize
+    renderAllTelemetry();
   </script>
 
 </body>
