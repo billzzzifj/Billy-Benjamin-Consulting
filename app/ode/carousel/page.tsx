@@ -84,7 +84,7 @@ export default function OdeCarouselPresentation() {
                 PRINCIPAL ARCHITECT & CREATIVE DIRECTOR
               </span>
               <span className="font-serif text-2xl text-[#2A2A2A] font-medium block">
-                Billie Benjamin
+                Billy Benjamin
               </span>
               <span className="text-xs font-mono text-[#485935]">
                 Billy Benjamin Consulting // billybenjaminconsulting.online
@@ -551,7 +551,7 @@ export default function OdeCarouselPresentation() {
                 PRINCIPAL STRATEGIST & BRAND ARCHITECT
               </span>
               <span className="font-serif text-2xl text-white font-medium block">
-                Billie Benjamin
+                Billy Benjamin
               </span>
               <span className="text-xs font-mono text-[#D9CFBE]">
                 Founder, Billy Benjamin Consulting
