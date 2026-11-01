@@ -42,6 +42,14 @@ function InstagramIcon({ className = "h-3.5 w-3.5" }: { className?: string }) {
   );
 }
 
+function MailIcon({ className = "h-3.5 w-3.5" }: { className?: string }) {
+  return (
+    <svg className={className} fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2} aria-hidden="true">
+      <path strokeLinecap="round" strokeLinejoin="round" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+    </svg>
+  );
+}
+
 interface Product {
   id: string;
   name: string;
@@ -178,6 +186,7 @@ export default function ColeBuxtonDynamicStorefront() {
 
   const LINKEDIN_URL = "https://www.linkedin.com/in/billy-benjamin-b02265315";
   const INSTAGRAM_URL = "https://www.instagram.com/billybranddirector88/";
+  const EMAIL_URL = "mailto:billybenjamin836@gmail.com";
 
   const activeProduct = PRODUCTS.find((p) => p.id === activeProductId) || PRODUCTS[0];
 
@@ -313,11 +322,18 @@ export default function ColeBuxtonDynamicStorefront() {
           </div>
           
           {/* Direct Executive Contact Links */}
-          <div className="flex items-center gap-3">
+          <div className="flex items-center gap-2">
             <div className="hidden lg:flex items-center gap-1.5 text-emerald-400 font-semibold mr-2">
               <Zap className="h-3 w-3" />
               <span>0.7s MOBILE LCP // RECAPTURING ~£350/DAY AD BLEED</span>
             </div>
+            <a
+              href={EMAIL_URL}
+              className="inline-flex items-center gap-1 border border-neutral-800 bg-neutral-900 px-2.5 py-1 text-neutral-300 hover:border-neutral-600 hover:text-white transition-colors"
+            >
+              <MailIcon className="h-3 w-3 text-emerald-400" />
+              <span>EMAIL</span>
+            </a>
             <a
               href={LINKEDIN_URL}
               target="_blank"
@@ -609,13 +625,20 @@ export default function ColeBuxtonDynamicStorefront() {
                   </p>
                   <div className="flex flex-wrap gap-2 pt-1">
                     <a
+                      href={EMAIL_URL}
+                      className="inline-flex items-center gap-2 bg-emerald-600 hover:bg-emerald-500 text-white px-3 py-2 text-xs font-bold uppercase tracking-wider transition-colors"
+                    >
+                      <MailIcon className="h-3.5 w-3.5" />
+                      <span>Email Architect</span>
+                    </a>
+                    <a
                       href={LINKEDIN_URL}
                       target="_blank"
                       rel="noopener noreferrer"
                       className="inline-flex items-center gap-2 bg-blue-600 hover:bg-blue-500 text-white px-3 py-2 text-xs font-bold uppercase tracking-wider transition-colors"
                     >
                       <LinkedInIcon className="h-3.5 w-3.5" />
-                      <span>Message on LinkedIn</span>
+                      <span>LinkedIn</span>
                     </a>
                     <a
                       href={INSTAGRAM_URL}
@@ -624,7 +647,7 @@ export default function ColeBuxtonDynamicStorefront() {
                       className="inline-flex items-center gap-2 border border-neutral-700 bg-neutral-900 hover:border-neutral-500 text-white px-3 py-2 text-xs font-bold uppercase tracking-wider transition-colors"
                     >
                       <InstagramIcon className="h-3.5 w-3.5 text-pink-400" />
-                      <span>DM on Instagram (@billybranddirector88)</span>
+                      <span>DM on Instagram</span>
                     </a>
                   </div>
                 </div>
@@ -928,12 +951,19 @@ export default function ColeBuxtonDynamicStorefront() {
                 <p className="text-[11px] text-neutral-400 font-sans leading-relaxed">
                   Ready to deploy this 0.7s multi-product checkout into Cole Buxton’s Shopify Plus store? Connect directly:
                 </p>
-                <div className="grid grid-cols-2 gap-2 pt-1">
+                <div className="grid grid-cols-3 gap-1.5 pt-1">
+                  <a
+                    href={EMAIL_URL}
+                    className="flex items-center justify-center gap-1 border border-neutral-800 bg-neutral-900 px-1.5 py-2 text-[10px] font-bold uppercase text-white hover:border-neutral-600 transition-colors"
+                  >
+                    <MailIcon className="h-3 w-3 text-emerald-400" />
+                    <span>Email</span>
+                  </a>
                   <a
                     href={LINKEDIN_URL}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="flex items-center justify-center gap-1.5 border border-neutral-800 bg-neutral-900 px-2 py-2 text-[10px] font-bold uppercase text-white hover:border-neutral-600 transition-colors"
+                    className="flex items-center justify-center gap-1 border border-neutral-800 bg-neutral-900 px-1.5 py-2 text-[10px] font-bold uppercase text-white hover:border-neutral-600 transition-colors"
                   >
                     <LinkedInIcon className="h-3 w-3 text-blue-400" />
                     <span>LinkedIn</span>
@@ -942,7 +972,7 @@ export default function ColeBuxtonDynamicStorefront() {
                     href={INSTAGRAM_URL}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="flex items-center justify-center gap-1.5 border border-neutral-800 bg-neutral-900 px-2 py-2 text-[10px] font-bold uppercase text-white hover:border-neutral-600 transition-colors"
+                    className="flex items-center justify-center gap-1 border border-neutral-800 bg-neutral-900 px-1.5 py-2 text-[10px] font-bold uppercase text-white hover:border-neutral-600 transition-colors"
                   >
                     <InstagramIcon className="h-3 w-3 text-pink-400" />
                     <span>Instagram</span>
