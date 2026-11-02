@@ -31,7 +31,11 @@ import {
   Compass,
   Feather,
   Gem,
-  Radio
+  Radio,
+  Camera,
+  Aperture,
+  Film,
+  Copy
 } from "lucide-react";
 
 function LinkedInIcon({ className = "h-3.5 w-3.5" }: { className?: string }) {
@@ -65,6 +69,16 @@ interface ScentNote {
   tastingNote: string;
 }
 
+interface OpticalRig {
+  compositionTitle: string;
+  camera: string;
+  lens: string;
+  substrate: string;
+  lighting: string;
+  filmStock: string;
+  promptPayload: string;
+}
+
 interface Fragrance {
   id: string;
   name: string;
@@ -84,6 +98,7 @@ interface Fragrance {
   pyramid: ScentNote[];
   sensoryShock: string;
   narrative: string;
+  opticalRig: OpticalRig;
   images: { label: string; url: string }[];
   sizes: string[];
 }
@@ -123,9 +138,19 @@ const FRAGRANCES: Fragrance[] = [
     ],
     sensoryShock: "Biting into a chilled, tart passionfruit amidst an untamed tropical forest where precious Agarwood logs smolder in the darkness.",
     narrative: "An astonishing olfactory dissonance. Jordi Fernández contrasts the luminous tropical electricity of Brazilian passionfruit with the ancestral depth of sustainably harvested Laotian Agarwood. Unforgiving, sensual, and unforgettable.",
+    opticalRig: {
+      compositionTitle: "Optical Study 01 // The Volcanic Crucible",
+      camera: "Hasselblad H6D-100c Medium Format",
+      lens: "HC 120mm f/4 Macro II (@ f/5.6, 1/160s, ISO 64)",
+      substrate: "Granular Volcanic Black Ash & Basalt Caldera Gravel (Mt Bromo)",
+      lighting: "Low-Rake Directional Sunrise Key + Deep Chiaroscuro Cast Shadows",
+      filmStock: "Kodak Portra 400 Color Science (Warm Amber Glass Halation)",
+      promptPayload: "Extreme macro editorial still-life photograph of Maison Crivelli heavy crystal perfume flacon half-embedded at a 20-degree tilt in fine granular volcanic black ash and jagged basalt gravel on Mt Bromo. Deep golden-amber extrait liquid catches low-raking sunrise rim lighting, illuminating suspended liquid refraction. Brushed gunmetal Zamak cap with micro-fine tactile metallic grain. Two shards of scorched Cambodian agarwood and dried passionfruit rind beside the base. Shot on Hasselblad H6D-100c with HC 120mm f/4 Macro II. Kodak Portra 400, unretouched raw 8k resolution. --ar 4:5 --style raw"
+    },
     images: [
-      { label: "FLACON ARCHITECTURE", url: "https://images.unsplash.com/photo-1592945403244-b3fbafd7f539?auto=format&fit=crop&w=1200&q=85" },
-      { label: "RAW RESIN & MARACUJÁ", url: "https://images.unsplash.com/photo-1547887537-6158d64c35b3?auto=format&fit=crop&w=1200&q=85" }
+      { label: "01 // VOLCANIC CRUCIBLE FLACON", url: "https://images.unsplash.com/photo-1616949755610-8c9bbc08f138?auto=format&fit=crop&w=1200&q=85" },
+      { label: "02 // AMBER EXTRAIT REFRACTION", url: "https://images.unsplash.com/photo-1592945403244-b3fbafd7f539?auto=format&fit=crop&w=1200&q=85" },
+      { label: "03 // LAOTIAN AGARWOOD HARVEST", url: "https://images.unsplash.com/photo-1547887537-6158d64c35b3?auto=format&fit=crop&w=1200&q=85" }
     ],
     sizes: ["50ml Flacon", "100ml Flacon"]
   },
@@ -152,9 +177,19 @@ const FRAGRANCES: Fragrance[] = [
     ],
     sensoryShock: "Drinking an iced ruby hibiscus infusion in the whispering shade of a bustling gemstone souk, inhaling sweet vanilla and fine leather bags.",
     narrative: "Created with Quentin Bisch. A dramatic, theatrical floral that pairs a shocking burst of cooling spearmint with opulent hibiscus and velvety Bourbon vanilla. An absolute crowd-stopper that radiates for hours.",
+    opticalRig: {
+      compositionTitle: "Optical Study 02 // Haute Atelier Travertine",
+      camera: "Leica M6 Rangefinder (0.72x)",
+      lens: "Leica Summicron-M 50mm f/2 (@ f/4, 1/125s, ISO 50)",
+      substrate: "Rough-Hewn Porous Roman Travertine Stone Plinth",
+      lighting: "Diffused Northern Parisian Window Light + Hard Window Louver Slits",
+      filmStock: "CineStill 50D Daylight Balanced (Ruby Carmine Glow & Organic Grain)",
+      promptPayload: "High-fashion editorial still-life of Maison Crivelli flacon on rough-hewn Roman travertine stone with natural cavities. Luminous ruby-crimson extrait liquid, embossed paper label 'MAISON CRIVELLI // HIBISCUS MAHAJÁD', diagonal window louver shadows, dried crimson hibiscus sepals, leather shaving, and crushed vanilla pod. Shot on Leica M6 with Summicron-M 50mm f/2. CineStill 50D, 8k resolution. --ar 4:5 --style raw"
+    },
     images: [
-      { label: "CARMINE RUBY FLACON", url: "https://images.unsplash.com/photo-1594035910387-fea47794261f?auto=format&fit=crop&w=1200&q=85" },
-      { label: "VELVET FLORAL DETAIL", url: "https://images.unsplash.com/photo-1615634260167-c8cdede054de?auto=format&fit=crop&w=1200&q=85" }
+      { label: "01 // TRAVERTINE STILL LIFE FLACON", url: "https://images.unsplash.com/photo-1541643600914-78b084683601?auto=format&fit=crop&w=1200&q=85" },
+      { label: "02 // CARMINE RUBY EXTRAIT", url: "https://images.unsplash.com/photo-1594035910387-fea47794261f?auto=format&fit=crop&w=1200&q=85" },
+      { label: "03 // TACTILE DECANT RITUAL", url: "https://images.unsplash.com/photo-1527799820374-dcf8d9d4a388?auto=format&fit=crop&w=1200&q=85" }
     ],
     sizes: ["50ml Flacon", "100ml Flacon"]
   },
@@ -181,9 +216,19 @@ const FRAGRANCES: Fragrance[] = [
     ],
     sensoryShock: "Gazing up at a diamond-strewn night sky in an arid desert plateau, enveloped in the intoxicating breath of night-blooming tuberose.",
     narrative: "A cosmic revelation. Quentin Bisch takes the famously narcotic, buttery tuberose and illuminates it with cinnamon starlight and apricot-tinted osmanthus. A celestial perfume of serene, arresting beauty.",
+    opticalRig: {
+      compositionTitle: "Optical Study 03 // Celestial Desert Obsidian",
+      camera: "Mamiya RZ67 Pro II Medium Format",
+      lens: "Mamiya Sekor Z 110mm f/2.8 (@ f/2.8, 1/60s, ISO 400)",
+      substrate: "Chiselled Jet-Black Obsidian Glass & Desert Sand Bed",
+      lighting: "Cold Lunar Starlight Key + Single Directional Warm Tungsten Beam",
+      filmStock: "Kodak Tri-X 400 (Atmospheric Silver-Halide Grain & Velvet Shadow)",
+      promptPayload: "Close-up cinematic photograph of Maison Crivelli perfume flacon on midnight obsidian glass in arid desert. Luminous twilight reflection, vaporizing mist under single directional tungsten beam, apothecary amber vials, natural white tuberose blossom. Shot on Mamiya RZ67 Pro II with Sekor 110mm f/2.8. Authentic silver-halide film grain, 8k resolution. --ar 4:5 --style raw"
+    },
     images: [
-      { label: "CELESTIAL GLASS", url: "https://images.unsplash.com/photo-1583445013765-46c20c4a6772?auto=format&fit=crop&w=1200&q=85" },
-      { label: "NOCTURNAL PETALS", url: "https://images.unsplash.com/photo-1518709268805-4e9042af9f23?auto=format&fit=crop&w=1200&q=85" }
+      { label: "01 // NOCTURNAL OBSIDIAN FLACON", url: "https://images.unsplash.com/photo-1508746829417-e6f548d8d6ed?auto=format&fit=crop&w=1200&q=85" },
+      { label: "02 // STARLIGHT CRISTAL REFRACTION", url: "https://images.unsplash.com/photo-1583445013765-46c20c4a6772?auto=format&fit=crop&w=1200&q=85" },
+      { label: "03 // OSMANTHUS VELVET PETALS", url: "https://images.unsplash.com/photo-1518709268805-4e9042af9f23?auto=format&fit=crop&w=1200&q=85" }
     ],
     sizes: ["50ml Flacon", "100ml Flacon"]
   },
@@ -210,9 +255,19 @@ const FRAGRANCES: Fragrance[] = [
     ],
     sensoryShock: "A motorcycle velocity descent through an equatorial monsoon where ripe peaches and wet patchouli electrify the air.",
     narrative: "Radical, polarizing, unforgettable. Quentin Bisch captures the raw kinetic energy of a tropical downpour pounding against fertile earth, sweetened by luscious peaches and grounded by monumental patchouli.",
+    opticalRig: {
+      compositionTitle: "Optical Study 04 // Equatorial Monsoon Downpour",
+      camera: "Contax 645 Medium Format",
+      lens: "Carl Zeiss Planar T* 80mm f/2 (@ f/2.8, 1/125s, ISO 400)",
+      substrate: "Wet Rainforest River Basalt & Dark Peat Earth",
+      lighting: "Diffused Storm Ozone Daylight + Heavy Atmospheric Rain Mist",
+      filmStock: "Fuji Pro 400H (Earthy Moss Greens, Cool Highlights & Dense Humidity)",
+      promptPayload: "Editorial photograph of Maison Crivelli bottle on wet volcanic river basalt during tropical monsoon downpour. Microscopic rain droplets running down thick glass sides, ripe white peach slices and wild wet patchouli leaves. Shot on Contax 645 with Zeiss 80mm f/2. Fuji Pro 400H, raw editorial unretouched. --ar 4:5 --style raw"
+    },
     images: [
-      { label: "MONSOON FLACON", url: "https://images.unsplash.com/photo-1523293182086-7651a899d37f?auto=format&fit=crop&w=1200&q=85" },
-      { label: "DAMP WOODS & PEACH", url: "https://images.unsplash.com/photo-1588405748880-12d1d2a59f75?auto=format&fit=crop&w=1200&q=85" }
+      { label: "01 // MONSOON BASALT FLACON", url: "https://images.unsplash.com/photo-1523293182086-7651a899d37f?auto=format&fit=crop&w=1200&q=85" },
+      { label: "02 // DAMP PEACH & EARTH MENISCUS", url: "https://images.unsplash.com/photo-1588405748880-12d1d2a59f75?auto=format&fit=crop&w=1200&q=85" },
+      { label: "03 // RAIN DRENCHED GREENERY", url: "https://images.unsplash.com/photo-1615634260167-c8cdede054de?auto=format&fit=crop&w=1200&q=85" }
     ],
     sizes: ["50ml Flacon", "100ml Flacon"]
   },
@@ -239,9 +294,19 @@ const FRAGRANCES: Fragrance[] = [
     ],
     sensoryShock: "Sipping an emerald absinthe shot under the vibrating luminescence of the Northern Lights in a snowbound Scandinavian forest.",
     narrative: "Nathalie Feisthauer channels the electrifying contrast between a freezing polar wind and the warming botanical burn of traditional green absinthe. Invigorating, crystalline, and effortlessly chic.",
+    opticalRig: {
+      compositionTitle: "Optical Study 05 // Arctic Phosphor Glacier",
+      camera: "Leica SL2-S Full Frame Mirrorless",
+      lens: "Leica APO-Summicron-SL 75mm f/2 ASPH (@ f/2.8, 1/250s, ISO 100)",
+      substrate: "Translucent Blue Glacial Ice & Frosted Pine Needles",
+      lighting: "Boreal Twilight Aurora Luminescence + Diffused Polar White Reflection",
+      filmStock: "Ilford Delta 100 Tonal Range (Crisp Edge Contrast & Cold Shading)",
+      promptPayload: "Editorial close-up of Maison Crivelli flacon encased in translucent glacial ice shelf in northern Norway. Emerald green extrait liquid glowing with cold phosphorescence, frozen artemisia wormwood sprigs. Shot on Leica SL2-S with APO-Summicron 75mm f/2. Crystalline sharp focus, 8k resolution. --ar 4:5 --style raw"
+    },
     images: [
-      { label: "FROST FLACON", url: "https://images.unsplash.com/photo-1595425970377-c9703cf48b6d?auto=format&fit=crop&w=1200&q=85" },
-      { label: "ARCTIC BOTANICALS", url: "https://images.unsplash.com/photo-1509042239860-f550ce710b93?auto=format&fit=crop&w=1200&q=85" }
+      { label: "01 // GLACIAL POLAR FLACON", url: "https://images.unsplash.com/photo-1595425970377-c9703cf48b6d?auto=format&fit=crop&w=1200&q=85" },
+      { label: "02 // BOREAL MINT & ICE NEEDLES", url: "https://images.unsplash.com/photo-1509042239860-f550ce710b93?auto=format&fit=crop&w=1200&q=85" },
+      { label: "03 // CRISTALLINE ARCTIC FROST", url: "https://images.unsplash.com/photo-1608571423902-eed4a5ad8108?auto=format&fit=crop&w=1200&q=85" }
     ],
     sizes: ["50ml Flacon", "100ml Flacon"]
   }
@@ -265,6 +330,17 @@ export default function MaisonCrivelliAestheticStorefrontPage() {
   const [cartHoldSeconds, setCartHoldSeconds] = useState<number>(600);
   const [isCheckingOut, setIsCheckingOut] = useState<boolean>(false);
   const [checkoutComplete, setCheckoutComplete] = useState<boolean>(false);
+  const [copiedPrompt, setCopiedPrompt] = useState<boolean>(false);
+  const [showOpticalDossier, setShowOpticalDossier] = useState<boolean>(true);
+
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      const hash = window.location.hash;
+      if (hash === "#gallery") setActiveTab("gallery");
+      else if (hash === "#duet-wardrobe") setActiveTab("duet-wardrobe");
+      else if (hash === "#forensic") setActiveTab("forensic");
+    }
+  }, []);
 
   useEffect(() => {
     if (!isCartOpen || cart.length === 0) return;
@@ -286,6 +362,14 @@ export default function MaisonCrivelliAestheticStorefrontPage() {
     setSelectedSize(fragrance.sizes[0]);
     setSelectedAccordIndex(0);
     setSillageSimulatorLevel(fragrance.sillageRating >= 4.8 ? 3.5 : 2.5);
+  };
+
+  const copyPromptPayload = (payload: string) => {
+    if (typeof navigator !== "undefined" && navigator.clipboard) {
+      navigator.clipboard.writeText(payload);
+      setCopiedPrompt(true);
+      setTimeout(() => setCopiedPrompt(false), 2500);
+    }
   };
 
   const addToCart = (fragrance: Fragrance, size: string, quantity = 1) => {
@@ -444,7 +528,7 @@ export default function MaisonCrivelliAestheticStorefrontPage() {
       </section>
 
       {/* 3. LUXURY HERO & SENSUAL ATMOSPHERE SWITCHER */}
-      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-10 pb-6">
+      <section id="gallery" className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-10 pb-6">
         <div className="flex flex-col lg:flex-row lg:items-end justify-between border-b border-[#E7E3DC] pb-8 gap-6">
           <div>
             <div className="flex items-center space-x-2 text-[11px] font-mono uppercase tracking-widest text-[#D48B38] font-bold mb-2">
@@ -563,7 +647,7 @@ export default function MaisonCrivelliAestheticStorefrontPage() {
               </div>
 
               {/* MEDIA GALLERY THUMBNAILS */}
-              <div className="grid grid-cols-4 gap-3">
+              <div className="grid grid-cols-3 gap-3">
                 {selectedFragrance.images.map((img, idx) => (
                   <button
                     key={idx}
@@ -577,6 +661,105 @@ export default function MaisonCrivelliAestheticStorefrontPage() {
                     <img src={img.url} alt={img.label} className="w-full h-full object-cover" />
                   </button>
                 ))}
+              </div>
+
+              {/* NANOBANANA PRO // OPTICAL RIG & ANALOG COMPOSITION DOSSIER */}
+              <div className="bg-[#151311] text-[#F6F5F2] rounded-2xl border border-[#2A2621] p-6 shadow-xl space-y-4 font-mono text-xs">
+                <div className="flex flex-col sm:flex-row sm:items-center justify-between pb-3 border-b border-[#2A2621] gap-2">
+                  <div className="flex items-center space-x-2">
+                    <Camera className="h-4 w-4 text-[#D48B38]" />
+                    <span className="font-bold text-[#D48B38] tracking-widest uppercase">
+                      NANOBANANA PRO // OPTICAL ART DIRECTION DOSSIER
+                    </span>
+                  </div>
+                  <div className="flex items-center space-x-2 text-[10px] text-emerald-400 bg-emerald-950/60 px-2.5 py-1 rounded-full border border-emerald-500/30">
+                    <Check className="h-3 w-3 text-emerald-400" />
+                    <span>ANTI-PLASTIC LAW: ZERO CGI SHEEN</span>
+                  </div>
+                </div>
+
+                <div className="flex items-center justify-between">
+                  <span className="text-sm font-serif italic text-white font-bold">
+                    {selectedFragrance.opticalRig.compositionTitle}
+                  </span>
+                  <button
+                    onClick={() => setShowOpticalDossier(!showOpticalDossier)}
+                    className="text-[11px] text-[#A8A296] hover:text-white underline font-mono"
+                  >
+                    {showOpticalDossier ? "Collapse Rig Telemetry ▲" : "Expand Rig Telemetry ▼"}
+                  </button>
+                </div>
+
+                {showOpticalDossier && (
+                  <div className="space-y-4 pt-1">
+                    {/* OPTICAL SPECS GRID */}
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-[11px]">
+                      <div className="p-3 bg-[#1C1A17] rounded-xl border border-[#2E2A24] space-y-1">
+                        <div className="flex items-center space-x-1.5 text-[#D48B38] font-bold uppercase text-[10px]">
+                          <Aperture className="h-3 w-3" />
+                          <span>CAMERA BODY & OPTICAL SENSOR</span>
+                        </div>
+                        <div className="text-white font-medium">{selectedFragrance.opticalRig.camera}</div>
+                        <div className="text-[#8C8577] text-[10px]">{selectedFragrance.opticalRig.lens}</div>
+                      </div>
+
+                      <div className="p-3 bg-[#1C1A17] rounded-xl border border-[#2E2A24] space-y-1">
+                        <div className="flex items-center space-x-1.5 text-[#D48B38] font-bold uppercase text-[10px]">
+                          <Film className="h-3 w-3" />
+                          <span>EMULSION & FILM CHEMISTRY</span>
+                        </div>
+                        <div className="text-white font-medium">{selectedFragrance.opticalRig.filmStock}</div>
+                        <div className="text-[#8C8577] text-[10px]">Real silver-halide grain & organic halation</div>
+                      </div>
+
+                      <div className="p-3 bg-[#1C1A17] rounded-xl border border-[#2E2A24] space-y-1">
+                        <div className="flex items-center space-x-1.5 text-[#D48B38] font-bold uppercase text-[10px]">
+                          <Gem className="h-3 w-3" />
+                          <span>SUBSTRATE & TACTILE MATERIALITY</span>
+                        </div>
+                        <div className="text-white font-medium">{selectedFragrance.opticalRig.substrate}</div>
+                        <div className="text-[#8C8577] text-[10px]">Heavy Zamak alloy cap + thick-walled crystal</div>
+                      </div>
+
+                      <div className="p-3 bg-[#1C1A17] rounded-xl border border-[#2E2A24] space-y-1">
+                        <div className="flex items-center space-x-1.5 text-[#D48B38] font-bold uppercase text-[10px]">
+                          <Sun className="h-3 w-3" />
+                          <span>LIGHTING PHYSICS RIG</span>
+                        </div>
+                        <div className="text-white font-medium">{selectedFragrance.opticalRig.lighting}</div>
+                        <div className="text-[#8C8577] text-[10px]">Natural refraction index through perfume liquid</div>
+                      </div>
+                    </div>
+
+                    {/* PROMPT PAYLOAD COPY BOX */}
+                    <div className="p-3.5 bg-[#100F0D] rounded-xl border border-[#2E2A24] space-y-2">
+                      <div className="flex items-center justify-between">
+                        <span className="text-[10px] text-[#A8A296] uppercase tracking-wider font-bold">
+                          NANOBANANA PRO // POSITIVE PROMPT PAYLOAD (RAW UNRETOUCHED)
+                        </span>
+                        <button
+                          onClick={() => copyPromptPayload(selectedFragrance.opticalRig.promptPayload)}
+                          className="flex items-center space-x-1 px-2.5 py-1 bg-[#D48B38] hover:bg-[#E59C49] text-black rounded-lg text-[10px] font-bold tracking-wider uppercase transition-all shadow-sm"
+                        >
+                          {copiedPrompt ? (
+                            <>
+                              <Check className="h-3 w-3 text-black" />
+                              <span>COPIED TO CLIPBOARD</span>
+                            </>
+                          ) : (
+                            <>
+                              <Copy className="h-3 w-3 text-black" />
+                              <span>COPY PROMPT</span>
+                            </>
+                          )}
+                        </button>
+                      </div>
+                      <p className="text-[11px] text-[#DDD8CF] leading-relaxed font-sans italic selection:bg-[#D48B38] selection:text-black">
+                        « {selectedFragrance.opticalRig.promptPayload} »
+                      </p>
+                    </div>
+                  </div>
+                )}
               </div>
 
               {/* INTERACTIVE SCENT PYRAMID ACCORD MATRIX */}
