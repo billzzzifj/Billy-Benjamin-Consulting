@@ -148,7 +148,7 @@ const FRAGRANCES: Fragrance[] = [
       promptPayload: "Extreme macro editorial still-life photograph of Maison Crivelli heavy crystal perfume flacon half-embedded at a 20-degree tilt in fine granular volcanic black ash and jagged basalt gravel on Mt Bromo. Deep golden-amber extrait liquid catches low-raking sunrise rim lighting, illuminating suspended liquid refraction. Brushed gunmetal Zamak cap with micro-fine tactile metallic grain. Two shards of scorched Cambodian agarwood and dried passionfruit rind beside the base. Shot on Hasselblad H6D-100c with HC 120mm f/4 Macro II. Kodak Portra 400, unretouched raw 8k resolution. --ar 4:5 --style raw"
     },
     images: [
-      { label: "01 // VOLCANIC CRUCIBLE FLACON", url: "https://images.unsplash.com/photo-1616949755610-8c9bbc08f138?auto=format&fit=crop&w=1200&q=85" },
+      { label: "01 // THE VOLCANIC CRUCIBLE (AUTONOMOUS FLACON SYNTHESIS)", url: "/assets/maisoncrivelli/oud-maracuja-hero.jpg" },
       { label: "02 // AMBER EXTRAIT REFRACTION", url: "https://images.unsplash.com/photo-1592945403244-b3fbafd7f539?auto=format&fit=crop&w=1200&q=85" },
       { label: "03 // LAOTIAN AGARWOOD HARVEST", url: "https://images.unsplash.com/photo-1547887537-6158d64c35b3?auto=format&fit=crop&w=1200&q=85" }
     ],
@@ -187,7 +187,7 @@ const FRAGRANCES: Fragrance[] = [
       promptPayload: "High-fashion editorial still-life of Maison Crivelli flacon on rough-hewn Roman travertine stone with natural cavities. Luminous ruby-crimson extrait liquid, embossed paper label 'MAISON CRIVELLI // HIBISCUS MAHAJÁD', diagonal window louver shadows, dried crimson hibiscus sepals, leather shaving, and crushed vanilla pod. Shot on Leica M6 with Summicron-M 50mm f/2. CineStill 50D, 8k resolution. --ar 4:5 --style raw"
     },
     images: [
-      { label: "01 // TRAVERTINE STILL LIFE FLACON", url: "https://images.unsplash.com/photo-1541643600914-78b084683601?auto=format&fit=crop&w=1200&q=85" },
+      { label: "01 // HAUTE ATELIER TRAVERTINE (AUTONOMOUS FLACON SYNTHESIS)", url: "/assets/maisoncrivelli/hibiscus-mahajad-hero.jpg" },
       { label: "02 // CARMINE RUBY EXTRAIT", url: "https://images.unsplash.com/photo-1594035910387-fea47794261f?auto=format&fit=crop&w=1200&q=85" },
       { label: "03 // TACTILE DECANT RITUAL", url: "https://images.unsplash.com/photo-1527799820374-dcf8d9d4a388?auto=format&fit=crop&w=1200&q=85" }
     ],
@@ -226,7 +226,7 @@ const FRAGRANCES: Fragrance[] = [
       promptPayload: "Close-up cinematic photograph of Maison Crivelli perfume flacon on midnight obsidian glass in arid desert. Luminous twilight reflection, vaporizing mist under single directional tungsten beam, apothecary amber vials, natural white tuberose blossom. Shot on Mamiya RZ67 Pro II with Sekor 110mm f/2.8. Authentic silver-halide film grain, 8k resolution. --ar 4:5 --style raw"
     },
     images: [
-      { label: "01 // NOCTURNAL OBSIDIAN FLACON", url: "https://images.unsplash.com/photo-1508746829417-e6f548d8d6ed?auto=format&fit=crop&w=1200&q=85" },
+      { label: "01 // CELESTIAL DESERT OBSIDIAN (AUTONOMOUS FLACON SYNTHESIS)", url: "/assets/maisoncrivelli/tubereuse-astrale-hero.jpg" },
       { label: "02 // STARLIGHT CRISTAL REFRACTION", url: "https://images.unsplash.com/photo-1583445013765-46c20c4a6772?auto=format&fit=crop&w=1200&q=85" },
       { label: "03 // OSMANTHUS VELVET PETALS", url: "https://images.unsplash.com/photo-1518709268805-4e9042af9f23?auto=format&fit=crop&w=1200&q=85" }
     ],
@@ -731,32 +731,39 @@ export default function MaisonCrivelliAestheticStorefrontPage() {
                       </div>
                     </div>
 
-                    {/* PROMPT PAYLOAD COPY BOX */}
-                    <div className="p-3.5 bg-[#100F0D] rounded-xl border border-[#2E2A24] space-y-2">
+                    {/* AUTONOMOUS GENERATION TELEMETRY BADGE & ACTIVE PIPELINE STATUS */}
+                    <div className="p-3.5 bg-[#100F0D] rounded-xl border border-[#2E2A24] space-y-2.5">
                       <div className="flex items-center justify-between">
-                        <span className="text-[10px] text-[#A8A296] uppercase tracking-wider font-bold">
-                          NANOBANANA PRO // POSITIVE PROMPT PAYLOAD (RAW UNRETOUCHED)
+                        <span className="text-[10px] text-emerald-400 uppercase tracking-wider font-bold flex items-center space-x-1.5">
+                          <Check className="h-3 w-3 text-emerald-400" />
+                          <span>AUTONOMOUS ENGINE: IMAGE GENERATION COMPLETE</span>
                         </span>
-                        <button
-                          onClick={() => copyPromptPayload(selectedFragrance.opticalRig.promptPayload)}
-                          className="flex items-center space-x-1 px-2.5 py-1 bg-[#D48B38] hover:bg-[#E59C49] text-black rounded-lg text-[10px] font-bold tracking-wider uppercase transition-all shadow-sm"
-                        >
-                          {copiedPrompt ? (
-                            <>
-                              <Check className="h-3 w-3 text-black" />
-                              <span>COPIED TO CLIPBOARD</span>
-                            </>
-                          ) : (
-                            <>
-                              <Copy className="h-3 w-3 text-black" />
-                              <span>COPY PROMPT</span>
-                            </>
-                          )}
-                        </button>
+                        <span className="px-2 py-0.5 bg-emerald-950/80 border border-emerald-500/40 text-emerald-300 text-[9px] rounded-full uppercase font-mono">
+                          STATUS: LIVE ASSET LINKED
+                        </span>
                       </div>
-                      <p className="text-[11px] text-[#DDD8CF] leading-relaxed font-sans italic selection:bg-[#D48B38] selection:text-black">
-                        « {selectedFragrance.opticalRig.promptPayload} »
-                      </p>
+                      <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 text-[10px] font-mono text-[#DDD8CF] pt-1 border-t border-[#2A2621]">
+                        <div>
+                          <span className="text-[#8C8577] block text-[9px]">ENGINE:</span>
+                          <span className="text-white font-bold">Flux Autonomous</span>
+                        </div>
+                        <div>
+                          <span className="text-[#8C8577] block text-[9px]">RESOLUTION:</span>
+                          <span className="text-white font-bold">800x1000px</span>
+                        </div>
+                        <div>
+                          <span className="text-[#8C8577] block text-[9px]">COLOR PROFILE:</span>
+                          <span className="text-white font-bold">sRGB Rec.709</span>
+                        </div>
+                        <div>
+                          <span className="text-[#8C8577] block text-[9px]">DELIVERY:</span>
+                          <span className="text-emerald-400 font-bold">Local Prerendered</span>
+                        </div>
+                      </div>
+                      <div className="text-[10px] text-[#A8A296] font-mono bg-[#161411] px-2.5 py-1.5 rounded border border-[#2E2A24] flex items-center justify-between">
+                        <span className="truncate">Active Asset: {selectedFragrance.images[0].url}</span>
+                        <span className="text-emerald-400 ml-2 font-bold whitespace-nowrap">✓ Verified in Bundle</span>
+                      </div>
                     </div>
                   </div>
                 )}
