@@ -189,6 +189,15 @@ export default function ChristopherWardStorefrontPage() {
   const [checkoutComplete, setCheckoutComplete] = useState<boolean>(false);
 
   useEffect(() => {
+    if (typeof window !== "undefined") {
+      const hash = window.location.hash;
+      if (hash === "#gallery") setActiveTab("gallery");
+      else if (hash === "#horological-suite") setActiveTab("horological-suite");
+      else if (hash === "#forensic") setActiveTab("forensic");
+    }
+  }, []);
+
+  useEffect(() => {
     if (!isCartOpen || cart.length === 0) return;
     const interval = setInterval(() => {
       setCartHoldSeconds((prev) => (prev > 0 ? prev - 1 : 0));
@@ -360,7 +369,7 @@ export default function ChristopherWardStorefrontPage() {
       </section>
 
       {/* 3. HERO & ARCHITECTURAL NAVIGATION */}
-      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-8 pb-4">
+      <section id="gallery" className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-8 pb-4">
         <div className="flex flex-col md:flex-row md:items-end justify-between border-b border-[#1E2229] pb-6">
           <div>
             <div className="text-xs font-mono uppercase tracking-widest text-[#00A896] font-semibold mb-1 flex items-center space-x-2">
