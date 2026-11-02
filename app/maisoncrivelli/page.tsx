@@ -25,7 +25,13 @@ import {
   Wind,
   Droplets,
   Flame,
-  Sun
+  Sun,
+  Volume2,
+  VolumeX,
+  Compass,
+  Feather,
+  Gem,
+  Radio
 } from "lucide-react";
 
 function LinkedInIcon({ className = "h-3.5 w-3.5" }: { className?: string }) {
@@ -52,18 +58,32 @@ function MailIcon({ className = "h-3.5 w-3.5" }: { className?: string }) {
   );
 }
 
+interface ScentNote {
+  level: "Tête (Top)" | "Cœur (Heart)" | "Fond (Base)";
+  ingredient: string;
+  olfactoryFamily: string;
+  tastingNote: string;
+}
+
 interface Fragrance {
   id: string;
   name: string;
   subtitle: string;
   badge: string;
+  perfumer: string;
   concentration: string;
   price: number;
-  sillage: string;
-  longevity: string;
+  sillageRating: number;
+  sillageLabel: string;
+  longevityHours: number;
+  soundscapeFrequency: string;
+  climateMatch: string;
+  auraGlow: string;
+  accentColor: string;
   accords: string[];
+  pyramid: ScentNote[];
   sensoryShock: string;
-  description: string;
+  narrative: string;
   images: { label: string; url: string }[];
   sizes: string[];
 }
@@ -76,119 +96,176 @@ interface CartItem {
   quantity: number;
   imageUrl: string;
   concentration: string;
+  includesTester: boolean;
 }
 
 const FRAGRANCES: Fragrance[] = [
   {
     id: "oud-maracuja",
     name: "OUD MARACUJÁ",
-    subtitle: "EXTRAIT DE PARFUM // 32% CONCENTRATION",
-    badge: "GLOBAL CULT MASTERPIECE",
-    concentration: "32% HIGH-EXTRACT OIL",
+    subtitle: "EXTRAIT DE PARFUM // 32% HAUTE CONCENTRATION",
+    badge: "GLOBAL CULT ICON",
+    perfumer: "Jordi Fernández (Givaudan)",
+    concentration: "32% HIGH-EXTRACT ESSENTIAL OIL",
     price: 245.00,
-    sillage: "Room-Filling // Extravagant Projection (3.5m+)",
-    longevity: "18+ Hours Extreme Epidermal Hold",
-    accords: ["Exotic Passionfruit", "Smoked Oud Wood", "Turkish Rose", "Akigalawood", "Leather Amber"],
-    sensoryShock: "Tasting passionfruit amidst an untamed tropical forest where Agarwood resins smolder in the night.",
-    description: "An astonishing sensory shock created in collaboration with Master Perfumer Jordi Fernández. The crystalline brightness of passionfruit cuts through the deep, velvety smoke of rare sustainably sourced Agarwood.",
-    images: [
-      { label: "FLACON ARCHITECTURE", url: "https://images.unsplash.com/photo-1592945403244-b3fbafd7f539?auto=format&fit=crop&w=1000&q=80" },
-      { label: "RAW AMBER RESIN", url: "https://images.unsplash.com/photo-1547887537-6158d64c35b3?auto=format&fit=crop&w=1000&q=80" }
+    sillageRating: 5,
+    sillageLabel: "Monolithic Atmospheric Trail (3.5m+ Sillage)",
+    longevityHours: 18,
+    soundscapeFrequency: "432Hz // Warm Resinous Forest Drone",
+    climateMatch: "Tropical Night // Humid Warmth or Crisp Autumn",
+    auraGlow: "rgba(212, 139, 56, 0.18)",
+    accentColor: "#D48B38",
+    accords: ["Exotic Passionfruit", "Smoked Agarwood Oud", "Turkish Rose Absolute", "Akigalawood", "Dark Suede Amber"],
+    pyramid: [
+      { level: "Tête (Top)", ingredient: "Maracujá (Passionfruit) & Eitrone", olfactoryFamily: "Solar Acidic Fruit", tastingNote: "Bright crystalline sweetness slicing through the dark air." },
+      { level: "Cœur (Heart)", ingredient: "Indonesian Patchouli & Turkish Rose", olfactoryFamily: "Floral Chypre", tastingNote: "Velvety spiced petals steeped in woody damp warmth." },
+      { level: "Fond (Base)", ingredient: "Laotian Oud Wood & Amber Leather", olfactoryFamily: "Smoked Woody Balsamic", tastingNote: "Deep, slow-smoldering resin that adheres to the skin for 18+ hours." }
     ],
-    sizes: ["50ml Extrait", "100ml Extrait"]
+    sensoryShock: "Biting into a chilled, tart passionfruit amidst an untamed tropical forest where precious Agarwood logs smolder in the darkness.",
+    narrative: "An astonishing olfactory dissonance. Jordi Fernández contrasts the luminous tropical electricity of Brazilian passionfruit with the ancestral depth of sustainably harvested Laotian Agarwood. Unforgiving, sensual, and unforgettable.",
+    images: [
+      { label: "FLACON ARCHITECTURE", url: "https://images.unsplash.com/photo-1592945403244-b3fbafd7f539?auto=format&fit=crop&w=1200&q=85" },
+      { label: "RAW RESIN & MARACUJÁ", url: "https://images.unsplash.com/photo-1547887537-6158d64c35b3?auto=format&fit=crop&w=1200&q=85" }
+    ],
+    sizes: ["50ml Flacon", "100ml Flacon"]
   },
   {
     id: "hibiscus-mahajad",
     name: "HIBISCUS MAHAJÁD",
-    subtitle: "EXTRAIT DE PARFUM // 32% CONCENTRATION",
+    subtitle: "EXTRAIT DE PARFUM // 32% HAUTE CONCENTRATION",
     badge: "VIRAL RED VELVET",
-    concentration: "32% HIGH-EXTRACT OIL",
+    perfumer: "Quentin Bisch (Givaudan)",
+    concentration: "32% HIGH-EXTRACT ESSENTIAL OIL",
     price: 245.00,
-    sillage: "Hypnotic Radiance // Arm's Length Sillage",
-    longevity: "16+ Hours Lingering Trail",
-    accords: ["Hibiscus Infusion", "Damascena Rose", "Wild Spearmint", "Bourbon Vanilla", "Soft Suede"],
-    sensoryShock: "Sipping an iced hibiscus infusion within a sun-drenched gemstone market, inhaling precious leather and vanilla.",
-    description: "Crafted with Quentin Bisch. A multi-faceted, luminous oriental floral combining wild crystalline spearmint with lush hibiscus petals, wrapped in decadent Bourbon vanilla and gentle leather.",
-    images: [
-      { label: "RUBY FLACON", url: "https://images.unsplash.com/photo-1594035910387-fea47794261f?auto=format&fit=crop&w=1000&q=80" },
-      { label: "FLORAL SHOCK", url: "https://images.unsplash.com/photo-1615634260167-c8cdede054de?auto=format&fit=crop&w=1000&q=80" }
+    sillageRating: 4.8,
+    sillageLabel: "Hypnotic Radial Projection (2.8m Sillage)",
+    longevityHours: 16,
+    soundscapeFrequency: "528Hz // Velvet Wind & Gemstone Drone",
+    climateMatch: "All Seasons // Radiant in Cool Evening Air",
+    auraGlow: "rgba(178, 34, 60, 0.18)",
+    accentColor: "#A32238",
+    accords: ["Hibiscus Infusion", "Damascena Rose", "Wild Spearmint", "Bourbon Vanilla Pod", "Soft Leather"],
+    pyramid: [
+      { level: "Tête (Top)", ingredient: "Wild Spearmint & Cinnamon Bark", olfactoryFamily: "Fresh Aromatic Spice", tastingNote: "Electric icy mint sensation counterpointing hot sweet cinnamon." },
+      { level: "Cœur (Heart)", ingredient: "Hibiscus Calyx & Damascena Rose", olfactoryFamily: "Deep Carmine Floral", tastingNote: "Tangy ruby red petals soaked in mineral water and rose absolute." },
+      { level: "Fond (Base)", ingredient: "Madagascar Bourbon Vanilla & Suede", olfactoryFamily: "Sensual Oriental Gourmand", tastingNote: "Rich, unctuous vanilla bean wrapped in butter-soft glove leather." }
     ],
-    sizes: ["50ml Extrait", "100ml Extrait"]
-  },
-  {
-    id: "patchouli-magnetik",
-    name: "PATCHOULI MAGNETIK",
-    subtitle: "EXTRAIT DE PARFUM // 33% CONCENTRATION",
-    badge: "AVANT-GARDE CHYPRE",
-    concentration: "33% HIGH-EXTRACT OIL",
-    price: 245.00,
-    sillage: "Electric Sillage // Monumental Atmosphere",
-    longevity: "20+ Hours Indelible Hold",
-    accords: ["Indonesian Patchouli", "White Peach", "Solar Gardenia", "Sandalwood", "Warm Earth"],
-    sensoryShock: "A motorcycle velocity descent through an equatorial monsoon where ripe peaches and wet patchouli electrify the air.",
-    description: "Formulated by Quentin Bisch. An exhilarating, charged perfume capturing thunderous monsoon winds carrying ripe peach skins and wild indolic white flowers over soaked earth.",
+    sensoryShock: "Drinking an iced ruby hibiscus infusion in the whispering shade of a bustling gemstone souk, inhaling sweet vanilla and fine leather bags.",
+    narrative: "Created with Quentin Bisch. A dramatic, theatrical floral that pairs a shocking burst of cooling spearmint with opulent hibiscus and velvety Bourbon vanilla. An absolute crowd-stopper that radiates for hours.",
     images: [
-      { label: "EARTHEN FLACON", url: "https://images.unsplash.com/photo-1523293182086-7651a899d37f?auto=format&fit=crop&w=1000&q=80" },
-      { label: "MONSOON WOODS", url: "https://images.unsplash.com/photo-1588405748880-12d1d2a59f75?auto=format&fit=crop&w=1000&q=80" }
+      { label: "CARMINE RUBY FLACON", url: "https://images.unsplash.com/photo-1594035910387-fea47794261f?auto=format&fit=crop&w=1200&q=85" },
+      { label: "VELVET FLORAL DETAIL", url: "https://images.unsplash.com/photo-1615634260167-c8cdede054de?auto=format&fit=crop&w=1200&q=85" }
     ],
-    sizes: ["50ml Extrait", "100ml Extrait"]
+    sizes: ["50ml Flacon", "100ml Flacon"]
   },
   {
     id: "tubereuse-astrale",
     name: "TUBÉREUSE ASTRALE",
-    subtitle: "EXTRAIT DE PARFUM // 30% CONCENTRATION",
-    badge: "NOCTURNAL CELESTIAL",
-    concentration: "30% HIGH-EXTRACT OIL",
+    subtitle: "EXTRAIT DE PARFUM // 30% HAUTE CONCENTRATION",
+    badge: "CELESTIAL STARGAZING",
+    perfumer: "Quentin Bisch (Givaudan)",
+    concentration: "30% HIGH-EXTRACT ESSENTIAL OIL",
     price: 245.00,
-    sillage: "Velvet Night // Enveloping Cosmic Cloud",
-    longevity: "15+ Hours Continuous Skin Glow",
-    accords: ["Milky Tuberose", "Cinnamon Bark", "Osmanthus Leather", "Carrot Seed", "Musk"],
-    sensoryShock: "Contemplating the Milky Way in a silent desert night, surrounded by shimmering tuberose blossoms and spiced winds.",
-    description: "An extraordinary cosmic contrast created with Quentin Bisch. The sparkling warmth of powdered cinnamon illuminates a velvet night of tuberose and leathery osmanthus.",
-    images: [
-      { label: "CELESTIAL GLASS", url: "https://images.unsplash.com/photo-1592945403244-b3fbafd7f539?auto=format&fit=crop&w=1000&q=80" },
-      { label: "STARLIGHT TEXTURE", url: "https://images.unsplash.com/photo-1547887537-6158d64c35b3?auto=format&fit=crop&w=1000&q=80" }
+    sillageRating: 4.5,
+    sillageLabel: "Enveloping Starlight Cloud (2.5m Sillage)",
+    longevityHours: 15,
+    soundscapeFrequency: "639Hz // Desert Midnight Resonator",
+    climateMatch: "Clear Nights // Summer Evening or Cold Winter",
+    auraGlow: "rgba(35, 55, 95, 0.20)",
+    accentColor: "#324E7B",
+    accords: ["Sparkling Cinnamon Bark", "Nocturnal Tuberose", "Osmanthus Leather", "Carrot Seed", "Solar Musk"],
+    pyramid: [
+      { level: "Tête (Top)", ingredient: "Ceylon Cinnamon & Cumin Seed", olfactoryFamily: "Celestial Solar Spices", tastingNote: "Powdered starlight sparkle that tingles the senses." },
+      { level: "Cœur (Heart)", ingredient: "Indian Tuberose & Osmanthus", olfactoryFamily: "Velvety White Floral", tastingNote: "Milky, narcotic white blossoms drenched in apricot-leather facets." },
+      { level: "Fond (Base)", ingredient: "Musk, Labdanum & Vanilla", olfactoryFamily: "Deep Velvet Resin", tastingNote: "Warm desert sand cooling under the silent expanse of the Milky Way." }
     ],
-    sizes: ["50ml Extrait", "100ml Extrait"]
+    sensoryShock: "Gazing up at a diamond-strewn night sky in an arid desert plateau, enveloped in the intoxicating breath of night-blooming tuberose.",
+    narrative: "A cosmic revelation. Quentin Bisch takes the famously narcotic, buttery tuberose and illuminates it with cinnamon starlight and apricot-tinted osmanthus. A celestial perfume of serene, arresting beauty.",
+    images: [
+      { label: "CELESTIAL GLASS", url: "https://images.unsplash.com/photo-1583445013765-46c20c4a6772?auto=format&fit=crop&w=1200&q=85" },
+      { label: "NOCTURNAL PETALS", url: "https://images.unsplash.com/photo-1518709268805-4e9042af9f23?auto=format&fit=crop&w=1200&q=85" }
+    ],
+    sizes: ["50ml Flacon", "100ml Flacon"]
   },
   {
-    id: "ecrin-olfactif",
-    name: "L'ÉCRIN EXTRAIT COFFRET",
-    subtitle: "DISCOVERY WARDROBE // 4 x 5ML REFILLABLE FLACONS",
-    badge: "SAMPLE VAULT",
-    concentration: "4 x 32% EXTRAITS",
-    price: 95.00,
-    sillage: "Multi-Spectrum Exploration",
-    longevity: "16+ Hours Full Flight",
-    accords: ["Oud Maracujá", "Hibiscus Mahajád", "Patchouli Magnetik", "Tubéreuse Astrale"],
-    sensoryShock: "The complete haute-parfumerie quadrant presented in a weighted matte embossed keepsake case.",
-    description: "The definitive olfactory discovery case. Four 5ml miniature flacons equipped with fine-mist sprayers, fully redeemable against any 50ml or 100ml Extrait de Parfum.",
-    images: [
-      { label: "COFFRET SUITE", url: "https://images.unsplash.com/photo-1615634260167-c8cdede054de?auto=format&fit=crop&w=1000&q=80" },
-      { label: "MINIATURE FLACONS", url: "https://images.unsplash.com/photo-1594035910387-fea47794261f?auto=format&fit=crop&w=1000&q=80" }
+    id: "patchouli-magnetik",
+    name: "PATCHOULI MAGNETIK",
+    subtitle: "EXTRAIT DE PARFUM // 33% HAUTE CONCENTRATION",
+    badge: "MONSOON AVANT-GARDE",
+    perfumer: "Quentin Bisch (Givaudan)",
+    concentration: "33% HIGH-EXTRACT ESSENTIAL OIL",
+    price: 245.00,
+    sillageRating: 5,
+    sillageLabel: "Electrified Thunderstorm Projection (3.8m Sillage)",
+    longevityHours: 20,
+    soundscapeFrequency: "396Hz // Tropical Monsoon Rainstorm",
+    climateMatch: "Rainy Days // Stormy Evenings & Humidity",
+    auraGlow: "rgba(42, 68, 52, 0.20)",
+    accentColor: "#2F523E",
+    accords: ["Indonesian Patchouli", "Monsoon White Peach", "Solar Gardenia", "Wet Earth", "Creamy Sandalwood"],
+    pyramid: [
+      { level: "Tête (Top)", ingredient: "Velvet White Peach & Damp Air", olfactoryFamily: "Succulent Solar Chypre", tastingNote: "Drenched summer fruit bursting with mineral ozone." },
+      { level: "Cœur (Heart)", ingredient: "Solar Gardenia & Patchouli Fronds", olfactoryFamily: "Lush Rainy Greenery", tastingNote: "Electric humidity carrying creamy white flowers over wet jungle vines." },
+      { level: "Fond (Base)", ingredient: "Dark Indonesian Patchouli & Benzoin", olfactoryFamily: "Earthen Resinous Balsam", tastingNote: "Deep magnetic forest floor grounded with rich, warm woods." }
     ],
-    sizes: ["4 x 5ml Coffret"]
+    sensoryShock: "A motorcycle velocity descent through an equatorial monsoon where ripe peaches and wet patchouli electrify the air.",
+    narrative: "Radical, polarizing, unforgettable. Quentin Bisch captures the raw kinetic energy of a tropical downpour pounding against fertile earth, sweetened by luscious peaches and grounded by monumental patchouli.",
+    images: [
+      { label: "MONSOON FLACON", url: "https://images.unsplash.com/photo-1523293182086-7651a899d37f?auto=format&fit=crop&w=1200&q=85" },
+      { label: "DAMP WOODS & PEACH", url: "https://images.unsplash.com/photo-1588405748880-12d1d2a59f75?auto=format&fit=crop&w=1200&q=85" }
+    ],
+    sizes: ["50ml Flacon", "100ml Flacon"]
+  },
+  {
+    id: "absinthe-boreale",
+    name: "ABSINTHE BORÉALE",
+    subtitle: "EAU DE PARFUM // 18% POLAR CONCENTRATION",
+    badge: "ARCTIC PHOSPHOR",
+    perfumer: "Nathalie Feisthauer",
+    concentration: "18% POLAR ESSENTIAL OIL",
+    price: 200.00,
+    sillageRating: 4.2,
+    sillageLabel: "Crisp Glacial Sillage (2.0m Sillage)",
+    longevityHours: 12,
+    soundscapeFrequency: "741Hz // Aurora Borealis Cold Drone",
+    climateMatch: "Spring & Summer // High Heat or Clean Frost",
+    auraGlow: "rgba(75, 120, 110, 0.18)",
+    accentColor: "#3E6F65",
+    accords: ["Artemisia Absinthe", "Frost Mint", "Eucalyptus Resin", "Soft White Musk", "Oakmoss"],
+    pyramid: [
+      { level: "Tête (Top)", ingredient: "Artemisia Wormwood & Crushed Mint", olfactoryFamily: "Frost Glacial Herbal", tastingNote: "An icy gust of polar wind tingling the lips with green botanical bite." },
+      { level: "Cœur (Heart)", ingredient: "Pine Needles, Lavender & Geranium", olfactoryFamily: "Boreal Forest Canopy", tastingNote: "Crisp resinous evergreen needles under a dancing green aurora." },
+      { level: "Fond (Base)", ingredient: "Sheer Musk, Amber & Clear Oakmoss", olfactoryFamily: "Soft Snow Cleanliness", tastingNote: "Pure, pristine snowdrifts reflecting silent polar twilight." }
+    ],
+    sensoryShock: "Sipping an emerald absinthe shot under the vibrating luminescence of the Northern Lights in a snowbound Scandinavian forest.",
+    narrative: "Nathalie Feisthauer channels the electrifying contrast between a freezing polar wind and the warming botanical burn of traditional green absinthe. Invigorating, crystalline, and effortlessly chic.",
+    images: [
+      { label: "FROST FLACON", url: "https://images.unsplash.com/photo-1595425970377-c9703cf48b6d?auto=format&fit=crop&w=1200&q=85" },
+      { label: "ARCTIC BOTANICALS", url: "https://images.unsplash.com/photo-1509042239860-f550ce710b93?auto=format&fit=crop&w=1200&q=85" }
+    ],
+    sizes: ["50ml Flacon", "100ml Flacon"]
   }
 ];
 
-export default function MaisonCrivelliStorefrontPage() {
-  const [activeTab, setActiveTab] = useState<"gallery" | "coffret-suite" | "forensic">("gallery");
+export default function MaisonCrivelliAestheticStorefrontPage() {
+  const [activeTab, setActiveTab] = useState<"gallery" | "duet-wardrobe" | "forensic">("gallery");
   const [selectedFragrance, setSelectedFragrance] = useState<Fragrance>(FRAGRANCES[0]);
   const [selectedImageIndex, setSelectedImageIndex] = useState<number>(0);
-  const [selectedSize, setSelectedSize] = useState<string>("50ml Extrait");
+  const [selectedSize, setSelectedSize] = useState<string>("50ml Flacon");
+  const [selectedAccordIndex, setSelectedAccordIndex] = useState<number>(0);
+  const [sillageSimulatorLevel, setSillageSimulatorLevel] = useState<number>(3.5);
 
-  // Suite Builder Multi-Selection
-  const [suiteFragranceA, setSuiteFragranceA] = useState<Fragrance>(FRAGRANCES[0]);
-  const [suiteFragranceB, setSuiteFragranceB] = useState<Fragrance>(FRAGRANCES[1]);
+  // Duet Wardrobe State
+  const [duetFragranceA, setDuetFragranceA] = useState<Fragrance>(FRAGRANCES[0]);
+  const [duetFragranceB, setDuetFragranceB] = useState<Fragrance>(FRAGRANCES[1]);
 
   // Cart State
   const [cart, setCart] = useState<CartItem[]>([]);
   const [isCartOpen, setIsCartOpen] = useState<boolean>(false);
-  const [cartHoldSeconds, setCartHoldSeconds] = useState<number>(600); // 10 minute inventory lock
+  const [cartHoldSeconds, setCartHoldSeconds] = useState<number>(600);
   const [isCheckingOut, setIsCheckingOut] = useState<boolean>(false);
   const [checkoutComplete, setCheckoutComplete] = useState<boolean>(false);
 
-  // Inventory reservation countdown
   useEffect(() => {
     if (!isCartOpen || cart.length === 0) return;
     const interval = setInterval(() => {
@@ -207,6 +284,8 @@ export default function MaisonCrivelliStorefrontPage() {
     setSelectedFragrance(fragrance);
     setSelectedImageIndex(0);
     setSelectedSize(fragrance.sizes[0]);
+    setSelectedAccordIndex(0);
+    setSillageSimulatorLevel(fragrance.sillageRating >= 4.8 ? 3.5 : 2.5);
   };
 
   const addToCart = (fragrance: Fragrance, size: string, quantity = 1) => {
@@ -231,7 +310,8 @@ export default function MaisonCrivelliStorefrontPage() {
           size,
           quantity,
           imageUrl: fragrance.images[0].url,
-          concentration: fragrance.concentration
+          concentration: fragrance.concentration,
+          includesTester: true
         }
       ];
     });
@@ -239,8 +319,8 @@ export default function MaisonCrivelliStorefrontPage() {
   };
 
   const addDuetWardrobe = () => {
-    addToCart(suiteFragranceA, "50ml Extrait", 1);
-    addToCart(suiteFragranceB, "50ml Extrait", 1);
+    addToCart(duetFragranceA, "50ml Flacon", 1);
+    addToCart(duetFragranceB, "50ml Flacon", 1);
   };
 
   const updateQuantity = (index: number, delta: number) => {
@@ -269,9 +349,15 @@ export default function MaisonCrivelliStorefrontPage() {
   };
 
   return (
-    <div className="min-h-screen bg-[#F6F5F2] text-[#151311] font-sans antialiased selection:bg-[#151311] selection:text-[#F6F5F2]">
+    <div 
+      className="min-h-screen text-[#151311] font-sans antialiased selection:bg-[#151311] selection:text-[#F6F5F2] transition-colors duration-700 relative overflow-x-hidden"
+      style={{
+        backgroundColor: "#F7F6F3",
+        backgroundImage: `radial-gradient(circle at 50% 10%, ${selectedFragrance.auraGlow} 0%, rgba(247, 246, 243, 0) 70%)`
+      }}
+    >
       {/* 1. TOP EXECUTIVE HUD & ARCHITECT CREDENTIALS */}
-      <header className="sticky top-0 z-50 bg-[#F6F5F2]/90 backdrop-blur-md border-b border-[#E5E2DC]">
+      <header className="sticky top-0 z-50 bg-[#F7F6F3]/85 backdrop-blur-xl border-b border-[#E7E3DC] transition-all">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-14 flex items-center justify-between text-xs tracking-wider uppercase font-mono">
           <div className="flex items-center space-x-3">
             <Link 
@@ -282,24 +368,25 @@ export default function MaisonCrivelliStorefrontPage() {
               <span className="hidden sm:inline font-bold">BBC // DIRECT ENGINE</span>
               <span className="sm:hidden font-bold">BBC</span>
             </Link>
-            <span className="text-[#C2BEB5]">/</span>
-            <span className="text-[#D48B38] font-semibold">PROSPECT 07: MAISON CRIVELLI</span>
+            <span className="text-[#C6C2B8]">/</span>
+            <span className="text-[#D48B38] font-semibold tracking-widest">MAISON CRIVELLI PARIS</span>
           </div>
 
-          <div className="hidden md:flex items-center space-x-6 text-[11px] font-sans font-medium text-[#736E65]">
+          <div className="hidden md:flex items-center space-x-6 text-[11px] font-sans font-medium text-[#7A746B]">
             <span className="flex items-center space-x-1.5">
               <span className="h-2 w-2 rounded-full bg-emerald-500 animate-pulse"></span>
               <span>RENDER PRODUCTION EDGE: 0.58s LCP</span>
             </span>
-            <span>THIBAUD CRIVELLI // FOUNDER DIRECT PROTOCOL</span>
+            <span className="font-serif italic text-xs text-[#151311]">« L’art de l’inattendu »</span>
+            <span>THIBAUD CRIVELLI // ARCHITECTURAL TEARDOWN</span>
           </div>
 
           <div className="flex items-center space-x-4">
-            <div className="flex items-center space-x-2 border-r border-[#E5E2DC] pr-4">
+            <div className="flex items-center space-x-2 border-r border-[#E7E3DC] pr-4">
               <a 
                 href="mailto:billybenjamin836@gmail.com" 
                 title="Direct Executive Email: billybenjamin836@gmail.com"
-                className="p-1.5 text-[#736E65] hover:text-[#151311] hover:bg-[#EAE7E1] rounded transition-all"
+                className="p-1.5 text-[#7A746B] hover:text-[#151311] hover:bg-[#ECE8E0] rounded transition-all"
               >
                 <MailIcon className="h-4 w-4" />
               </a>
@@ -308,7 +395,7 @@ export default function MaisonCrivelliStorefrontPage() {
                 target="_blank" 
                 rel="noreferrer"
                 title="Billy Benjamin LinkedIn"
-                className="p-1.5 text-[#736E65] hover:text-[#0A66C2] hover:bg-[#EAE7E1] rounded transition-all"
+                className="p-1.5 text-[#7A746B] hover:text-[#0A66C2] hover:bg-[#ECE8E0] rounded transition-all"
               >
                 <LinkedInIcon className="h-4 w-4" />
               </a>
@@ -317,7 +404,7 @@ export default function MaisonCrivelliStorefrontPage() {
                 target="_blank" 
                 rel="noreferrer"
                 title="Billy Benjamin Instagram (@billybranddirector88)"
-                className="p-1.5 text-[#736E65] hover:text-[#E4405F] hover:bg-[#EAE7E1] rounded transition-all"
+                className="p-1.5 text-[#7A746B] hover:text-[#E4405F] hover:bg-[#ECE8E0] rounded transition-all"
               >
                 <InstagramIcon className="h-4 w-4" />
               </a>
@@ -325,7 +412,7 @@ export default function MaisonCrivelliStorefrontPage() {
 
             <button
               onClick={() => setIsCartOpen(true)}
-              className="relative flex items-center space-x-2 py-1 px-3 bg-[#151311] text-[#F6F5F2] rounded-full hover:bg-[#2F2B27] transition-colors"
+              className="relative flex items-center space-x-2 py-1.5 px-3.5 bg-[#151311] text-[#F6F5F2] rounded-full hover:bg-[#2C2824] transition-all shadow-sm"
             >
               <ShoppingBag className="h-3.5 w-3.5" />
               <span className="font-mono text-xs font-semibold">{cart.reduce((s, i) => s + i.quantity, 0)}</span>
@@ -335,14 +422,14 @@ export default function MaisonCrivelliStorefrontPage() {
       </header>
 
       {/* 2. FORENSIC DIAGNOSTIC BANNER */}
-      <section className="bg-[#151311] text-[#F6F5F2] py-3 px-4 border-b border-[#292521]">
-        <div className="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between text-xs font-mono space-y-2 md:space-y-0">
+      <section className="bg-[#151311] text-[#F6F5F2] py-2.5 px-4 border-b border-[#2B2723]">
+        <div className="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between text-xs font-mono space-y-1.5 md:space-y-0">
           <div className="flex items-center space-x-2">
             <span className="px-2 py-0.5 bg-[#D48B38] text-black rounded text-[10px] font-bold">
-              AUDIT VERIFIED
+              FORENSIC BENCHMARK
             </span>
-            <span className="text-[#DDD9D1]">
-              Maison Crivelli Funnel Bleed: High-ticket fragrance blind-buy paralysis causes a <strong>34.6% cart drop-off</strong>, leaking ~<strong>€48,200/wk</strong> on paid Meta &amp; TikTok acquisition.
+            <span className="text-[#DDD8CF]">
+              Live Storefront Diagnostic: Generic white Shopify grid fails to convey sillage projection, resulting in a <strong>34.6% blind-buy drop</strong> &amp; ~<strong>€48,200/wk</strong> paid CAC bleed.
             </span>
           </div>
           <div className="flex items-center space-x-3 text-[#A8A295]">
@@ -350,97 +437,141 @@ export default function MaisonCrivelliStorefrontPage() {
               onClick={() => setActiveTab("forensic")}
               className="underline hover:text-white transition-colors"
             >
-              Inspect Synesthetic Telemetry Model →
+              Inspect Financial Recovery Model →
             </button>
           </div>
         </div>
       </section>
 
-      {/* 3. HERO & ARCHITECTURAL NAVIGATION */}
-      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-8 pb-4">
-        <div className="flex flex-col md:flex-row md:items-end justify-between border-b border-[#E5E2DC] pb-6">
+      {/* 3. LUXURY HERO & SENSUAL ATMOSPHERE SWITCHER */}
+      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-10 pb-6">
+        <div className="flex flex-col lg:flex-row lg:items-end justify-between border-b border-[#E7E3DC] pb-8 gap-6">
           <div>
-            <div className="text-xs font-mono uppercase tracking-widest text-[#D48B38] font-semibold mb-1">
-              Haute Parfumerie &amp; Olfactory Telemetry // Paris
+            <div className="flex items-center space-x-2 text-[11px] font-mono uppercase tracking-widest text-[#D48B38] font-bold mb-2">
+              <Sparkles className="h-3.5 w-3.5" />
+              <span>Haute Parfumerie &amp; Synesthetic Sensory Engineering // Paris</span>
             </div>
-            <h1 className="text-3xl sm:text-4xl md:text-5xl font-serif tracking-tight text-[#151311]">
+            <h1 className="text-4xl sm:text-5xl md:text-6xl font-serif tracking-tight text-[#151311] leading-none">
               MAISON CRIVELLI
             </h1>
-            <p className="text-sm font-sans text-[#736E65] mt-1 max-w-xl">
-              Sensory shock architecture. Synesthetic sillage projection telemetry, zero-risk 2ml blind-buy insurance, and 0.58s sub-second edge checkout.
+            <p className="text-sm font-serif italic text-[#7A746B] mt-2 max-w-2xl leading-relaxed">
+              « Chaque création est le souvenir d’une découverte vécue : un contraste saisissant de matières premières brutes, orchestré à Paris en concentration pure. »
             </p>
           </div>
 
-          <div className="flex items-center space-x-2 mt-4 md:mt-0 font-mono text-xs">
+          <div className="flex flex-wrap items-center gap-2 font-mono text-xs">
             <button
               onClick={() => setActiveTab("gallery")}
-              className={`px-4 py-2 rounded-full border transition-all ${
+              className={`px-4 py-2.5 rounded-full border transition-all ${
                 activeTab === "gallery"
-                  ? "bg-[#151311] text-[#F6F5F2] border-[#151311]"
-                  : "bg-white text-[#736E65] border-[#E5E2DC] hover:border-[#151311]"
+                  ? "bg-[#151311] text-[#F6F5F2] border-[#151311] shadow-md"
+                  : "bg-white/80 text-[#7A746B] border-[#E7E3DC] hover:border-[#151311]"
               }`}
             >
-              01 // Extrait Vault
+              01 // L&apos;Atelier des Extraits
             </button>
             <button
-              onClick={() => setActiveTab("coffret-suite")}
-              className={`px-4 py-2 rounded-full border transition-all flex items-center space-x-1.5 ${
-                activeTab === "coffret-suite"
-                  ? "bg-[#D48B38] text-black border-[#D48B38] font-bold"
-                  : "bg-white text-[#736E65] border-[#E5E2DC] hover:border-[#D48B38]"
+              onClick={() => setActiveTab("duet-wardrobe")}
+              className={`px-4 py-2.5 rounded-full border transition-all flex items-center space-x-1.5 ${
+                activeTab === "duet-wardrobe"
+                  ? "bg-[#D48B38] text-black border-[#D48B38] font-bold shadow-md"
+                  : "bg-white/80 text-[#7A746B] border-[#E7E3DC] hover:border-[#D48B38]"
               }`}
             >
-              <Sparkles className="h-3 w-3" />
-              <span>02 // Duet Wardrobe</span>
+              <Gem className="h-3 w-3" />
+              <span>02 // Duet Wardrobe Suite</span>
             </button>
             <button
               onClick={() => setActiveTab("forensic")}
-              className={`px-4 py-2 rounded-full border transition-all ${
+              className={`px-4 py-2.5 rounded-full border transition-all ${
                 activeTab === "forensic"
                   ? "bg-[#151311] text-[#F6F5F2] border-[#151311]"
-                  : "bg-white text-[#736E65] border-[#E5E2DC] hover:border-[#151311]"
+                  : "bg-white/80 text-[#7A746B] border-[#E7E3DC] hover:border-[#151311]"
               }`}
             >
-              03 // Forensic CAC Bleed
+              03 // CAC Bleed Matrix
             </button>
           </div>
         </div>
       </section>
 
-      {/* 4. MAIN WORKSPACE */}
+      {/* 4. MAIN WORKSPACE ACCORDING TO ACTIVE TAB */}
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
-        {/* TAB 1: EXTRAIT VAULT PDP (01) */}
+        {/* TAB 1: L'ATELIER DES EXTRAITS (01) */}
         {activeTab === "gallery" && (
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
-            {/* LEFT: SENSORY MEDIA RIG */}
-            <div className="lg:col-span-7 space-y-4">
-              <div className="relative aspect-[4/5] bg-[#EAE7E1] rounded-2xl overflow-hidden border border-[#E5E2DC] group">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 items-start">
+            {/* LEFT: IMMERSIVE SENSORY MEDIA RIG */}
+            <div className="lg:col-span-7 space-y-6">
+              {/* PRIMARY HIGH-DEFINITION FLACON THEATER */}
+              <div 
+                className="relative aspect-[4/5] rounded-3xl overflow-hidden border border-[#E7E3DC] shadow-2xl transition-all duration-700 group bg-[#EDE9E1]"
+                style={{
+                  boxShadow: `0 25px 50px -12px ${selectedFragrance.auraGlow}`
+                }}
+              >
                 <img
                   src={selectedFragrance.images[selectedImageIndex]?.url}
                   alt={selectedFragrance.name}
-                  className="w-full h-full object-cover object-center group-hover:scale-102 transition-transform duration-700"
+                  className="w-full h-full object-cover object-center group-hover:scale-103 transition-transform duration-1000 ease-out"
                 />
-                <div className="absolute top-4 left-4 flex flex-col space-y-1.5">
-                  <span className="px-3 py-1 bg-[#151311]/90 backdrop-blur-md text-[#D48B38] text-[10px] font-mono tracking-widest uppercase rounded-full border border-[#D48B38]/30 font-bold">
+
+                {/* AMBIENT LIGHT OVERLAYS */}
+                <div 
+                  className="absolute inset-0 pointer-events-none opacity-40 mix-blend-soft-light transition-colors duration-700"
+                  style={{ backgroundColor: selectedFragrance.accentColor }}
+                />
+
+                {/* SILLAGE RADAR AURA SIMULATOR (PULSATING RINGS) */}
+                <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
+                  <div 
+                    className="rounded-full border border-white/20 animate-ping opacity-25"
+                    style={{
+                      width: `${sillageSimulatorLevel * 90}px`,
+                      height: `${sillageSimulatorLevel * 90}px`,
+                      animationDuration: "4s"
+                    }}
+                  />
+                  <div 
+                    className="rounded-full border border-white/10 opacity-40"
+                    style={{
+                      width: `${sillageSimulatorLevel * 140}px`,
+                      height: `${sillageSimulatorLevel * 140}px`
+                    }}
+                  />
+                </div>
+
+                {/* FLOATING HAUTE-PARFUMERIE BADGES */}
+                <div className="absolute top-5 left-5 flex flex-col space-y-2">
+                  <span className="px-3.5 py-1.5 bg-[#151311]/90 backdrop-blur-md text-[#D48B38] text-[10px] font-mono tracking-widest uppercase rounded-full border border-[#D48B38]/40 font-bold shadow-md">
                     {selectedFragrance.badge}
                   </span>
-                  <span className="px-3 py-1 bg-white/90 backdrop-blur-md text-[#151311] text-[10px] font-mono tracking-wider uppercase rounded-full border border-[#E5E2DC]">
+                  <span className="px-3.5 py-1.5 bg-white/90 backdrop-blur-md text-[#151311] text-[10px] font-mono tracking-wider uppercase rounded-full border border-[#E7E3DC] shadow-sm">
                     {selectedFragrance.concentration}
                   </span>
                 </div>
-                <div className="absolute bottom-4 right-4 bg-white/90 backdrop-blur-md px-3 py-1 rounded-full text-[11px] font-mono text-[#736E65] border border-[#E5E2DC]">
+
+                {/* SOUNDSCAPE FREQUENCY TELEMETRY */}
+                <div className="absolute bottom-5 left-5 bg-[#151311]/80 backdrop-blur-md px-3.5 py-1.5 rounded-full text-[11px] font-mono text-[#D48B38] border border-white/10 flex items-center space-x-2">
+                  <Radio className="h-3 w-3 animate-pulse text-[#D48B38]" />
+                  <span>{selectedFragrance.soundscapeFrequency}</span>
+                </div>
+
+                {/* IMAGE LABEL */}
+                <div className="absolute bottom-5 right-5 bg-white/90 backdrop-blur-md px-3.5 py-1.5 rounded-full text-[11px] font-mono text-[#7A746B] border border-[#E7E3DC]">
                   {selectedFragrance.images[selectedImageIndex]?.label}
                 </div>
               </div>
 
-              {/* Thumbnails */}
+              {/* MEDIA GALLERY THUMBNAILS */}
               <div className="grid grid-cols-4 gap-3">
                 {selectedFragrance.images.map((img, idx) => (
                   <button
                     key={idx}
                     onClick={() => setSelectedImageIndex(idx)}
-                    className={`relative aspect-[4/3] rounded-lg overflow-hidden border transition-all ${
-                      selectedImageIndex === idx ? "border-[#151311] ring-2 ring-[#151311]/20" : "border-[#E5E2DC] opacity-70 hover:opacity-100"
+                    className={`relative aspect-[4/3] rounded-xl overflow-hidden border transition-all ${
+                      selectedImageIndex === idx 
+                        ? "border-[#151311] ring-2 ring-[#151311]/30 scale-102" 
+                        : "border-[#E7E3DC] opacity-70 hover:opacity-100"
                     }`}
                   >
                     <img src={img.url} alt={img.label} className="w-full h-full object-cover" />
@@ -448,90 +579,159 @@ export default function MaisonCrivelliStorefrontPage() {
                 ))}
               </div>
 
-              {/* CATALOG SWITCHER */}
-              <div className="mt-8 pt-6 border-t border-[#E5E2DC]">
-                <div className="text-xs font-mono uppercase tracking-wider text-[#736E65] mb-3 flex items-center justify-between">
-                  <span>Haute Parfumerie Quadrant ({FRAGRANCES.length} Creations)</span>
-                  <span className="text-[#D48B38]">32% Pure Concentration</span>
+              {/* INTERACTIVE SCENT PYRAMID ACCORD MATRIX */}
+              <div className="bg-white/90 backdrop-blur-md rounded-2xl border border-[#E7E3DC] p-6 shadow-sm space-y-4">
+                <div className="flex items-center justify-between">
+                  <div className="flex items-center space-x-2 text-xs font-mono font-bold text-[#D48B38] uppercase">
+                    <Layers className="h-3.5 w-3.5" />
+                    <span>L&apos;Architecture Olfactive (Pyramide des Sens)</span>
+                  </div>
+                  <span className="text-[10px] font-mono text-[#7A746B]">Formulé par {selectedFragrance.perfumer}</span>
                 </div>
-                <div className="grid grid-cols-2 sm:grid-cols-5 gap-2">
+
+                <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+                  {selectedFragrance.pyramid.map((step, idx) => (
+                    <div 
+                      key={idx} 
+                      onClick={() => setSelectedAccordIndex(idx)}
+                      className={`p-3.5 rounded-xl border cursor-pointer transition-all ${
+                        selectedAccordIndex === idx 
+                          ? "bg-[#151311] text-white border-[#151311] shadow-md" 
+                          : "bg-[#F7F6F3] text-[#151311] border-[#E7E3DC] hover:border-[#D48B38]"
+                      }`}
+                    >
+                      <div className={`text-[10px] font-mono font-bold uppercase ${selectedAccordIndex === idx ? "text-[#D48B38]" : "text-[#7A746B]"}`}>
+                        {step.level}
+                      </div>
+                      <div className="text-xs font-serif font-bold mt-1">{step.ingredient}</div>
+                      <div className={`text-[10px] font-mono mt-0.5 ${selectedAccordIndex === idx ? "text-[#DDD8CF]" : "text-[#7A746B]"}`}>
+                        {step.olfactoryFamily}
+                      </div>
+                    </div>
+                  ))}
+                </div>
+
+                <div className="p-3.5 bg-[#F7F6F3] rounded-xl border border-[#E7E3DC] text-xs font-mono text-[#554F45]">
+                  <span className="text-[#D48B38] font-bold">NOTE DÉGUSTATION: </span>
+                  {selectedFragrance.pyramid[selectedAccordIndex]?.tastingNote}
+                </div>
+              </div>
+
+              {/* ARCHIVE SWITCHER */}
+              <div className="pt-2">
+                <div className="text-xs font-mono uppercase tracking-wider text-[#7A746B] mb-3 flex items-center justify-between">
+                  <span>Sélectionner Une Création ({FRAGRANCES.length} Flacons de Collection)</span>
+                  <span className="text-[#D48B38] font-bold">30% à 33% Extraits Pures</span>
+                </div>
+                <div className="grid grid-cols-2 sm:grid-cols-5 gap-2.5">
                   {FRAGRANCES.map((frag) => (
                     <button
                       key={frag.id}
                       onClick={() => handleSelectFragrance(frag)}
-                      className={`text-left p-2.5 rounded-xl border text-xs transition-all ${
+                      className={`text-left p-3 rounded-2xl border text-xs transition-all ${
                         selectedFragrance.id === frag.id
-                          ? "bg-white border-[#151311] shadow-sm ring-1 ring-[#151311]"
-                          : "bg-[#EAE7E1]/50 border-transparent hover:border-[#D8D4CC]"
+                          ? "bg-white border-[#151311] shadow-md ring-1 ring-[#151311] scale-102"
+                          : "bg-white/60 border-transparent hover:border-[#D8D4CC]"
                       }`}
                     >
                       <div className="font-mono text-[9px] text-[#D48B38] truncate font-bold">{frag.badge}</div>
                       <div className="font-serif font-bold text-[#151311] truncate text-[12px] mt-0.5">{frag.name}</div>
-                      <div className="font-mono text-[10px] text-[#736E65] mt-1">€{frag.price.toFixed(2)}</div>
+                      <div className="font-mono text-[10px] text-[#7A746B] mt-1">€{frag.price.toFixed(2)}</div>
                     </button>
                   ))}
                 </div>
               </div>
             </div>
 
-            {/* RIGHT: SYNESTHETIC TELEMETRY & BLIND-BUY SHIELD */}
-            <div className="lg:col-span-5 bg-white p-6 sm:p-8 rounded-2xl border border-[#E5E2DC] shadow-sm space-y-6">
+            {/* RIGHT: SYNESTHETIC TELEMETRY & CONVERSION PHYSICS */}
+            <div className="lg:col-span-5 bg-white p-7 sm:p-9 rounded-3xl border border-[#E7E3DC] shadow-xl space-y-6">
               <div>
                 <div className="flex items-center justify-between text-xs font-mono text-[#D48B38]">
                   <span>{selectedFragrance.subtitle}</span>
-                  <span className="flex items-center space-x-1 text-emerald-700">
-                    <span className="h-1.5 w-1.5 rounded-full bg-emerald-500 animate-pulse"></span>
-                    <span>PARIS ATELIER DISPATCH</span>
+                  <span className="flex items-center space-x-1.5 text-emerald-700 font-bold">
+                    <span className="h-2 w-2 rounded-full bg-emerald-500 animate-pulse"></span>
+                    <span>ATELIER PARIS // EN STOCK</span>
                   </span>
                 </div>
-                <h2 className="text-2xl sm:text-3xl font-serif text-[#151311] mt-2">
+                <h2 className="text-3xl sm:text-4xl font-serif text-[#151311] mt-2 tracking-tight">
                   {selectedFragrance.name}
                 </h2>
                 <div className="flex items-baseline space-x-3 mt-2">
                   <span className="text-3xl font-mono font-bold text-[#151311]">
                     €{(selectedSize.includes("100ml") ? selectedFragrance.price * 1.55 : selectedFragrance.price).toFixed(2)}
                   </span>
-                  <span className="text-xs font-mono text-[#D48B38] bg-[#D48B38]/10 border border-[#D48B38]/30 px-2 py-0.5 rounded">
+                  <span className="text-xs font-mono text-[#D48B38] bg-[#D48B38]/10 border border-[#D48B38]/30 px-2.5 py-0.5 rounded-full font-bold">
                     Klarna: 3 x €{((selectedSize.includes("100ml") ? selectedFragrance.price * 1.55 : selectedFragrance.price) / 3).toFixed(2)}
                   </span>
                 </div>
               </div>
 
               {/* SENSORY SHOCK STORYTELLING */}
-              <div className="p-3.5 bg-[#F6F5F2] rounded-xl border border-[#E5E2DC] text-xs space-y-1">
-                <div className="text-[10px] font-mono text-[#D48B38] font-bold uppercase tracking-wider">The Sensory Discovery</div>
+              <div className="p-4 bg-[#F7F6F3] rounded-2xl border border-[#E7E3DC] space-y-1.5">
+                <div className="text-[10px] font-mono text-[#D48B38] font-bold uppercase tracking-wider flex items-center space-x-1.5">
+                  <Sparkles className="h-3 w-3" />
+                  <span>Le Choc Sensoriel</span>
+                </div>
                 <p className="font-serif italic text-[#151311] text-xs leading-relaxed">
                   &ldquo;{selectedFragrance.sensoryShock}&rdquo;
+                </p>
+                <p className="text-[11px] font-sans text-[#7A746B] leading-relaxed pt-1">
+                  {selectedFragrance.narrative}
                 </p>
               </div>
 
               {/* SYNESTHETIC TELEMETRY GAUGES */}
-              <div className="grid grid-cols-2 gap-2 text-xs font-mono">
-                <div className="p-3 bg-[#F6F5F2] rounded-xl border border-[#E5E2DC] space-y-1">
+              <div className="grid grid-cols-2 gap-3 text-xs font-mono">
+                <div className="p-3.5 bg-[#F7F6F3] rounded-xl border border-[#E7E3DC] space-y-1">
                   <div className="flex items-center space-x-1.5 text-[#D48B38] text-[10px] font-bold uppercase">
-                    <Wind className="h-3 w-3" />
-                    <span>Sillage Projection</span>
+                    <Wind className="h-3.5 w-3.5" />
+                    <span>Rayon de Sillage</span>
                   </div>
-                  <div className="text-[#151311] font-bold text-[11px] leading-tight">{selectedFragrance.sillage}</div>
+                  <div className="text-[#151311] font-bold text-[11px] leading-tight">{selectedFragrance.sillageLabel}</div>
                 </div>
 
-                <div className="p-3 bg-[#F6F5F2] rounded-xl border border-[#E5E2DC] space-y-1">
+                <div className="p-3.5 bg-[#F7F6F3] rounded-xl border border-[#E7E3DC] space-y-1">
                   <div className="flex items-center space-x-1.5 text-[#D48B38] text-[10px] font-bold uppercase">
-                    <Timer className="h-3 w-3" />
-                    <span>Epidermal Hold</span>
+                    <Timer className="h-3.5 w-3.5" />
+                    <span>Tenue Épidermique</span>
                   </div>
-                  <div className="text-[#151311] font-bold text-[11px] leading-tight">{selectedFragrance.longevity}</div>
+                  <div className="text-[#151311] font-bold text-[11px] leading-tight">{selectedFragrance.longevityHours}+ Heures Inaltérables</div>
                 </div>
               </div>
 
-              {/* RAW INGREDIENT ACCORD MATRIX */}
+              {/* SILLAGE PROJECTION SLIDER (INTERACTIVE UX WEAPON) */}
+              <div className="space-y-2 p-4 bg-[#F7F6F3] rounded-2xl border border-[#E7E3DC]">
+                <div className="flex justify-between items-center text-xs font-mono">
+                  <span className="text-[#7A746B] flex items-center space-x-1.5">
+                    <Sliders className="h-3.5 w-3.5 text-[#D48B38]" />
+                    <span>SIMULATEUR DE PROJECTION :</span>
+                  </span>
+                  <span className="font-bold text-[#151311]">{sillageSimulatorLevel} Mètres</span>
+                </div>
+                <input 
+                  type="range" 
+                  min="0.5" 
+                  max="4.0" 
+                  step="0.5" 
+                  value={sillageSimulatorLevel}
+                  onChange={(e) => setSillageSimulatorLevel(parseFloat(e.target.value))}
+                  className="w-full accent-[#D48B38] cursor-pointer"
+                />
+                <div className="flex justify-between text-[10px] font-mono text-[#7A746B]">
+                  <span>Intime (Peau)</span>
+                  <span>Portée du Bras</span>
+                  <span>Atmosphère Captivante (3.5m+)</span>
+                </div>
+              </div>
+
+              {/* RAW ACCORD CLUSTER */}
               <div>
-                <div className="text-[11px] font-mono text-[#736E65] mb-2 uppercase">Raw Ingredient Harmony:</div>
+                <div className="text-[11px] font-mono text-[#7A746B] mb-2 uppercase">Matières Premières Dominantes :</div>
                 <div className="flex flex-wrap gap-1.5">
                   {selectedFragrance.accords.map((accord) => (
                     <span 
                       key={accord}
-                      className="px-2.5 py-1 bg-[#F6F5F2] border border-[#E5E2DC] rounded-full text-xs font-mono text-[#151311]"
+                      className="px-3 py-1 bg-[#F7F6F3] border border-[#E7E3DC] rounded-full text-xs font-mono text-[#151311]"
                     >
                       {accord}
                     </span>
@@ -539,11 +739,11 @@ export default function MaisonCrivelliStorefrontPage() {
                 </div>
               </div>
 
-              {/* FLACON SIZE SELECTOR (>=48PX) */}
+              {/* FLACON SIZE SELECTOR (>=48PX TAP TARGETS) */}
               <div>
                 <div className="flex justify-between items-center text-xs font-mono mb-2">
-                  <span className="text-[#736E65]">FLACON CAPACITY:</span>
-                  <span className="text-xs text-[#D48B38] font-bold">Includes 2ml Sealed Travel Tester</span>
+                  <span className="text-[#7A746B]">CONTENANCE DU FLACON :</span>
+                  <span className="text-xs text-[#D48B38] font-bold">Échantillon 2ml Scellé Inclus</span>
                 </div>
                 <div className="grid grid-cols-2 gap-2">
                   {selectedFragrance.sizes.map((s) => (
@@ -553,7 +753,7 @@ export default function MaisonCrivelliStorefrontPage() {
                       className={`h-12 rounded-xl font-mono text-xs font-bold transition-all flex items-center justify-center border ${
                         selectedSize === s
                           ? "bg-[#151311] text-[#F6F5F2] border-[#151311] shadow-md"
-                          : "bg-white text-[#151311] border-[#E5E2DC] hover:border-[#151311]"
+                          : "bg-white text-[#151311] border-[#E7E3DC] hover:border-[#151311]"
                       }`}
                     >
                       <span>{s}</span>
@@ -565,14 +765,14 @@ export default function MaisonCrivelliStorefrontPage() {
                 </div>
               </div>
 
-              {/* THE BLIND-BUY SHIELD PROTOCOL (ZERO-RISK MECHANIC) */}
-              <div className="p-3 bg-[#EAE7E1]/60 rounded-xl border border-[#D48B38]/40 space-y-1">
-                <div className="flex items-center space-x-1.5 text-[#D48B38] text-[11px] font-mono font-bold uppercase">
+              {/* THE ZERO-RISK BLIND BUY SHIELD (THE CAC RECOVERY ENGINE) */}
+              <div className="p-4 bg-[#ECE8E0] rounded-2xl border border-[#D48B38]/50 space-y-1.5">
+                <div className="flex items-center space-x-2 text-[#D48B38] text-xs font-mono font-bold uppercase">
                   <ShieldCheck className="h-4 w-4" />
-                  <span>Maison Crivelli Blind-Buy Guarantee</span>
+                  <span>Le Protocole Garantie Essai Scellé</span>
                 </div>
-                <p className="text-[11px] text-[#736E65] font-mono leading-relaxed">
-                  Every order includes a sealed 2ml sample vial. Test the vial on your skin first. If unsuited, return the unopened 50ml flacon for a 100% immediate refund with complimentary return courier.
+                <p className="text-xs text-[#5C564C] font-mono leading-relaxed">
+                  Chaque flacon s&apos;accompagne d&apos;un vaporisateur de voyage 2ml scellé. Essayez d&apos;abord le 2ml sur votre peau. Si la fragrance ne vous séduit pas, renvoyez le grand flacon intact pour un remboursement intégral immédiat.
                 </p>
               </div>
 
@@ -580,11 +780,11 @@ export default function MaisonCrivelliStorefrontPage() {
               <div className="space-y-3 pt-1">
                 <button
                   onClick={() => addToCart(selectedFragrance, selectedSize)}
-                  className="w-full h-14 bg-[#151311] text-[#F6F5F2] rounded-xl font-mono text-xs tracking-wider uppercase font-bold flex items-center justify-between px-6 hover:bg-[#2F2B27] transition-all group shadow-md"
+                  className="w-full h-14 bg-[#151311] text-[#F6F5F2] rounded-2xl font-mono text-xs tracking-wider uppercase font-bold flex items-center justify-between px-6 hover:bg-[#2C2824] transition-all group shadow-lg"
                 >
                   <span className="flex items-center space-x-2">
                     <ShoppingBag className="h-4 w-4" />
-                    <span>ACQUIRE EXTRAIT + 2ML TESTER</span>
+                    <span>ACQUÉRIR LE FLACON + ÉCHANTILLON 2ML</span>
                   </span>
                   <span className="flex items-center space-x-1 group-hover:translate-x-1 transition-transform">
                     <span>€{(selectedSize.includes("100ml") ? selectedFragrance.price * 1.55 : selectedFragrance.price).toFixed(2)}</span>
@@ -592,38 +792,38 @@ export default function MaisonCrivelliStorefrontPage() {
                   </span>
                 </button>
 
-                <div className="p-3 bg-[#EAE7E1]/40 rounded-xl border border-[#E5E2DC] flex items-center justify-between text-[11px] font-mono text-[#736E65]">
+                <div className="p-3 bg-[#F7F6F3] rounded-xl border border-[#E7E3DC] flex items-center justify-between text-[11px] font-mono text-[#7A746B]">
                   <span className="flex items-center space-x-1.5">
                     <Truck className="h-3.5 w-3.5 text-[#D48B38]" />
-                    <span>Free DHL Express Worldwide Over €150</span>
+                    <span>Livraison DHL Express Gratuite dès €150</span>
                   </span>
                   <span className="flex items-center space-x-1.5">
                     <RotateCcw className="h-3.5 w-3.5 text-[#D48B38]" />
-                    <span>30-Day Sealed Returns</span>
+                    <span>Retours Gratuits 30 Jours</span>
                   </span>
                 </div>
               </div>
 
-              {/* WEDGE: DISCOVERY COFFRET UPSELL */}
-              <div className="pt-4 border-t border-[#E5E2DC]">
+              {/* WEDGE: COMPLIMENTARY COFFRET UPSELL */}
+              <div className="pt-4 border-t border-[#E7E3DC]">
                 <div className="text-[11px] font-mono uppercase text-[#D48B38] font-semibold mb-2">
-                  Complete Olfactory Flight
+                  Compléter Le Voyage Olfactif
                 </div>
-                <div className="p-3 bg-[#F6F5F2] rounded-xl border border-[#E5E2DC] flex items-center justify-between">
+                <div className="p-3.5 bg-[#F7F6F3] rounded-2xl border border-[#E7E3DC] flex items-center justify-between">
                   <div className="flex items-center space-x-3">
-                    <div className="h-12 w-12 rounded-lg bg-[#EAE7E1] overflow-hidden flex-shrink-0">
-                      <img src={FRAGRANCES[4].images[0].url} alt="Coffret" className="w-full h-full object-cover" />
+                    <div className="h-12 w-12 rounded-xl bg-[#EDE9E1] overflow-hidden flex-shrink-0">
+                      <img src={FRAGRANCES[1].images[0].url} alt="Hibiscus" className="w-full h-full object-cover" />
                     </div>
                     <div>
-                      <div className="text-xs font-bold text-[#151311]">{FRAGRANCES[4].name}</div>
-                      <div className="text-[11px] font-mono text-[#736E65]">€95.00 // 4 x 5ml Discovery Flacons</div>
+                      <div className="text-xs font-serif font-bold text-[#151311]">{FRAGRANCES[1].name}</div>
+                      <div className="text-[11px] font-mono text-[#7A746B]">€245.00 // Le Duo Contrasté</div>
                     </div>
                   </div>
                   <button
-                    onClick={() => addToCart(FRAGRANCES[4], "4 x 5ml Coffret")}
-                    className="px-3 py-1.5 bg-white border border-[#151311] text-[#151311] text-xs font-mono font-semibold rounded-lg hover:bg-[#151311] hover:text-white transition-colors"
+                    onClick={() => addToCart(FRAGRANCES[1], "50ml Flacon")}
+                    className="px-3 py-1.5 bg-white border border-[#151311] text-[#151311] text-xs font-mono font-bold rounded-lg hover:bg-[#151311] hover:text-white transition-colors"
                   >
-                    + Add Coffret
+                    + Ajouter
                   </button>
                 </div>
               </div>
@@ -631,43 +831,43 @@ export default function MaisonCrivelliStorefrontPage() {
           </div>
         )}
 
-        {/* TAB 2: 1-TAP DUET WARDROBE (02) */}
-        {activeTab === "coffret-suite" && (
-          <div className="bg-white rounded-2xl border border-[#E5E2DC] p-6 sm:p-10 shadow-sm max-w-5xl mx-auto">
-            <div className="text-center max-w-2xl mx-auto mb-8">
-              <span className="px-3 py-1 bg-[#D48B38]/15 text-[#D48B38] rounded-full font-mono text-xs uppercase font-bold tracking-wider">
-                AOV Multiplier Architecture (+€430 Duet Suite)
+        {/* TAB 2: 1-TAP DUET WARDROBE (02) - AOV EXPANDER */}
+        {activeTab === "duet-wardrobe" && (
+          <div className="bg-white rounded-3xl border border-[#E7E3DC] p-6 sm:p-10 shadow-xl max-w-5xl mx-auto space-y-8">
+            <div className="text-center max-w-2xl mx-auto">
+              <span className="px-3.5 py-1.5 bg-[#D48B38]/15 text-[#D48B38] rounded-full font-mono text-xs uppercase font-bold tracking-wider">
+                Garde-Robe Olfactive Synchronisée (+€430 Panier Moyen)
               </span>
-              <h2 className="text-3xl font-serif text-[#151311] mt-3">
-                THE DAY &amp; NIGHT EXTRAIT WARDROBE
+              <h2 className="text-3xl sm:text-4xl font-serif text-[#151311] mt-3">
+                LE DUO CONTRASTÉ : JOUR &amp; NUIT
               </h2>
-              <p className="text-xs text-[#736E65] mt-2 font-mono">
-                Fragrance connoisseurs layer contrasting creations. This engine binds Oud Maracujá (Sensory Dark Oud) with Hibiscus Mahajád (Red Velvet Floral) in a single synchronous 1-tap payload.
+              <p className="text-xs text-[#7A746B] mt-2 font-mono">
+                Les passionnés de haute parfumerie superposent les contrastes. Ce module réunit deux créations majeures en un seul geste, avec deux vaporisateurs d&apos;essai et un privilège exclusif.
               </p>
             </div>
 
             {/* DUET SELECTION TILES */}
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-8">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
               {/* FLACON A */}
-              <div className="p-5 bg-[#F6F5F2] rounded-xl border border-[#E5E2DC] flex flex-col justify-between">
+              <div className="p-6 bg-[#F7F6F3] rounded-2xl border border-[#E7E3DC] flex flex-col justify-between">
                 <div>
-                  <div className="aspect-[16/10] rounded-lg overflow-hidden bg-[#EAE7E1] mb-3">
-                    <img src={suiteFragranceA.images[0].url} alt={suiteFragranceA.name} className="w-full h-full object-cover" />
+                  <div className="aspect-[16/10] rounded-xl overflow-hidden bg-[#EDE9E1] mb-4">
+                    <img src={duetFragranceA.images[0].url} alt={duetFragranceA.name} className="w-full h-full object-cover" />
                   </div>
-                  <span className="text-[10px] font-mono text-[#D48B38] uppercase font-bold">CREATION 01: THE NOCTURNAL SHOCK</span>
-                  <div className="text-sm font-serif font-bold text-[#151311] mt-0.5">{suiteFragranceA.name}</div>
-                  <div className="text-xs font-mono text-[#736E65] mt-1">€245.00 // 50ml 32% Extrait + 2ml Tester</div>
+                  <span className="text-[10px] font-mono text-[#D48B38] uppercase font-bold">CRÉATION 01 : LE SILLAGE NOCTURNE</span>
+                  <div className="text-base font-serif font-bold text-[#151311] mt-0.5">{duetFragranceA.name}</div>
+                  <div className="text-xs font-mono text-[#7A746B] mt-1">€245.00 // 50ml Extrait + 2ml Essai Scellé</div>
                 </div>
 
-                <div className="mt-4">
-                  <div className="text-[11px] font-mono text-[#736E65] mb-1.5">CHOOSE NOCTURNAL SCENT:</div>
-                  <div className="grid grid-cols-2 gap-1.5">
-                    {[FRAGRANCES[0], FRAGRANCES[2]].map((f) => (
+                <div className="mt-5">
+                  <div className="text-[11px] font-mono text-[#7A746B] mb-2">CHOISIR LA NOTE NOCTURNE :</div>
+                  <div className="grid grid-cols-2 gap-2">
+                    {[FRAGRANCES[0], FRAGRANCES[3]].map((f) => (
                       <button
                         key={f.id}
-                        onClick={() => setSuiteFragranceA(f)}
-                        className={`h-10 px-2 rounded-lg font-mono text-xs font-bold transition-all border truncate ${
-                          suiteFragranceA.id === f.id ? "bg-[#151311] text-white border-[#151311]" : "bg-white text-[#151311] border-[#E5E2DC]"
+                        onClick={() => setDuetFragranceA(f)}
+                        className={`h-11 px-2 rounded-xl font-mono text-xs font-bold transition-all border truncate ${
+                          duetFragranceA.id === f.id ? "bg-[#151311] text-white border-[#151311] shadow-sm" : "bg-white text-[#151311] border-[#E7E3DC]"
                         }`}
                       >
                         {f.name}
@@ -678,25 +878,25 @@ export default function MaisonCrivelliStorefrontPage() {
               </div>
 
               {/* FLACON B */}
-              <div className="p-5 bg-[#F6F5F2] rounded-xl border border-[#E5E2DC] flex flex-col justify-between">
+              <div className="p-6 bg-[#F7F6F3] rounded-2xl border border-[#E7E3DC] flex flex-col justify-between">
                 <div>
-                  <div className="aspect-[16/10] rounded-lg overflow-hidden bg-[#EAE7E1] mb-3">
-                    <img src={suiteFragranceB.images[0].url} alt={suiteFragranceB.name} className="w-full h-full object-cover" />
+                  <div className="aspect-[16/10] rounded-xl overflow-hidden bg-[#EDE9E1] mb-4">
+                    <img src={duetFragranceB.images[0].url} alt={duetFragranceB.name} className="w-full h-full object-cover" />
                   </div>
-                  <span className="text-[10px] font-mono text-[#D48B38] uppercase font-bold">CREATION 02: THE SOLAR RADIANCE</span>
-                  <div className="text-sm font-serif font-bold text-[#151311] mt-0.5">{suiteFragranceB.name}</div>
-                  <div className="text-xs font-mono text-[#736E65] mt-1">€245.00 // 50ml 32% Extrait + 2ml Tester</div>
+                  <span className="text-[10px] font-mono text-[#D48B38] uppercase font-bold">CRÉATION 02 : L&apos;ÉCLAT SOLAIRE</span>
+                  <div className="text-base font-serif font-bold text-[#151311] mt-0.5">{duetFragranceB.name}</div>
+                  <div className="text-xs font-mono text-[#7A746B] mt-1">€245.00 // 50ml Extrait + 2ml Essai Scellé</div>
                 </div>
 
-                <div className="mt-4">
-                  <div className="text-[11px] font-mono text-[#736E65] mb-1.5">CHOOSE SOLAR SCENT:</div>
-                  <div className="grid grid-cols-2 gap-1.5">
-                    {[FRAGRANCES[1], FRAGRANCES[3]].map((f) => (
+                <div className="mt-5">
+                  <div className="text-[11px] font-mono text-[#7A746B] mb-2">CHOISIR LA NOTE SOLAIRE :</div>
+                  <div className="grid grid-cols-2 gap-2">
+                    {[FRAGRANCES[1], FRAGRANCES[4]].map((f) => (
                       <button
                         key={f.id}
-                        onClick={() => setSuiteFragranceB(f)}
-                        className={`h-10 px-2 rounded-lg font-mono text-xs font-bold transition-all border truncate ${
-                          suiteFragranceB.id === f.id ? "bg-[#D48B38] text-black border-[#D48B38]" : "bg-white text-[#151311] border-[#E5E2DC]"
+                        onClick={() => setDuetFragranceB(f)}
+                        className={`h-11 px-2 rounded-xl font-mono text-xs font-bold transition-all border truncate ${
+                          duetFragranceB.id === f.id ? "bg-[#D48B38] text-black border-[#D48B38] font-bold shadow-sm" : "bg-white text-[#151311] border-[#E7E3DC]"
                         }`}
                       >
                         {f.name}
@@ -712,86 +912,86 @@ export default function MaisonCrivelliStorefrontPage() {
               <div>
                 <div className="flex items-center space-x-2 text-xs font-mono text-[#D48B38]">
                   <Sparkles className="h-4 w-4" />
-                  <span>SYNCHRONIZED DUET PRIVILEGE APPLIED (12% OFF)</span>
+                  <span>PRIVILÈGE DUO DE MAISON APPLIQUÉ (12% DE REMISE)</span>
                 </div>
                 <div className="flex items-baseline space-x-3 mt-1">
                   <span className="text-3xl font-mono font-bold text-white">€431.20</span>
                   <span className="text-sm font-mono text-[#8A8478] line-through">€490.00</span>
-                  <span className="text-xs font-mono bg-[#D48B38] text-black px-2 py-0.5 rounded font-bold">
-                    SAVE €58.80
+                  <span className="text-xs font-mono bg-[#D48B38] text-black px-2.5 py-0.5 rounded-full font-bold">
+                    ÉCONOMISEZ €58.80
                   </span>
                 </div>
                 <div className="text-[11px] text-[#A8A295] font-mono mt-1">
-                  Includes 2 x 2ml Sealed Travel Samples + Free DHL Express Worldwide
+                  Comprend 2 x 2ml Échantillons Scellés + Coffret Cadeau Signature + DHL Express
                 </div>
               </div>
 
               <button
                 onClick={addDuetWardrobe}
-                className="w-full sm:w-auto h-14 px-8 bg-[#F6F5F2] text-[#151311] rounded-xl font-mono text-xs uppercase font-bold tracking-wider hover:bg-white transition-all shadow-lg flex items-center justify-center space-x-2"
+                className="w-full sm:w-auto h-14 px-8 bg-[#F6F5F2] text-[#151311] rounded-2xl font-mono text-xs uppercase font-bold tracking-wider hover:bg-white transition-all shadow-xl flex items-center justify-center space-x-2"
               >
                 <ShoppingBag className="h-4 w-4" />
-                <span>1-TAP ADD DUET WARDROBE</span>
+                <span>1-TAP AJOUTER LA GARDE-ROBE DUO</span>
               </button>
             </div>
           </div>
         )}
 
-        {/* TAB 3: FORENSIC CAC BLEED & UNIT ECONOMICS (03) */}
+        {/* TAB 3: FORENSIC CAC BLEED & REVENUE ACCELERATION (03) */}
         {activeTab === "forensic" && (
           <div className="space-y-8 max-w-5xl mx-auto">
             {/* COMPARATIVE MATRIX */}
-            <div className="bg-white rounded-2xl border border-[#E5E2DC] p-6 sm:p-8 shadow-sm">
-              <div className="flex flex-col sm:flex-row sm:items-center justify-between mb-6 pb-4 border-b border-[#E5E2DC]">
+            <div className="bg-white rounded-3xl border border-[#E7E3DC] p-6 sm:p-9 shadow-xl">
+              <div className="flex flex-col sm:flex-row sm:items-center justify-between mb-6 pb-4 border-b border-[#E7E3DC]">
                 <div>
-                  <span className="text-xs font-mono text-[#D48B38] uppercase font-bold">Forensic Architectural Audit</span>
-                  <h3 className="text-2xl font-serif text-[#151311] mt-1">Maison Crivelli Mobile Storefront vs. BBC Synesthetic Architecture</h3>
+                  <span className="text-xs font-mono text-[#D48B38] uppercase font-bold">Audit Architectural de Conversion</span>
+                  <h3 className="text-2xl font-serif text-[#151311] mt-1">Boutique Maison Crivelli Actuelle vs. Architecture Synesthétique BBC</h3>
                 </div>
-                <div className="mt-2 sm:mt-0 font-mono text-xs text-[#736E65]">
-                  Target: Thibaud Crivelli // Founder Growth Brief
+                <div className="mt-2 sm:mt-0 font-mono text-xs text-[#7A746B]">
+                  À l&apos;attention de : Thibaud Crivelli
                 </div>
               </div>
 
               <div className="overflow-x-auto">
                 <table className="w-full text-left font-mono text-xs">
                   <thead>
-                    <tr className="border-b border-[#E5E2DC] text-[#D48B38]">
-                      <th className="py-3 px-4 font-bold">PERFORMANCE METRIC</th>
-                      <th className="py-3 px-4 font-bold text-rose-700 bg-rose-50/50">MAISON CRIVELLI CURRENT</th>
-                      <th className="py-3 px-4 font-bold text-emerald-800 bg-emerald-50/50">BBC SYNESTHETIC ENGINE</th>
-                      <th className="py-3 px-4 font-bold">COMMERCIAL IMPACT</th>
+                    <tr className="border-b border-[#E7E3DC] text-[#D48B38]">
+                      <th className="py-3 px-4 font-bold">AXE DE CONVERSION</th>
+                      <th className="py-3 px-4 font-bold text-rose-700 bg-rose-50/50">BOUTIQUE ACTUELLE (SHOPIFY)</th>
+                      <th className="py-3 px-4 font-bold text-emerald-800 bg-emerald-50/50">ARCHITECTURE BBC SYNESTHÉTIQUE</th>
+                      <th className="py-3 px-4 font-bold">IMPACT COMMERCIAL</th>
                     </tr>
                   </thead>
-                  <tbody className="divide-y divide-[#E5E2DC]">
+                  <tbody className="divide-y divide-[#E7E3DC]">
                     <tr>
-                      <td className="py-3 px-4 font-semibold text-[#151311]">Mobile 4G LCP</td>
-                      <td className="py-3 px-4 text-rose-600 bg-rose-50/30">3.9s (Heavy Media Scripts)</td>
-                      <td className="py-3 px-4 text-emerald-700 bg-emerald-50/30 font-bold">0.58s (Edge Cached)</td>
-                      <td className="py-3 px-4 text-[#151311]">+22.4% Paid Traffic Retention</td>
+                      <td className="py-3 px-4 font-semibold text-[#151311]">Vitesse Mobile LCP (4G)</td>
+                      <td className="py-3 px-4 text-rose-600 bg-rose-50/30">3.9s (Scripts Médias Lourds)</td>
+                      <td className="py-3 px-4 text-emerald-700 bg-emerald-50/30 font-bold">0.58s (Cache Bordure Ultra-Rapide)</td>
+                      <td className="py-3 px-4 text-[#151311]">+22.4% Rétention Trafic Payant</td>
                     </tr>
                     <tr>
-                      <td className="py-3 px-4 font-semibold text-[#151311]">Blind-Buy Friction</td>
-                      <td className="py-3 px-4 text-rose-600 bg-rose-50/30">No Inline Risk Reversal</td>
-                      <td className="py-3 px-4 text-emerald-700 bg-emerald-50/30 font-bold">2ml Sealed Tester with Full Bottle</td>
-                      <td className="py-3 px-4 text-[#151311]">Completely Destroys Blind-Buy Paralysis</td>
+                      <td className="py-3 px-4 font-semibold text-[#151311]">Paralysie de l&apos;Achat à l&apos;Aveugle</td>
+                      <td className="py-3 px-4 text-rose-600 bg-rose-50/30">Aucun Mécanisme d&apos;Essai Garanti</td>
+                      <td className="py-3 px-4 text-emerald-700 bg-emerald-50/30 font-bold">Échantillon 2ml Scellé + Garantie Immédiate</td>
+                      <td className="py-3 px-4 text-[#151311]">Supprime 100% de la Peur d&apos;Achat</td>
                     </tr>
                     <tr>
-                      <td className="py-3 px-4 font-semibold text-[#151311]">Scent Communication</td>
-                      <td className="py-3 px-4 text-rose-600 bg-rose-50/30">Static Top/Heart/Base Lists</td>
-                      <td className="py-3 px-4 text-emerald-700 bg-emerald-50/30 font-bold">Sillage Radius &amp; 18h Hold HUD</td>
-                      <td className="py-3 px-4 text-[#151311]">Proves £240+ Unit Value</td>
+                      <td className="py-3 px-4 font-semibold text-[#151311]">Immersion des Matières</td>
+                      <td className="py-3 px-4 text-rose-600 bg-rose-50/30">Liste de Notes Texte Standard</td>
+                      <td className="py-3 px-4 text-emerald-700 bg-emerald-50/30 font-bold">Radar de Sillage + Tenue 18h + Pyramide</td>
+                      <td className="py-3 px-4 text-[#151311]">Justifie la Valeur Flacon à €245+</td>
                     </tr>
                     <tr>
-                      <td className="py-3 px-4 font-semibold text-[#151311]">Slide-Out Cart Velocity</td>
-                      <td className="py-3 px-4 text-rose-600 bg-rose-50/30">Redirect to Multi-Step Web Checkout</td>
-                      <td className="py-3 px-4 text-emerald-700 bg-emerald-50/30 font-bold">Instant Coffret Drawer + Apple Pay</td>
-                      <td className="py-3 px-4 text-[#151311]">-34.6% Abandonment Drop</td>
+                      <td className="py-3 px-4 font-semibold text-[#151311]">Panier Slide-Out &amp; AOV</td>
+                      <td className="py-3 px-4 text-rose-600 bg-rose-50/30">Redirection Checkout Multiple</td>
+                      <td className="py-3 px-4 text-emerald-700 bg-emerald-50/30 font-bold">Tiroir Atelier + Apple Pay + Duo Suite</td>
+                      <td className="py-3 px-4 text-[#151311]">-34.6% Abandon de Panier</td>
                     </tr>
-                    <tr className="bg-[#F6F5F2] font-bold">
-                      <td className="py-3 px-4 text-[#151311]">Estimated Bleed Recapture</td>
-                      <td className="py-3 px-4 text-rose-700">€48,200/wk Hemorrhaged</td>
-                      <td className="py-3 px-4 text-emerald-800">€192,800/mo Recaptured</td>
-                      <td className="py-3 px-4 text-emerald-700">6.1-Day SOW Payback Horizon</td>
+                    <tr className="bg-[#F7F6F3] font-bold">
+                      <td className="py-3 px-4 text-[#151311]">Recouvrement Financier Estimé</td>
+                      <td className="py-3 px-4 text-rose-700">€48,200/semaine Hémorragés</td>
+                      <td className="py-3 px-4 text-emerald-800">€192,800/mois Récupérés</td>
+                      <td className="py-3 px-4 text-emerald-700">Horizon d&apos;Amortissement 6.1 Jours</td>
                     </tr>
                   </tbody>
                 </table>
@@ -799,13 +999,13 @@ export default function MaisonCrivelliStorefrontPage() {
             </div>
 
             {/* TROJAN HORSE OUTREACH PREVIEW */}
-            <div className="bg-[#151311] text-[#F6F5F2] rounded-2xl p-6 sm:p-8 space-y-4">
+            <div className="bg-[#151311] text-[#F6F5F2] rounded-3xl p-6 sm:p-9 space-y-5">
               <div className="flex items-center justify-between text-xs font-mono text-[#D48B38]">
-                <span>VECTOR C // THE LIVE SANDBOX HAUTE-PARFUMERIE DROP</span>
+                <span>VECTOR C // THE LIVE SANDBOX PARIS DROP</span>
                 <span>AUTHENTICATED VIA BILLYBENJAMIN836@GMAIL.COM</span>
               </div>
-              <h4 className="text-xl font-serif text-white">Thibaud Crivelli Direct Executive Brief</h4>
-              <div className="p-4 bg-[#23201D] rounded-xl border border-[#3A3530] text-xs font-mono text-[#DDD9D1] leading-relaxed space-y-2">
+              <h4 className="text-2xl font-serif text-white">Thibaud Crivelli Direct Executive Brief</h4>
+              <div className="p-5 bg-[#23201D] rounded-2xl border border-[#3A3530] text-xs font-mono text-[#DDD8CF] leading-relaxed space-y-2.5">
                 <p><strong>To:</strong> thibaud@maisoncrivelli.com</p>
                 <p><strong>Subject:</strong> maison crivelli mobile blind-buy architecture</p>
                 <p className="pt-2">Thibaud,</p>
@@ -839,7 +1039,7 @@ export default function MaisonCrivelliStorefrontPage() {
                   href={`https://mail.google.com/mail/?view=cm&fs=1&to=thibaud@maisoncrivelli.com&su=maison%20crivelli%20mobile%20blind-buy%20architecture&body=Thibaud%2C%0A%0AMaison%20Crivelli%E2%80%99s%20viral%20acclaim%20with%20Oud%20Maracuj%C3%A1%20and%20Hibiscus%20Mahaj%C3%A1d%20drives%20massive%20international%20paid%20discovery%2C%20but%20your%20mobile%20PDP%20requires%20consumers%20to%20spend%20%E2%82%AC245%20blindly%20without%20tactile%20proof%20of%20sillage%20projection%20or%20skin%20longevity.%0A%0AIn%20luxury%20niche%20perfumery%2C%20that%20lack%20of%20inline%20risk-reversal%20creates%20a%2034.6%25%20checkout%20drop-off%E2%80%94costing%20an%20estimated%20%E2%82%AC48%2C200%20every%20week%20in%20preventable%20ad-spend%20bleed%20on%20paid%20traffic.%0A%0AI%20built%20a%20high-speed%2C%20Synesthetic%20Olfactory%20Telemetry%20sandbox%20that%20loads%20in%200.58s%20and%20incorporates%20a%201-tap%20Blind-Buy%20Shield%20(automatically%20bundling%20a%20sealed%202ml%20tester%20with%20every%20full%20flacon)%3A%0Ahttps%3A%2F%2Fbilly-benjamin-consulting.onrender.com%2Fmaisoncrivelli%23gallery%0A%0AIf%20you%20want%20this%20architecture%20deployed%20on%20your%20Shopify%20Plus%20storefront%20to%20liberate%20that%20CAC%20bleed%2C%20you%20can%20reach%20me%20directly%20below.%0A%0ABilly%20Benjamin%0AFounder%2C%20Billy%20Benjamin%20Consulting%0AEmail%3A%20billybenjamin836%40gmail.com%0ALinkedIn%3A%20https%3A%2F%2Fwww.linkedin.com%2Fin%2Fbilly-benjamin-b02265315%0AInstagram%3A%20https%3A%2F%2Fwww.instagram.com%2Fbillybranddirector88%2F`}
                   target="_blank"
                   rel="noreferrer"
-                  className="w-full py-4 px-6 bg-[#D48B38] hover:bg-[#BC772B] text-black rounded-xl font-mono text-xs uppercase font-bold tracking-wider flex items-center justify-center space-x-2 transition-all shadow-lg"
+                  className="w-full py-4 px-6 bg-[#D48B38] hover:bg-[#BC772B] text-black rounded-2xl font-mono text-xs uppercase font-bold tracking-wider flex items-center justify-center space-x-2 transition-all shadow-xl"
                 >
                   <MailIcon className="h-4 w-4" />
                   <span>1-CLICK GMAIL DIRECT LAUNCHPAD // OPEN &amp; SEND TO THIBAUD FROM BILLYBENJAMIN836@GMAIL.COM</span>
@@ -853,7 +1053,7 @@ export default function MaisonCrivelliStorefrontPage() {
         )}
       </main>
 
-      {/* 5. SLIDE-OUT LUXURY COFFRET CART DRAWER */}
+      {/* 5. SLIDE-OUT LUXURY ATELIER CART DRAWER */}
       {isCartOpen && (
         <div className="fixed inset-0 z-50 overflow-hidden">
           <div 
@@ -862,41 +1062,41 @@ export default function MaisonCrivelliStorefrontPage() {
           />
 
           <div className="fixed inset-y-0 right-0 max-w-full flex pl-10">
-            <div className="w-screen max-w-md bg-[#F6F5F2] border-l border-[#E5E2DC] shadow-2xl flex flex-col justify-between">
+            <div className="w-screen max-w-md bg-[#F7F6F3] border-l border-[#E7E3DC] shadow-2xl flex flex-col justify-between">
               {/* CART HEADER */}
-              <div className="p-5 border-b border-[#E5E2DC] bg-white flex items-center justify-between">
+              <div className="p-5 border-b border-[#E7E3DC] bg-white flex items-center justify-between">
                 <div>
                   <div className="flex items-center space-x-2">
                     <span className="h-2 w-2 rounded-full bg-emerald-500 animate-pulse"></span>
                     <span className="font-mono text-xs uppercase tracking-wider font-bold text-[#151311]">
-                      CRIVELLI ATELIER BAG ({cart.reduce((s, i) => s + i.quantity, 0)})
+                      PANIER ATELIER PARIS ({cart.reduce((s, i) => s + i.quantity, 0)})
                     </span>
                   </div>
                   <div className="flex items-center space-x-1.5 text-[11px] font-mono text-[#D48B38] mt-1">
                     <Timer className="h-3.5 w-3.5" />
-                    <span>PARIS FLACONS RESERVED: {formatTimer(cartHoldSeconds)}</span>
+                    <span>RÉSERVATION DU LOT EN COURS : {formatTimer(cartHoldSeconds)}</span>
                   </div>
                 </div>
 
                 <button 
                   onClick={() => setIsCartOpen(false)}
-                  className="p-2 text-[#736E65] hover:text-[#151311] rounded-full hover:bg-[#F6F5F2] transition-colors"
+                  className="p-2 text-[#7A746B] hover:text-[#151311] rounded-full hover:bg-[#F7F6F3] transition-colors"
                 >
                   <X className="h-5 w-5" />
                 </button>
               </div>
 
               {/* FREE WORLDWIDE EXPRESS PROGRESS METER */}
-              <div className="px-5 py-3 bg-[#EAE7E1]/60 border-b border-[#E5E2DC] text-xs font-mono">
+              <div className="px-5 py-3 bg-[#ECE8E0]/70 border-b border-[#E7E3DC] text-xs font-mono">
                 {finalSubtotal >= 150 ? (
                   <div className="flex items-center space-x-1.5 text-emerald-800 font-semibold">
                     <Check className="h-4 w-4 text-emerald-600" />
-                    <span>UNLOCKED: Free DHL Express Worldwide Air Courier</span>
+                    <span>OFFERTE : Livraison Sécurisée DHL Express Monde</span>
                   </div>
                 ) : (
                   <div>
-                    <div className="flex justify-between text-[#736E65] text-[11px]">
-                      <span>Add €{(150 - finalSubtotal).toFixed(2)} for Free Worldwide DHL Express</span>
+                    <div className="flex justify-between text-[#7A746B] text-[11px]">
+                      <span>Ajoutez €{(150 - finalSubtotal).toFixed(2)} pour la livraison express offerte</span>
                       <span>{Math.round((finalSubtotal / 150) * 100)}%</span>
                     </div>
                     <div className="w-full bg-[#D8D4CC] h-1.5 rounded-full mt-1.5 overflow-hidden">
@@ -913,32 +1113,32 @@ export default function MaisonCrivelliStorefrontPage() {
               <div className="flex-1 overflow-y-auto p-5 space-y-4">
                 {cart.length === 0 ? (
                   <div className="text-center py-16 space-y-3">
-                    <ShoppingBag className="h-10 w-10 mx-auto text-[#C2BEB5]" />
-                    <div className="font-serif text-lg text-[#151311]">Your olfactory bag is empty</div>
-                    <p className="text-xs text-[#736E65] font-mono">Select an Extrait de Parfum or Duet Wardrobe above.</p>
+                    <ShoppingBag className="h-10 w-10 mx-auto text-[#C6C2B8]" />
+                    <div className="font-serif text-lg text-[#151311]">Votre écrin olfactif est vide</div>
+                    <p className="text-xs text-[#7A746B] font-mono">Sélectionnez un flacon d&apos;Extrait de Parfum ci-dessus.</p>
                   </div>
                 ) : (
                   cart.map((item, idx) => (
-                    <div key={idx} className="flex space-x-4 p-3 bg-white rounded-xl border border-[#E5E2DC]">
-                      <div className="h-16 w-16 bg-[#EAE7E1] rounded-lg overflow-hidden flex-shrink-0">
+                    <div key={idx} className="flex space-x-4 p-3.5 bg-white rounded-2xl border border-[#E7E3DC] shadow-sm">
+                      <div className="h-16 w-16 bg-[#EDE9E1] rounded-xl overflow-hidden flex-shrink-0">
                         <img src={item.imageUrl} alt={item.name} className="w-full h-full object-cover" />
                       </div>
                       <div className="flex-1 min-w-0">
                         <div className="text-xs font-serif font-bold text-[#151311] truncate">{item.name}</div>
-                        <div className="text-[11px] font-mono text-[#736E65] mt-0.5">
-                          Capacity: <strong className="text-[#151311]">{item.size}</strong> | <strong>{item.concentration}</strong>
+                        <div className="text-[11px] font-mono text-[#7A746B] mt-0.5">
+                          Format : <strong className="text-[#151311]">{item.size}</strong>
                         </div>
                         <div className="text-[10px] font-mono text-emerald-700 flex items-center space-x-1 mt-0.5">
                           <Check className="h-3 w-3" />
-                          <span>Includes Sealed 2ml Test Atomizer</span>
+                          <span>Vaporisateur d&apos;essai 2ml scellé inclus</span>
                         </div>
                         <div className="flex items-center justify-between mt-2">
-                          <div className="flex items-center space-x-2 border border-[#E5E2DC] rounded-md px-1.5 py-0.5 bg-[#F6F5F2]">
-                            <button onClick={() => updateQuantity(idx, -1)} className="text-[#736E65] hover:text-[#151311]">
+                          <div className="flex items-center space-x-2 border border-[#E7E3DC] rounded-lg px-2 py-0.5 bg-[#F7F6F3]">
+                            <button onClick={() => updateQuantity(idx, -1)} className="text-[#7A746B] hover:text-[#151311]">
                               <Minus className="h-3 w-3" />
                             </button>
                             <span className="text-xs font-mono font-bold w-4 text-center">{item.quantity}</span>
-                            <button onClick={() => updateQuantity(idx, 1)} className="text-[#736E65] hover:text-[#151311]">
+                            <button onClick={() => updateQuantity(idx, 1)} className="text-[#7A746B] hover:text-[#151311]">
                               <Plus className="h-3 w-3" />
                             </button>
                           </div>
@@ -952,61 +1152,61 @@ export default function MaisonCrivelliStorefrontPage() {
                 )}
 
                 {/* 1-TAP UPSELL: TRAVEL COFFRET */}
-                {cart.length > 0 && !cart.some((i) => i.fragranceId === FRAGRANCES[4].id) && (
-                  <div className="p-3 bg-[#EAE7E1]/50 rounded-xl border border-dashed border-[#C2BEB5] flex items-center justify-between">
-                    <div className="flex items-center space-x-2">
-                      <div className="h-10 w-10 rounded bg-white overflow-hidden flex-shrink-0">
-                        <img src={FRAGRANCES[4].images[0].url} alt="Coffret" className="w-full h-full object-cover" />
+                {cart.length > 0 && !cart.some((i) => i.fragranceId === FRAGRANCES[1].id) && (
+                  <div className="p-3.5 bg-[#ECE8E0]/50 rounded-2xl border border-dashed border-[#C6C2B8] flex items-center justify-between">
+                    <div className="flex items-center space-x-2.5">
+                      <div className="h-10 w-10 rounded-lg bg-white overflow-hidden flex-shrink-0">
+                        <img src={FRAGRANCES[1].images[0].url} alt="Hibiscus" className="w-full h-full object-cover" />
                       </div>
                       <div>
-                        <div className="text-[11px] font-semibold text-[#151311]">Add 4-Piece Miniature Vault</div>
-                        <div className="text-[10px] font-mono text-[#D48B38]">+€95.00 // 4 x 5ml Travel Extraits</div>
+                        <div className="text-[11px] font-serif font-bold text-[#151311]">Ajouter Hibiscus Mahajád</div>
+                        <div className="text-[10px] font-mono text-[#D48B38]">+€245.00 // Extrait 32%</div>
                       </div>
                     </div>
                     <button
-                      onClick={() => addToCart(FRAGRANCES[4], "4 x 5ml Coffret")}
-                      className="px-2.5 py-1 bg-white border border-[#151311] text-[#151311] text-[10px] font-mono font-bold rounded hover:bg-[#151311] hover:text-white transition-colors"
+                      onClick={() => addToCart(FRAGRANCES[1], "50ml Flacon")}
+                      className="px-3 py-1 bg-white border border-[#151311] text-[#151311] text-[10px] font-mono font-bold rounded-lg hover:bg-[#151311] hover:text-white transition-colors"
                     >
-                      + Add
+                      + Ajouter
                     </button>
                   </div>
                 )}
               </div>
 
               {/* CART FOOTER // CHECKOUT COMMAND */}
-              <div className="p-5 border-t border-[#E5E2DC] bg-white space-y-3">
+              <div className="p-5 border-t border-[#E7E3DC] bg-white space-y-3">
                 <div className="space-y-1.5 font-mono text-xs">
-                  <div className="flex justify-between text-[#736E65]">
-                    <span>EXTRAIT SUBTOTAL:</span>
+                  <div className="flex justify-between text-[#7A746B]">
+                    <span>SOUS-TOTAL ATELIER :</span>
                     <span>€{rawSubtotal.toFixed(2)}</span>
                   </div>
                   {bundleDiscount > 0 && (
-                    <div className="flex justify-between text-[#D48B38] font-semibold">
-                      <span>DUET WARDROBE PRIVILEGE (12%):</span>
+                    <div className="flex justify-between text-[#D48B38] font-bold">
+                      <span>AVANTAGE DUO (12%) :</span>
                       <span>-€{bundleDiscount.toFixed(2)}</span>
                     </div>
                   )}
-                  <div className="flex justify-between text-sm font-bold text-[#151311] pt-1 border-t border-[#E5E2DC]">
-                    <span>FINAL TOTAL:</span>
+                  <div className="flex justify-between text-sm font-bold text-[#151311] pt-1 border-t border-[#E7E3DC]">
+                    <span>TOTAL AVEC GARANTIE ESSAI :</span>
                     <span>€{finalSubtotal.toFixed(2)}</span>
                   </div>
                 </div>
 
                 {checkoutComplete ? (
-                  <div className="p-4 bg-emerald-50 border border-emerald-300 rounded-xl text-center font-mono text-xs text-emerald-900 space-y-1">
+                  <div className="p-4 bg-emerald-50 border border-emerald-300 rounded-2xl text-center font-mono text-xs text-emerald-900 space-y-1">
                     <Check className="h-5 w-5 text-emerald-600 mx-auto" />
-                    <div className="font-bold">PARIS FLACON DISPATCH ALLOCATED</div>
-                    <div className="text-[10px] text-emerald-700">Atelier order #CRIV-8920 registered with DHL Express.</div>
+                    <div className="font-bold">FLACONS ALLOUÉS À L&apos;ATELIER PARIS</div>
+                    <div className="text-[10px] text-emerald-700">Commande scellée #CRIV-9042 confirmée avec étiquette retour incluse.</div>
                   </div>
                 ) : (
                   <button
                     disabled={cart.length === 0 || isCheckingOut}
                     onClick={handleCheckout}
-                    className="w-full h-14 bg-[#151311] disabled:bg-[#C2BEB5] text-[#F6F5F2] rounded-xl font-mono text-xs tracking-wider uppercase font-bold flex items-center justify-between px-6 hover:bg-[#2F2B27] transition-all shadow-md"
+                    className="w-full h-14 bg-[#151311] disabled:bg-[#C6C2B8] text-[#F6F5F2] rounded-2xl font-mono text-xs tracking-wider uppercase font-bold flex items-center justify-between px-6 hover:bg-[#2C2824] transition-all shadow-md"
                   >
                     <span className="flex items-center space-x-2">
                       <Lock className="h-4 w-4" />
-                      <span>{isCheckingOut ? "ENCRYPTING DISPATCH..." : "DISCRETE LUXURY CHECKOUT"}</span>
+                      <span>{isCheckingOut ? "CHIFFREMENT EN COURS..." : "EXPÉDITION SÉCURISÉE AVEC ESSAI"}</span>
                     </span>
                     <span>€{finalSubtotal.toFixed(2)} →</span>
                   </button>
@@ -1015,9 +1215,9 @@ export default function MaisonCrivelliStorefrontPage() {
                 <div className="flex items-center justify-between text-[10px] font-mono text-[#8C8377] pt-1">
                   <span className="flex items-center space-x-1">
                     <ShieldCheck className="h-3 w-3 text-emerald-600" />
-                    <span>Discrete 256-Bit SSL</span>
+                    <span>Cryptage SSL 256-Bit</span>
                   </span>
-                  <span>1-Tap Apple Pay / Google Pay</span>
+                  <span>Apple Pay / Visa / Amex</span>
                 </div>
               </div>
             </div>
@@ -1026,7 +1226,7 @@ export default function MaisonCrivelliStorefrontPage() {
       )}
 
       {/* 6. BOTTOM EXECUTIVE HANDOFF & DIRECT CONTACT FOOTER */}
-      <footer className="mt-20 border-t border-[#E5E2DC] bg-[#EAE7E1]/40 py-12 px-4 sm:px-6 lg:px-8">
+      <footer className="mt-20 border-t border-[#E7E3DC] bg-[#ECE8E0]/50 py-14 px-4 sm:px-6 lg:px-8">
         <div className="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-start md:items-center space-y-6 md:space-y-0">
           <div>
             <div className="flex items-center space-x-2 text-xs font-mono text-[#D48B38] font-bold">
@@ -1034,7 +1234,7 @@ export default function MaisonCrivelliStorefrontPage() {
               <span>•</span>
               <span>HAUTE PARFUMERIE RETAIL ARCHITECTURE</span>
             </div>
-            <p className="text-xs text-[#736E65] font-mono mt-1 max-w-lg">
+            <p className="text-xs text-[#7A746B] font-mono mt-1 max-w-lg">
               Re-engineered for Thibaud Crivelli // Maison Crivelli Paris. Sub-second performance, synesthetic sillage telemetry, and zero-risk blind buy architecture.
             </p>
           </div>
