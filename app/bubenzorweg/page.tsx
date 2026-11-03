@@ -95,12 +95,12 @@ const BZ_CATALOG: VaultProduct[] = [
       },
       {
         label: "02 // BIOMETRIC STEEL KEYPAD & REDUNDANCY",
-        url: "https://images.unsplash.com/photo-1544717305-2782549b5136?auto=format&fit=crop&w=1200&q=85",
+        url: "/assets/bubenzorweg/bz-orion-keypad.jpg",
         caption: "Optical fingerprint sensor opens the 60mm solid steel door in under 0.8 seconds."
       },
       {
         label: "03 // GERMAN MECHANICAL RELOCKER MECHANICS",
-        url: "https://images.unsplash.com/photo-1508296695146-257a814070b4?auto=format&fit=crop&w=1200&q=85",
+        url: "/assets/bubenzorweg/bz-orion-relocker.jpg",
         caption: "Emergency glass-plate relockers instantly fire hardened bolts into the frame upon drill penetration."
       }
     ],
@@ -130,12 +130,12 @@ const BZ_CATALOG: VaultProduct[] = [
       },
       {
         label: "02 // ITALIAN NAPPA DRAWER STORAGE",
-        url: "https://images.unsplash.com/photo-1511499767150-a48a237f0083?auto=format&fit=crop&w=1200&q=85",
+        url: "/assets/bubenzorweg/bz-illusion-drawers.jpg",
         caption: "Compartments sized for passport folios, bearer instruments, and high-jewelry presentation."
       },
       {
         label: "03 // HIGH-GLOSS OBSIDIAN PIANO FINISH",
-        url: "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&w=1200&q=85",
+        url: "/assets/bubenzorweg/bz-illusion-finish.jpg",
         caption: "18 coats of hand-rubbed polyester lacquer polished to an immaculate mirror gloss."
       }
     ],
@@ -165,12 +165,12 @@ const BZ_CATALOG: VaultProduct[] = [
       },
       {
         label: "02 // 20-WINDER INDEPENDENT PROGRAMMING",
-        url: "https://images.unsplash.com/photo-1522335789203-aabd1fc54bc9?auto=format&fit=crop&w=1200&q=85",
+        url: "/assets/bubenzorweg/bz-infinity-winders.jpg",
         caption: "Each timepiece winder module can be independently tuned to exact caliber TPD specifications."
       },
       {
         label: "03 // INTEGRATED WORLD TIME COMPLICATION",
-        url: "https://images.unsplash.com/photo-1544716278-ca5e3f4abd8c?auto=format&fit=crop&w=1200&q=85",
+        url: "/assets/bubenzorweg/bz-infinity-dial.jpg",
         caption: "Hand-finished blued steel hands sweeping across an open-worked three-dimensional dial."
       }
     ],
