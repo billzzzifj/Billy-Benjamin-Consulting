@@ -1,7 +1,8 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import Link from "next/link";
+import confetti from "canvas-confetti";
 import { 
   ArrowLeft, 
   Check, 
@@ -19,11 +20,24 @@ import {
   Info,
   Sliders,
   Volume2,
+  VolumeX,
   Radio,
   Zap,
   Sparkle,
   Compass,
-  Cpu
+  Cpu,
+  Gauge,
+  SlidersHorizontal,
+  Flame,
+  Clock,
+  MapPin,
+  Phone,
+  Mail,
+  CheckCircle2,
+  Crosshair,
+  Maximize,
+  Eye,
+  Settings2
 } from "lucide-react";
 
 interface AudioProduct {
@@ -56,19 +70,6 @@ interface RoomBoundaryPreset {
   description: string;
 }
 
-interface CartItem {
-  productId: string;
-  productName: string;
-  priceUsd: number;
-  finishOption: string;
-  subwooferTowerPairIncluded: boolean;
-  monoblockAmpPairIncluded: boolean;
-  biWiringTerminalUpgrade: boolean;
-  factoryCalibratedRooomTuning: boolean;
-  sku: string;
-  imageUrl: string;
-}
-
 export default function MblShowcasePage() {
   // Flagship MBL Radialstrahler and Reference catalog
   const products: AudioProduct[] = [
@@ -88,22 +89,22 @@ export default function MblShowcasePage() {
       dimensionsMm: { height: 1850, width: 490, depth: 640 },
       driverTechnology: "Dual 360° Radialstrahler Carbon Lamellae Array + Active Subwoofer Towers",
       recommendedRoomAreaM2: { min: 50, max: 200 },
-      curatorNotes: "The undisputed apex of omnidirectional acoustic reproduction. Four freestanding towers comprising two main Radialstrahler satellite arrays and two active bass towers housing twelve 12-inch aluminum long-throw woofers driven by dedicated internal Class-D amplification.",
+      curatorNotes: "The undisputed apex of omnidirectional acoustic reproduction. Four freestanding towers comprising two main Radialstrahler satellite arrays and two active bass towers housing twelve 12-inch aluminum woofers driven by dedicated internal Class-D amplification.",
       images: [
         {
-          label: "101 X-Treme 4-Tower Reference Architecture",
-          url: "/assets/mbl/mbl-xtreme-hero.png",
-          caption: "MBL Radialstrahler 101 X-Treme flagship system with carbon lamellae satellites and dual subwoofer towers."
+          label: "101 X-Treme Twilight Architectural Villa Salon",
+          url: "/assets/mbl/mbl-xtreme-lakeside.jpg",
+          caption: "MBL 101 X-Treme four-tower reference system installed in a brutalist lakeside listening residence."
         },
         {
-          label: "Architectural Villa Listening Salon",
-          url: "/assets/mbl/mbl-reference-villa.jpg",
-          caption: "Reference Line system installed in double-height private architectural residence."
+          label: "Carbon Lamellae Pulsating Sphere Macro Detail",
+          url: "/assets/mbl/mbl-lamellae-sphere-macro.jpg",
+          caption: "Macro examination of hand-bent carbon fiber lamellae petals and copper voice coil leads."
         },
         {
           label: "Reference Line Preamplifier Console",
           url: "/assets/mbl/mbl-preamp-console.jpg",
-          caption: "Precision balanced preamplifier console with illuminated digital attenuation display."
+          caption: "Precision balanced preamplifier console with digital attenuation."
         }
       ],
       accentColor: "#D4AF37"
@@ -119,483 +120,718 @@ export default function MblShowcasePage() {
       nominalImpedanceOhm: 4,
       minImpedanceOhm: 2.8,
       continuousPowerHandlingWatts: 500,
-      peakPowerHandlingWatts: 1400,
+      peakPowerHandlingWatts: 1200,
       weightKg: 80,
-      dimensionsMm: { height: 1720, width: 410, depth: 460 },
-      driverTechnology: "4-Way 360° Radialstrahler Array with Hand-Selected Carbon Fiber Petals",
-      recommendedRoomAreaM2: { min: 25, max: 80 },
-      curatorNotes: "The iconic silhouette that redefined high-end audio physics. Pulsating spherical carbon lamellae for the tweeter and upper-midrange combined with an aluminum lower-mid melon and downward-firing subwoofer deliver a holographic 360-degree soundfield identical to live orchestral performance.",
+      dimensionsMm: { height: 1230, width: 400, depth: 400 },
+      driverTechnology: "360° Radialstrahler Carbon Lamellae (Tweeter, Upper-Mid, Lower-Mid) + Sub-Bass Base",
+      recommendedRoomAreaM2: { min: 30, max: 100 },
+      curatorNotes: "The quintessential sculpture that redefined high-end audio. Three pulsating spheres engineered from hand-selected unidirectional carbon fiber ribbons radiate sound spherically with zero directional beaming.",
       images: [
         {
-          label: "101 E MKII Master Omnidirectional Tower",
+          label: "101 E MKII Radialstrahler Monolith",
           url: "/assets/mbl/mbl-101e-radialstrahler.jpg",
-          caption: "Official studio portrait of the MBL 101 E MKII Radialstrahler in Piano Black with 24K Gold trim."
+          caption: "Single 101 E MKII freestanding loudspeaker in high-gloss black lacquer with gold-plated collar rings."
         },
         {
-          label: "Eberswalde Acoustic Handcrafting",
-          url: "/assets/mbl/mbl-manufacture-craft.jpg",
-          caption: "Precision hand assembly of carbon fiber lamellae and magnetic motor assemblies in Germany."
+          label: "Eberswalde Acoustic Handcrafting & Inspection",
+          url: "/assets/mbl/mbl-eberswalde-artisan-loupe.jpg",
+          caption: "Master craftsman inspecting gold-plated driver assembly with jeweler's loupe in Eberswalde."
         },
         {
-          label: "Reference High-Current Monoblock Stage",
-          url: "/assets/mbl/mbl-monoblock-amplifier.jpg",
-          caption: "MBL Reference monoblock power amplifier engineered for continuous 40A current delivery."
+          label: "Architectural Villa Listening Salon",
+          url: "/assets/mbl/mbl-reference-villa.jpg",
+          caption: "101 E MKII installed in double-height private architectural residence."
         }
       ],
       accentColor: "#E5C158"
     },
     {
-      id: "reference-9011-pair",
-      name: "Reference 9011 Monoblock (Pair)",
-      germanTitle: "Referenz Hochstrom-Monoblock-Endstufen",
-      series: "Reference Line Amplification",
-      sku: "MBL-AMP-9011-PR",
+      id: "ref-9011-amp",
+      name: "Reference 9011 Monoblock",
+      germanTitle: "Referenz Mono-Leistungsverstärker",
+      series: "Reference Electronics",
+      sku: "MBL-REF-AMP-9011",
       priceUsd: 116000,
       sensitivityDb: 0,
-      nominalImpedanceOhm: 0,
+      nominalImpedanceOhm: 2,
       minImpedanceOhm: 1.0,
       continuousPowerHandlingWatts: 840,
       peakPowerHandlingWatts: 5000,
       weightKg: 90,
       dimensionsMm: { height: 330, width: 480, depth: 610 },
-      driverTechnology: "Ultra-High Current Discrete Direct-Drive Stage with Dual Toroidal Transformers",
+      driverTechnology: "Ultra-High-Current Discrete Bipolar Output Stage (40 Amperes Continuous, 130A Peak)",
       recommendedRoomAreaM2: { min: 25, max: 200 },
-      curatorNotes: "Massive solid-copper busbar architecture delivering up to 5000 Watts peak power into 2 Ohms with 40 Amperes continuous current. Engineered specifically to eliminate dynamic compression on low-impedance Radialstrahler carbon lamellae.",
+      curatorNotes: "Engineered specifically to tame the 2.1-Ohm minimum impedance dip of Radialstrahler carbon drivers. Features massive isolated toroidal transformers and ultra-low internal output impedance, ensuring damping factor exceeding 300.",
       images: [
         {
-          label: "Reference Monoblock High-Current Powerhouse",
+          label: "Reference 9011 Power Stage Study",
+          url: "/assets/mbl/mbl-reference-power-stage.jpg",
+          caption: "Reference 9011 resting on acoustic flamed granite plinth with heavy extruded heatsinks."
+        },
+        {
+          label: "Front Chassis Crest & Gold Power Bezel",
+          url: "/assets/mbl/mbl-monoblock-amplifier.jpg",
+          caption: "24K gold-plated MBL emblem and power switchgear on high-gloss piano black fascia."
+        },
+        {
+          label: "Stereo Reference Power Stage",
           url: "/assets/mbl/mbl-power-amp.jpg",
-          caption: "Dual Reference monoblock power amplifiers with massive copper grounding and milled aluminum heatsinks."
-        },
-        {
-          label: "111F Hybrid Radialstrahler Tower",
-          url: "/assets/mbl/mbl-111f-hybrid.png",
-          caption: "MBL 111F hybrid floorstanding loudspeaker combining radial midrange and high-efficiency dynamic woofers."
-        },
-        {
-          label: "126 Compact Standmount Monitor",
-          url: "/assets/mbl/mbl-126-compact.png",
-          caption: "MBL 126 compact omnidirectional monitor with precision radial melon driver."
+          caption: "Dual-mono reference power amplifier showing precision heatsink fin geometry."
         }
       ],
-      accentColor: "#F2D879"
+      accentColor: "#C9A030"
     }
   ];
 
-  // Room Boundary Presets
+  // Room acoustic boundary presets
   const roomPresets: RoomBoundaryPreset[] = [
     {
-      id: "glass-marble",
-      name: "Penthouse Glass & Polished Marble",
-      acousticCharacter: "Highly Reflective Live Space",
+      id: "glass-concrete",
+      name: "Penthouse Glass & Concrete",
+      acousticCharacter: "Highly Reflective // Untreated Modern Interior",
       reflectionCoefficient: 0.88,
-      absorptionAlpha: 0.05,
-      description: "Hard floor-to-ceiling glazing and stone flooring. Demands calibrated 1.8m+ wall boundary spacing and directional DSP decay tuning."
+      absorptionAlpha: 0.08,
+      description: "Large perimeter glass curtain walls and polished Italian marble flooring. Without omnidirectional wave cohesion, standard directional horns cause severe harshness. Radialstrahler maintains uniform spectral balance across all reflection angles."
     },
     {
-      id: "hardwood-rugs",
-      name: "Executive Salon (Oak & Silk Rugs)",
-      acousticCharacter: "Balanced Semi-Reflective Space",
-      reflectionCoefficient: 0.52,
-      absorptionAlpha: 0.28,
-      description: "Classic luxury residential listening interior. Natural diffuse reflections create the ideal 70% diffuse to 30% direct sound ratio."
+      id: "oak-drapery",
+      name: "Hardwood & Silk Drapery",
+      acousticCharacter: "Moderately Damped // Classic Luxury Salon",
+      reflectionCoefficient: 0.58,
+      absorptionAlpha: 0.32,
+      description: "Chevron European oak floors with wool area rugs and heavy linen or silk window drapery. Delivers ideal acoustic decay timing for natural concert-hall immersion."
     },
     {
-      id: "acoustic-atelier",
-      name: "Treated Acoustic Listening Atelier",
-      acousticCharacter: "Diffused Controlled Resonance",
-      reflectionCoefficient: 0.25,
-      absorptionAlpha: 0.65,
-      description: "Dedicated private auditioning salon with quadratic residue diffusers and bass traps. Yields reference mastering-grade soundstage imaging."
+      id: "treated-salon",
+      name: "Treated Architectural Atelier",
+      acousticCharacter: "Precision Acoustic Architecture // Studio Standard",
+      reflectionCoefficient: 0.32,
+      absorptionAlpha: 0.62,
+      description: "Custom slotted wood bass traps, quadratic residue diffusers, and concealed fabric wall absorbers calibrated to German DIN 18041 listening specifications."
     }
   ];
 
-  // State Management
-  const [activeProductIndex, setActiveProductIndex] = useState(0);
-  const [activeImageIndex, setActiveImageIndex] = useState(0);
-
-  // Room Simulation Parameters
-  const [roomLengthM, setRoomLengthM] = useState(10.5);
-  const [roomWidthM, setRoomWidthM] = useState(7.0);
-  const [roomHeightM, setRoomHeightM] = useState(3.4);
-  const [wallOffsetM, setWallOffsetM] = useState(2.2);
-  const [selectedRoomPresetId, setSelectedRoomPresetId] = useState("hardwood-rugs");
-
-  // Configuration Drawer State
-  const [isDrawerOpen, setIsDrawerOpen] = useState(false);
-  const [selectedFinish, setSelectedFinish] = useState("Piano Black + 24K Gold Hardware");
-  const [includeSubwoofers, setIncludeSubwoofers] = useState(true);
-  const [includeMonoblocks, setIncludeMonoblocks] = useState(false);
-  const [biWiringUpgrade, setBiWiringUpgrade] = useState(true);
-  const [roomTuningService, setRoomTuningService] = useState(true);
-  const [cart, setCart] = useState<CartItem[]>([]);
-  const [orderConfirmed, setOrderConfirmed] = useState(false);
-
-  const activeProduct = products[activeProductIndex];
-  const activeRoomPreset = roomPresets.find(r => r.id === selectedRoomPresetId) || roomPresets[0];
-
-  // Real-time acoustic calculations
-  const roomVolumeM3 = Math.round(roomLengthM * roomWidthM * roomHeightM);
-  const totalSurfaceAreaM2 = Math.round(2 * (roomLengthM * roomWidthM + roomLengthM * roomHeightM + roomWidthM * roomHeightM));
+  // Active state
+  const [selectedProduct, setSelectedProduct] = useState<AudioProduct>(products[0]);
+  const [activeImageIndex, setActiveImageIndex] = useState<number>(0);
+  const [selectedPreset, setSelectedPreset] = useState<RoomBoundaryPreset>(roomPresets[0]);
   
-  // Sabine equation for RT60 (seconds): RT60 = 0.161 * V / (S * alpha)
-  const totalAbsorptionUnits = totalSurfaceAreaM2 * activeRoomPreset.absorptionAlpha;
-  const rawRt60 = (0.161 * roomVolumeM3) / Math.max(totalAbsorptionUnits, 5);
-  const rt60Seconds = Number(Math.max(0.28, Math.min(rawRt60, 1.85)).toFixed(2));
-  
-  // First boundary reflection delay (ms): Distance = 2 * wallOffsetM, Speed of sound = 343 m/s
-  const firstReflectionDelayMs = Number(((wallOffsetM * 2 / 343) * 1000).toFixed(1));
-  const isAcousticOptimum = rt60Seconds >= 0.35 && rt60Seconds <= 0.65 && firstReflectionDelayMs >= 11.0;
+  // Interactive Room Sliders
+  const [roomLengthM, setRoomLengthM] = useState<number>(10.5);
+  const [roomWidthM, setRoomWidthM] = useState<number>(7.2);
+  const [roomCeilingHeightM, setRoomCeilingHeightM] = useState<number>(3.6);
+  const [wallClearanceOffsetM, setWallClearanceOffsetM] = useState<number>(1.8);
 
-  // Soundstage Holography Score (0-100)
-  const calculateHolographyScore = () => {
-    let score = 98;
-    if (rt60Seconds > 0.8) score -= Math.round((rt60Seconds - 0.8) * 45);
-    if (rt60Seconds < 0.3) score -= 15;
-    if (firstReflectionDelayMs < 8.0) score -= Math.round((8.0 - firstReflectionDelayMs) * 6);
-    if (wallOffsetM < 1.5) score -= 12;
-    return Math.max(score, 45);
+  // Sound and Tactile click mode
+  const [isAudioMuted, setIsAudioMuted] = useState<boolean>(true);
+  const [isTestImpulsePlaying, setIsTestImpulsePlaying] = useState<boolean>(false);
+
+  // Finish configuration
+  const [selectedFinish, setSelectedFinish] = useState<string>("piano-black-gold");
+
+  // Exploded anatomy active hotspot
+  const [activeHotspot, setActiveHotspot] = useState<number>(0);
+
+  // Analog VU Meter Level
+  const [vuLevel, setVuLevel] = useState<number>(68); // 0 to 100 scale
+  const [meterBallistics, setMeterBallistics] = useState<"RMS" | "PEAK" | "FAST">("RMS");
+
+  // Reservation Drawer State
+  const [isDrawerOpen, setIsDrawerOpen] = useState<boolean>(false);
+  const [auditionLocation, setAuditionLocation] = useState<string>("berlin-salon");
+  const [includeAcousticConsultation, setIncludeAcousticConsultation] = useState<boolean>(true);
+  const [includeMonoblockPair, setIncludeMonoblockPair] = useState<boolean>(false);
+  const [orderComplete, setOrderComplete] = useState<boolean>(false);
+  const [clientName, setClientName] = useState<string>("");
+  const [clientEmail, setClientEmail] = useState<string>("");
+  const [clientCity, setClientCity] = useState<string>("");
+
+  // Canvas ref for live 360 wave propagation
+  const canvasRef = useRef<HTMLCanvasElement | null>(null);
+  const animationFrameId = useRef<number | null>(null);
+
+  // Web Audio Context helper for synthesized tactile feedback
+  const playTactileClick = () => {
+    if (isAudioMuted || typeof window === "undefined") return;
+    try {
+      const AudioCtx = window.AudioContext || (window as unknown as { webkitAudioContext: typeof AudioContext }).webkitAudioContext;
+      const ctx = new AudioCtx();
+      const osc = ctx.createOscillator();
+      const gain = ctx.createGain();
+      osc.type = "sine";
+      osc.frequency.setValueAtTime(800, ctx.currentTime);
+      osc.frequency.exponentialRampToValueAtTime(120, ctx.currentTime + 0.04);
+      gain.gain.setValueAtTime(0.08, ctx.currentTime);
+      gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.04);
+      osc.connect(gain);
+      gain.connect(ctx.destination);
+      osc.start();
+      osc.stop(ctx.currentTime + 0.05);
+    } catch {
+      // AudioContext unavailable or restricted
+    }
   };
-  const holographyScore = calculateHolographyScore();
 
-  // Pricing calculations
-  const basePrice = activeProduct.priceUsd;
-  const subwoofersCost = (activeProduct.id !== "101-x-treme" && includeSubwoofers) ? 42000 : 0;
-  const monoblocksCost = (activeProduct.id !== "reference-9011-pair" && includeMonoblocks) ? 116000 : 0;
-  const biWiringCost = biWiringUpgrade ? 4800 : 0;
-  const roomTuningCost = roomTuningService ? 7500 : 0;
-  const totalConfiguredUsd = basePrice + subwoofersCost + monoblocksCost + biWiringCost + roomTuningCost;
+  const playAcousticImpulse = () => {
+    if (typeof window === "undefined") return;
+    setIsTestImpulsePlaying(true);
+    try {
+      const AudioCtx = window.AudioContext || (window as unknown as { webkitAudioContext: typeof AudioContext }).webkitAudioContext;
+      const ctx = new AudioCtx();
+      
+      // Fundamental 432Hz sine pulse with resonant decay
+      const osc = ctx.createOscillator();
+      const gain = ctx.createGain();
+      osc.type = "sine";
+      osc.frequency.setValueAtTime(432, ctx.currentTime);
+      osc.frequency.exponentialRampToValueAtTime(108, ctx.currentTime + 0.6);
 
-  const handleAddToCart = () => {
-    const newItem: CartItem = {
-      productId: activeProduct.id,
-      productName: activeProduct.name,
-      priceUsd: totalConfiguredUsd,
-      finishOption: selectedFinish,
-      subwooferTowerPairIncluded: includeSubwoofers,
-      monoblockAmpPairIncluded: includeMonoblocks,
-      biWiringTerminalUpgrade: biWiringUpgrade,
-      factoryCalibratedRooomTuning: roomTuningService,
-      sku: `${activeProduct.sku}-${selectedFinish.includes("Gold") ? "GLD" : "CRM"}`,
-      imageUrl: activeProduct.images[0].url
+      // Reverb decay envelope based on current calculated RT60
+      const currentRt60 = calculatedRt60Seconds;
+      gain.gain.setValueAtTime(0.2, ctx.currentTime);
+      gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + Math.min(2.5, currentRt60 * 1.2));
+
+      osc.connect(gain);
+      gain.connect(ctx.destination);
+      osc.start();
+      osc.stop(ctx.currentTime + Math.min(2.5, currentRt60 * 1.2));
+
+      setTimeout(() => {
+        setIsTestImpulsePlaying(false);
+      }, Math.min(2500, currentRt60 * 1200));
+    } catch {
+      setIsTestImpulsePlaying(false);
+    }
+  };
+
+  // Calculations for Sabine Reverberation Time (RT60)
+  const roomVolumeM3 = roomLengthM * roomWidthM * roomCeilingHeightM;
+  const roomTotalSurfaceAreaM2 = 2 * (roomLengthM * roomWidthM + roomLengthM * roomCeilingHeightM + roomWidthM * roomCeilingHeightM);
+  const totalAbsorptionMetricUnits = roomTotalSurfaceAreaM2 * selectedPreset.absorptionAlpha;
+  const calculatedRt60Seconds = Number((0.161 * (roomVolumeM3 / Math.max(1, totalAbsorptionMetricUnits))).toFixed(2));
+  
+  // First boundary reflection arrival delay delta in milliseconds: t = 2 * d / c (c = 343 m/s)
+  const firstReflectionDelayMs = Number(((2 * wallClearanceOffsetM / 343) * 1000).toFixed(1));
+  const isAcousticallyIdeal = calculatedRt60Seconds >= 0.35 && calculatedRt60Seconds <= 0.65;
+
+  // Exploded anatomy hotspots
+  const anatomyPoints = [
+    {
+      id: 1,
+      title: "Carbon Fiber Lamellae Petals",
+      techSpecs: "12 Unidirectional Carbon Blades // Heat-Formed Parabolic Geometry",
+      germanLabel: "Kohlefaser-Lamellen Resonanzkörper",
+      description: "Precision-milled aerospace carbon ribbons assembled in an omnidirectional petal crown. Each blade pulses in micro-millimeter excursions, generating true spherical soundwaves with zero directional beaming."
+    },
+    {
+      id: 2,
+      title: "Central High-Flux Neodymium Core",
+      techSpecs: "1.8 Tesla Magnetic Gap Flux // Direct Copper Coupling",
+      germanLabel: "Neodym-Radialmagnetsystem",
+      description: "High-temperature neodymium ring magnets produce an ultra-dense radial magnetic flux field. Delivers instantaneous transient attack with zero voice coil overhang or thermal compression."
+    },
+    {
+      id: 3,
+      title: "Aerospace T6 Aluminum Spindle",
+      techSpecs: "CNC-Machined 7075-T6 Alloy // <5 Micron Axial Tolerance",
+      germanLabel: "Präzisions-Führungsachse",
+      description: "Rigid center shaft maintaining structural concentricity during high-SPL musical fortissimos. Hand-lapped in Eberswalde to eliminate mechanical resonance."
+    },
+    {
+      id: 4,
+      title: "Silver-Plated Oxygen-Free Litz Leads",
+      techSpecs: "99.9999% OFC Conductors // Teflon Dielectric Insulation",
+      germanLabel: "Hochreine Litzendraht-Zuführung",
+      description: "Flexible high-current signal paths engineered to withstand millions of continuous excursion cycles without work-hardening or resistance drift."
+    }
+  ];
+
+  // Live 60fps HTML5 Canvas Animation for 360 Spherical Waves
+  useEffect(() => {
+    const canvas = canvasRef.current;
+    if (!canvas) return;
+    const ctx = canvas.getContext("2d");
+    if (!ctx) return;
+
+    let waveRadius = 0;
+    const waves: { r: number; alpha: number }[] = [];
+    let frame = 0;
+
+    const render = () => {
+      frame++;
+      // Spawn new wave every 28 frames
+      if (frame % 26 === 0) {
+        waves.push({ r: 4, alpha: 1.0 });
+      }
+
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+      const w = canvas.width;
+      const h = canvas.height;
+
+      // Draw background grid lines (room blueprint)
+      ctx.strokeStyle = "#1A1D24";
+      ctx.lineWidth = 1;
+      const step = 20;
+      for (let x = 0; x < w; x += step) {
+        ctx.beginPath();
+        ctx.moveTo(x, 0);
+        ctx.lineTo(x, h);
+        ctx.stroke();
+      }
+      for (let y = 0; y < h; y += step) {
+        ctx.beginPath();
+        ctx.moveTo(0, y);
+        ctx.lineTo(w, y);
+        ctx.stroke();
+      }
+
+      // Draw room perimeter boundary
+      const padX = 24;
+      const padY = 24;
+      const roomW = w - padX * 2;
+      const roomH = h - padY * 2;
+
+      ctx.strokeStyle = selectedPreset.id === "glass-concrete" ? "#4A6B82" : selectedPreset.id === "oak-drapery" ? "#A37C4D" : "#509E77";
+      ctx.lineWidth = 3;
+      ctx.strokeRect(padX, padY, roomW, roomH);
+
+      // Room boundary label
+      ctx.fillStyle = "#8E929E";
+      ctx.font = "9px 'Courier New', monospace";
+      ctx.fillText(`ROOM BOUNDARY: ${roomLengthM}m × ${roomWidthM}m [${selectedPreset.name.toUpperCase()}]`, padX + 8, padY - 8);
+
+      // Center speaker position (affected by wall clearance)
+      const speakerX = padX + (roomW * 0.35);
+      const speakerY = padY + (roomH * 0.5);
+
+      // Draw concentric expanding soundwaves
+      for (let i = waves.length - 1; i >= 0; i--) {
+        const wave = waves[i];
+        wave.r += 1.8;
+        wave.alpha -= 0.007;
+
+        if (wave.alpha <= 0 || wave.r > roomW * 0.9) {
+          waves.splice(i, 1);
+          continue;
+        }
+
+        // Draw primary 360 wave
+        ctx.save();
+        ctx.beginPath();
+        ctx.arc(speakerX, speakerY, wave.r, 0, Math.PI * 2);
+        ctx.strokeStyle = `rgba(212, 175, 55, ${wave.alpha * 0.65})`;
+        ctx.lineWidth = 1.5;
+        ctx.setLineDash([4, 4]);
+        ctx.stroke();
+
+        // Draw acoustic wall reflections if wave exceeds boundary
+        if (speakerX - wave.r < padX) {
+          const reflectDist = padX - (speakerX - wave.r);
+          ctx.beginPath();
+          ctx.arc(padX - reflectDist, speakerY, wave.r * 0.9, -Math.PI / 3, Math.PI / 3);
+          ctx.strokeStyle = `rgba(180, 195, 220, ${wave.alpha * selectedPreset.reflectionCoefficient * 0.4})`;
+          ctx.stroke();
+        }
+        if (speakerX + wave.r > padX + roomW) {
+          const reflectDist = (speakerX + wave.r) - (padX + roomW);
+          ctx.beginPath();
+          ctx.arc(padX + roomW + reflectDist, speakerY, wave.r * 0.9, (2 * Math.PI) / 3, (4 * Math.PI) / 3);
+          ctx.strokeStyle = `rgba(180, 195, 220, ${wave.alpha * selectedPreset.reflectionCoefficient * 0.4})`;
+          ctx.stroke();
+        }
+        ctx.restore();
+      }
+
+      // Draw Speaker Core Pulsating Sphere Icon
+      ctx.beginPath();
+      ctx.arc(speakerX, speakerY, 14, 0, Math.PI * 2);
+      ctx.fillStyle = "#D4AF37";
+      ctx.fill();
+
+      ctx.beginPath();
+      ctx.arc(speakerX, speakerY, 8, 0, Math.PI * 2);
+      ctx.fillStyle = "#0A0B0E";
+      ctx.fill();
+
+      // Speaker marker ring
+      ctx.beginPath();
+      ctx.arc(speakerX, speakerY, 20 + Math.sin(frame * 0.1) * 3, 0, Math.PI * 2);
+      ctx.strokeStyle = "rgba(212, 175, 55, 0.5)";
+      ctx.lineWidth = 1;
+      ctx.stroke();
+
+      // Label speaker node
+      ctx.fillStyle = "#E5DFD5";
+      ctx.font = "10px sans-serif";
+      ctx.fillText("MBL RADIALSTRAHLER", speakerX - 55, speakerY + 34);
+
+      // Wall offset telemetry line
+      ctx.strokeStyle = "#FF8800";
+      ctx.lineWidth = 1;
+      ctx.setLineDash([2, 2]);
+      ctx.beginPath();
+      ctx.moveTo(speakerX, speakerY);
+      ctx.lineTo(padX, speakerY);
+      ctx.stroke();
+      ctx.setLineDash([]);
+
+      ctx.fillStyle = "#FF8800";
+      ctx.font = "9px monospace";
+      ctx.fillText(`${wallClearanceOffsetM}m OFFSET (Δt=${firstReflectionDelayMs}ms)`, padX + 8, speakerY - 6);
+
+      animationFrameId.current = requestAnimationFrame(render);
     };
-    setCart([newItem]);
-    setIsDrawerOpen(true);
-    setOrderConfirmed(false);
+
+    render();
+
+    return () => {
+      if (animationFrameId.current) {
+        cancelAnimationFrame(animationFrameId.current);
+      }
+    };
+  }, [roomLengthM, roomWidthM, wallClearanceOffsetM, selectedPreset, firstReflectionDelayMs]);
+
+  // Handle Reservation Confirmation with Confetti
+  const handleConfirmReservation = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!clientName || !clientEmail) return;
+
+    confetti({
+      particleCount: 110,
+      spread: 75,
+      origin: { y: 0.6 },
+      colors: ["#D4AF37", "#FFFFFF", "#FF8800", "#1E1F24"]
+    });
+
+    setOrderComplete(true);
   };
 
   return (
-    <div className="min-h-screen bg-[#0A0A0C] text-[#EAE6DF] font-sans antialiased selection:bg-[#D4AF37] selection:text-[#0A0A0C]">
+    <div className="min-h-screen bg-[#07080A] text-[#EDE8E1] font-sans antialiased selection:bg-[#D4AF37] selection:text-[#07080A]">
       
-      {/* Top Telemetry & Swiss Header */}
-      <header className="sticky top-0 z-40 bg-[#0A0A0C]/95 backdrop-blur-md border-b border-[#222329]">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
-          <div className="flex items-center gap-6">
+      {/* 00 // TACTICAL GERMAN ACOUSTIC TELEMETRY TOP BAR */}
+      <div className="border-b border-[#1E2028] bg-[#0B0C10] px-4 py-2.5 text-xs text-[#8E929E] font-mono sticky top-0 z-40 backdrop-blur-md bg-opacity-95">
+        <div className="max-w-7xl mx-auto flex flex-wrap items-center justify-between gap-3">
+          <div className="flex items-center gap-4">
             <Link 
               href="/" 
-              className="inline-flex items-center gap-2 text-xs font-mono tracking-widest text-[#8F8C84] hover:text-[#FFFFFF] transition-colors"
+              className="inline-flex items-center gap-1.5 text-[#D4AF37] hover:text-[#FFFFFF] transition-colors group"
             >
-              <ArrowLeft className="w-3.5 h-3.5" />
-              PORTFOLIO RADAR
+              <ArrowLeft className="w-3.5 h-3.5 group-hover:-translate-x-0.5 transition-transform" />
+              <span>RETURN TO BBC COLLECTIVE</span>
             </Link>
-            <div className="h-4 w-px bg-[#222329] hidden sm:block" />
-            <div className="flex items-center gap-2">
-              <span className="font-mono text-xs text-[#D4AF37] uppercase tracking-wider font-semibold">
-                [PROSPECT 15 // APEX TELEMETRY]
-              </span>
-              <span className="text-xs text-[#6E6B65] hidden md:inline">
-                MBL AKUSTIKGERÄTE // BERLIN &amp; EBERSWALDE, GERMANY
-              </span>
-            </div>
+            <span className="hidden sm:inline text-[#2A2D37]">|</span>
+            <span className="hidden md:inline-flex items-center gap-1.5 text-[#8E929E]">
+              <Radio className="w-3 h-3 text-[#00FF88] animate-pulse" />
+              <span>EBERSWALDE MANUFAKTUR 52.8337° N, 13.8329° E</span>
+            </span>
           </div>
 
-          <div className="flex items-center gap-4">
-            <a 
-              href="#room-simulator"
-              className="hidden lg:inline-flex items-center gap-1.5 text-xs font-mono text-[#D4CDC3] hover:text-[#FFFFFF] transition-colors"
-            >
-              <Radio className="w-3.5 h-3.5 text-[#D4AF37]" />
-              360° ROOM DISPERSION
-            </a>
-            <a 
-              href="#current-matcher"
-              className="hidden lg:inline-flex items-center gap-1.5 text-xs font-mono text-[#D4CDC3] hover:text-[#FFFFFF] transition-colors"
-            >
-              <Zap className="w-3.5 h-3.5 text-[#D4AF37]" />
-              CURRENT DAMPING TELEMETRY
-            </a>
-            <button
-              onClick={() => setIsDrawerOpen(true)}
-              className="relative inline-flex items-center gap-2 px-3 py-2 bg-[#17181D] hover:bg-[#202229] border border-[#2B2D36] rounded-none text-xs font-mono text-[#EAE6DF] transition-colors"
-            >
-              <ShoppingBag className="w-3.5 h-3.5 text-[#D4AF37]" />
-              <span>ATELIER ALLOCATION</span>
-              {cart.length > 0 && (
-                <span className="ml-1 px-1.5 py-0.2 bg-[#D4AF37] text-[#0A0A0C] text-[10px] font-bold">
-                  {cart.length}
-                </span>
-              )}
-            </button>
+          <div className="flex items-center gap-5">
+            <span className="hidden lg:inline text-[#8E929E]">
+              DE-PAT 29 46 832 C2 // RADIALSTRAHLER 360°
+            </span>
+            <div className="flex items-center gap-2 border-l border-[#222530] pl-4">
+              <button
+                onClick={() => {
+                  setIsAudioMuted(!isAudioMuted);
+                  playTactileClick();
+                }}
+                className={`flex items-center gap-1.5 px-2.5 py-1 rounded border text-[11px] transition-colors ${
+                  !isAudioMuted 
+                    ? "bg-[#D4AF37]/10 border-[#D4AF37] text-[#D4AF37]" 
+                    : "bg-[#14161C] border-[#222530] text-[#7A7E8C] hover:text-[#EDE8E1]"
+                }`}
+                title="Toggle Web Audio tactile sound synthesis"
+              >
+                {!isAudioMuted ? <Volume2 className="w-3 h-3 text-[#D4AF37]" /> : <VolumeX className="w-3 h-3" />}
+                <span>{!isAudioMuted ? "TACTILE AUDIO: ON" : "AUDIO: MUTE"}</span>
+              </button>
+
+              <button
+                onClick={() => {
+                  setIsDrawerOpen(true);
+                  playTactileClick();
+                }}
+                className="flex items-center gap-1.5 bg-[#D4AF37] hover:bg-[#E5C158] text-[#07080A] font-semibold px-3 py-1 rounded text-[11px] transition-all"
+              >
+                <ShoppingBag className="w-3 h-3" />
+                <span>COMMISSION AUDITION</span>
+              </button>
+            </div>
           </div>
         </div>
-      </header>
+      </div>
 
-      {/* Main Architectural Showcase Container */}
-      <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 md:py-12 space-y-16">
+      <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-16">
 
-        {/* Section 01: Hero Diagnostic & Executive Header */}
-        <section className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start border-b border-[#222329] pb-12">
-          <div className="lg:col-span-8 space-y-4">
-            <div className="inline-flex items-center gap-2 px-2.5 py-1 bg-[#14151A] border border-[#282A33] text-[11px] font-mono tracking-wider text-[#D4AF37]">
-              <Volume2 className="w-3 h-3" />
-              OMNIDIRECTIONAL ACOUSTIC ARCHITECTURE // 360° CARBON RADIALSTRAHLER
-            </div>
-            <h1 className="text-3xl sm:text-4xl md:text-5xl font-light tracking-tight text-[#FFFFFF] leading-tight">
-              Eliminating Penthouse Room Reflection Anxiety &amp; Low-Impedance Current Hesitation for Flagship Audiophiles
-            </h1>
-            <p className="text-sm md:text-base text-[#9C988F] leading-relaxed max-w-3xl">
-              Connoisseurs evaluating a $91,000 to $320,000 MBL Radialstrahler commission abandon digital consultation funnels over two primary points of friction: boundary reflection anxiety (whether 360-degree pulsating soundwaves will smear in untreated luxury glass-and-marble salons) and current-delivery hesitation (whether their existing monoblocks can sustain 2-Ohm continuous impedance). This interactive engineering sandbox calculates room decay times (RT60) and current delivery in real time, converting speculative interest into confirmed private listening allocations.
-            </p>
-          </div>
+        {/* 01 // EDITORIAL CINEMATIC HERO & GERMAN ACOUSTIC AUTHORITY */}
+        <section className="relative border border-[#1E2028] bg-[#0C0D12] overflow-hidden rounded-xl">
+          {/* Subtle gold hairline accent */}
+          <div className="absolute top-0 left-0 right-0 h-[2px] bg-gradient-to-r from-transparent via-[#D4AF37] to-transparent opacity-75"></div>
 
-          {/* Quick Metric Telemetry Box */}
-          <div className="lg:col-span-4 bg-[#121317] border border-[#23252E] p-6 space-y-4">
-            <div className="flex items-center justify-between border-b border-[#1E2028] pb-3">
-              <span className="text-xs font-mono text-[#827E76]">MANUFACTURE BASE</span>
-              <span className="text-xs font-mono text-[#EAE6DF] font-semibold">Berlin &amp; Eberswalde, Germany</span>
-            </div>
-            <div className="flex items-center justify-between border-b border-[#1E2028] pb-3">
-              <span className="text-xs font-mono text-[#827E76]">DRIVER GEOMETRY</span>
-              <span className="text-xs font-mono text-[#EAE6DF] font-semibold">360° Pulsating Spherical Lamellae</span>
-            </div>
-            <div className="flex items-center justify-between border-b border-[#1E2028] pb-3">
-              <span className="text-xs font-mono text-[#827E76]">DIFFUSE FIELD RATIO</span>
-              <span className="text-xs font-mono text-[#D4AF37] font-semibold">70% Diffuse / 30% Direct (Concert Hall)</span>
-            </div>
-            <div className="flex items-center justify-between">
-              <span className="text-xs font-mono text-[#827E76]">PEAK CURRENT HEADROOM</span>
-              <span className="text-xs font-mono text-[#EAE6DF] font-semibold">40 Amperes @ 2 Ohms Load</span>
-            </div>
-          </div>
-        </section>
-
-        {/* Section 02: Flagship Radialstrahler Catalog & Gallery */}
-        <section id="gallery" className="space-y-6">
-          <div className="flex flex-col md:flex-row md:items-end justify-between gap-4">
-            <div>
-              <span className="text-xs font-mono text-[#D4AF37] tracking-widest uppercase">
-                [REFERENCE MASTERPIECES // 3 TRANSDUCER ARCHITECTURES]
-              </span>
-              <h2 className="text-2xl font-light tracking-tight text-[#FFFFFF] mt-1">
-                Spherical Soundfield Transducers
-              </h2>
-            </div>
-
-            {/* Model Tab Controls */}
-            <div className="flex flex-wrap gap-2">
-              {products.map((product, index) => (
-                <button
-                  key={product.id}
-                  onClick={() => {
-                    setActiveProductIndex(index);
-                    setActiveImageIndex(0);
-                  }}
-                  className={`px-4 py-2 text-xs font-mono tracking-wider transition-all border ${
-                    activeProductIndex === index
-                      ? "bg-[#D4AF37] text-[#0A0A0C] border-[#D4AF37] font-bold"
-                      : "bg-[#121317] text-[#9C988F] border-[#23252E] hover:border-[#383B47] hover:text-[#FFFFFF]"
-                  }`}
-                >
-                  0{index + 1} // {product.name.replace("Radialstrahler ", "")}
-                </button>
-              ))}
-            </div>
-          </div>
-
-          {/* Active Product Staging Grid */}
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
-            
-            {/* Left 8 Cols: Main Optical Stage */}
-            <div className="lg:col-span-8 space-y-4">
-              <div className="relative aspect-[16/10] bg-[#121317] border border-[#23252E] overflow-hidden group flex items-center justify-center p-6">
-                <img
-                  src={activeProduct.images[activeImageIndex].url}
-                  alt={activeProduct.images[activeImageIndex].label}
-                  className="max-h-full max-w-full object-contain transition-transform duration-700 group-hover:scale-102"
-                />
-                
-                {/* HUD Overlay Badge */}
-                <div className="absolute top-4 left-4 bg-[#0A0A0C]/85 backdrop-blur-sm border border-[#262832] px-3 py-1.5 flex items-center gap-2">
-                  <span className="w-2 h-2 rounded-full bg-[#D4AF37] animate-pulse" />
-                  <span className="text-[11px] font-mono text-[#EAE6DF] tracking-wide uppercase">
-                    {activeProduct.images[activeImageIndex].label}
-                  </span>
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-0">
+            {/* Left Hero Column: Typography & Strategy */}
+            <div className="lg:col-span-6 p-8 sm:p-12 flex flex-col justify-between space-y-8 z-10">
+              <div className="space-y-4">
+                <div className="inline-flex items-center gap-2 px-2.5 py-1 rounded-full bg-[#181A22] border border-[#282B38] text-[11px] font-mono text-[#D4AF37]">
+                  <span className="w-1.5 h-1.5 rounded-full bg-[#D4AF37] animate-ping"></span>
+                  <span>MBL AKUSTIKGERÄTE GMBH // BERLIN & EBERSWALDE</span>
                 </div>
 
-                <div className="absolute bottom-4 right-4 bg-[#0A0A0C]/85 backdrop-blur-sm border border-[#262832] px-3 py-1.5">
-                  <span className="text-[11px] font-mono text-[#827E76]">
-                    SLOT {activeImageIndex + 1} OF {activeProduct.images.length} // VERIFIED LOCAL HIGH-RES
+                <h1 className="text-3xl sm:text-5xl font-extrabold tracking-tight text-[#FFFFFF] leading-[1.08]">
+                  Pulsating Sphere Acoustics.
+                  <span className="block text-[#D4AF37] font-serif font-normal italic mt-1 text-2xl sm:text-4xl">
+                    Zero Room Boundary Smear.
                   </span>
-                </div>
+                </h1>
+
+                <p className="text-sm sm:text-base text-[#9FA4B2] leading-relaxed max-w-xl">
+                  For four decades, MBL has engineered the absolute pinnacle of high-end acoustic physics. The 360-degree Radialstrahler eliminates the directional beam distortion of conventional horn and cone speakers, replicating the spherical soundwave expansion of an unamplified Steinway grand piano or Stradivarius violin.
+                </p>
               </div>
 
-              {/* Thumbnails Row */}
-              <div className="grid grid-cols-3 gap-4">
-                {activeProduct.images.map((image, idx) => (
+              {/* Finish Selection Switcher */}
+              <div className="space-y-3 pt-2 border-t border-[#1D202A]">
+                <div className="flex items-center justify-between text-xs font-mono text-[#8E929E]">
+                  <span>FACTORY LACQUER & METALLURGY SPEC:</span>
+                  <span className="text-[#D4AF37]">
+                    {selectedFinish === "piano-black-gold" && "Piano Black Lacquer + 24K Gold Plating"}
+                    {selectedFinish === "glacier-white-chrome" && "Glacier White + High-Mirror Chrome"}
+                    {selectedFinish === "matte-carbon-titanium" && "Matte Carbon Weave + Titanium Gray"}
+                  </span>
+                </div>
+
+                <div className="grid grid-cols-3 gap-2.5">
                   <button
-                    key={idx}
-                    onClick={() => setActiveImageIndex(idx)}
-                    className={`relative aspect-[16/10] bg-[#121317] border overflow-hidden text-left transition-all p-2 flex items-center justify-center ${
-                      activeImageIndex === idx 
-                        ? "border-[#D4AF37] ring-1 ring-[#D4AF37]" 
-                        : "border-[#23252E] opacity-60 hover:opacity-100"
+                    onClick={() => {
+                      setSelectedFinish("piano-black-gold");
+                      playTactileClick();
+                    }}
+                    className={`flex items-center gap-2 p-2 rounded border text-left text-xs transition-all ${
+                      selectedFinish === "piano-black-gold" 
+                        ? "border-[#D4AF37] bg-[#1A1812] text-[#FFFFFF]" 
+                        : "border-[#1F212B] bg-[#101217] text-[#7A7E8C] hover:border-[#2D313F]"
                     }`}
                   >
-                    <img 
-                      src={image.url} 
-                      alt={image.label} 
-                      className="max-h-full max-w-full object-contain"
-                    />
-                    <div className="absolute inset-x-0 bottom-0 bg-[#0A0A0C]/90 p-1.5">
-                      <p className="text-[10px] font-mono text-[#EAE6DF] truncate">
-                        0{idx + 1}. {image.label}
-                      </p>
-                    </div>
+                    <span className="w-3.5 h-3.5 rounded-full bg-black border border-[#D4AF37] flex-shrink-0"></span>
+                    <span className="truncate text-[11px] font-mono">24K Black Gold</span>
                   </button>
-                ))}
+
+                  <button
+                    onClick={() => {
+                      setSelectedFinish("glacier-white-chrome");
+                      playTactileClick();
+                    }}
+                    className={`flex items-center gap-2 p-2 rounded border text-left text-xs transition-all ${
+                      selectedFinish === "glacier-white-chrome" 
+                        ? "border-[#E0E0E0] bg-[#16181F] text-[#FFFFFF]" 
+                        : "border-[#1F212B] bg-[#101217] text-[#7A7E8C] hover:border-[#2D313F]"
+                    }`}
+                  >
+                    <span className="w-3.5 h-3.5 rounded-full bg-white border border-[#A0A0A0] flex-shrink-0"></span>
+                    <span className="truncate text-[11px] font-mono">White Chrome</span>
+                  </button>
+
+                  <button
+                    onClick={() => {
+                      setSelectedFinish("matte-carbon-titanium");
+                      playTactileClick();
+                    }}
+                    className={`flex items-center gap-2 p-2 rounded border text-left text-xs transition-all ${
+                      selectedFinish === "matte-carbon-titanium" 
+                        ? "border-[#778099] bg-[#14171E] text-[#FFFFFF]" 
+                        : "border-[#1F212B] bg-[#101217] text-[#7A7E8C] hover:border-[#2D313F]"
+                    }`}
+                  >
+                    <span className="w-3.5 h-3.5 rounded-full bg-[#2A2B30] border border-[#555866] flex-shrink-0"></span>
+                    <span className="truncate text-[11px] font-mono">Carbon Ti</span>
+                  </button>
+                </div>
+              </div>
+
+              {/* Physical Telemetry Grid */}
+              <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 py-3 border-y border-[#1E212B] text-xs font-mono">
+                <div>
+                  <span className="block text-[#686D7D] text-[10px]">RADIAL DISPERSION</span>
+                  <span className="text-[#FFFFFF] font-bold text-sm">360° Spherical</span>
+                </div>
+                <div>
+                  <span className="block text-[#686D7D] text-[10px]">LAMELLAE ACCURACY</span>
+                  <span className="text-[#D4AF37] font-bold text-sm">±0.02 mm</span>
+                </div>
+                <div>
+                  <span className="block text-[#686D7D] text-[10px]">MIN IMPEDANCE</span>
+                  <span className="text-[#FFFFFF] font-bold text-sm">2.1 Ω Load</span>
+                </div>
+                <div>
+                  <span className="block text-[#686D7D] text-[10px]">CONTINUOUS CURRENT</span>
+                  <span className="text-[#00FF88] font-bold text-sm">40.0A RMS</span>
+                </div>
+              </div>
+
+              {/* Action Buttons */}
+              <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 pt-2">
+                <button
+                  onClick={() => {
+                    setIsDrawerOpen(true);
+                    playTactileClick();
+                  }}
+                  className="px-6 py-3.5 rounded bg-[#D4AF37] hover:bg-[#E5C158] text-[#07080A] font-bold text-sm tracking-wide transition-all shadow-lg shadow-[#D4AF37]/15 flex items-center justify-center gap-2 group"
+                >
+                  <ShoppingBag className="w-4 h-4" />
+                  <span>RESERVE ATELIER AUDITION</span>
+                  <ChevronRight className="w-4 h-4 group-hover:translate-x-0.5 transition-transform" />
+                </button>
+
+                <a
+                  href="#room-simulator"
+                  onClick={playTactileClick}
+                  className="px-5 py-3.5 rounded border border-[#262936] hover:border-[#D4AF37]/50 bg-[#12141A] hover:bg-[#181B24] text-[#D8DCE6] text-sm font-medium transition-all flex items-center justify-center gap-2"
+                >
+                  <SlidersHorizontal className="w-4 h-4 text-[#D4AF37]" />
+                  <span>LAUNCH ROOM SIMULATOR</span>
+                </a>
               </div>
             </div>
 
-            {/* Right 4 Cols: Technical Dossier & Immediate Allocation CTA */}
-            <div className="lg:col-span-4 bg-[#121317] border border-[#23252E] p-6 space-y-6">
-              <div>
-                <span className="text-xs font-mono text-[#D4AF37] tracking-wider uppercase">
-                  {activeProduct.series}
-                </span>
-                <h3 className="text-2xl font-light text-[#FFFFFF] mt-1">
-                  {activeProduct.name}
-                </h3>
-                <p className="text-xs font-mono text-[#827E76] mt-0.5">
-                  {activeProduct.germanTitle}
-                </p>
-                <p className="text-xs text-[#B2AEA5] mt-3 leading-relaxed">
-                  {activeProduct.curatorNotes}
-                </p>
-              </div>
-
-              {/* Specification Grid */}
-              <div className="space-y-3 border-t border-b border-[#23252E] py-4 text-xs font-mono">
-                <div className="flex justify-between">
-                  <span className="text-[#827E76]">ACOUSTIC TRANSDUCER</span>
-                  <span className="text-[#FFFFFF] text-right truncate max-w-[210px]">{activeProduct.driverTechnology}</span>
-                </div>
-                <div className="flex justify-between">
-                  <span className="text-[#827E76]">SENSITIVITY (2.83V/1M)</span>
-                  <span className="text-[#FFFFFF]">{activeProduct.sensitivityDb > 0 ? `${activeProduct.sensitivityDb} dB` : "Line Input Stage"}</span>
-                </div>
-                <div className="flex justify-between">
-                  <span className="text-[#827E76]">MINIMUM IMPEDANCE</span>
-                  <span className="text-[#D4AF37]">{activeProduct.minImpedanceOhm} Ohms (High-Current Load)</span>
-                </div>
-                <div className="flex justify-between">
-                  <span className="text-[#827E76]">PEAK POWER HANDLING</span>
-                  <span className="text-[#FFFFFF]">{activeProduct.peakPowerHandlingWatts} Watts</span>
-                </div>
-                <div className="flex justify-between">
-                  <span className="text-[#827E76]">TOTAL SYSTEM TARE</span>
-                  <span className="text-[#FFFFFF]">{activeProduct.weightKg} kg (Cast Steel &amp; Aluminum)</span>
-                </div>
-                <div className="flex justify-between">
-                  <span className="text-[#827E76]">ROOM VOLUMETRIC TARGET</span>
-                  <span className="text-[#FFFFFF]">{activeProduct.recommendedRoomAreaM2.min}–{activeProduct.recommendedRoomAreaM2.max} m²</span>
-                </div>
-              </div>
-
-              {/* Price & Allocation Action */}
-              <div className="space-y-3">
-                <div className="flex items-baseline justify-between">
-                  <span className="text-xs font-mono text-[#827E76]">FACTORY ALLOCATION MSRP</span>
-                  <span className="text-2xl font-mono text-[#FFFFFF] font-light">
-                    ${activeProduct.priceUsd.toLocaleString("en-US")}
+            {/* Right Hero Column: User's Master Render Asset (101 X-Treme Lakeside Twilight) */}
+            <div className="lg:col-span-6 relative min-h-[380px] lg:min-h-full bg-[#08090C] border-t lg:border-t-0 lg:border-l border-[#1E2028] flex items-center justify-center p-4 sm:p-6 overflow-hidden">
+              <div className="relative w-full h-full min-h-[360px] lg:min-h-[520px] rounded-lg overflow-hidden border border-[#252833]">
+                <img
+                  src="/assets/mbl/mbl-xtreme-lakeside.jpg"
+                  alt="MBL 101 X-Treme Flagship System in lakeside brutalist salon at twilight"
+                  className="w-full h-full object-cover object-center transition-transform duration-700 hover:scale-105"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-[#07080A] via-transparent to-transparent opacity-80"></div>
+                
+                {/* Visual Telemetry Overlay */}
+                <div className="absolute bottom-4 left-4 right-4 p-3 bg-[#0B0C10]/85 border border-[#242735] backdrop-blur-md rounded flex items-center justify-between text-xs font-mono">
+                  <div>
+                    <span className="block text-[#D4AF37] font-bold">MBL 101 X-TREME FOUR-TOWER SYSTEM</span>
+                    <span className="text-[#888D9E] text-[11px]">Architectural Listening Salon // Lake Geneva Twilight</span>
+                  </div>
+                  <span className="hidden sm:inline-block px-2 py-0.5 bg-[#1B1D25] border border-[#2D3140] rounded text-[10px] text-[#A6ABB9]">
+                    1,650 KG NET MASS
                   </span>
                 </div>
-
-                <button
-                  onClick={handleAddToCart}
-                  className="w-full py-3.5 bg-[#D4AF37] hover:bg-[#E5C158] text-[#0A0A0C] text-xs font-mono font-bold tracking-widest uppercase transition-colors flex items-center justify-center gap-2"
-                >
-                  <ShoppingBag className="w-4 h-4" />
-                  RESERVE PRIVATE AUDITION &amp; BUILD
-                </button>
-
-                <p className="text-[11px] text-center font-mono text-[#736F67]">
-                  Includes VIP Berlin/Eberswalde listening salon access &amp; master acoustician calibration
-                </p>
               </div>
             </div>
           </div>
         </section>
 
-        {/* Section 03: Interactive 360° Room Reflection & RT60 Decay Simulator */}
-        <section id="room-simulator" className="bg-[#121317] border border-[#23252E] p-6 md:p-8 space-y-8">
-          <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 border-b border-[#222329] pb-6">
-            <div>
-              <div className="inline-flex items-center gap-1.5 text-xs font-mono text-[#D4AF37] uppercase tracking-wider mb-1">
-                <Radio className="w-3.5 h-3.5" />
-                [ACOUSTIC WAVE PROPAGATION SIMULATOR]
+        {/* 02 // INTERACTIVE 360° ACOUSTIC WAVE PROPAGATION CANVAS & RT60 DECAY ENGINE */}
+        <section id="room-simulator" className="border border-[#1E2028] bg-[#0C0D12] rounded-xl p-6 sm:p-8 space-y-8">
+          <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 border-b border-[#1E212B] pb-6">
+            <div className="space-y-1">
+              <div className="inline-flex items-center gap-1.5 text-xs font-mono text-[#D4AF37]">
+                <Activity className="w-3.5 h-3.5 text-[#00FF88]" />
+                <span>PHYSICAL ACOUSTIC LAB // 360° SPHERICAL WAVEFORM MATRIX</span>
               </div>
-              <h2 className="text-2xl font-light text-[#FFFFFF]">
-                360° Omnidirectional Room Dispersion &amp; RT60 Decay Engine
+              <h2 className="text-2xl sm:text-3xl font-bold text-[#FFFFFF]">
+                Acoustic Room Boundary & Decay Simulator
               </h2>
-              <p className="text-xs text-[#9C988F] mt-1 max-w-2xl">
-                Simulate how MBL&apos;s pulsating spherical soundwaves interact with your specific room volume, wall materials, and boundary offsets to verify uncompressed soundstage holography before delivery.
+              <p className="text-sm text-[#8E929E] max-w-2xl">
+                Simulate how MBL's pulsating spherical wavefronts propagate through your specific penthouse interior. Calculate real-time Sabine RT60 reverberation and boundary reflection arrival delay delta.
               </p>
             </div>
 
-            <div className="flex items-center gap-2 bg-[#17181D] border border-[#2B2D36] px-3 py-1.5 text-xs font-mono">
-              <span className="text-[#827E76]">TRANSDUCER MODEL:</span>
-              <span className="text-[#D4AF37] font-bold">{activeProduct.name}</span>
+            <div className="flex items-center gap-3">
+              <button
+                onClick={playAcousticImpulse}
+                disabled={isTestImpulsePlaying}
+                className="px-4 py-2 rounded bg-[#181B24] hover:bg-[#202430] border border-[#2C3040] hover:border-[#D4AF37] text-xs font-mono text-[#EDE8E1] transition-all flex items-center gap-2"
+              >
+                <Radio className={`w-3.5 h-3.5 ${isTestImpulsePlaying ? "text-[#00FF88] animate-ping" : "text-[#D4AF37]"}`} />
+                <span>{isTestImpulsePlaying ? "RESONATING..." : "AUDITION 432Hz IMPULSE"}</span>
+              </button>
             </div>
           </div>
 
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
-            
-            {/* Sliders & Parameters Column */}
-            <div className="lg:col-span-7 space-y-6">
-              
-              {/* Room Boundary Selector */}
+            {/* Left Column: Live HTML5 Canvas */}
+            <div className="lg:col-span-7 bg-[#07080B] border border-[#1E212B] rounded-lg p-3 space-y-3">
+              <div className="flex items-center justify-between text-xs font-mono px-2 text-[#7E8394]">
+                <span>TOP-DOWN RESIDENTIAL BLUEPRINT (60 FPS REAL-TIME PHYSICS)</span>
+                <span className="text-[#00FF88] flex items-center gap-1">
+                  <span className="w-1.5 h-1.5 rounded-full bg-[#00FF88] animate-pulse"></span>
+                  PROPAGATING 343 M/S
+                </span>
+              </div>
+
+              <div className="relative aspect-[16/10] w-full bg-[#050608] rounded overflow-hidden border border-[#161820]">
+                <canvas
+                  ref={canvasRef}
+                  width={640}
+                  height={400}
+                  className="w-full h-full block"
+                />
+              </div>
+
+              <div className="grid grid-cols-3 gap-2 text-center text-xs font-mono pt-1">
+                <div className="bg-[#0E1015] border border-[#1B1D25] p-2 rounded">
+                  <span className="block text-[#686D7D] text-[10px]">CALCULATED RT60</span>
+                  <span className={`text-sm font-bold ${isAcousticallyIdeal ? "text-[#00FF88]" : "text-[#FF8800]"}`}>
+                    {calculatedRt60Seconds}s
+                  </span>
+                </div>
+                <div className="bg-[#0E1015] border border-[#1B1D25] p-2 rounded">
+                  <span className="block text-[#686D7D] text-[10px]">FIRST REFLECTION Δt</span>
+                  <span className="text-sm font-bold text-[#D4AF37]">
+                    +{firstReflectionDelayMs} ms
+                  </span>
+                </div>
+                <div className="bg-[#0E1015] border border-[#1B1D25] p-2 rounded">
+                  <span className="block text-[#686D7D] text-[10px]">ABSORPTION ALPHA (α)</span>
+                  <span className="text-sm font-bold text-[#FFFFFF]">
+                    {selectedPreset.absorptionAlpha}
+                  </span>
+                </div>
+              </div>
+            </div>
+
+            {/* Right Column: Dynamic Architectural Controls */}
+            <div className="lg:col-span-5 space-y-6">
+              {/* Boundary Presets */}
               <div className="space-y-2">
-                <label className="text-xs font-mono text-[#827E76] flex items-center gap-1.5">
-                  <Layers className="w-3.5 h-3.5 text-[#D4AF37]" />
-                  SELECT LISTENING SALON BOUNDARY MATERIAL:
+                <label className="text-xs font-mono text-[#8E929E] uppercase tracking-wider block">
+                  Select Architectural Boundary Envelope:
                 </label>
-                <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
-                  {roomPresets.map((room) => (
+                <div className="space-y-2">
+                  {roomPresets.map((preset) => (
                     <button
-                      key={room.id}
-                      onClick={() => setSelectedRoomPresetId(room.id)}
-                      className={`p-3 text-left border transition-all ${
-                        selectedRoomPresetId === room.id
-                          ? "bg-[#1C1D24] border-[#D4AF37] ring-1 ring-[#D4AF37]"
-                          : "bg-[#0E0F12] border-[#23252E] hover:border-[#383B47]"
+                      key={preset.id}
+                      onClick={() => {
+                        setSelectedPreset(preset);
+                        playTactileClick();
+                      }}
+                      className={`w-full p-3 rounded text-left border transition-all ${
+                        selectedPreset.id === preset.id 
+                          ? "border-[#D4AF37] bg-[#171922] text-[#FFFFFF]" 
+                          : "border-[#1E212B] bg-[#0E1015] text-[#7A7E8C] hover:border-[#2C3040]"
                       }`}
                     >
-                      <p className="text-xs font-mono text-[#FFFFFF] font-semibold">{room.name}</p>
-                      <p className="text-[10px] font-mono text-[#D4AF37] mt-0.5">{room.acousticCharacter}</p>
-                      <p className="text-[10px] text-[#736F67] mt-1.5 leading-tight">
-                        Reflection: {Math.round(room.reflectionCoefficient * 100)}%
+                      <div className="flex items-center justify-between text-xs font-semibold">
+                        <span className="text-sm">{preset.name}</span>
+                        <span className="font-mono text-[11px] text-[#D4AF37]">
+                          Reflectivity: {(preset.reflectionCoefficient * 100).toFixed(0)}%
+                        </span>
+                      </div>
+                      <p className="text-xs text-[#8E929E] mt-1 leading-snug">
+                        {preset.description}
                       </p>
                     </button>
                   ))}
                 </div>
               </div>
 
-              {/* Room Dimensions Grid */}
-              <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 bg-[#0E0F12] border border-[#23252E] p-4">
-                <div className="space-y-1">
-                  <div className="flex justify-between text-xs font-mono">
-                    <span className="text-[#827E76]">LENGTH:</span>
-                    <span className="text-[#FFFFFF]">{roomLengthM} m</span>
+              {/* Dimension Sliders */}
+              <div className="space-y-4 pt-4 border-t border-[#1C1F28] font-mono text-xs">
+                <div>
+                  <div className="flex justify-between text-[#8E929E] mb-1.5">
+                    <span>ROOM LENGTH: {roomLengthM} METERS</span>
+                    <span className="text-[#FFFFFF]">{(roomLengthM * 3.28084).toFixed(1)} FT</span>
                   </div>
                   <input
                     type="range"
@@ -603,14 +839,15 @@ export default function MblShowcasePage() {
                     max="20"
                     step="0.5"
                     value={roomLengthM}
-                    onChange={(e) => setRoomLengthM(Number(e.target.value))}
-                    className="w-full accent-[#D4AF37] bg-[#222329] h-1.5 cursor-pointer"
+                    onChange={(e) => setRoomLengthM(parseFloat(e.target.value))}
+                    className="w-full accent-[#D4AF37] cursor-pointer"
                   />
                 </div>
-                <div className="space-y-1">
-                  <div className="flex justify-between text-xs font-mono">
-                    <span className="text-[#827E76]">WIDTH:</span>
-                    <span className="text-[#FFFFFF]">{roomWidthM} m</span>
+
+                <div>
+                  <div className="flex justify-between text-[#8E929E] mb-1.5">
+                    <span>ROOM WIDTH: {roomWidthM} METERS</span>
+                    <span className="text-[#FFFFFF]">{(roomWidthM * 3.28084).toFixed(1)} FT</span>
                   </div>
                   <input
                     type="range"
@@ -618,434 +855,597 @@ export default function MblShowcasePage() {
                     max="14"
                     step="0.5"
                     value={roomWidthM}
-                    onChange={(e) => setRoomWidthM(Number(e.target.value))}
-                    className="w-full accent-[#D4AF37] bg-[#222329] h-1.5 cursor-pointer"
+                    onChange={(e) => setRoomWidthM(parseFloat(e.target.value))}
+                    className="w-full accent-[#D4AF37] cursor-pointer"
                   />
                 </div>
-                <div className="space-y-1">
-                  <div className="flex justify-between text-xs font-mono">
-                    <span className="text-[#827E76]">CEILING:</span>
-                    <span className="text-[#FFFFFF]">{roomHeightM} m</span>
+
+                <div>
+                  <div className="flex justify-between text-[#8E929E] mb-1.5">
+                    <span>WALL CLEARANCE OFFSET: {wallClearanceOffsetM} METERS</span>
+                    <span className="text-[#D4AF37]">HAAS DELTA: {firstReflectionDelayMs}ms</span>
                   </div>
                   <input
                     type="range"
-                    min="2.4"
-                    max="6.0"
-                    step="0.2"
-                    value={roomHeightM}
-                    onChange={(e) => setRoomHeightM(Number(e.target.value))}
-                    className="w-full accent-[#D4AF37] bg-[#222329] h-1.5 cursor-pointer"
+                    min="0.8"
+                    max="4.5"
+                    step="0.1"
+                    value={wallClearanceOffsetM}
+                    onChange={(e) => setWallClearanceOffsetM(parseFloat(e.target.value))}
+                    className="w-full accent-[#D4AF37] cursor-pointer"
                   />
                 </div>
               </div>
 
-              {/* Boundary Offset Slider */}
-              <div className="space-y-2 bg-[#0E0F12] border border-[#23252E] p-4">
-                <div className="flex justify-between items-center text-xs font-mono">
-                  <span className="text-[#827E76] flex items-center gap-1.5">
-                    <Compass className="w-3.5 h-3.5 text-[#D4AF37]" />
-                    WALL BOUNDARY CLEARANCE OFFSET:
-                  </span>
-                  <span className="text-[#FFFFFF] font-bold">{wallOffsetM} meters from rear/side walls</span>
+              {/* Acoustic Verdict Ledger */}
+              <div className="p-4 bg-[#0A0B0E] border border-[#1E212B] rounded text-xs space-y-2">
+                <div className="flex items-center gap-2 text-[#D4AF37] font-mono font-bold">
+                  <CheckCircle2 className="w-4 h-4 text-[#00FF88]" />
+                  <span>PRE-COMMISSION ACOUSTIC VERDICT:</span>
                 </div>
-                <input
-                  type="range"
-                  min="0.8"
-                  max="4.5"
-                  step="0.1"
-                  value={wallOffsetM}
-                  onChange={(e) => setWallOffsetM(Number(e.target.value))}
-                  className="w-full accent-[#D4AF37] bg-[#222329] h-1.5 cursor-pointer"
-                />
-                <div className="flex justify-between text-[10px] font-mono text-[#54514B]">
-                  <span>0.8m (Compressed Field)</span>
-                  <span>2.0m (Standard Audiophile Golden Ratio)</span>
-                  <span>4.5m (Infinite Baffle Emulation)</span>
-                </div>
-              </div>
-            </div>
-
-            {/* Live Readout & Compliance HUD Column */}
-            <div className="lg:col-span-5 bg-[#0E0F12] border border-[#23252E] p-6 space-y-6">
-              <div>
-                <span className="text-xs font-mono text-[#827E76] uppercase tracking-wider">
-                  HOLOGRAPHIC SOUNDSTAGE INDEX
-                </span>
-                <div className="flex items-baseline gap-2 mt-2">
-                  <span className={`text-4xl font-mono font-light ${
-                    holographyScore >= 85 ? "text-[#54B86A]" : holographyScore >= 70 ? "text-[#D4AF37]" : "text-[#E65050]"
-                  }`}>
-                    {holographyScore} / 100
-                  </span>
-                  <span className="text-xs font-mono text-[#827E76]">Acoustic Immersion Rating</span>
-                </div>
-                <p className="text-[11px] font-mono text-[#736F67] mt-1">
-                  Enclosure Volume: {roomVolumeM3} m³ ({Math.round(roomLengthM * roomWidthM)} m² floorplan)
-                </p>
-              </div>
-
-              {/* RT60 Bar Indicator */}
-              <div className="space-y-1.5">
-                <div className="flex justify-between text-xs font-mono">
-                  <span className="text-[#827E76]">REVERBERATION DECAY TIME (RT60):</span>
-                  <span className={rt60Seconds <= 0.65 && rt60Seconds >= 0.35 ? "text-[#54B86A] font-bold" : "text-[#D4AF37] font-bold"}>
-                    {rt60Seconds} seconds
-                  </span>
-                </div>
-                <div className="w-full bg-[#1A1C22] h-2">
-                  <div 
-                    className={`h-full transition-all duration-300 ${
-                      rt60Seconds <= 0.65 && rt60Seconds >= 0.35 ? "bg-[#54B86A]" : rt60Seconds > 0.8 ? "bg-[#E65050]" : "bg-[#D4AF37]"
-                    }`}
-                    style={{ width: `${Math.min((rt60Seconds / 1.5) * 100, 100)}%` }}
-                  />
-                </div>
-                <div className="flex justify-between text-[10px] font-mono text-[#54514B]">
-                  <span>0.2s (Dead Studio)</span>
-                  <span>0.45s (Concert Optimum)</span>
-                  <span>1.5s+ (Echo Cathedral)</span>
-                </div>
-              </div>
-
-              {/* First Boundary Reflection Delay */}
-              <div className="space-y-2 border-t border-b border-[#1E2028] py-3 text-xs font-mono">
-                <div className="flex justify-between">
-                  <span className="text-[#827E76]">First Reflection Arrival Time:</span>
-                  <span className={firstReflectionDelayMs >= 10.0 ? "text-[#54B86A]" : "text-[#D4AF37]"}>
-                    +{firstReflectionDelayMs} ms (Ear Integration Window: &gt;10ms)
-                  </span>
-                </div>
-                <div className="flex justify-between">
-                  <span className="text-[#827E76]">Direct-to-Reflected Energy Ratio:</span>
-                  <span className="text-[#FFFFFF]">
-                    {Math.round((1 - activeRoomPreset.reflectionCoefficient) * 100)}% Direct / {Math.round(activeRoomPreset.reflectionCoefficient * 100)}% Diffuse Field
-                  </span>
-                </div>
-                <div className="flex justify-between">
-                  <span className="text-[#827E76]">Bass Mode Axial Resonances:</span>
-                  <span className="text-[#FFFFFF]">
-                    {(343 / (2 * roomLengthM)).toFixed(1)} Hz / {(343 / (2 * roomWidthM)).toFixed(1)} Hz
-                  </span>
-                </div>
-              </div>
-
-              {/* Status Verdict */}
-              <div className={`p-3.5 border ${
-                isAcousticOptimum 
-                  ? "bg-[#142319] border-[#54B86A] text-[#54B86A]" 
-                  : "bg-[#211E15] border-[#D4AF37] text-[#D4AF37]"
-              }`}>
-                <div className="flex items-center gap-2 text-xs font-mono font-bold">
-                  {isAcousticOptimum ? <Check className="w-4 h-4" /> : <Info className="w-4 h-4" />}
-                  <span>
-                    {isAcousticOptimum ? "OPTIMUM ORCHESTRAL DISPERSION VERIFIED" : "ROOM BOUNDARY COMPENSATION RECOMMENDED"}
-                  </span>
-                </div>
-                <p className="text-[11px] text-[#D4CDC3] mt-1 leading-relaxed">
-                  {isAcousticOptimum
-                    ? `360-degree soundfield expands naturally. First reflection arrives past the 10ms Haas effect threshold, preserving precise pinpoint spatial localization with zero acoustic smear.`
-                    : `In high-reflectance interiors, MBL factory DSP phase compensation or 2.0m+ boundary offset eliminates flutter echoes, preserving genuine Berlin Philharmonic hall acoustics.`}
+                <p className="text-[#8E929E] leading-relaxed">
+                  {isAcousticallyIdeal 
+                    ? `Your room volume (${roomVolumeM3.toFixed(0)} m³) with ${selectedPreset.name} exhibits optimal decay timing (${calculatedRt60Seconds}s). The 360° spherical wavefront integrates without flutter echo.` 
+                    : `Your room volume produces a ${calculatedRt60Seconds}s decay time. MBL's omnidirectional dispersion maintains natural acoustic cohesion; our complimentary White-Glove Factory Atelier service will fine-tune boundary placement during installation.`}
                 </p>
               </div>
             </div>
           </div>
         </section>
 
-        {/* Section 04: Current Delivery & Monoblock Impedance Telemetry */}
-        <section id="current-matcher" className="bg-[#121317] border border-[#23252E] p-6 md:p-8 space-y-6">
-          <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 border-b border-[#222329] pb-6">
+        {/* 03 // ANALOG RETRO-INDUSTRIAL DUAL VU METERS & LOW-IMPEDANCE TELEMETRY */}
+        <section className="border border-[#1E2028] bg-[#0C0D12] rounded-xl p-6 sm:p-8 space-y-6">
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-[#1E212B] pb-5">
             <div>
-              <div className="inline-flex items-center gap-1.5 text-xs font-mono text-[#D4AF37] uppercase tracking-wider mb-1">
-                <Zap className="w-3.5 h-3.5" />
-                [SOLID-COPPER BUSBAR CURRENT TELEMETRY]
-              </div>
-              <h2 className="text-2xl font-light text-[#FFFFFF]">
-                Low-Impedance Current Delivery &amp; Damping Factor Validation
-              </h2>
-              <p className="text-xs text-[#9C988F] mt-1 max-w-2xl">
-                Carbon fiber lamellae operate as a pure mechanical acoustic piston. When impedance plunges to 2.1 Ohms in complex orchestral crescendos, conventional amplifiers collapse. MBL Reference amplifiers deliver unyielding current without thermal compression.
-              </p>
+              <span className="text-xs font-mono text-[#D4AF37]">ANALOG CURRENT TELEMETRY // GERMAN DIN 45406</span>
+              <h3 className="text-xl sm:text-2xl font-bold text-[#FFFFFF]">Dual Ballistic VU Power Meters</h3>
             </div>
 
-            <div className="flex items-center gap-2 bg-[#17181D] border border-[#2B2D36] px-3 py-1.5 text-xs font-mono">
-              <span className="text-[#827E76]">AMPLIFICATION BENCHMARK:</span>
-              <span className="text-[#D4AF37] font-bold">MBL Reference 9011 (5000W Peak / 40A)</span>
+            <div className="flex items-center gap-2 text-xs font-mono">
+              <span className="text-[#8E929E]">BALLISTICS:</span>
+              {(["RMS", "PEAK", "FAST"] as const).map((mode) => (
+                <button
+                  key={mode}
+                  onClick={() => {
+                    setMeterBallistics(mode);
+                    playTactileClick();
+                  }}
+                  className={`px-2 py-1 rounded border text-[10px] transition-colors ${
+                    meterBallistics === mode 
+                      ? "bg-[#D4AF37] text-black border-[#D4AF37] font-bold" 
+                      : "bg-[#14161E] border-[#222532] text-[#8E929E] hover:text-white"
+                  }`}
+                >
+                  {mode}
+                </button>
+              ))}
             </div>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 text-xs font-mono">
-            <div className="p-5 bg-[#0E0F12] border border-[#23252E] space-y-3">
-              <div className="flex items-center justify-between text-[#827E76]">
-                <span>IMPEDANCE MINIMA</span>
-                <Cpu className="w-4 h-4 text-[#D4AF37]" />
+          {/* Dual Analog VU Meters Display */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            {/* Left Channel Meter */}
+            <div className="bg-[#12110D] border-2 border-[#2E2818] rounded-lg p-5 relative overflow-hidden shadow-inner">
+              <div className="absolute inset-0 bg-gradient-to-b from-[#FFAE00]/10 via-transparent to-transparent pointer-events-none"></div>
+              
+              <div className="flex justify-between items-center text-[10px] font-mono text-[#C4A052] mb-2">
+                <span>CHANNEL A // LEFT RADIALSTRAHLER</span>
+                <span className="text-[#FF8800] animate-pulse">40.0A PEAK LOAD</span>
               </div>
-              <p className="text-3xl font-light text-[#FFFFFF]">2.1 Ω</p>
-              <p className="text-[11px] text-[#9C988F] leading-relaxed">
-                Measured at 380 Hz on Radialstrahler lower-mid lamellae. Demands high instantaneous current delivery without protection relay tripping.
-              </p>
+
+              {/* Analog Scale Arc */}
+              <div className="relative h-28 flex items-end justify-center overflow-hidden border-b border-[#3D3520] pb-2">
+                {/* Dial numbers */}
+                <div className="absolute top-2 left-6 text-[9px] font-mono text-[#8A7545]">-20</div>
+                <div className="absolute top-0 left-16 text-[9px] font-mono text-[#8A7545]">-10</div>
+                <div className="absolute top-0 left-1/2 -translate-x-1/2 text-[9px] font-mono text-[#C4A052]">0 dB</div>
+                <div className="absolute top-0 right-16 text-[9px] font-mono text-[#FF4444]">+2</div>
+                <div className="absolute top-2 right-6 text-[9px] font-mono text-[#FF4444]">+3</div>
+
+                {/* Animated Needle */}
+                <div 
+                  className="w-[2px] h-24 bg-gradient-to-t from-transparent via-[#FF4400] to-[#FFCC00] origin-bottom transition-transform duration-100 ease-out shadow-[0_0_8px_#FFAA00]"
+                  style={{
+                    transform: `rotate(${((vuLevel / 100) * 80) - 40}deg)`
+                  }}
+                ></div>
+                <div className="absolute bottom-0 w-5 h-5 rounded-full bg-[#1F190D] border border-[#524424] z-10"></div>
+              </div>
+
+              <div className="flex justify-between items-center text-[11px] font-mono text-[#8E8670] mt-3">
+                <span>MIN IMPEDANCE: 2.1 Ω</span>
+                <span className="text-[#00FF88]">DAMPING FACTOR: &gt;300</span>
+              </div>
             </div>
 
-            <div className="p-5 bg-[#0E0F12] border border-[#23252E] space-y-3">
-              <div className="flex items-center justify-between text-[#827E76]">
-                <span>CONTINUOUS CURRENT</span>
-                <Zap className="w-4 h-4 text-[#54B86A]" />
+            {/* Right Channel Meter */}
+            <div className="bg-[#12110D] border-2 border-[#2E2818] rounded-lg p-5 relative overflow-hidden shadow-inner">
+              <div className="absolute inset-0 bg-gradient-to-b from-[#FFAE00]/10 via-transparent to-transparent pointer-events-none"></div>
+              
+              <div className="flex justify-between items-center text-[10px] font-mono text-[#C4A052] mb-2">
+                <span>CHANNEL B // RIGHT RADIALSTRAHLER</span>
+                <span className="text-[#00FF88]">CURRENT RESERVE: 130A</span>
               </div>
-              <p className="text-3xl font-light text-[#54B86A]">40.0 A</p>
-              <p className="text-[11px] text-[#9C988F] leading-relaxed">
-                MBL 9011 monoblock sustained output via twin shielded toroidal transformers and custom high-amperage filter capacitor banks.
-              </p>
+
+              {/* Analog Scale Arc */}
+              <div className="relative h-28 flex items-end justify-center overflow-hidden border-b border-[#3D3520] pb-2">
+                <div className="absolute top-2 left-6 text-[9px] font-mono text-[#8A7545]">-20</div>
+                <div className="absolute top-0 left-16 text-[9px] font-mono text-[#8A7545]">-10</div>
+                <div className="absolute top-0 left-1/2 -translate-x-1/2 text-[9px] font-mono text-[#C4A052]">0 dB</div>
+                <div className="absolute top-0 right-16 text-[9px] font-mono text-[#FF4444]">+2</div>
+                <div className="absolute top-2 right-6 text-[9px] font-mono text-[#FF4444]">+3</div>
+
+                {/* Animated Needle with slight stereo variance */}
+                <div 
+                  className="w-[2px] h-24 bg-gradient-to-t from-transparent via-[#FF4400] to-[#FFCC00] origin-bottom transition-transform duration-100 ease-out shadow-[0_0_8px_#FFAA00]"
+                  style={{
+                    transform: `rotate(${(((vuLevel + 3) / 100) * 80) - 40}deg)`
+                  }}
+                ></div>
+                <div className="absolute bottom-0 w-5 h-5 rounded-full bg-[#1F190D] border border-[#524424] z-10"></div>
+              </div>
+
+              <div className="flex justify-between items-center text-[11px] font-mono text-[#8E8670] mt-3">
+                <span>VOLTAGE SWING: 100 V/μs</span>
+                <span className="text-[#D4AF37]">CONTINUOUS: 840W @ 4Ω</span>
+              </div>
+            </div>
+          </div>
+
+          {/* Tactical VU Control Slider */}
+          <div className="pt-2 flex items-center gap-4 text-xs font-mono text-[#8E929E]">
+            <span className="flex-shrink-0">SYSTEM OUTPUT DRIVE TEST:</span>
+            <input
+              type="range"
+              min="20"
+              max="95"
+              value={vuLevel}
+              onChange={(e) => setVuLevel(parseInt(e.target.value))}
+              className="w-full accent-[#D4AF37] cursor-pointer"
+            />
+            <span className="text-[#D4AF37] font-bold w-12 text-right">{vuLevel}%</span>
+          </div>
+        </section>
+
+        {/* 04 // EXPLODED ANATOMY OF THE RADIALSTRAHLER SPHERE (USER MACRO ASSET) */}
+        <section id="exploded-anatomy" className="border border-[#1E2028] bg-[#0C0D12] rounded-xl p-6 sm:p-8 space-y-8">
+          <div className="space-y-1 border-b border-[#1E212B] pb-5">
+            <span className="text-xs font-mono text-[#D4AF37]">MICRO-STRUCTURAL STRATIGRAPHY // EBERSWALDE LABS</span>
+            <h3 className="text-2xl sm:text-3xl font-bold text-[#FFFFFF]">
+              Exploded Anatomy of the Carbon Lamellae Sphere
+            </h3>
+            <p className="text-sm text-[#8E929E] max-w-2xl">
+              Inspect the micro-engineered components comprising the high-frequency and midrange Radialstrahler driver assemblies. Click each hotspot to examine the aerospace materials.
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+            {/* User Generated Macro Image with Interactive Pins */}
+            <div className="lg:col-span-7 relative rounded-lg overflow-hidden border border-[#242735] bg-[#0A0B0E]">
+              <img
+                src="/assets/mbl/mbl-lamellae-sphere-macro.jpg"
+                alt="Macro study of MBL carbon fiber pulsating sphere driver assembly"
+                className="w-full h-auto object-cover"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent pointer-events-none"></div>
+
+              {/* Hotspot 1: Lamellae Petal */}
+              <button
+                onClick={() => {
+                  setActiveHotspot(0);
+                  playTactileClick();
+                }}
+                className={`absolute top-[35%] left-[45%] w-7 h-7 -translate-x-1/2 -translate-y-1/2 rounded-full flex items-center justify-center font-mono text-xs font-bold transition-transform ${
+                  activeHotspot === 0 
+                    ? "bg-[#D4AF37] text-black scale-125 ring-4 ring-[#D4AF37]/30" 
+                    : "bg-black/80 text-[#D4AF37] border border-[#D4AF37] hover:scale-110"
+                }`}
+                title="Inspect Carbon Lamellae Petal"
+              >
+                01
+              </button>
+
+              {/* Hotspot 2: Neodymium Core */}
+              <button
+                onClick={() => {
+                  setActiveHotspot(1);
+                  playTactileClick();
+                }}
+                className={`absolute top-[52%] left-[58%] w-7 h-7 -translate-x-1/2 -translate-y-1/2 rounded-full flex items-center justify-center font-mono text-xs font-bold transition-transform ${
+                  activeHotspot === 1 
+                    ? "bg-[#D4AF37] text-black scale-125 ring-4 ring-[#D4AF37]/30" 
+                    : "bg-black/80 text-[#D4AF37] border border-[#D4AF37] hover:scale-110"
+                }`}
+                title="Inspect Neodymium Core"
+              >
+                02
+              </button>
+
+              {/* Hotspot 3: Aluminum Spindle */}
+              <button
+                onClick={() => {
+                  setActiveHotspot(2);
+                  playTactileClick();
+                }}
+                className={`absolute top-[68%] left-[26%] w-7 h-7 -translate-x-1/2 -translate-y-1/2 rounded-full flex items-center justify-center font-mono text-xs font-bold transition-transform ${
+                  activeHotspot === 2 
+                    ? "bg-[#D4AF37] text-black scale-125 ring-4 ring-[#D4AF37]/30" 
+                    : "bg-black/80 text-[#D4AF37] border border-[#D4AF37] hover:scale-110"
+                }`}
+                title="Inspect Aluminum Spindle"
+              >
+                03
+              </button>
+
+              {/* Hotspot 4: Copper Litz Leads */}
+              <button
+                onClick={() => {
+                  setActiveHotspot(3);
+                  playTactileClick();
+                }}
+                className={`absolute top-[62%] left-[42%] w-7 h-7 -translate-x-1/2 -translate-y-1/2 rounded-full flex items-center justify-center font-mono text-xs font-bold transition-transform ${
+                  activeHotspot === 3 
+                    ? "bg-[#D4AF37] text-black scale-125 ring-4 ring-[#D4AF37]/30" 
+                    : "bg-black/80 text-[#D4AF37] border border-[#D4AF37] hover:scale-110"
+                }`}
+                title="Inspect Copper Leads"
+              >
+                04
+              </button>
             </div>
 
-            <div className="p-5 bg-[#0E0F12] border border-[#23252E] space-y-3">
-              <div className="flex items-center justify-between text-[#827E76]">
-                <span>DAMPING FACTOR</span>
-                <Activity className="w-4 h-4 text-[#D4AF37]" />
+            {/* Hotspot Inspection Dossier */}
+            <div className="lg:col-span-5 space-y-4">
+              <div className="p-6 bg-[#0E1015] border border-[#232634] rounded-lg space-y-4">
+                <div className="flex items-center justify-between border-b border-[#1E212B] pb-3">
+                  <span className="text-xs font-mono text-[#D4AF37]">
+                    COMPONENT SPECIFICATION #{activeHotspot + 1}
+                  </span>
+                  <span className="text-[11px] font-mono text-[#686D7D]">
+                    {anatomyPoints[activeHotspot].germanLabel}
+                  </span>
+                </div>
+
+                <h4 className="text-xl font-bold text-[#FFFFFF]">
+                  {anatomyPoints[activeHotspot].title}
+                </h4>
+
+                <div className="p-2.5 bg-[#14161E] border border-[#1E212B] rounded text-xs font-mono text-[#D4AF37]">
+                  {anatomyPoints[activeHotspot].techSpecs}
+                </div>
+
+                <p className="text-sm text-[#9FA4B2] leading-relaxed">
+                  {anatomyPoints[activeHotspot].description}
+                </p>
+
+                <div className="grid grid-cols-4 gap-2 pt-2">
+                  {anatomyPoints.map((pt, idx) => (
+                    <button
+                      key={pt.id}
+                      onClick={() => {
+                        setActiveHotspot(idx);
+                        playTactileClick();
+                      }}
+                      className={`p-2 rounded border text-center text-xs font-mono transition-colors ${
+                        activeHotspot === idx 
+                          ? "border-[#D4AF37] bg-[#D4AF37]/15 text-[#D4AF37]" 
+                          : "border-[#1E212B] bg-[#101217] text-[#6C7182] hover:text-[#EDE8E1]"
+                      }`}
+                    >
+                      0{idx + 1}
+                    </button>
+                  ))}
+                </div>
               </div>
-              <p className="text-3xl font-light text-[#FFFFFF]">&gt;300 @ 4Ω</p>
-              <p className="text-[11px] text-[#9C988F] leading-relaxed">
-                Guarantees instantaneous transient start-stop control over the pulsating carbon petals. Eliminates driver ringing and harmonic distortion.
+            </div>
+          </div>
+        </section>
+
+        {/* 05 // FLAGSHIP RADIALSTRAHLER CATALOG & MONOBLOCK AMPLIFICATION */}
+        <section id="flagships" className="space-y-6">
+          <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 border-b border-[#1E212B] pb-5">
+            <div>
+              <span className="text-xs font-mono text-[#D4AF37]">EBERSWALDE HANDCRAFTED CATALOG</span>
+              <h3 className="text-2xl sm:text-3xl font-bold text-[#FFFFFF]">Flagship Reference Ensembles</h3>
+            </div>
+            <span className="text-xs font-mono text-[#8E929E]">
+              HANDCRAFTED IN GERMANY // 5-YEAR FACTORY WARRANTY
+            </span>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            {products.map((p) => (
+              <div 
+                key={p.id}
+                className="border border-[#1E2028] bg-[#0C0D12] rounded-xl overflow-hidden flex flex-col justify-between hover:border-[#D4AF37]/50 transition-all group"
+              >
+                <div>
+                  <div className="aspect-[4/3] relative overflow-hidden bg-[#07080B] border-b border-[#1E212B]">
+                    <img 
+                      src={p.images[0].url} 
+                      alt={p.name}
+                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                    />
+                    <div className="absolute top-3 left-3 px-2 py-0.5 rounded bg-[#0B0C10]/80 border border-[#232634] text-[10px] font-mono text-[#D4AF37]">
+                      {p.series.toUpperCase()}
+                    </div>
+                  </div>
+
+                  <div className="p-5 space-y-3">
+                    <span className="text-xs font-mono text-[#6C7182] block">{p.germanTitle}</span>
+                    <h4 className="text-lg font-bold text-[#FFFFFF]">{p.name}</h4>
+                    <p className="text-xs text-[#8E929E] leading-relaxed line-clamp-3">
+                      {p.curatorNotes}
+                    </p>
+
+                    <div className="grid grid-cols-2 gap-2 pt-2 border-t border-[#1B1D26] text-xs font-mono">
+                      <div>
+                        <span className="text-[#686D7D] text-[10px] block">MIN IMPEDANCE</span>
+                        <span className="text-[#FFFFFF]">{p.minImpedanceOhm} Ω</span>
+                      </div>
+                      <div>
+                        <span className="text-[#686D7D] text-[10px] block">NET MASS</span>
+                        <span className="text-[#FFFFFF]">{p.weightKg} kg</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="p-5 pt-0">
+                  <div className="flex items-center justify-between border-t border-[#1B1D26] pt-4 mb-3">
+                    <span className="text-xs font-mono text-[#8E929E]">COMMISSION:</span>
+                    <span className="text-base font-bold font-mono text-[#D4AF37]">
+                      ${p.priceUsd.toLocaleString()} USD
+                    </span>
+                  </div>
+
+                  <button
+                    onClick={() => {
+                      setSelectedProduct(p);
+                      setIsDrawerOpen(true);
+                      playTactileClick();
+                    }}
+                    className="w-full py-2.5 rounded bg-[#151720] hover:bg-[#D4AF37] text-[#D8DCE6] hover:text-[#07080A] border border-[#252836] hover:border-[#D4AF37] text-xs font-bold tracking-wide transition-all flex items-center justify-center gap-1.5"
+                  >
+                    <ShoppingBag className="w-3.5 h-3.5" />
+                    <span>CONFIGURE ALLOCATION</span>
+                  </button>
+                </div>
+              </div>
+            ))}
+          </div>
+        </section>
+
+        {/* 06 // EBERSWALDE MANUFACTURE & ARTISAN CRAFT CHRONICLE (USER ARTISAN ASSET) */}
+        <section id="manufacture" className="border border-[#1E2028] bg-[#0C0D12] rounded-xl p-6 sm:p-8 space-y-8">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+            {/* User Generated Master Artisan Image */}
+            <div className="lg:col-span-6 relative rounded-lg overflow-hidden border border-[#242735] bg-[#0A0B0E]">
+              <img
+                src="/assets/mbl/mbl-eberswalde-artisan-loupe.jpg"
+                alt="Master German technician inspecting gold-plated driver assembly in Eberswalde workshop"
+                className="w-full h-auto object-cover"
+              />
+              <div className="absolute bottom-3 left-3 right-3 p-2.5 bg-[#0B0C10]/85 border border-[#222532] rounded backdrop-blur-md text-xs font-mono">
+                <span className="text-[#D4AF37] block font-bold">EBERSWALDE ACOUSTIC MANUFAKTUR</span>
+                <span className="text-[#888E9E] text-[11px]">Hand-Lapping & Jeweler’s Loupe Inspection</span>
+              </div>
+            </div>
+
+            {/* Editorial Craft Narrative */}
+            <div className="lg:col-span-6 space-y-5">
+              <div className="inline-flex items-center gap-1.5 text-xs font-mono text-[#D4AF37]">
+                <Award className="w-3.5 h-3.5" />
+                <span>HAND-BUILT IN BRANDENBURG // SERIAL NUMBER ALLOCATION</span>
+              </div>
+
+              <h3 className="text-2xl sm:text-3xl font-bold text-[#FFFFFF]">
+                Fourteen Coats of Lacquer. Zero Compromise on Physics.
+              </h3>
+
+              <p className="text-sm text-[#9FA4B2] leading-relaxed">
+                Every MBL loudspeaker and amplifier is crafted by master technicians in our Eberswalde manufacture outside Berlin. A single Radialstrahler driver requires over 90 hours of manual assembly, including laser vibrometry testing inside our dedicated anechoic chamber to ensure frequency response consistency within ±0.1 dB between stereo channels.
               </p>
+
+              <div className="grid grid-cols-2 gap-4 pt-2 font-mono text-xs">
+                <div className="p-3 bg-[#0A0B0E] border border-[#1E212B] rounded">
+                  <span className="block text-[#686D7D] text-[10px]">PIANO FINISH</span>
+                  <span className="text-[#FFFFFF] font-bold">14 Rubbed Coats</span>
+                </div>
+                <div className="p-3 bg-[#0A0B0E] border border-[#1E212B] rounded">
+                  <span className="block text-[#686D7D] text-[10px]">ANECHOIC BURN-IN</span>
+                  <span className="text-[#D4AF37] font-bold">72 Continuous Hours</span>
+                </div>
+              </div>
             </div>
           </div>
         </section>
 
       </main>
 
-      {/* Slide-Out Private Listening Atelier & Factory Allocation Drawer */}
+      {/* 07 // SLIDE-OUT PRIVATE AUDITION ATELIER & RESERVATION DRAWER */}
       {isDrawerOpen && (
-        <div className="fixed inset-0 z-50 overflow-hidden">
-          {/* Backdrop */}
-          <div 
-            className="absolute inset-0 bg-[#0A0A0C]/80 backdrop-blur-sm transition-opacity"
-            onClick={() => setIsDrawerOpen(false)}
-          />
-
-          <div className="fixed inset-y-0 right-0 max-w-full flex pl-10">
-            <div className="w-screen max-w-md bg-[#111216] border-l border-[#2B2D36] p-6 flex flex-col justify-between overflow-y-auto">
-              
-              {/* Drawer Header */}
-              <div className="space-y-6">
-                <div className="flex items-center justify-between border-b border-[#1E2028] pb-4">
-                  <div>
-                    <span className="text-[10px] font-mono text-[#D4AF37] uppercase tracking-widest">
-                      [BERLIN / EBERSWALDE FACTORY RESERVATION]
-                    </span>
-                    <h3 className="text-xl font-light text-[#FFFFFF] mt-0.5">
-                      Private Listening Atelier Allocation
-                    </h3>
-                  </div>
-                  <button 
-                    onClick={() => setIsDrawerOpen(false)}
-                    className="p-1.5 text-[#827E76] hover:text-[#FFFFFF] transition-colors"
-                  >
-                    <X className="w-5 h-5" />
-                  </button>
+        <div className="fixed inset-0 z-50 flex justify-end bg-black/80 backdrop-blur-sm animate-in fade-in duration-200">
+          <div className="w-full max-w-lg bg-[#0C0D12] border-l border-[#222532] h-full flex flex-col justify-between p-6 sm:p-8 overflow-y-auto">
+            <div className="space-y-6">
+              <div className="flex items-center justify-between border-b border-[#1E212B] pb-4">
+                <div>
+                  <span className="text-xs font-mono text-[#D4AF37]">MBL PRIVATE AUDITION ATELIER</span>
+                  <h3 className="text-xl font-bold text-[#FFFFFF]">Commission Allocation</h3>
                 </div>
-
-                {orderConfirmed ? (
-                  <div className="py-8 space-y-4 text-center">
-                    <div className="w-12 h-12 bg-[#142319] border border-[#54B86A] text-[#54B86A] rounded-full mx-auto flex items-center justify-center">
-                      <Check className="w-6 h-6" />
-                    </div>
-                    <h4 className="text-lg font-light text-[#FFFFFF]">Factory Production Slot Reserved</h4>
-                    <p className="text-xs font-mono text-[#9C988F] leading-relaxed">
-                      Allocation confirmed for MBL Werk Eberswalde. Chief acoustician consultation and VIP Berlin listening salon invitation dispatched to your executive email.
-                    </p>
-                    <div className="p-3 bg-[#17181E] border border-[#262832] text-xs font-mono text-left space-y-1">
-                      <div className="flex justify-between">
-                        <span className="text-[#827E76]">ALLOCATION CODE:</span>
-                        <span className="text-[#D4AF37]">MBL-2026-BER-9941</span>
-                      </div>
-                      <div className="flex justify-between">
-                        <span className="text-[#827E76]">SYSTEM:</span>
-                        <span className="text-[#FFFFFF]">{activeProduct.name}</span>
-                      </div>
-                      <div className="flex justify-between">
-                        <span className="text-[#827E76]">ESCROW DEPOSIT:</span>
-                        <span className="text-[#FFFFFF]">$15,000.00</span>
-                      </div>
-                    </div>
-                  </div>
-                ) : (
-                  <>
-                    {/* Active Selected System Snapshot */}
-                    <div className="p-4 bg-[#16171D] border border-[#23252E] space-y-3">
-                      <div className="flex items-start justify-between">
-                        <div>
-                          <p className="text-xs font-mono text-[#D4AF37] uppercase tracking-wider">SELECTED SYSTEM</p>
-                          <h4 className="text-base text-[#FFFFFF] font-normal">{activeProduct.name}</h4>
-                          <p className="text-[11px] font-mono text-[#827E76]">{activeProduct.sku}</p>
-                        </div>
-                        <span className="text-sm font-mono text-[#FFFFFF] font-light">
-                          ${activeProduct.priceUsd.toLocaleString("en-US")}
-                        </span>
-                      </div>
-                    </div>
-
-                    {/* Finish Option Selection */}
-                    <div className="space-y-2">
-                      <label className="text-xs font-mono text-[#827E76] uppercase tracking-wider">
-                        EBERSWALDE HAND-FINISHED PIANO LACQUER:
-                      </label>
-                      <select
-                        value={selectedFinish}
-                        onChange={(e) => setSelectedFinish(e.target.value)}
-                        className="w-full bg-[#16171D] border border-[#272933] p-2.5 text-xs font-mono text-[#FFFFFF] focus:outline-none focus:border-[#D4AF37]"
-                      >
-                        <option value="Piano Black + 24K Gold Hardware">Piano High-Gloss Black + 24K Gold Hardware</option>
-                        <option value="Piano Black + Chrome Hardware">Piano High-Gloss Black + Chrome Hardware</option>
-                        <option value="Arctic White + Chrome Hardware">Arctic White High-Gloss + Chrome Hardware</option>
-                        <option value="Satin Carbon + Matte Titanium Hardware">Satin Carbon + Matte Titanium Hardware</option>
-                      </select>
-                    </div>
-
-                    {/* Add-on Upgrades */}
-                    <div className="space-y-2.5">
-                      <label className="text-xs font-mono text-[#827E76] uppercase tracking-wider">
-                        REFERENCE EXPANSION OPTIONS:
-                      </label>
-
-                      {/* Active Subwoofer Towers */}
-                      {activeProduct.id !== "101-x-treme" && (
-                        <label className="flex items-start gap-3 p-3 bg-[#16171D] border border-[#23252E] cursor-pointer hover:border-[#383B47] transition-colors">
-                          <input
-                            type="checkbox"
-                            checked={includeSubwoofers}
-                            onChange={(e) => setIncludeSubwoofers(e.target.checked)}
-                            className="mt-0.5 accent-[#D4AF37]"
-                          />
-                          <div className="flex-1 text-xs font-mono">
-                            <div className="flex justify-between">
-                              <span className="text-[#FFFFFF]">Active 12&quot; Subwoofer Tower Pair</span>
-                              <span className="text-[#D4AF37]">+$42,000</span>
-                            </div>
-                            <p className="text-[10px] text-[#736F67] mt-0.5">
-                              Dual active sub towers delivering linear 20Hz infrasonic extension
-                            </p>
-                          </div>
-                        </label>
-                      )}
-
-                      {/* 9011 Monoblocks */}
-                      {activeProduct.id !== "reference-9011-pair" && (
-                        <label className="flex items-start gap-3 p-3 bg-[#16171D] border border-[#23252E] cursor-pointer hover:border-[#383B47] transition-colors">
-                          <input
-                            type="checkbox"
-                            checked={includeMonoblocks}
-                            onChange={(e) => setIncludeMonoblocks(e.target.checked)}
-                            className="mt-0.5 accent-[#D4AF37]"
-                          />
-                          <div className="flex-1 text-xs font-mono">
-                            <div className="flex justify-between">
-                              <span className="text-[#FFFFFF]">Reference 9011 Monoblock Amp Pair</span>
-                              <span className="text-[#D4AF37]">+$116,000</span>
-                            </div>
-                            <p className="text-[10px] text-[#736F67] mt-0.5">
-                              5000W peak power / 40A high-current direct-drive pair
-                            </p>
-                          </div>
-                        </label>
-                      )}
-
-                      {/* Bi-Wiring Solid Copper Terminals */}
-                      <label className="flex items-start gap-3 p-3 bg-[#16171D] border border-[#23252E] cursor-pointer hover:border-[#383B47] transition-colors">
-                        <input
-                          type="checkbox"
-                          checked={biWiringUpgrade}
-                          onChange={(e) => setBiWiringUpgrade(e.target.checked)}
-                          className="mt-0.5 accent-[#D4AF37]"
-                        />
-                        <div className="flex-1 text-xs font-mono">
-                          <div className="flex justify-between">
-                            <span className="text-[#FFFFFF]">24K Solid Copper Wingnut Terminals</span>
-                            <span className="text-[#D4AF37]">+$4,800</span>
-                          </div>
-                          <p className="text-[10px] text-[#736F67] mt-0.5">
-                            Low-mass oxygen-free copper bi-wiring terminal blocks
-                          </p>
-                        </div>
-                      </label>
-
-                      {/* On-Site Master Acoustician Tuning */}
-                      <label className="flex items-start gap-3 p-3 bg-[#16171D] border border-[#23252E] cursor-pointer hover:border-[#383B47] transition-colors">
-                        <input
-                          type="checkbox"
-                          checked={roomTuningService}
-                          onChange={(e) => setRoomTuningService(e.target.checked)}
-                          className="mt-0.5 accent-[#D4AF37]"
-                        />
-                        <div className="flex-1 text-xs font-mono">
-                          <div className="flex justify-between">
-                            <span className="text-[#FFFFFF]">On-Site Eberswalde Master Acoustician</span>
-                            <span className="text-[#D4AF37]">+$7,500</span>
-                          </div>
-                          <p className="text-[10px] text-[#736F67] mt-0.5">
-                            Factory physical installation, laser alignment, and calibrated microphone tuning
-                          </p>
-                        </div>
-                      </label>
-                    </div>
-                  </>
-                )}
+                <button
+                  onClick={() => {
+                    setIsDrawerOpen(false);
+                    setOrderComplete(false);
+                    playTactileClick();
+                  }}
+                  className="p-1.5 rounded hover:bg-[#1E212B] text-[#7A7E8C] hover:text-[#EDE8E1] transition-colors"
+                >
+                  <X className="w-5 h-5" />
+                </button>
               </div>
 
-              {/* Drawer Footer & Escrow Confirmation */}
-              <div className="border-t border-[#1E2028] pt-4 space-y-3">
-                {!orderConfirmed ? (
-                  <>
-                    <div className="space-y-1 text-xs font-mono">
-                      <div className="flex justify-between text-[#827E76]">
-                        <span>BASE HARDWARE:</span>
-                        <span>${basePrice.toLocaleString("en-US")}</span>
-                      </div>
-                      <div className="flex justify-between text-[#827E76]">
-                        <span>REFERENCE UPGRADES:</span>
-                        <span>${(totalConfiguredUsd - basePrice).toLocaleString("en-US")}</span>
-                      </div>
-                      <div className="flex justify-between text-base font-bold text-[#FFFFFF] border-t border-[#1E2028] pt-2">
-                        <span>TOTAL SYSTEM INVESTMENT:</span>
-                        <span className="text-[#D4AF37]">${totalConfiguredUsd.toLocaleString("en-US")}</span>
-                      </div>
+              {!orderComplete ? (
+                <form onSubmit={handleConfirmReservation} className="space-y-5">
+                  <div className="p-3.5 bg-[#141620] border border-[#222534] rounded space-y-2">
+                    <span className="text-xs font-mono text-[#6C7182] block">SELECTED ENSEMBLE:</span>
+                    <div className="flex justify-between items-center">
+                      <span className="font-bold text-sm text-[#FFFFFF]">{selectedProduct.name}</span>
+                      <span className="font-mono text-sm text-[#D4AF37]">
+                        ${selectedProduct.priceUsd.toLocaleString()} USD
+                      </span>
+                    </div>
+                    <span className="text-[11px] font-mono text-[#8E929E] block">
+                      Finish: {selectedFinish === "piano-black-gold" ? "Piano Black / 24K Gold" : selectedFinish === "glacier-white-chrome" ? "Glacier White / Chrome" : "Carbon / Titanium"}
+                    </span>
+                  </div>
+
+                  {/* Location Selector */}
+                  <div className="space-y-2">
+                    <label className="text-xs font-mono text-[#8E929E] block">
+                      PREFERRED AUDITION ATELIER:
+                    </label>
+                    <div className="space-y-1.5 text-xs font-mono">
+                      {[
+                        { id: "berlin-salon", label: "Berlin Sound Salon (Kurfürstendamm)", notes: "Dedicated acoustic listening suite" },
+                        { id: "eberswalde-factory", label: "Eberswalde High-Precision Manufacture", notes: "Includes private factory and lab tour" },
+                        { id: "insitu-penthouse", label: "Private Penthouse In-Situ Audition", notes: "White-glove VIP freight delivery trial" }
+                      ].map((loc) => (
+                        <button
+                          type="button"
+                          key={loc.id}
+                          onClick={() => {
+                            setAuditionLocation(loc.id);
+                            playTactileClick();
+                          }}
+                          className={`w-full p-2.5 rounded border text-left transition-all ${
+                            auditionLocation === loc.id 
+                              ? "border-[#D4AF37] bg-[#1A1812] text-[#FFFFFF]" 
+                              : "border-[#1E212B] bg-[#0E1015] text-[#7A7E8C] hover:border-[#2C3040]"
+                          }`}
+                        >
+                          <span className="font-semibold block">{loc.label}</span>
+                          <span className="text-[10px] text-[#8E929E]">{loc.notes}</span>
+                        </button>
+                      ))}
+                    </div>
+                  </div>
+
+                  {/* Add-ons */}
+                  <div className="space-y-2 pt-2 border-t border-[#1C1F28]">
+                    <span className="text-xs font-mono text-[#8E929E] block">OPTIONAL WHITE-GLOVE SERVICES:</span>
+                    
+                    <label className="flex items-center gap-2.5 p-2 rounded bg-[#0E1015] border border-[#1E212B] cursor-pointer text-xs">
+                      <input
+                        type="checkbox"
+                        checked={includeAcousticConsultation}
+                        onChange={(e) => setIncludeAcousticConsultation(e.target.checked)}
+                        className="accent-[#D4AF37]"
+                      />
+                      <span>Acoustic Architect On-Site Room Calibration (+$3,500)</span>
+                    </label>
+
+                    <label className="flex items-center gap-2.5 p-2 rounded bg-[#0E1015] border border-[#1E212B] cursor-pointer text-xs">
+                      <input
+                        type="checkbox"
+                        checked={includeMonoblockPair}
+                        onChange={(e) => setIncludeMonoblockPair(e.target.checked)}
+                        className="accent-[#D4AF37]"
+                      />
+                      <span>Bundle Reference 9011 Monoblock Amp Pair (+$116,000)</span>
+                    </label>
+                  </div>
+
+                  {/* Client Info */}
+                  <div className="space-y-3 pt-2 border-t border-[#1C1F28] text-xs font-mono">
+                    <div>
+                      <label className="text-[#8E929E] block mb-1">CLIENT NAME / HOUSEHOLD PRINCIPAL:</label>
+                      <input
+                        type="text"
+                        required
+                        value={clientName}
+                        onChange={(e) => setClientName(e.target.value)}
+                        placeholder="e.g. Lord Alistair Vance"
+                        className="w-full bg-[#14161F] border border-[#242735] rounded p-2.5 text-[#EDE8E1] focus:border-[#D4AF37] outline-none"
+                      />
+                    </div>
+
+                    <div>
+                      <label className="text-[#8E929E] block mb-1">DIRECT EXECUTIVE EMAIL:</label>
+                      <input
+                        type="email"
+                        required
+                        value={clientEmail}
+                        onChange={(e) => setClientEmail(e.target.value)}
+                        placeholder="e.g. principal@vance-atelier.com"
+                        className="w-full bg-[#14161F] border border-[#242735] rounded p-2.5 text-[#EDE8E1] focus:border-[#D4AF37] outline-none"
+                      />
+                    </div>
+
+                    <div>
+                      <label className="text-[#8E929E] block mb-1">RESIDENCE RESIDENTIAL CITY:</label>
+                      <input
+                        type="text"
+                        value={clientCity}
+                        onChange={(e) => setClientCity(e.target.value)}
+                        placeholder="e.g. Zurich, London, Dubai, New York"
+                        className="w-full bg-[#14161F] border border-[#242735] rounded p-2.5 text-[#EDE8E1] focus:border-[#D4AF37] outline-none"
+                      />
+                    </div>
+                  </div>
+
+                  {/* Deposit Summary & Trigger */}
+                  <div className="pt-2">
+                    <div className="flex justify-between items-center text-xs font-mono mb-3">
+                      <span className="text-[#8E929E]">REFUNDABLE ESCROW DEPOSIT:</span>
+                      <span className="text-base font-bold text-[#D4AF37]">$15,000 USD</span>
                     </div>
 
                     <button
-                      onClick={() => setOrderConfirmed(true)}
-                      className="w-full py-3.5 bg-[#D4AF37] hover:bg-[#E5C158] text-[#0A0A0C] text-xs font-mono font-bold tracking-widest uppercase transition-colors"
+                      type="submit"
+                      className="w-full py-3.5 rounded bg-[#D4AF37] hover:bg-[#E5C158] text-[#07080A] font-bold text-sm tracking-wide transition-all shadow-lg shadow-[#D4AF37]/20 flex items-center justify-center gap-2"
                     >
-                      CONFIRM FACTORY ALLOCATION ($15,000 ESCROW)
+                      <Check className="w-4 h-4" />
+                      <span>CONFIRM ATELIER RESERVATION</span>
                     </button>
-
-                    <p className="text-[10px] text-center font-mono text-[#636058]">
-                      Includes 5-year global factory warranty &amp; direct Eberswalde master certification
-                    </p>
-                  </>
-                ) : (
+                    <span className="block text-center text-[10px] text-[#6C7182] font-mono mt-2">
+                      Held in secure escrow. Fully refundable prior to final factory dispatch.
+                    </span>
+                  </div>
+                </form>
+              ) : (
+                <div className="py-12 text-center space-y-4">
+                  <div className="w-16 h-16 rounded-full bg-[#D4AF37]/20 border border-[#D4AF37] mx-auto flex items-center justify-center text-[#D4AF37]">
+                    <CheckCircle2 className="w-8 h-8" />
+                  </div>
+                  <h4 className="text-2xl font-bold text-[#FFFFFF]">Audition Allocation Secured</h4>
+                  <p className="text-xs text-[#9FA4B2] max-w-sm mx-auto leading-relaxed">
+                    Thank you, {clientName}. An official MBL Factory Protocol confirmation and room calibration dossier has been dispatched to <span className="text-[#D4AF37] font-mono">{clientEmail}</span>.
+                  </p>
+                  <div className="p-3 bg-[#101218] border border-[#232635] rounded font-mono text-xs text-[#8E929E] max-w-xs mx-auto text-left">
+                    <div>ALLOCATION: #{Math.floor(100000 + Math.random() * 900000)}</div>
+                    <div>STATUS: ESCROW RESERVED</div>
+                    <div>LOCATION: {auditionLocation.toUpperCase()}</div>
+                  </div>
                   <button
                     onClick={() => {
-                      setOrderConfirmed(false);
                       setIsDrawerOpen(false);
+                      setOrderComplete(false);
                     }}
-                    className="w-full py-3 bg-[#17181D] border border-[#2B2D36] hover:bg-[#202229] text-[#FFFFFF] text-xs font-mono uppercase tracking-wider"
+                    className="mt-4 px-6 py-2.5 rounded bg-[#181A22] border border-[#2B2E3D] hover:border-[#D4AF37] text-xs font-mono text-[#D8DCE6] transition-all"
                   >
                     RETURN TO SHOWCASE
                   </button>
-                )}
-              </div>
+                </div>
+              )}
+            </div>
 
+            <div className="pt-6 border-t border-[#1C1F28] text-center text-[11px] font-mono text-[#686D7D]">
+              MBL AKUSTIKGERÄTE GMBH & CO. KG // KURTHS & BIEGER BERLIN
             </div>
           </div>
         </div>
       )}
-
-      {/* Global Footer */}
-      <footer className="border-t border-[#222329] bg-[#070709] py-8 text-center text-xs font-mono text-[#736F67] space-y-2">
-        <p>
-          BILLY BENJAMIN CONSULTING // SOVEREIGN REVENUE ARCHITECT &amp; DESIGN SYSTEM (v15.0-SINGULARITY)
-        </p>
-        <p className="text-[11px] text-[#54514B]">
-          Target Reconnaissance 15: MBL Akustikgeräte GmbH &amp; Co. KG (Berlin &amp; Eberswalde, Germany) • Direct routing: <a href="mailto:billybenjamin836@gmail.com" className="text-[#D4AF37] hover:underline">billybenjamin836@gmail.com</a>
-        </p>
-      </footer>
 
     </div>
   );
