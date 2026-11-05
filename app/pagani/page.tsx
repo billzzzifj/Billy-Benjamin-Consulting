@@ -114,7 +114,7 @@ export default function PaganiShowcasePage() {
       id: "codalunga",
       name: "Pagani Huayra Codalunga",
       italianSubtitle: "Omaggio ai Grandi Carrozzieri degli Anni '60",
-      productionRun: "Bespoke Division 'Grandi Complicazioni' // Exactly 5 Units",
+      productionRun: "Coachbuilt Division 'Grandi Complicazioni' // Exactly 5 Units",
       priceEur: 7000000,
       engine: "Pagani V12 6.0L Twin-Turbo (840 HP / 1,100 Nm)",
       displacementCc: 5980,
@@ -219,6 +219,7 @@ export default function PaganiShowcasePage() {
 
   const [selectedHypercar, setSelectedHypercar] = useState<HypercarModel>(hypercars[0]);
   const [selectedAeroMode, setSelectedAeroMode] = useState<AeroModePreset>(aeroPresets[0]);
+  const [aeroViewMode, setAeroViewMode] = useState<"canvas" | "optical">("canvas");
 
   // Tactile Dynamics Controls
   const [speedKmh, setSpeedKmh] = useState<number>(240);
@@ -466,6 +467,7 @@ export default function PaganiShowcasePage() {
       title: "Carbo-Titanium HP62-G2 Monocoque",
       spec: "Grade 5 Titanium Thread Co-Woven into Toray M46J Carbon // 135°C Autoclave Cured",
       label: "Monocoque Structural Core",
+      image: "/assets/pagani/pagani-carbo-titanium-weave.jpg",
       description: "Horacio Pagani's patented composite fusion. Titanium alloy filaments are woven directly into the unidirectional carbon fabric. Under catastrophic impact, the titanium threads stretch rather than splinter, maintaining structural cockpit survival cell integrity."
     },
     {
@@ -473,13 +475,15 @@ export default function PaganiShowcasePage() {
       title: "Mercedes-AMG 6.0L Twin-Turbo V12",
       spec: "864 HP @ 5,800 RPM // 1,100 Nm Torque @ 2,800–5,900 RPM",
       label: "Heart of the Machine",
-      description: "Hand-assembled in Affalterbach specifically for Pagani by a single master engine builder. Features bespoke twin scroll turbochargers, wastegate electronics calibrated by Horacio, and zero hybrid battery weight."
+      image: "/assets/pagani/pagani-huayra-r-open-clamshell.jpg",
+      description: "Hand-assembled in Affalterbach specifically for Pagani by a single master engine builder. Features custom twin scroll turbochargers, wastegate electronics calibrated by Horacio, and zero hybrid battery weight."
     },
     {
       id: 3,
       title: "Open-Gated 7-Speed Manual Linkage",
       spec: "Pure Mechanical Action // 90 Exposed Titanium & Brass Components",
       label: "Horological Shifter Assembly",
+      image: "/assets/pagani/pagani-utopia-interior-shifter.jpg",
       description: "A mechanical sculpture taking pride of place in the center console. Every gear engagement delivers an uncompressed metallic tactile click through polished titanium connecting rods and open return springs."
     },
     {
@@ -487,7 +491,8 @@ export default function PaganiShowcasePage() {
       title: "Brembo Carbon-Ceramic Matrix (CCM)",
       spec: "410mm Front Discs with 6-Piston Monolithic Calipers // 390mm Rear Discs",
       label: "Braking Retardation System",
-      description: "Ventilated carbon-ceramic rotors co-developed with Brembo. Works in direct synergy with the rear active aerodynamic airbrakes to decelerate from 200 km/h to standstill in under 4.1 seconds."
+      image: "/assets/pagani/pagani-utopia-rear-quad-exhaust.jpg",
+      description: "Ventilated carbon-ceramic rotors co-developed with Brembo. Works in direct coordination with the rear active aerodynamic airbrakes to decelerate from 200 km/h to standstill in under 4.1 seconds."
     }
   ];
 
@@ -756,13 +761,64 @@ export default function PaganiShowcasePage() {
                 </span>
               </div>
 
+              <div className="flex items-center gap-2 pb-1">
+                <button
+                  type="button"
+                  onClick={() => {
+                    setAeroViewMode("canvas");
+                    playGatedShifterClick();
+                  }}
+                  className={`px-3 py-1 rounded text-xs font-mono transition-colors ${
+                    aeroViewMode === "canvas"
+                      ? "bg-[#D4AF37] text-black font-bold"
+                      : "bg-[#121520] border border-[#202534] text-[#8A909F] hover:text-[#FFFFFF]"
+                  }`}
+                >
+                  60 FPS FLUID CANVAS
+                </button>
+                <button
+                  type="button"
+                  onClick={() => {
+                    setAeroViewMode("optical");
+                    playGatedShifterClick();
+                  }}
+                  className={`px-3 py-1 rounded text-xs font-mono transition-colors ${
+                    aeroViewMode === "optical"
+                      ? "bg-[#D4AF37] text-black font-bold"
+                      : "bg-[#121520] border border-[#202534] text-[#8A909F] hover:text-[#FFFFFF]"
+                  }`}
+                >
+                  FACILITY OPTICAL SMOKE RIG
+                </button>
+              </div>
+
               <div className="relative aspect-[16/10] w-full bg-[#05060A] rounded overflow-hidden border border-[#161922]">
-                <canvas
-                  ref={canvasRef}
-                  width={640}
-                  height={360}
-                  className="w-full h-full block"
-                />
+                {aeroViewMode === "canvas" ? (
+                  <canvas
+                    ref={canvasRef}
+                    width={640}
+                    height={360}
+                    className="w-full h-full block"
+                  />
+                ) : (
+                  <div className="relative w-full h-full">
+                    <img
+                      src="/assets/pagani/pagani-wind-tunnel-aero.jpg"
+                      alt="Pagani Utopia aerodynamic smoke flow visualization in full-scale wind tunnel"
+                      className="w-full h-full object-cover object-center"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent pointer-events-none"></div>
+                    <div className="absolute bottom-3 left-3 right-3 p-2.5 bg-black/80 border border-[#262B3B] backdrop-blur-md rounded flex items-center justify-between text-xs font-mono">
+                      <div>
+                        <span className="block text-[#00FF88] font-bold">LAMINAR STREAMLINE TELEMETRY</span>
+                        <span className="text-[#8A909F] text-[10px]">Active rear flap pitched to {selectedAeroMode.rearFlapAngleDeg}° // Green illuminated tracer smoke</span>
+                      </div>
+                      <span className="px-2 py-0.5 bg-[#171B26] border border-[#2B3244] rounded text-[10px] text-[#D4AF37]">
+                        SCALE 1:1 FACILITY
+                      </span>
+                    </div>
+                  </div>
+                )}
               </div>
 
               <div className="grid grid-cols-3 gap-2 text-center text-xs font-mono pt-1">
@@ -1065,6 +1121,17 @@ export default function PaganiShowcasePage() {
                   </span>
                 </div>
 
+                <div className="relative aspect-[16/9] w-full rounded overflow-hidden border border-[#222736] bg-[#07090E]">
+                  <img
+                    src={carboAnatomy[activeHotspot].image}
+                    alt={carboAnatomy[activeHotspot].title}
+                    className="w-full h-full object-cover transition-transform duration-500 hover:scale-105"
+                  />
+                  <div className="absolute bottom-2 left-2 px-2 py-0.5 rounded bg-[#0B0D13]/90 border border-[#2A2E3D] text-[10px] font-mono text-[#D4AF37]">
+                    LABORATORY CALIBRATION SPECIMEN
+                  </div>
+                </div>
+
                 <h4 className="text-xl font-bold text-[#FFFFFF]">
                   {carboAnatomy[activeHotspot].title}
                 </h4>
@@ -1245,9 +1312,9 @@ export default function PaganiShowcasePage() {
                     </div>
                   </div>
 
-                  {/* Bespoke Add-ons */}
+                  {/* Commission Options */}
                   <div className="space-y-2 pt-2 border-t border-[#1C1F28]">
-                    <span className="text-xs font-mono text-[#8A909F] block">BESPOKE MODENA COMMISSION ADD-ONS:</span>
+                    <span className="text-xs font-mono text-[#8A909F] block">COACHBUILT MODENA COMMISSION OPTIONS:</span>
                     
                     <label className="flex items-center gap-2.5 p-2 rounded bg-[#0E1016] border border-[#1C1F28] cursor-pointer text-xs">
                       <input
