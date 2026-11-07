@@ -1,7 +1,8 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import Link from "next/link";
+import confetti from "canvas-confetti";
 import { 
   ArrowLeft, 
   Check, 
@@ -9,21 +10,24 @@ import {
   Shield, 
   ShoppingBag, 
   X, 
-  ExternalLink, 
-  RefreshCw, 
-  Award,
-  Maximize2,
   FileText,
   Layers,
   Activity,
-  Info,
   Sliders,
   Volume2,
+  VolumeX,
   Droplets,
   HardHat,
-  Flame,
   Sparkle,
-  Compass
+  Compass,
+  Download,
+  CheckCircle2,
+  AlertTriangle,
+  RotateCcw,
+  Play,
+  Pause,
+  ExternalLink,
+  Maximize2
 } from "lucide-react";
 
 interface BathProduct {
@@ -33,42 +37,36 @@ interface BathProduct {
   designer: string;
   category: string;
   sku: string;
-  price: number;
+  basePrice: number;
   capacityLiters: number;
   netWeightKg: number;
   dimensionsMm: { length: number; width: number; depth: number };
   material: string;
   warrantyYears: number;
   floorContactM2: number;
-  curatorNotes: string;
+  description: string;
   images: { label: string; url: string; caption: string }[];
   accentColor: string;
 }
 
-interface FloorSubstructure {
+interface ProjectileType {
   id: string;
   name: string;
-  germanName: string;
-  maxLoadKgM2: number;
-  deflectionLimitMm: number;
+  massKg: number;
+  standard: string;
   description: string;
 }
 
-interface CartItem {
-  productId: string;
-  productName: string;
-  price: number;
-  finishColor: string;
-  soundWaveEnabled: boolean;
-  antiSlipEnabled: boolean;
-  monogramCoverEnabled: boolean;
-  decouplingKitEnabled: boolean;
-  sku: string;
-  imageUrl: string;
+interface ProjectTier {
+  id: string;
+  name: string;
+  scale: string;
+  discountRate: number;
+  description: string;
 }
 
 export default function KaldeweiShowcasePage() {
-  // Flagship architectural catalog
+  // Flagship Architectural Catalog
   const products: BathProduct[] = [
     {
       id: "centro-duo-oval",
@@ -77,14 +75,14 @@ export default function KaldeweiShowcasePage() {
       designer: "Sottsass Associati",
       category: "Freestanding Monolithic Bath",
       sku: "KW-MST-CDO-170",
-      price: 8450,
+      basePrice: 8450,
       capacityLiters: 156,
       netWeightKg: 122,
       dimensionsMm: { length: 1700, width: 750, depth: 470 },
-      material: "Kaldewei 3.5mm Glazed Titanium-Steel",
+      material: "3.5mm Glazed Titanium-Steel (Molecular Enamel Fusion)",
       warrantyYears: 30,
       floorContactM2: 1.15,
-      curatorNotes: "Pure oval symmetry with dual identical backrest slopes. Seamless one-piece enamelled steel panelling eliminates visible joints, providing superior thermal retention and non-porous hygiene.",
+      description: "Pure oval symmetry with dual identical backrest slopes. Continuous single-piece enamelled steel apron eliminates visible joints, providing superior thermal retention, non-porous hygiene, and structural rigidity.",
       images: [
         {
           label: "Monolithic Oval Architecture",
@@ -94,7 +92,7 @@ export default function KaldeweiShowcasePage() {
         {
           label: "3.5mm Vitreous Steel Molecular Bond",
           url: "/assets/kaldewei/kw-enamel-macro.jpg",
-          caption: "Precision edge radius showing fused glass enamel molecular bond to titanium steel."
+          caption: "Precision edge radius showing fused glass enamel molecular bond to titanium steel at 850°C."
         },
         {
           label: "Flush Integrated Waste System",
@@ -111,14 +109,14 @@ export default function KaldeweiShowcasePage() {
       designer: "Studio Aisslinger",
       category: "Cubist Architectural Monolith",
       sku: "KW-MST-CND-170",
-      price: 9280,
+      basePrice: 9280,
       capacityLiters: 159,
       netWeightKg: 138,
       dimensionsMm: { length: 1700, width: 750, depth: 445 },
-      material: "Kaldewei 3.5mm Glazed Titanium-Steel",
+      material: "3.5mm Glazed Titanium-Steel (Molecular Enamel Fusion)",
       warrantyYears: 30,
       floorContactM2: 1.25,
-      curatorNotes: "Sharp linear geometry engineered for central room placement. Perfectly planar exterior steel aprons create an architectural presence inspired by minimalist sculpture.",
+      description: "Sharp linear geometry engineered for central space placement. Planar exterior steel aprons create an architectural presence inspired by minimalist sculpture, concealing Sound Wave acoustic transducers.",
       images: [
         {
           label: "Cubist Architectural Monolith",
@@ -128,7 +126,7 @@ export default function KaldeweiShowcasePage() {
         {
           label: "Concealed Sound Wave Resonance Transducers",
           url: "/assets/kaldewei/kw-soundwave-acoustic.jpg",
-          caption: "Acoustic exciter transducer array mounted to exterior steel wall transforming the tub into a speaker."
+          caption: "Acoustic exciter transducer array mounted to exterior steel wall transforming the tub into an audio diaphragm."
         },
         {
           label: "Acoustic Sub-Floor Decoupling Frame",
@@ -145,19 +143,19 @@ export default function KaldeweiShowcasePage() {
       designer: "Werner Aisslinger",
       category: "Zero-Threshold Shower & Basin Suite",
       sku: "KW-SPZ-MNA-SET",
-      price: 4620,
+      basePrice: 4620,
       capacityLiters: 0,
       netWeightKg: 60,
       dimensionsMm: { length: 1400, width: 900, depth: 32 },
-      material: "Kaldewei 3.5mm Glazed Titanium-Steel",
+      material: "3.5mm Glazed Titanium-Steel (Molecular Enamel Fusion)",
       warrantyYears: 30,
       floorContactM2: 1.26,
-      curatorNotes: "Zero-threshold floor-level shower surface with wall-adjacent linear drain, paired with ultra-thin Miena glazed steel washbasin. Designed with microscopic corner radii for direct tile integration.",
+      description: "Zero-threshold floor-level shower surface with wall-adjacent linear drain, paired with ultra-thin Miena glazed steel washbasin. Designed with microscopic corner radii for direct flush tile integration.",
       images: [
         {
           label: "Zero-Threshold Flush Shower Plane",
           url: "/assets/kaldewei/kw-superplan-zero.jpg",
-          caption: "Superplan Zero floor-level steel shower surface installed flush to natural stone tiles."
+          caption: "Superplan Zero floor-level steel shower surface installed flush to natural stone floor slabs."
         },
         {
           label: "Miena Ultra-Thin Glazed Steel Basin",
@@ -174,145 +172,455 @@ export default function KaldeweiShowcasePage() {
     }
   ];
 
-  // Substructure presets for point load and deflection analysis
-  const substructurePresets: FloorSubstructure[] = [
+  // Projectiles for DIN ISO 4532 Drop-Impact Test
+  const projectiles: ProjectileType[] = [
     {
-      id: "cast-concrete",
-      name: "Cast Reinforced Concrete Slab",
-      germanName: "Stahlbetondecke DIN 1045",
-      maxLoadKgM2: 500,
-      deflectionLimitMm: 1.2,
-      description: "Solid reinforced concrete slab with cement screed. Highest load-bearing capacity and acoustic isolation."
+      id: "steel-ball",
+      name: "200g Hardened Steel Ball",
+      massKg: 0.20,
+      standard: "DIN ISO 4532 Standard Impact Ball",
+      description: "Standard industrial ball test for porcelain and vitreous glazed coatings."
     },
     {
-      id: "screed-insulation",
-      name: "Floating Screed on Acoustic Layer",
-      germanName: "Schwimmender Estrich auf Trittschall",
-      maxLoadKgM2: 350,
-      deflectionLimitMm: 2.0,
-      description: "Standard luxury residential floor makeup. Requires verified compressive insulation strength under point loads."
+      id: "crystal-flask",
+      name: "500g Crystal Glass Flacon",
+      massKg: 0.50,
+      standard: "Domestic High-Density Heavy Perfume Bottle",
+      description: "Dense leaded crystal dropped edge-first from vanity ledge."
     },
     {
-      id: "timber-joists",
-      name: "Historic Engineered Timber Joists",
-      germanName: "Holzbalkendecke Altbau",
-      maxLoadKgM2: 250,
-      deflectionLimitMm: 3.5,
-      description: "Heritage or penthouse timber beam framing. Demands weight distribution plate to eliminate localized deflection."
+      id: "brass-wand",
+      name: "1.2kg Solid Brass Shower Wand",
+      massKg: 1.20,
+      standard: "Architectural Hand Shower Fitting",
+      description: "Uncontrolled slip from wet hand during shower operation."
     }
   ];
 
-  // State management
-  const [activeProductIndex, setActiveProductIndex] = useState(0);
-  const [activeImageIndex, setActiveImageIndex] = useState(0);
-  
-  // Floor Load Simulator State
-  const [waterFillPercent, setWaterFillPercent] = useState(85);
-  const [batherWeightKg, setBatherWeightKg] = useState(80);
-  const [selectedSubstructureId, setSelectedSubstructureId] = useState("cast-concrete");
+  // Commercial & Architectural Project Tiers
+  const projectTiers: ProjectTier[] = [
+    {
+      id: "villa",
+      name: "Private Residential Estate",
+      scale: "1 to 3 Master Bathrooms",
+      discountRate: 0.0,
+      description: "Direct atelier allocation with factory individual crate delivery."
+    },
+    {
+      id: "multi-residence",
+      name: "Luxury Multi-Unit Penthouse",
+      scale: "4 to 12 Luxury Units",
+      discountRate: 0.12,
+      description: "Architectural project batch pricing with phased site drop deliveries."
+    },
+    {
+      id: "alpine-hotel",
+      name: "5★ Alpine Resort & Spa",
+      scale: "15+ Hospitality Suites",
+      discountRate: 0.22,
+      description: "Direct Werk I Ahlen production scheduling and customized CAD/BIM support."
+    }
+  ];
 
-  // Sound Wave Simulator State
-  const [soundWaveMode, setSoundWaveMode] = useState<"ambient" | "hifi" | "tactile">("ambient");
-  const [isAudioSimActive, setIsAudioSimActive] = useState(true);
+  // Core State
+  const [selectedProductIndex, setSelectedProductIndex] = useState(0);
+  const [selectedImageIndex, setSelectedImageIndex] = useState(0);
 
-  // Configuration Drawer State
+  // Drop-Impact Simulator State
+  const [selectedProjectileId, setSelectedProjectileId] = useState("steel-ball");
+  const [dropHeightM, setDropHeightM] = useState(1.5);
+  const [testSurface, setTestSurface] = useState<"kaldewei" | "acrylic">("kaldewei");
+  const [isImpactRunning, setIsImpactRunning] = useState(false);
+  const [impactResult, setImpactResult] = useState<{
+    energyJ: number;
+    velocityMs: number;
+    peakStressMpa: number;
+    damageRating: string;
+    fractureStatus: string;
+  } | null>(null);
+
+  // Acoustic Decibel Dampener State
+  const [waterFlowRateLpm, setWaterFlowRateLpm] = useState(18);
+  const [isAcousticDamped, setIsAcousticDamped] = useState(true);
+  const [isAudioActive, setIsAudioActive] = useState(false);
+  const audioCtxRef = useRef<AudioContext | null>(null);
+  const audioNodeRef = useRef<{ osc: OscillatorNode; gain: GainNode } | null>(null);
+
+  // Specification Drawer & Escrow State
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
-  const [selectedFinish, setSelectedFinish] = useState("Alpine White (High Gloss)");
+  const [selectedFinish, setSelectedFinish] = useState("Alpine White (Vitreous Gloss)");
+  const [securePlusAddon, setSecurePlusAddon] = useState(true);
+  const [easyCleanAddon, setEasyCleanAddon] = useState(true);
   const [soundWaveAddon, setSoundWaveAddon] = useState(true);
-  const [antiSlipAddon, setAntiSlipAddon] = useState(false);
-  const [monogramCoverAddon, setMonogramCoverAddon] = useState(false);
   const [decouplingKitAddon, setDecouplingKitAddon] = useState(true);
-  const [cart, setCart] = useState<CartItem[]>([]);
+  const [selectedProjectTierId, setSelectedProjectTierId] = useState("villa");
   const [orderConfirmed, setOrderConfirmed] = useState(false);
+  const [confirmationSerial, setConfirmationSerial] = useState("");
 
-  const activeProduct = products[activeProductIndex];
-  const activeSubstructure = substructurePresets.find(s => s.id === selectedSubstructureId) || substructurePresets[0];
+  // CAD/BIM Download Modal State
+  const [isBimModalOpen, setIsBimModalOpen] = useState(false);
+  const [downloadingFormat, setDownloadingFormat] = useState<string | null>(null);
+  const [downloadComplete, setDownloadComplete] = useState<string | null>(null);
 
-  // Real-time calculations
-  const waterWeightKg = Math.round((activeProduct.capacityLiters * waterFillPercent) / 100);
-  const totalStaticMassKg = activeProduct.netWeightKg + waterWeightKg + (activeProduct.capacityLiters > 0 ? batherWeightKg : 0);
-  const pointLoadKgM2 = Math.round(totalStaticMassKg / activeProduct.floorContactM2);
-  const isOverloadRisk = pointLoadKgM2 > activeSubstructure.maxLoadKgM2;
-  const loadPercentage = Math.round((pointLoadKgM2 / activeSubstructure.maxLoadKgM2) * 100);
-  const estimatedDeflectionMm = Number(((pointLoadKgM2 / activeSubstructure.maxLoadKgM2) * activeSubstructure.deflectionLimitMm).toFixed(2));
+  // Canvas Refs
+  const canvasRef = useRef<HTMLCanvasElement | null>(null);
+  const animationFrameRef = useRef<number | null>(null);
 
-  // Pricing calculations
-  const basePrice = activeProduct.price;
+  const activeProduct = products[selectedProductIndex];
+  const activeProjectile = projectiles.find(p => p.id === selectedProjectileId) || projectiles[0];
+  const activeTier = projectTiers.find(t => t.id === selectedProjectTierId) || projectTiers[0];
+
+  // Physics Calculations
+  const gravity = 9.81;
+  const impactVelocity = Math.sqrt(2 * gravity * dropHeightM);
+  const kineticEnergy = activeProjectile.massKg * gravity * dropHeightM;
+  // Steel enamel elasticity modulus 210 GPa vs Acrylic 3.2 GPa
+  const peakStressKaldewei = (kineticEnergy * 14.5).toFixed(1);
+  const peakStressAcrylic = (kineticEnergy * 58.2).toFixed(1);
+
+  // Acoustic Calculations (DIN 4109 & SIA 181 standards)
+  // Uninsulated water impact: 36dB to 46dB. Kaldewei damped: 12dB to 17dB.
+  const flowFactor = (waterFlowRateLpm - 8) / (32 - 8);
+  const uninsulatedDb = Math.round(36 + flowFactor * 10);
+  const dampedDb = Math.round(12 + flowFactor * 5);
+  const currentDb = isAcousticDamped ? dampedDb : uninsulatedDb;
+
+  // Pricing calculations with add-ons and project discount
+  const baseCost = activeProduct.basePrice;
+  const securePlusCost = securePlusAddon ? 280 : 0;
+  const easyCleanCost = easyCleanAddon ? 190 : 0;
   const soundWaveCost = soundWaveAddon ? 1450 : 0;
-  const antiSlipCost = antiSlipAddon ? 280 : 0;
-  const monogramCoverCost = monogramCoverAddon ? 190 : 0;
   const decouplingKitCost = decouplingKitAddon ? 420 : 0;
-  const configuredTotal = basePrice + soundWaveCost + antiSlipCost + monogramCoverCost + decouplingKitCost;
+  const subtotal = baseCost + securePlusCost + easyCleanCost + soundWaveCost + decouplingKitCost;
+  const discountAmount = subtotal * activeTier.discountRate;
+  const finalPrice = Math.round(subtotal - discountAmount);
+  const escrowDepositAmount = 2500;
 
-  const handleAddToCart = () => {
-    const newItem: CartItem = {
-      productId: activeProduct.id,
-      productName: activeProduct.name,
-      price: configuredTotal,
-      finishColor: selectedFinish,
-      soundWaveEnabled: soundWaveAddon,
-      antiSlipEnabled: antiSlipAddon,
-      monogramCoverEnabled: monogramCoverAddon,
-      decouplingKitEnabled: decouplingKitAddon,
-      sku: `${activeProduct.sku}-${selectedFinish.substring(0, 3).toUpperCase()}`,
-      imageUrl: activeProduct.images[0].url
+  // Web Audio Synthesizer for Water & Hull Resonance
+  useEffect(() => {
+    if (!isAudioActive) {
+      if (audioNodeRef.current) {
+        audioNodeRef.current.gain.gain.setValueAtTime(0, audioCtxRef.current?.currentTime || 0);
+      }
+      return;
+    }
+
+    try {
+      const AudioCtxClass = window.AudioContext || (window as unknown as { webkitAudioContext: typeof AudioContext }).webkitAudioContext;
+      if (!audioCtxRef.current) {
+        audioCtxRef.current = new AudioCtxClass();
+      }
+      const ctx = audioCtxRef.current;
+      if (ctx.state === "suspended") {
+        ctx.resume();
+      }
+
+      if (!audioNodeRef.current) {
+        const osc = ctx.createOscillator();
+        const gain = ctx.createGain();
+        osc.type = "sine";
+        osc.frequency.setValueAtTime(isAcousticDamped ? 72 : 184, ctx.currentTime);
+        gain.gain.setValueAtTime(isAcousticDamped ? 0.04 : 0.22, ctx.currentTime);
+        osc.connect(gain);
+        gain.connect(ctx.destination);
+        osc.start();
+        audioNodeRef.current = { osc, gain };
+      } else {
+        const { osc, gain } = audioNodeRef.current;
+        osc.frequency.setTargetAtTime(isAcousticDamped ? 68 : 192, ctx.currentTime, 0.1);
+        gain.gain.setTargetAtTime(isAcousticDamped ? 0.03 : 0.20, ctx.currentTime, 0.1);
+      }
+    } catch {
+      // AudioContext policy fallback
+    }
+
+    return () => {
+      if (audioNodeRef.current) {
+        audioNodeRef.current.gain.gain.setValueAtTime(0, audioCtxRef.current?.currentTime || 0);
+      }
     };
-    setCart([newItem]);
-    setIsDrawerOpen(true);
-    setOrderConfirmed(false);
+  }, [isAudioActive, isAcousticDamped, waterFlowRateLpm]);
+
+  // Drop-Impact Canvas Animation Engine (60 FPS)
+  useEffect(() => {
+    const canvas = canvasRef.current;
+    if (!canvas) return;
+    const ctx = canvas.getContext("2d");
+    if (!ctx) return;
+
+    let ballY = 40;
+    let ballSpeed = 0;
+    const surfaceY = 220;
+    let impactTime = 0;
+    let particles: { x: number; y: number; vx: number; vy: number; life: number; color: string }[] = [];
+    let rippleRadius = 0;
+    let isFalling = true;
+
+    const render = () => {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+      // Background Grid & Technical Ruler
+      ctx.strokeStyle = "rgba(255, 255, 255, 0.05)";
+      ctx.lineWidth = 1;
+      for (let x = 0; x < canvas.width; x += 40) {
+        ctx.beginPath();
+        ctx.moveTo(x, 0);
+        ctx.lineTo(x, canvas.height);
+        ctx.stroke();
+      }
+      for (let y = 0; y < canvas.height; y += 40) {
+        ctx.beginPath();
+        ctx.moveTo(0, y);
+        ctx.lineTo(canvas.width, y);
+        ctx.stroke();
+      }
+
+      // Height Reference Line
+      ctx.strokeStyle = "rgba(197, 160, 89, 0.3)";
+      ctx.setLineDash([4, 4]);
+      ctx.beginPath();
+      ctx.moveTo(40, 40);
+      ctx.lineTo(canvas.width - 40, 40);
+      ctx.stroke();
+      ctx.setLineDash([]);
+      ctx.fillStyle = "#C5A059";
+      ctx.font = "10px monospace";
+      ctx.fillText(`DROP DATUM // H = ${dropHeightM.toFixed(1)}m`, 45, 34);
+
+      // Material Target Substrate Layer
+      const isKaldewei = testSurface === "kaldewei";
+      ctx.fillStyle = isKaldewei ? "#1E222A" : "#1A1B1F";
+      ctx.fillRect(40, surfaceY, canvas.width - 80, 45);
+
+      // Enamel or Acrylic Surface Cap
+      ctx.fillStyle = isKaldewei ? "#EAE6DF" : "#565D68";
+      ctx.fillRect(40, surfaceY, canvas.width - 80, isKaldewei ? 8 : 12);
+
+      // Substrate Label
+      ctx.fillStyle = isKaldewei ? "#C5A059" : "#8A909A";
+      ctx.font = "11px monospace";
+      ctx.fillText(
+        isKaldewei ? "KALDEWEI 3.5mm GLAZED TITANIUM-STEEL (MOHS 7 HARDNESS)" : "CONVENTIONAL 4.0mm SANITARY ACRYLIC (MOHS 3)",
+        45,
+        surfaceY + 32
+      );
+
+      // Ball Physics
+      if (isFalling) {
+        ballSpeed += 0.45;
+        ballY += ballSpeed;
+
+        if (ballY >= surfaceY - 14) {
+          ballY = surfaceY - 14;
+          isFalling = false;
+          impactTime = 1;
+
+          // Spawn Shockwave & Particles
+          rippleRadius = 4;
+          const particleCount = isKaldewei ? 12 : 28;
+          for (let i = 0; i < particleCount; i++) {
+            const angle = Math.random() * Math.PI + Math.PI;
+            const speed = Math.random() * 4 + 1.5;
+            particles.push({
+              x: canvas.width / 2,
+              y: surfaceY - 4,
+              vx: Math.cos(angle) * speed,
+              vy: Math.sin(angle) * speed,
+              life: 1.0,
+              color: isKaldewei ? "#C5A059" : "#E65050"
+            });
+          }
+
+          // Register Result
+          setImpactResult({
+            energyJ: Number(kineticEnergy.toFixed(2)),
+            velocityMs: Number(impactVelocity.toFixed(2)),
+            peakStressMpa: Number(isKaldewei ? peakStressKaldewei : peakStressAcrylic),
+            damageRating: isKaldewei ? "0.00% Zero Surface Fracture" : "Severe Spiderweb Stress Fracture",
+            fractureStatus: isKaldewei ? "PASS // DIN ISO 4532 PERFECT INTEGRITY" : "FAIL // PERMANENT RESIN CAVITATION"
+          });
+          setIsImpactRunning(false);
+        }
+      }
+
+      // Draw Shockwave Ripples
+      if (impactTime > 0) {
+        impactTime++;
+        rippleRadius += 3.2;
+        ctx.strokeStyle = isKaldewei 
+          ? `rgba(197, 160, 89, ${Math.max(0, 1 - rippleRadius / 140)})` 
+          : `rgba(230, 80, 80, ${Math.max(0, 1 - rippleRadius / 140)})`;
+        ctx.lineWidth = 2;
+        ctx.beginPath();
+        ctx.arc(canvas.width / 2, surfaceY, rippleRadius, 0, Math.PI * 2);
+        ctx.stroke();
+
+        // Secondary ripple
+        if (rippleRadius > 25) {
+          ctx.beginPath();
+          ctx.arc(canvas.width / 2, surfaceY, rippleRadius - 20, 0, Math.PI * 2);
+          ctx.stroke();
+        }
+
+        // Draw Surface Damage Representation if Acrylic
+        if (!isKaldewei) {
+          ctx.strokeStyle = "#E65050";
+          ctx.lineWidth = 1.5;
+          ctx.beginPath();
+          // Spiderweb crack paths
+          ctx.moveTo(canvas.width / 2, surfaceY);
+          ctx.lineTo(canvas.width / 2 - 25, surfaceY + 6);
+          ctx.moveTo(canvas.width / 2, surfaceY);
+          ctx.lineTo(canvas.width / 2 + 30, surfaceY + 8);
+          ctx.moveTo(canvas.width / 2, surfaceY);
+          ctx.lineTo(canvas.width / 2 - 12, surfaceY - 4);
+          ctx.moveTo(canvas.width / 2, surfaceY);
+          ctx.lineTo(canvas.width / 2 + 18, surfaceY - 5);
+          ctx.stroke();
+
+          ctx.fillStyle = "#E65050";
+          ctx.font = "9px monospace";
+          ctx.fillText("CRACK DEPTH: 1.2mm", canvas.width / 2 + 35, surfaceY + 16);
+        } else {
+          // Clean deflection marker on Kaldewei
+          ctx.fillStyle = "#54B86A";
+          ctx.font = "9px monospace";
+          ctx.fillText("ELASTIC DEFLECTION: 0.00mm // ZERO CHIP", canvas.width / 2 + 25, surfaceY - 8);
+        }
+      }
+
+      // Update & Draw Particles
+      particles.forEach((p, idx) => {
+        p.x += p.vx;
+        p.y += p.vy;
+        p.vy += 0.2; // particle gravity
+        p.life -= 0.025;
+        if (p.life > 0) {
+          ctx.fillStyle = p.color;
+          ctx.globalAlpha = p.life;
+          ctx.beginPath();
+          ctx.arc(p.x, p.y, 2, 0, Math.PI * 2);
+          ctx.fill();
+          ctx.globalAlpha = 1.0;
+        } else {
+          particles.splice(idx, 1);
+        }
+      });
+
+      // Draw Falling Projectile
+      const projX = canvas.width / 2;
+      ctx.fillStyle = "#D4CDC3";
+      ctx.strokeStyle = "#C5A059";
+      ctx.lineWidth = 2;
+      ctx.beginPath();
+      const radius = activeProjectile.massKg > 1 ? 16 : activeProjectile.massKg > 0.4 ? 12 : 9;
+      ctx.arc(projX, ballY, radius, 0, Math.PI * 2);
+      ctx.fill();
+      ctx.stroke();
+
+      // Projectile specular gleam
+      ctx.fillStyle = "#FFFFFF";
+      ctx.beginPath();
+      ctx.arc(projX - radius * 0.3, ballY - radius * 0.3, radius * 0.3, 0, Math.PI * 2);
+      ctx.fill();
+
+      animationFrameRef.current = requestAnimationFrame(render);
+    };
+
+    render();
+
+    return () => {
+      if (animationFrameRef.current) {
+        cancelAnimationFrame(animationFrameRef.current);
+      }
+    };
+  }, [dropHeightM, activeProjectile, testSurface, kineticEnergy, impactVelocity, peakStressKaldewei, peakStressAcrylic]);
+
+  const triggerImpactTest = () => {
+    setIsImpactRunning(true);
+    setImpactResult(null);
+    // Restart animation from top
+    const canvas = canvasRef.current;
+    if (canvas) {
+      // Re-trigger via state change
+      setDropHeightM(prev => prev);
+    }
+  };
+
+  const handleBimDownload = (format: string) => {
+    setDownloadingFormat(format);
+    setTimeout(() => {
+      setDownloadingFormat(null);
+      setDownloadComplete(format);
+      setTimeout(() => setDownloadComplete(null), 3000);
+    }, 1200);
+  };
+
+  const handleConfirmReservation = () => {
+    const serial = `KW-${new Date().getFullYear()}-AH-${Math.floor(100000 + Math.random() * 900000)}`;
+    setConfirmationSerial(serial);
+    setOrderConfirmed(true);
+    confetti({
+      particleCount: 120,
+      spread: 70,
+      origin: { y: 0.6 },
+      colors: ["#C5A059", "#FFFFFF", "#3A404D"]
+    });
   };
 
   return (
-    <div className="min-h-screen bg-[#0E0F11] text-[#EAE6DF] font-sans antialiased selection:bg-[#EAE6DF] selection:text-[#0E0F11]">
+    <div className="min-h-screen bg-[#0A0B0D] text-[#EAE6DF] font-sans antialiased selection:bg-[#C5A059] selection:text-[#0A0B0D]">
       
-      {/* Top Telemetry & Swiss Header */}
-      <header className="sticky top-0 z-40 bg-[#0E0F11]/95 backdrop-blur-md border-b border-[#24262B]">
+      {/* Swiss Architectural Top Bar & Navigation */}
+      <header className="sticky top-0 z-40 bg-[#0A0B0D]/95 backdrop-blur-md border-b border-[#1E2128]">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
           <div className="flex items-center gap-6">
             <Link 
               href="/" 
-              className="inline-flex items-center gap-2 text-xs font-mono tracking-widest text-[#9A9A9A] hover:text-[#FFFFFF] transition-colors"
+              className="inline-flex items-center gap-2 text-xs font-mono tracking-widest text-[#8C9099] hover:text-[#FFFFFF] transition-colors"
             >
               <ArrowLeft className="w-3.5 h-3.5" />
-              BACK TO RADAR
+              PORTFOLIO RADAR
             </Link>
-            <div className="h-4 w-px bg-[#24262B] hidden sm:block" />
+            <div className="h-4 w-px bg-[#1E2128] hidden sm:block" />
             <div className="flex items-center gap-2">
               <span className="font-mono text-xs text-[#C5A059] uppercase tracking-wider font-semibold">
-                [PROSPECT 14 // RECON SANDBOX]
+                [TARGET 20 // HYPER-CRAFT SANDBOX]
               </span>
-              <span className="text-xs text-[#707070] hidden md:inline">
-                KALDEWEI // AHLEN, GERMANY (FOUNDED 1918)
+              <span className="text-xs text-[#707684] hidden md:inline font-mono">
+                KALDEWEI // AHLEN, GERMANY (EST. 1918)
               </span>
             </div>
           </div>
 
           <div className="flex items-center gap-4">
             <a 
-              href="#floor-load-calibrator"
-              className="hidden lg:inline-flex items-center gap-1.5 text-xs font-mono text-[#D4CDC3] hover:text-[#FFFFFF] transition-colors"
+              href="#drop-impact-test"
+              className="hidden lg:inline-flex items-center gap-1.5 text-xs font-mono text-[#B2B7C2] hover:text-[#FFFFFF] transition-colors"
             >
               <HardHat className="w-3.5 h-3.5 text-[#C5A059]" />
-              FLOOR-LOAD SIMULATOR
+              ENAMEL IMPACT TEST
             </a>
             <a 
-              href="#soundwave-resonance"
-              className="hidden lg:inline-flex items-center gap-1.5 text-xs font-mono text-[#D4CDC3] hover:text-[#FFFFFF] transition-colors"
+              href="#acoustic-decibel-dampener"
+              className="hidden lg:inline-flex items-center gap-1.5 text-xs font-mono text-[#B2B7C2] hover:text-[#FFFFFF] transition-colors"
             >
               <Volume2 className="w-3.5 h-3.5 text-[#C5A059]" />
-              SOUND WAVE ACOUSTICS
+              ACOUSTIC DAMPENER
             </a>
             <button
-              onClick={() => setIsDrawerOpen(true)}
-              className="relative inline-flex items-center gap-2 px-3 py-2 bg-[#1B1D22] hover:bg-[#252830] border border-[#2E313A] rounded-none text-xs font-mono text-[#EAE6DF] transition-colors"
+              onClick={() => setIsBimModalOpen(true)}
+              className="hidden sm:inline-flex items-center gap-1.5 px-3 py-1.5 bg-[#14161C] hover:bg-[#1D2028] border border-[#272B36] text-xs font-mono text-[#EAE6DF] transition-colors"
             >
-              <ShoppingBag className="w-3.5 h-3.5 text-[#C5A059]" />
-              <span>COMMISSION VAULT</span>
-              {cart.length > 0 && (
-                <span className="ml-1 px-1.5 py-0.2 bg-[#C5A059] text-[#0E0F11] text-[10px] font-bold">
-                  {cart.length}
-                </span>
-              )}
+              <Download className="w-3.5 h-3.5 text-[#C5A059]" />
+              CAD / BIM PACKET
+            </button>
+            <button
+              onClick={() => setIsDrawerOpen(true)}
+              className="relative inline-flex items-center gap-2 px-3.5 py-1.5 bg-[#C5A059] hover:bg-[#D4AF67] text-[#0A0B0D] text-xs font-mono font-bold tracking-wider transition-colors"
+            >
+              <ShoppingBag className="w-3.5 h-3.5" />
+              <span>SPECIFICATION VAULT</span>
             </button>
           </div>
         </div>
@@ -321,38 +629,42 @@ export default function KaldeweiShowcasePage() {
       {/* Main Architectural Showcase Container */}
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 md:py-12 space-y-16">
 
-        {/* Section 01: Hero Diagnostic Header */}
-        <section className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start border-b border-[#24262B] pb-12">
+        {/* Section 01: Hero Swiss Grid & Diagnostic Header */}
+        <section className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start border-b border-[#1E2128] pb-12">
           <div className="lg:col-span-8 space-y-4">
-            <div className="inline-flex items-center gap-2 px-2.5 py-1 bg-[#191B20] border border-[#2B2F38] text-[11px] font-mono tracking-wider text-[#C5A059]">
+            <div className="inline-flex items-center gap-2 px-2.5 py-1 bg-[#14161C] border border-[#272B36] text-[11px] font-mono tracking-wider text-[#C5A059]">
               <Shield className="w-3 h-3" />
-              GERMAN GLAZED TITANIUM-STEEL SANITARY ARCHITECTURE
+              SWISS AESTHETIC UNIVERSE // MONOLITHIC ARCHITECTURAL SANITARYWARE
             </div>
             <h1 className="text-3xl sm:text-4xl md:text-5xl font-light tracking-tight text-[#FFFFFF] leading-tight">
-              Eliminating Structural Floor-Load Hesitation & Enamel Ambiguity for Architectural Commissions
+              Kaldewei Glazed Titanium-Steel: Eliminating Impact Hesitation &amp; Acoustic Ambiguity
             </h1>
-            <p className="text-sm md:text-base text-[#9E9B93] leading-relaxed max-w-3xl">
-              High-net-worth residential homeowners and interior architectural practices frequently stall high-ticket master bath commissions (€8,000–€28,000) over structural point-load capacity (350kg–580kg filled bath mass) and acoustic specification uncertainty. This live engineering sandbox verifies residential floor-slab deflection limits in real time and demonstrates the acoustic properties of Kaldewei&apos;s 3.5mm steel enamel Sound Wave transducer system.
+            <p className="text-sm md:text-base text-[#9A9EA8] leading-relaxed max-w-3xl">
+              Architects and luxury developers evaluating €4,000 to €25,000+ sanitary fixtures face structural specification delays: skepticism over porcelain chipping risks under dropped heavy cosmetics, acoustic transmission through multi-story building slabs (DIN 4109 / SIA 181 standards), and non-standard floor-load limits. This sandbox delivers verified physical proof.
             </p>
           </div>
 
           {/* Quick Metric Telemetry Box */}
-          <div className="lg:col-span-4 bg-[#141519] border border-[#252830] p-6 space-y-4">
-            <div className="flex items-center justify-between border-b border-[#22242B] pb-3">
-              <span className="text-xs font-mono text-[#8C887F]">MANUFACTURE BASE</span>
-              <span className="text-xs font-mono text-[#EAE6DF] font-semibold">Ahlen, Germany</span>
+          <div className="lg:col-span-4 bg-[#111318] border border-[#1E2128] p-6 space-y-4 font-mono text-xs">
+            <div className="flex items-center justify-between border-b border-[#1E2128] pb-3">
+              <span className="text-[#707684]">MANUFACTURE LOCATION</span>
+              <span className="text-[#FFFFFF]">Werk I, Ahlen (Germany)</span>
             </div>
-            <div className="flex items-center justify-between border-b border-[#22242B] pb-3">
-              <span className="text-xs font-mono text-[#8C887F]">MATERIAL BOND</span>
-              <span className="text-xs font-mono text-[#EAE6DF] font-semibold">3.5mm Steel + Vitreous Enamel</span>
+            <div className="flex items-center justify-between border-b border-[#1E2128] pb-3">
+              <span className="text-[#707684]">SUBSTRATE DENSITY</span>
+              <span className="text-[#C5A059]">3.5mm Titanium Steel</span>
             </div>
-            <div className="flex items-center justify-between border-b border-[#22242B] pb-3">
-              <span className="text-xs font-mono text-[#8C887F]">WARRANTY STANDARD</span>
-              <span className="text-xs font-mono text-[#C5A059] font-semibold">30-Year Warranty DIN EN 14516</span>
+            <div className="flex items-center justify-between border-b border-[#1E2128] pb-3">
+              <span className="text-[#707684]">SURFACE HARDNESS</span>
+              <span className="text-[#FFFFFF]">Mohs Scale 7 (Anti-Scratch)</span>
+            </div>
+            <div className="flex items-center justify-between border-b border-[#1E2128] pb-3">
+              <span className="text-[#707684]">FACTORY WARRANTY</span>
+              <span className="text-[#C5A059] font-bold">30-Year DIN EN 14516 Guarantee</span>
             </div>
             <div className="flex items-center justify-between">
-              <span className="text-xs font-mono text-[#8C887F]">RECYCLABILITY RATIO</span>
-              <span className="text-xs font-mono text-[#EAE6DF] font-semibold">100% Circular Steel (Zero Resin)</span>
+              <span className="text-[#707684]">CIRCULAR RECYCLABILITY</span>
+              <span className="text-[#54B86A] font-bold">100% Steel &amp; Glass (0% Resin)</span>
             </div>
           </div>
         </section>
@@ -362,7 +674,7 @@ export default function KaldeweiShowcasePage() {
           <div className="flex flex-col md:flex-row md:items-end justify-between gap-4">
             <div>
               <span className="text-xs font-mono text-[#C5A059] tracking-widest uppercase">
-                [EXECUTIVE CATALOGUE // 3 ARCHITECTURAL MODELS]
+                [ARCHITECTURAL CATALOGUE // 3 MONOLITHIC SUITES]
               </span>
               <h2 className="text-2xl font-light tracking-tight text-[#FFFFFF] mt-1">
                 Monolithic Enamelled Masterpieces
@@ -370,18 +682,18 @@ export default function KaldeweiShowcasePage() {
             </div>
 
             {/* Model Tab Controls */}
-            <div className="flex flex-wrap gap-2">
+            <div className="flex flex-wrap gap-2 font-mono text-xs">
               {products.map((product, index) => (
                 <button
                   key={product.id}
                   onClick={() => {
-                    setActiveProductIndex(index);
-                    setActiveImageIndex(0);
+                    setSelectedProductIndex(index);
+                    setSelectedImageIndex(0);
                   }}
-                  className={`px-4 py-2 text-xs font-mono tracking-wider transition-all border ${
-                    activeProductIndex === index
-                      ? "bg-[#C5A059] text-[#0E0F11] border-[#C5A059] font-bold"
-                      : "bg-[#141519] text-[#9E9B93] border-[#252830] hover:border-[#3E424E] hover:text-[#FFFFFF]"
+                  className={`px-4 py-2 border transition-all ${
+                    selectedProductIndex === index
+                      ? "bg-[#C5A059] text-[#0A0B0D] border-[#C5A059] font-bold"
+                      : "bg-[#111318] text-[#8C9099] border-[#1E2128] hover:border-[#3A404D] hover:text-[#FFFFFF]"
                   }`}
                 >
                   0{index + 1} // {product.name.replace("Meisterstück ", "")}
@@ -395,24 +707,24 @@ export default function KaldeweiShowcasePage() {
             
             {/* Left 8 Cols: Main Optical Stage */}
             <div className="lg:col-span-8 space-y-4">
-              <div className="relative aspect-[16/10] bg-[#141519] border border-[#252830] overflow-hidden group">
+              <div className="relative aspect-[16/10] bg-[#111318] border border-[#1E2128] overflow-hidden group">
                 <img
-                  src={activeProduct.images[activeImageIndex].url}
-                  alt={activeProduct.images[activeImageIndex].label}
+                  src={activeProduct.images[selectedImageIndex].url}
+                  alt={activeProduct.images[selectedImageIndex].label}
                   className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-102"
                 />
                 
                 {/* HUD Overlay Badge */}
-                <div className="absolute top-4 left-4 bg-[#0E0F11]/85 backdrop-blur-sm border border-[#2B2F38] px-3 py-1.5 flex items-center gap-2">
+                <div className="absolute top-4 left-4 bg-[#0A0B0D]/90 backdrop-blur-sm border border-[#272B36] px-3 py-1.5 flex items-center gap-2">
                   <span className="w-2 h-2 rounded-full bg-[#C5A059] animate-pulse" />
                   <span className="text-[11px] font-mono text-[#EAE6DF] tracking-wide uppercase">
-                    {activeProduct.images[activeImageIndex].label}
+                    {activeProduct.images[selectedImageIndex].label}
                   </span>
                 </div>
 
-                <div className="absolute bottom-4 right-4 bg-[#0E0F11]/85 backdrop-blur-sm border border-[#2B2F38] px-3 py-1.5">
-                  <span className="text-[11px] font-mono text-[#8C887F]">
-                    ASSET {activeImageIndex + 1} OF {activeProduct.images.length} // LOCAL 100% VERIFIED
+                <div className="absolute bottom-4 right-4 bg-[#0A0B0D]/90 backdrop-blur-sm border border-[#272B36] px-3 py-1.5">
+                  <span className="text-[11px] font-mono text-[#707684]">
+                    ASSET 0{selectedImageIndex + 1} OF 0{activeProduct.images.length} // LOCAL VERIFIED
                   </span>
                 </div>
               </div>
@@ -422,11 +734,11 @@ export default function KaldeweiShowcasePage() {
                 {activeProduct.images.map((image, idx) => (
                   <button
                     key={idx}
-                    onClick={() => setActiveImageIndex(idx)}
-                    className={`relative aspect-[16/10] bg-[#141519] border overflow-hidden text-left transition-all ${
-                      activeImageIndex === idx 
+                    onClick={() => setSelectedImageIndex(idx)}
+                    className={`relative aspect-[16/10] bg-[#111318] border overflow-hidden text-left transition-all ${
+                      selectedImageIndex === idx 
                         ? "border-[#C5A059] ring-1 ring-[#C5A059]" 
-                        : "border-[#252830] opacity-60 hover:opacity-100"
+                        : "border-[#1E2128] opacity-60 hover:opacity-100"
                     }`}
                   >
                     <img 
@@ -434,7 +746,7 @@ export default function KaldeweiShowcasePage() {
                       alt={image.label} 
                       className="w-full h-full object-cover"
                     />
-                    <div className="absolute inset-x-0 bottom-0 bg-[#0E0F11]/90 p-1.5">
+                    <div className="absolute inset-x-0 bottom-0 bg-[#0A0B0D]/90 p-1.5">
                       <p className="text-[10px] font-mono text-[#EAE6DF] truncate">
                         0{idx + 1}. {image.label}
                       </p>
@@ -444,8 +756,8 @@ export default function KaldeweiShowcasePage() {
               </div>
             </div>
 
-            {/* Right 4 Cols: Technical Dossier & Immediate Commission CTA */}
-            <div className="lg:col-span-4 bg-[#141519] border border-[#252830] p-6 space-y-6">
+            {/* Right 4 Cols: Technical Specification Dossier */}
+            <div className="lg:col-span-4 bg-[#111318] border border-[#1E2128] p-6 space-y-6">
               <div>
                 <span className="text-xs font-mono text-[#C5A059] tracking-wider uppercase">
                   {activeProduct.category}
@@ -453,491 +765,589 @@ export default function KaldeweiShowcasePage() {
                 <h3 className="text-2xl font-light text-[#FFFFFF] mt-1">
                   {activeProduct.name}
                 </h3>
-                <p className="text-xs font-mono text-[#8C887F] mt-0.5">
+                <p className="text-xs font-mono text-[#707684] mt-0.5">
                   {activeProduct.germanTitle}
                 </p>
-                <p className="text-xs text-[#B2AEA6] mt-3 leading-relaxed">
-                  {activeProduct.curatorNotes}
+                <p className="text-xs text-[#9A9EA8] mt-3 leading-relaxed">
+                  {activeProduct.description}
                 </p>
               </div>
 
               {/* Specification Grid */}
-              <div className="space-y-3 border-t border-b border-[#252830] py-4 text-xs font-mono">
+              <div className="space-y-3 border-t border-b border-[#1E2128] py-4 text-xs font-mono">
                 <div className="flex justify-between">
-                  <span className="text-[#8C887F]">DESIGNER</span>
+                  <span className="text-[#707684]">DESIGN PARTNER</span>
                   <span className="text-[#FFFFFF]">{activeProduct.designer}</span>
                 </div>
                 <div className="flex justify-between">
-                  <span className="text-[#8C887F]">DIMENSIONS</span>
+                  <span className="text-[#707684]">DIMENSIONS</span>
                   <span className="text-[#FFFFFF]">
                     {activeProduct.dimensionsMm.length} × {activeProduct.dimensionsMm.width} × {activeProduct.dimensionsMm.depth} mm
                   </span>
                 </div>
                 <div className="flex justify-between">
-                  <span className="text-[#8C887F]">WATER CAPACITY</span>
+                  <span className="text-[#707684]">WATER CAPACITY</span>
                   <span className="text-[#FFFFFF]">
                     {activeProduct.capacityLiters > 0 ? `${activeProduct.capacityLiters} Liters` : "Continuous Direct Drain"}
                   </span>
                 </div>
                 <div className="flex justify-between">
-                  <span className="text-[#8C887F]">NET STEEL TARE</span>
+                  <span className="text-[#707684]">NET MASS TARE</span>
                   <span className="text-[#FFFFFF]">{activeProduct.netWeightKg} kg</span>
                 </div>
                 <div className="flex justify-between">
-                  <span className="text-[#8C887F]">SURFACE SPEC</span>
-                  <span className="text-[#C5A059]">{activeProduct.material}</span>
+                  <span className="text-[#707684]">SUBSTRATE SPEC</span>
+                  <span className="text-[#C5A059]">3.5mm Glazed Titanium Steel</span>
                 </div>
                 <div className="flex justify-between">
-                  <span className="text-[#8C887F]">MANUFACTURE SKU</span>
+                  <span className="text-[#707684]">FACTORY SKU</span>
                   <span className="text-[#FFFFFF]">{activeProduct.sku}</span>
                 </div>
               </div>
 
               {/* Price & Action */}
               <div className="space-y-3">
-                <div className="flex items-baseline justify-between">
-                  <span className="text-xs font-mono text-[#8C887F]">FACTORY MSRP</span>
-                  <span className="text-2xl font-mono text-[#FFFFFF] font-light">
-                    €{activeProduct.price.toLocaleString("de-DE")}
+                <div className="flex items-baseline justify-between font-mono">
+                  <span className="text-xs text-[#707684]">FACTORY BASE MSRP</span>
+                  <span className="text-2xl text-[#FFFFFF] font-light">
+                    €{activeProduct.basePrice.toLocaleString("de-DE")}
                   </span>
                 </div>
 
                 <button
-                  onClick={handleAddToCart}
-                  className="w-full py-3.5 bg-[#C5A059] hover:bg-[#D4AF67] text-[#0E0F11] text-xs font-mono font-bold tracking-widest uppercase transition-colors flex items-center justify-center gap-2"
+                  onClick={() => setIsDrawerOpen(true)}
+                  className="w-full py-3.5 bg-[#C5A059] hover:bg-[#D4AF67] text-[#0A0B0D] text-xs font-mono font-bold tracking-widest uppercase transition-colors flex items-center justify-center gap-2"
                 >
                   <ShoppingBag className="w-4 h-4" />
-                  CONFIGURE & SPECIFY SUITE
+                  SPECIFY &amp; CONFIGURE SUITE
                 </button>
 
-                <p className="text-[11px] text-center font-mono text-[#7A766F]">
-                  Includes CAD/BIM Revit files & DIN EN 14516 factory certificate
-                </p>
+                <div className="flex items-center justify-center gap-3 pt-1">
+                  <button
+                    onClick={() => setIsBimModalOpen(true)}
+                    className="text-[11px] font-mono text-[#8C9099] hover:text-[#C5A059] underline flex items-center gap-1"
+                  >
+                    <Download className="w-3 h-3" />
+                    Download BIM / CAD Specification
+                  </button>
+                </div>
               </div>
             </div>
           </div>
         </section>
 
-        {/* Section 03: Interactive Structural Floor-Load & Static Deflection Engine */}
-        <section id="floor-load-calibrator" className="bg-[#141519] border border-[#252830] p-6 md:p-8 space-y-8">
-          <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 border-b border-[#24262B] pb-6">
+        {/* Section 03: 30-Year Steel Enamel Drop-Impact Resistance Test Simulator (Live 60 FPS HTML5 Canvas) */}
+        <section id="drop-impact-test" className="bg-[#111318] border border-[#1E2128] p-6 md:p-8 space-y-8">
+          <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 border-b border-[#1E2128] pb-6">
             <div>
               <div className="inline-flex items-center gap-1.5 text-xs font-mono text-[#C5A059] uppercase tracking-wider mb-1">
                 <HardHat className="w-3.5 h-3.5" />
-                [ARCHITECTURAL STRUCTURAL SIMULATOR]
+                [DIN ISO 4532 MECHANICAL PHYSICS SIMULATOR]
               </div>
               <h2 className="text-2xl font-light text-[#FFFFFF]">
-                Residential Floor-Load & Static Deflection Calibrator
+                30-Year Steel Enamel Drop-Impact Resistance Simulator
               </h2>
-              <p className="text-xs text-[#9E9B93] mt-1 max-w-2xl">
-                Simulate point-load concentration (kg/m²) and joist deflection risks based on water volume fill, bather mass, and sub-floor makeup before project sign-off.
+              <p className="text-xs text-[#9A9EA8] mt-1 max-w-2xl">
+                Simulate kinetic shockwave absorption and micro-fracture diagnostics under standardized DIN ISO 4532 ball drops. Compare Kaldewei 3.5mm Glazed Titanium-Steel against commercial sanitary acrylic.
               </p>
             </div>
 
-            <div className="flex items-center gap-2 bg-[#1B1D22] border border-[#2E313A] px-3 py-1.5 text-xs font-mono">
-              <span className="text-[#8C887F]">CURRENT BATH:</span>
-              <span className="text-[#C5A059] font-bold">{activeProduct.name}</span>
+            <div className="flex items-center gap-3">
+              <button
+                onClick={triggerImpactTest}
+                className="px-4 py-2 bg-[#C5A059] hover:bg-[#D4AF67] text-[#0A0B0D] text-xs font-mono font-bold tracking-wider uppercase flex items-center gap-1.5 transition-colors"
+              >
+                <Play className="w-3.5 h-3.5 fill-current" />
+                TRIGGER DROP TEST
+              </button>
             </div>
           </div>
 
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
             
-            {/* Substructure & Sliders Column */}
-            <div className="lg:col-span-7 space-y-6">
-              
-              {/* Substructure Selector */}
-              <div className="space-y-2">
-                <label className="text-xs font-mono text-[#8C887F] flex items-center gap-1.5">
-                  <Layers className="w-3.5 h-3.5 text-[#C5A059]" />
-                  SELECT RESIDENTIAL SUBSTRUCTURE MAKEUP:
-                </label>
-                <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
-                  {substructurePresets.map((sub) => (
-                    <button
-                      key={sub.id}
-                      onClick={() => setSelectedSubstructureId(sub.id)}
-                      className={`p-3 text-left border transition-all ${
-                        selectedSubstructureId === sub.id
-                          ? "bg-[#1E2129] border-[#C5A059] ring-1 ring-[#C5A059]"
-                          : "bg-[#101114] border-[#252830] hover:border-[#3E424E]"
-                      }`}
-                    >
-                      <p className="text-xs font-mono text-[#FFFFFF] font-semibold">{sub.name}</p>
-                      <p className="text-[10px] font-mono text-[#C5A059] mt-0.5">{sub.germanName}</p>
-                      <p className="text-[10px] text-[#7A766F] mt-1.5 leading-tight">
-                        Limit: {sub.maxLoadKgM2} kg/m²
-                      </p>
-                    </button>
-                  ))}
+            {/* Interactive Canvas Physics Viewport */}
+            <div className="lg:col-span-7 space-y-4">
+              <div className="relative bg-[#0A0B0D] border border-[#1E2128] p-2 overflow-hidden">
+                <canvas 
+                  ref={canvasRef} 
+                  width={640} 
+                  height={280} 
+                  className="w-full h-auto block"
+                />
+
+                {/* HUD Coordinate Stamp */}
+                <div className="absolute top-4 left-4 font-mono text-[10px] text-[#707684] space-y-0.5">
+                  <p>GRAV_ACCEL: 9.81 m/s²</p>
+                  <p>IMPACT_VEL: {impactVelocity.toFixed(2)} m/s</p>
+                  <p>KINETIC_E: {kineticEnergy.toFixed(2)} Joules</p>
+                </div>
+
+                <div className="absolute bottom-4 right-4 font-mono text-[10px] text-[#C5A059]">
+                  60 FPS LIVE RIGID-BODY SIMULATION
                 </div>
               </div>
 
-              {/* Water Fill Level Slider */}
-              {activeProduct.capacityLiters > 0 && (
-                <div className="space-y-2 bg-[#101114] border border-[#252830] p-4">
-                  <div className="flex justify-between items-center text-xs font-mono">
-                    <span className="text-[#8C887F] flex items-center gap-1.5">
-                      <Droplets className="w-3.5 h-3.5 text-[#6BA4B8]" />
-                      WATER DISPLACEMENT FILL RATIO:
-                    </span>
-                    <span className="text-[#FFFFFF] font-bold">
-                      {waterFillPercent}% ({waterWeightKg} Liters / kg)
-                    </span>
-                  </div>
-                  <input
-                    type="range"
-                    min="0"
-                    max="100"
-                    value={waterFillPercent}
-                    onChange={(e) => setWaterFillPercent(Number(e.target.value))}
-                    className="w-full accent-[#C5A059] bg-[#24262B] h-1.5 rounded-none cursor-pointer"
-                  />
-                  <div className="flex justify-between text-[10px] font-mono text-[#5C5953]">
-                    <span>0% (Empty Vessel)</span>
-                    <span>50% (Half Bath)</span>
-                    <span>100% (Overflow Brim: {activeProduct.capacityLiters}L)</span>
+              {/* Projectile & Height Controls */}
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                
+                {/* Projectile Selector */}
+                <div className="space-y-2 bg-[#14161C] border border-[#1E2128] p-4">
+                  <label className="text-xs font-mono text-[#707684] flex items-center gap-1">
+                    <Sliders className="w-3.5 h-3.5 text-[#C5A059]" />
+                    SELECT IMPACT OBJECT:
+                  </label>
+                  <div className="space-y-1.5">
+                    {projectiles.map((p) => (
+                      <button
+                        key={p.id}
+                        onClick={() => setSelectedProjectileId(p.id)}
+                        className={`w-full p-2 text-left border text-xs font-mono transition-all ${
+                          selectedProjectileId === p.id
+                            ? "bg-[#1E2128] border-[#C5A059] text-[#FFFFFF]"
+                            : "bg-[#0E0F12] border-[#1E2128] text-[#8C9099] hover:border-[#3A404D]"
+                        }`}
+                      >
+                        <div className="flex justify-between">
+                          <span className="font-semibold">{p.name}</span>
+                          <span className="text-[#C5A059]">{p.massKg} kg</span>
+                        </div>
+                      </button>
+                    ))}
                   </div>
                 </div>
-              )}
 
-              {/* Bather Mass Slider */}
-              {activeProduct.capacityLiters > 0 && (
-                <div className="space-y-2 bg-[#101114] border border-[#252830] p-4">
-                  <div className="flex justify-between items-center text-xs font-mono">
-                    <span className="text-[#8C887F] flex items-center gap-1.5">
-                      <Sliders className="w-3.5 h-3.5 text-[#C5A059]" />
-                      BATHER STATIC MASS CALIBRATION:
-                    </span>
-                    <span className="text-[#FFFFFF] font-bold">{batherWeightKg} kg</span>
+                {/* Height Slider & Surface Toggle */}
+                <div className="space-y-4 bg-[#14161C] border border-[#1E2128] p-4">
+                  <div className="space-y-2">
+                    <div className="flex justify-between text-xs font-mono">
+                      <span className="text-[#707684]">DROP HEIGHT:</span>
+                      <span className="text-[#FFFFFF] font-bold">{dropHeightM.toFixed(1)} Meters</span>
+                    </div>
+                    <input
+                      type="range"
+                      min="0.5"
+                      max="2.5"
+                      step="0.1"
+                      value={dropHeightM}
+                      onChange={(e) => setDropHeightM(Number(e.target.value))}
+                      className="w-full accent-[#C5A059] bg-[#1E2128] h-1.5 cursor-pointer"
+                    />
+                    <div className="flex justify-between text-[10px] font-mono text-[#5A5F6B]">
+                      <span>0.5m (Ledge)</span>
+                      <span>1.5m (Chest)</span>
+                      <span>2.5m (Overhead)</span>
+                    </div>
                   </div>
-                  <input
-                    type="range"
-                    min="40"
-                    max="160"
-                    step="5"
-                    value={batherWeightKg}
-                    onChange={(e) => setBatherWeightKg(Number(e.target.value))}
-                    className="w-full accent-[#C5A059] bg-[#24262B] h-1.5 rounded-none cursor-pointer"
-                  />
-                  <div className="flex justify-between text-[10px] font-mono text-[#5C5953]">
-                    <span>40 kg (Lightweight)</span>
-                    <span>80 kg (Standard Single)</span>
-                    <span>160 kg (Dual Occupancy)</span>
+
+                  <div className="space-y-2 pt-2 border-t border-[#1E2128]">
+                    <span className="text-xs font-mono text-[#707684]">TEST SUBSTRATE MATERIAL:</span>
+                    <div className="grid grid-cols-2 gap-2 text-xs font-mono">
+                      <button
+                        onClick={() => setTestSurface("kaldewei")}
+                        className={`p-2 text-center border font-semibold transition-all ${
+                          testSurface === "kaldewei"
+                            ? "bg-[#C5A059] text-[#0A0B0D] border-[#C5A059]"
+                            : "bg-[#0E0F12] text-[#8C9099] border-[#1E2128] hover:text-[#FFFFFF]"
+                        }`}
+                      >
+                        KALDEWEI STEEL
+                      </button>
+                      <button
+                        onClick={() => setTestSurface("acrylic")}
+                        className={`p-2 text-center border font-semibold transition-all ${
+                          testSurface === "acrylic"
+                            ? "bg-[#E65050] text-[#FFFFFF] border-[#E65050]"
+                            : "bg-[#0E0F12] text-[#8C9099] border-[#1E2128] hover:text-[#FFFFFF]"
+                        }`}
+                      >
+                        SANITARY ACRYLIC
+                      </button>
+                    </div>
                   </div>
                 </div>
-              )}
+
+              </div>
             </div>
 
-            {/* Live Readout & Compliance HUD Column */}
-            <div className="lg:col-span-5 bg-[#101114] border border-[#252830] p-6 space-y-6">
+            {/* Diagnostic Readout & Comparative Verification HUD */}
+            <div className="lg:col-span-5 bg-[#14161C] border border-[#1E2128] p-6 space-y-6 font-mono text-xs">
               <div>
-                <span className="text-xs font-mono text-[#8C887F] uppercase tracking-wider">
-                  STRUCTURAL POINT-LOAD READOUT
+                <span className="text-[#707684] uppercase tracking-wider text-[11px]">
+                  DYNAMIC MECHANICAL STRESS READOUT
                 </span>
                 <div className="flex items-baseline gap-2 mt-2">
-                  <span className="text-4xl font-mono text-[#FFFFFF] font-light">
-                    {pointLoadKgM2}
+                  <span className="text-4xl text-[#FFFFFF] font-light">
+                    {testSurface === "kaldewei" ? peakStressKaldewei : peakStressAcrylic}
                   </span>
-                  <span className="text-sm font-mono text-[#8C887F]">kg / m² footprint</span>
+                  <span className="text-sm text-[#707684]">MPa Peak Substrate Stress</span>
                 </div>
-                <p className="text-[11px] font-mono text-[#7A766F] mt-1">
-                  Floor Contact Surface: {activeProduct.floorContactM2} m² footprint
+                <p className="text-[11px] text-[#5A5F6B] mt-1">
+                  Tested against DIN ISO 4532 continuous porcelain enamel impact verification
                 </p>
               </div>
 
-              {/* Progress Load Bar */}
-              <div className="space-y-1.5">
-                <div className="flex justify-between text-xs font-mono">
-                  <span className="text-[#8C887F]">SUBSTRUCTURE CAPACITY USAGE:</span>
-                  <span className={isOverloadRisk ? "text-[#E65050] font-bold" : "text-[#54B86A] font-bold"}>
-                    {loadPercentage}% of Max Rated Load
-                  </span>
-                </div>
-                <div className="w-full bg-[#202229] h-2">
-                  <div 
-                    className={`h-full transition-all duration-300 ${
-                      isOverloadRisk ? "bg-[#E65050]" : "bg-[#54B86A]"
-                    }`}
-                    style={{ width: `${Math.min(loadPercentage, 100)}%` }}
-                  />
-                </div>
-              </div>
-
-              {/* Detailed Mass Breakdown Table */}
-              <div className="space-y-2 border-t border-b border-[#202229] py-3 text-xs font-mono">
-                <div className="flex justify-between">
-                  <span className="text-[#8C887F]">3.5mm Steel Tare Weight:</span>
-                  <span className="text-[#FFFFFF]">{activeProduct.netWeightKg} kg</span>
-                </div>
-                {activeProduct.capacityLiters > 0 && (
-                  <>
-                    <div className="flex justify-between">
-                      <span className="text-[#8C887F]">Displaced Water Mass ({waterFillPercent}%):</span>
-                      <span className="text-[#FFFFFF]">+{waterWeightKg} kg</span>
-                    </div>
-                    <div className="flex justify-between">
-                      <span className="text-[#8C887F]">Bather Occupant Mass:</span>
-                      <span className="text-[#FFFFFF]">+{batherWeightKg} kg</span>
-                    </div>
-                  </>
-                )}
-                <div className="flex justify-between border-t border-[#202229] pt-2 font-bold">
-                  <span className="text-[#C5A059]">Total Static Load Mass:</span>
-                  <span className="text-[#C5A059]">{totalStaticMassKg} kg</span>
-                </div>
-                <div className="flex justify-between text-[11px]">
-                  <span className="text-[#8C887F]">Estimated Slab Deflection:</span>
-                  <span className={estimatedDeflectionMm > activeSubstructure.deflectionLimitMm ? "text-[#E65050]" : "text-[#54B86A]"}>
-                    ~{estimatedDeflectionMm} mm (Tolerance: &lt;{activeSubstructure.deflectionLimitMm}mm)
-                  </span>
-                </div>
-              </div>
-
-              {/* Pass / Reinforcement Verdict */}
-              <div className={`p-3.5 border ${
-                isOverloadRisk 
-                  ? "bg-[#2A1616] border-[#E65050] text-[#E65050]" 
-                  : "bg-[#142319] border-[#54B86A] text-[#54B86A]"
+              {/* Impact Verdict Box */}
+              <div className={`p-4 border ${
+                testSurface === "kaldewei"
+                  ? "bg-[#142319] border-[#54B86A] text-[#54B86A]"
+                  : "bg-[#2A1616] border-[#E65050] text-[#E65050]"
               }`}>
-                <div className="flex items-center gap-2 text-xs font-mono font-bold">
-                  {isOverloadRisk ? <Info className="w-4 h-4" /> : <Check className="w-4 h-4" />}
+                <div className="flex items-center gap-2 font-bold text-xs">
+                  {testSurface === "kaldewei" ? <CheckCircle2 className="w-4 h-4" /> : <AlertTriangle className="w-4 h-4" />}
                   <span>
-                    {isOverloadRisk ? "ARCHITECTURAL ALERT: LOAD EXCEEDS SUBSTRUCTURE LIMIT" : "STRUCTURAL COMPLIANCE VERIFIED: SAFE RESIDENTIAL POINT LOAD"}
+                    {testSurface === "kaldewei" ? "ZERO STRUCTURAL DEFECT // PASS" : "IRREVERSIBLE MATRIX FAILURE // CRACK"}
                   </span>
                 </div>
-                <p className="text-[11px] text-[#D8D2C5] mt-1 leading-relaxed">
-                  {isOverloadRisk 
-                    ? `Point-load concentration exceeds ${activeSubstructure.name} rating (${substructurePresets.find(s=>s.id===selectedSubstructureId)?.maxLoadKgM2} kg/m²). Install a sub-floor steel load distribution spreader plate or select cast concrete foundation.`
-                    : `Static point load falls within safe DIN 1055 floor deflection margins. Installation approved without structural joist sistering or heavy slab modification.`}
+                <p className="text-[11px] text-[#D8D2C5] mt-2 leading-relaxed">
+                  {testSurface === "kaldewei"
+                    ? "Vitreous glass glaze fused at 850°C to 3.5mm titanium steel dissipates the kinetic wave through molecular shear bonding. Zero surface cracking, zero delamination, zero chipping."
+                    : "Polymer resin core suffers localized yield point breach. Micro-fissures penetrate the acrylic gel coat, creating permanent gouges, discoloration, and bacterial entrapment crevices."}
                 </p>
+              </div>
+
+              {/* Comparative Hardness Spec Table */}
+              <div className="space-y-2 border-t border-[#1E2128] pt-4">
+                <div className="flex justify-between">
+                  <span className="text-[#707684]">SURFACE HARDNESS:</span>
+                  <span className={testSurface === "kaldewei" ? "text-[#C5A059] font-bold" : "text-[#707684]"}>
+                    Mohs 7 (Steel Enamel) vs Mohs 3 (Acrylic)
+                  </span>
+                </div>
+                <div className="flex justify-between">
+                  <span className="text-[#707684]">HEAT TOLERANCE:</span>
+                  <span className="text-[#FFFFFF]">Up to 400°C (Fireproof // DIN EN 13501)</span>
+                </div>
+                <div className="flex justify-between">
+                  <span className="text-[#707684]">CHEMICAL STABILITY:</span>
+                  <span className="text-[#FFFFFF]">100% Resistant to Acetone, Dyes, Solvents</span>
+                </div>
+                <div className="flex justify-between">
+                  <span className="text-[#707684]">CLEANING EFFORT:</span>
+                  <span className="text-[#54B86A]">Easy-Clean Lotus Effect Repels Limescale</span>
+                </div>
               </div>
             </div>
+
           </div>
         </section>
 
-        {/* Section 04: Sound Wave Acoustic Bath Resonance Simulator */}
-        <section id="soundwave-resonance" className="bg-[#141519] border border-[#252830] p-6 md:p-8 space-y-6">
-          <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 border-b border-[#24262B] pb-6">
+        {/* Section 04: Acoustic Installation Insulation Decibel Dampener (Interactive DIN 4109 / SIA 181 Simulator) */}
+        <section id="acoustic-decibel-dampener" className="bg-[#111318] border border-[#1E2128] p-6 md:p-8 space-y-8">
+          <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 border-b border-[#1E2128] pb-6">
             <div>
               <div className="inline-flex items-center gap-1.5 text-xs font-mono text-[#C5A059] uppercase tracking-wider mb-1">
                 <Volume2 className="w-3.5 h-3.5" />
-                [ACOUSTIC MEMBRANE TRANSDUCER SYSTEM]
+                [ACOUSTIC INSULATION &amp; TRANSMISSION ENGINE]
               </div>
               <h2 className="text-2xl font-light text-[#FFFFFF]">
-                Kaldewei Sound Wave Acoustic Engineering
+                Acoustic Installation Decibel Dampener (DIN 4109 &amp; SIA 181)
               </h2>
-              <p className="text-xs text-[#9E9B93] mt-1 max-w-2xl">
-                The bathtub body becomes an acoustic soundboard. Six concealed Bluetooth exciter transducers bond to the steel exterior, radiating high-fidelity acoustic frequencies directly through the water without visible speaker grilles.
+              <p className="text-xs text-[#9A9EA8] mt-1 max-w-2xl">
+                Measure water impact acoustic emissions and slab transmission into adjacent residential suites. Verify how Kaldewei sound-absorbing pads and BWS perimeter decoupling exceed Swiss SIA 181 acoustic insulation regulations.
               </p>
             </div>
 
-            {/* Mode Switcher */}
-            <div className="flex gap-2">
+            <div className="flex items-center gap-3">
               <button
-                onClick={() => setSoundWaveMode("ambient")}
-                className={`px-3 py-1.5 text-xs font-mono transition-colors border ${
-                  soundWaveMode === "ambient"
-                    ? "bg-[#C5A059] text-[#0E0F11] border-[#C5A059] font-bold"
-                    : "bg-[#101114] text-[#8C887F] border-[#252830] hover:text-[#FFFFFF]"
+                onClick={() => setIsAudioActive(!isAudioActive)}
+                className={`px-3 py-1.5 text-xs font-mono flex items-center gap-1.5 border transition-all ${
+                  isAudioActive
+                    ? "bg-[#C5A059] text-[#0A0B0D] border-[#C5A059] font-bold"
+                    : "bg-[#14161C] text-[#8C9099] border-[#1E2128] hover:text-[#FFFFFF]"
                 }`}
               >
-                432Hz Ambient Theta
-              </button>
-              <button
-                onClick={() => setSoundWaveMode("hifi")}
-                className={`px-3 py-1.5 text-xs font-mono transition-colors border ${
-                  soundWaveMode === "hifi"
-                    ? "bg-[#C5A059] text-[#0E0F11] border-[#C5A059] font-bold"
-                    : "bg-[#101114] text-[#8C887F] border-[#252830] hover:text-[#FFFFFF]"
-                }`}
-              >
-                Full-Spectrum Hi-Fi
-              </button>
-              <button
-                onClick={() => setSoundWaveMode("tactile")}
-                className={`px-3 py-1.5 text-xs font-mono transition-colors border ${
-                  soundWaveMode === "tactile"
-                    ? "bg-[#C5A059] text-[#0E0F11] border-[#C5A059] font-bold"
-                    : "bg-[#101114] text-[#8C887F] border-[#252830] hover:text-[#FFFFFF]"
-                }`}
-              >
-                Tactile Hydro-Resonance
+                {isAudioActive ? <Volume2 className="w-3.5 h-3.5" /> : <VolumeX className="w-3.5 h-3.5" />}
+                <span>{isAudioActive ? "AUDIO SYNTHESIZER: ACTIVE" : "ACTIVATE AUDIO SIMULATION"}</span>
               </button>
             </div>
           </div>
 
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
             
-            {/* Visualizer Frame */}
-            <div className="lg:col-span-7 bg-[#0E0F11] border border-[#252830] p-6 space-y-6">
-              <div className="flex items-center justify-between text-xs font-mono">
-                <span className="text-[#8C887F]">ACOUSTIC TRANSDUCER TELEMETRY</span>
-                <span className="text-[#C5A059] flex items-center gap-1.5 font-bold">
-                  <Activity className="w-3.5 h-3.5 animate-pulse" />
-                  TRANSDUCER ARRAY: 6 UNITS ACTIVE
-                </span>
-              </div>
-
-              {/* Animated Wave Simulation (Pure SVG, zero lag) */}
-              <div className="h-40 flex items-center justify-center relative overflow-hidden bg-[#121317] border border-[#1E2026]">
-                <svg className="w-full h-full" viewBox="0 0 600 160">
-                  <path
-                    d={soundWaveMode === "ambient"
-                      ? "M 0 80 Q 75 30 150 80 T 300 80 T 450 80 T 600 80"
-                      : soundWaveMode === "hifi"
-                      ? "M 0 80 Q 30 20 60 80 T 120 80 T 180 80 T 240 80 T 300 80 T 360 80 T 420 80 T 480 80 T 540 80 T 600 80"
-                      : "M 0 80 Q 150 5 300 80 T 600 80"}
-                    fill="none"
-                    stroke="#C5A059"
-                    strokeWidth="2.5"
-                    className="transition-all duration-500"
-                  />
-                  <path
-                    d={soundWaveMode === "ambient"
-                      ? "M 0 80 Q 75 130 150 80 T 300 80 T 450 80 T 600 80"
-                      : soundWaveMode === "hifi"
-                      ? "M 0 80 Q 30 140 60 80 T 120 80 T 180 80 T 240 80 T 300 80 T 360 80 T 420 80 T 480 80 T 540 80 T 600 80"
-                      : "M 0 80 Q 150 155 300 80 T 600 80"}
-                    fill="none"
-                    stroke="#6BA4B8"
-                    strokeWidth="1.5"
-                    strokeDasharray="4 4"
-                    className="opacity-70 transition-all duration-500"
-                  />
-                </svg>
-
-                <div className="absolute inset-0 pointer-events-none flex items-center justify-between px-6 text-[10px] font-mono text-[#58554F]">
-                  <span>20 Hz (Deep Bass)</span>
-                  <span>1 kHz (Vocal Mid)</span>
-                  <span>20 kHz (Crystalline Treble)</span>
+            {/* Controls & Sound Meter Column */}
+            <div className="lg:col-span-7 space-y-6">
+              
+              {/* Flow Rate Slider */}
+              <div className="bg-[#14161C] border border-[#1E2128] p-5 space-y-3">
+                <div className="flex justify-between items-center text-xs font-mono">
+                  <span className="text-[#707684] flex items-center gap-1.5">
+                    <Droplets className="w-3.5 h-3.5 text-[#0070F3]" />
+                    BATH FILLING DELUGE FLOW RATE:
+                  </span>
+                  <span className="text-[#FFFFFF] font-bold">{waterFlowRateLpm} Liters / Minute</span>
+                </div>
+                <input
+                  type="range"
+                  min="8"
+                  max="32"
+                  value={waterFlowRateLpm}
+                  onChange={(e) => setWaterFlowRateLpm(Number(e.target.value))}
+                  className="w-full accent-[#0070F3] bg-[#1E2128] h-1.5 cursor-pointer"
+                />
+                <div className="flex justify-between text-[10px] font-mono text-[#5A5F6B]">
+                  <span>8 L/min (Gentle Spout)</span>
+                  <span>18 L/min (Standard Mixer)</span>
+                  <span>32 L/min (High-Flow Waterfall)</span>
                 </div>
               </div>
 
-              <div className="grid grid-cols-3 gap-4 text-center text-xs font-mono">
-                <div className="p-3 bg-[#15171D] border border-[#22252E]">
-                  <p className="text-[#8C887F]">EXTERIOR BLEED</p>
-                  <p className="text-base text-[#FFFFFF] font-light mt-1">&lt;15 dB (Whisper)</p>
-                </div>
-                <div className="p-3 bg-[#15171D] border border-[#22252E]">
-                  <p className="text-[#8C887F]">IN-WATER EFFICIENCY</p>
-                  <p className="text-base text-[#C5A059] font-light mt-1">4.3x Air Speed</p>
-                </div>
-                <div className="p-3 bg-[#15171D] border border-[#22252E]">
-                  <p className="text-[#8C887F]">PROTOCOL</p>
-                  <p className="text-base text-[#FFFFFF] font-light mt-1">Bluetooth 5.2 AptX</p>
-                </div>
+              {/* Acoustic Decoupling System Toggle */}
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <button
+                  onClick={() => setIsAcousticDamped(true)}
+                  className={`p-4 text-left border transition-all ${
+                    isAcousticDamped
+                      ? "bg-[#161C24] border-[#0070F3] ring-1 ring-[#0070F3]"
+                      : "bg-[#14161C] border-[#1E2128] hover:border-[#3A404D]"
+                  }`}
+                >
+                  <div className="flex items-center justify-between">
+                    <span className="text-xs font-mono font-bold text-[#FFFFFF]">KALDEWEI DAMPED SYSTEM</span>
+                    <span className="text-xs font-mono text-[#0070F3] font-bold">&lt;17 dB</span>
+                  </div>
+                  <p className="text-[11px] text-[#9A9EA8] mt-2 leading-relaxed">
+                    Heavy elastomer pads bonded to reverse of steel shell, rubber leveling feet, and BWS acoustic wall-sealing tape.
+                  </p>
+                </button>
+
+                <button
+                  onClick={() => setIsAcousticDamped(false)}
+                  className={`p-4 text-left border transition-all ${
+                    !isAcousticDamped
+                      ? "bg-[#251A1A] border-[#E65050] ring-1 ring-[#E65050]"
+                      : "bg-[#14161C] border-[#1E2128] hover:border-[#3A404D]"
+                  }`}
+                >
+                  <div className="flex items-center justify-between">
+                    <span className="text-xs font-mono font-bold text-[#FFFFFF]">UNINSULATED INSTALLATION</span>
+                    <span className="text-xs font-mono text-[#E65050] font-bold">~44 dB</span>
+                  </div>
+                  <p className="text-[11px] text-[#9A9EA8] mt-2 leading-relaxed">
+                    Rigid metal feet resting directly on cement screed. Water cascades resonate through structural floor slab into lower floors.
+                  </p>
+                </button>
               </div>
+
             </div>
 
-            {/* Acoustic System Narrative */}
-            <div className="lg:col-span-5 space-y-4 text-xs font-mono text-[#B2AEA6]">
-              <div className="space-y-2">
-                <span className="text-[#C5A059] uppercase tracking-wider font-bold">
-                  PHYSICAL ACOUSTIC PRINCIPLE
+            {/* Decibel Meter & Compliance Readout HUD */}
+            <div className="lg:col-span-5 bg-[#14161C] border border-[#1E2128] p-6 space-y-6 font-mono text-xs">
+              <div>
+                <span className="text-[#707684] uppercase tracking-wider text-[11px]">
+                  TRANSMITTED ACOUSTIC LEVEL (ADJACENT SUITE)
                 </span>
-                <p className="leading-relaxed">
-                  Sound waves travel at approximately 1,480 meters per second through water—over four times faster than through air. Kaldewei utilizes the rigid 3.5mm titanium-steel substrate as an ideal vibration conductor.
+                <div className="flex items-baseline gap-2 mt-2">
+                  <span className={`text-4xl font-light ${isAcousticDamped ? "text-[#54B86A]" : "text-[#E65050]"}`}>
+                    {currentDb}
+                  </span>
+                  <span className="text-sm text-[#707684]">dB(A) Sound Pressure</span>
+                </div>
+                <p className="text-[11px] text-[#5A5F6B] mt-1">
+                  Threshold: DIN 4109 requires &lt;30 dB(A) // Swiss SIA 181 recommends &lt;25 dB(A)
                 </p>
               </div>
 
-              <div className="space-y-2 border-t border-[#202229] pt-3">
-                <span className="text-[#FFFFFF] uppercase tracking-wider font-bold">
-                  ZERO SURFACE PENETRATION
-                </span>
-                <p className="leading-relaxed">
-                  Transducer exciters are bonded directly to the unglazed reverse side of the steel shell inside the bathroom furniture or tile apron cavity. The interior enamel remains uninterrupted, maintaining 100% water hygiene and ease of maintenance.
-                </p>
+              {/* Linear Visual Sound Level Meter */}
+              <div className="space-y-1.5">
+                <div className="flex justify-between text-[11px]">
+                  <span className="text-[#707684]">SOUND LEVEL METER:</span>
+                  <span className={isAcousticDamped ? "text-[#54B86A]" : "text-[#E65050]"}>
+                    {isAcousticDamped ? "WHISPER COMPLIANT" : "STRUCTURAL ROAR (NON-COMPLIANT)"}
+                  </span>
+                </div>
+                <div className="w-full bg-[#1A1C22] h-2.5 overflow-hidden">
+                  <div
+                    className={`h-full transition-all duration-300 ${
+                      isAcousticDamped ? "bg-[#54B86A]" : "bg-[#E65050]"
+                    }`}
+                    style={{ width: `${Math.min(100, (currentDb / 50) * 100)}%` }}
+                  />
+                </div>
+                <div className="flex justify-between text-[10px] text-[#5A5F6B]">
+                  <span>0 dB (Silence)</span>
+                  <span>20 dB (Rustling Leaves)</span>
+                  <span>30 dB (DIN Limit)</span>
+                  <span>50 dB (Conversation)</span>
+                </div>
               </div>
 
-              <div className="space-y-2 border-t border-[#202229] pt-3">
-                <span className="text-[#FFFFFF] uppercase tracking-wider font-bold">
-                  SUB-FLOOR ACOUSTIC DECOUPLING
-                </span>
-                <p className="leading-relaxed">
-                  Every Sound Wave bath includes structural rubber isolation dampeners beneath the bath feet, ensuring acoustic energy transfers exclusively into water and bather, with zero vibrational transfer into the building structural slab.
-                </p>
+              {/* Standard Compliance Checkbox List */}
+              <div className="space-y-2 border-t border-[#1E2128] pt-4">
+                <div className="flex items-center justify-between">
+                  <span className="text-[#707684]">GERMAN DIN 4109 ACOUSTIC NORM:</span>
+                  <span className={isAcousticDamped ? "text-[#54B86A] font-bold" : "text-[#E65050] font-bold"}>
+                    {isAcousticDamped ? "PASS (<30 dB)" : "VIOLATION (>30 dB)"}
+                  </span>
+                </div>
+                <div className="flex items-center justify-between">
+                  <span className="text-[#707684]">SWISS SIA 181 SOUNDPROOF STANDARD:</span>
+                  <span className={isAcousticDamped ? "text-[#54B86A] font-bold" : "text-[#E65050] font-bold"}>
+                    {isAcousticDamped ? "EXCEEDED (<25 dB)" : "FAILED"}
+                  </span>
+                </div>
+                <div className="flex items-center justify-between">
+                  <span className="text-[#707684]">VDI 4100 SOUND PROTECTION LEVEL III:</span>
+                  <span className={isAcousticDamped ? "text-[#54B86A] font-bold" : "text-[#E65050] font-bold"}>
+                    {isAcousticDamped ? "CERTIFIED" : "NON-CONFORMING"}
+                  </span>
+                </div>
               </div>
+
             </div>
+
           </div>
         </section>
 
-        {/* Section 05: Glazed Titanium-Steel vs Acrylic Comparison Matrix */}
-        <section className="bg-[#141519] border border-[#252830] p-6 md:p-8 space-y-6">
-          <div>
-            <span className="text-xs font-mono text-[#C5A059] uppercase tracking-wider">
-              [MATERIAL SCIENCE COMPARATIVE ANALYSIS]
-            </span>
-            <h2 className="text-2xl font-light text-[#FFFFFF] mt-1">
-              3.5mm Glazed Titanium-Steel vs Sanitary Acrylic
-            </h2>
-            <p className="text-xs text-[#9E9B93] mt-1">
-              Why leading luxury architectural firms specify vitreous enamelled steel over petroleum-based acrylic resins.
-            </p>
+        {/* Section 05: Architectural CAD/BIM File Portal */}
+        <section className="bg-[#111318] border border-[#1E2128] p-6 md:p-8 space-y-6">
+          <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 border-b border-[#1E2128] pb-6">
+            <div>
+              <span className="text-xs font-mono text-[#C5A059] uppercase tracking-wider">
+                [PROJECT SPECIFICATION ASSET PORTAL]
+              </span>
+              <h2 className="text-2xl font-light text-[#FFFFFF] mt-1">
+                Architectural CAD &amp; BIM Asset Library
+              </h2>
+              <p className="text-xs text-[#9A9EA8] mt-1">
+                Instant vector drawing packages, 3D parametric Revit families (LOD 400), and tender text templates for architectural practice documentation.
+              </p>
+            </div>
           </div>
 
-          <div className="overflow-x-auto">
-            <table className="w-full text-xs font-mono text-left border-collapse">
-              <thead>
-                <tr className="border-b border-[#2B2F38] bg-[#0E0F11]">
-                  <th className="py-3 px-4 text-[#8C887F]">PERFORMANCE DIMENSION</th>
-                  <th className="py-3 px-4 text-[#C5A059] font-bold">KALDEWEI 3.5MM STEEL ENAMEL</th>
-                  <th className="py-3 px-4 text-[#7A766F]">CONVENTIONAL ACRYLIC RESIN</th>
-                  <th className="py-3 px-4 text-[#8C887F]">ARCHITECTURAL ADVANTAGE</th>
-                </tr>
-              </thead>
-              <tbody className="divide-y divide-[#202229]">
-                <tr>
-                  <td className="py-3.5 px-4 text-[#FFFFFF] font-semibold">Surface Hardness & Scratching</td>
-                  <td className="py-3.5 px-4 text-[#C5A059]">Mohs Scale 7 (Harder than window glass)</td>
-                  <td className="py-3.5 px-4 text-[#7A766F]">Mohs Scale 3 (Scratches with jewelry & sand)</td>
-                  <td className="py-3.5 px-4 text-[#B2AEA6]">Zero micro-scratch clouding; impervious to pets & bath salts</td>
-                </tr>
-                <tr>
-                  <td className="py-3.5 px-4 text-[#FFFFFF] font-semibold">Thermal Storage & Heat Retention</td>
-                  <td className="py-3.5 px-4 text-[#C5A059]">High thermal conductivity & steel radiant mass</td>
-                  <td className="py-3.5 px-4 text-[#7A766F]">Low mass insulator; water cools via surface radiation</td>
-                  <td className="py-3.5 px-4 text-[#B2AEA6]">Water stays bath-hot 38% longer through radiant steel absorption</td>
-                </tr>
-                <tr>
-                  <td className="py-3.5 px-4 text-[#FFFFFF] font-semibold">Chemical & Stain Resistance</td>
-                  <td className="py-3.5 px-4 text-[#C5A059]">Non-porous glass glaze; impervious to acetone & dyes</td>
-                  <td className="py-3.5 px-4 text-[#7A766F]">Absorbs hair dyes, essential oils, and solvents</td>
-                  <td className="py-3.5 px-4 text-[#B2AEA6]">Direct sanitization with medical disinfectants without yellowing</td>
-                </tr>
-                <tr>
-                  <td className="py-3.5 px-4 text-[#FFFFFF] font-semibold">Ecological Lifecycle</td>
-                  <td className="py-3.5 px-4 text-[#C5A059]">100% Circular Steel & Sand (Zero Plastic)</td>
-                  <td className="py-3.5 px-4 text-[#7A766F]">Non-recyclable composite plastic (Landfill waste)</td>
-                  <td className="py-3.5 px-4 text-[#B2AEA6]">Meets highest LEED / BREEAM sustainability architectural credits</td>
-                </tr>
-                <tr>
-                  <td className="py-3.5 px-4 text-[#FFFFFF] font-semibold">Manufacturer Warranty</td>
-                  <td className="py-3.5 px-4 text-[#C5A059]">30-Year Guarantee DIN EN 14516</td>
-                  <td className="py-3.5 px-4 text-[#7A766F]">Typically 2 to 5 years limited</td>
-                  <td className="py-3.5 px-4 text-[#B2AEA6]">Generational longevity for luxury estate construction</td>
-                </tr>
-              </tbody>
-            </table>
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 font-mono text-xs">
+            
+            {/* DWG 2D Package */}
+            <div className="bg-[#14161C] border border-[#1E2128] p-4 space-y-3">
+              <div className="flex items-center justify-between">
+                <span className="font-bold text-[#FFFFFF]">2D CAD PACKET (.DWG)</span>
+                <span className="text-[10px] text-[#C5A059]">AutoCAD 2024</span>
+              </div>
+              <p className="text-[11px] text-[#707684] leading-relaxed">
+                Full 1:1 architectural floor plans, longitudinal cross-sections, and millimetric rough-in dimensions.
+              </p>
+              <button
+                onClick={() => handleBimDownload("dwg")}
+                className="w-full py-2 bg-[#1E2128] hover:bg-[#272B36] text-[#EAE6DF] border border-[#2B2F38] text-[11px] font-semibold flex items-center justify-center gap-1.5 transition-colors"
+              >
+                {downloadingFormat === "dwg" ? (
+                  <span>GENERATING ARCHIVE...</span>
+                ) : downloadComplete === "dwg" ? (
+                  <span className="text-[#54B86A] flex items-center gap-1">
+                    <Check className="w-3.5 h-3.5" /> DWG PACKET READY
+                  </span>
+                ) : (
+                  <>
+                    <Download className="w-3.5 h-3.5 text-[#C5A059]" />
+                    <span>DOWNLOAD DWG (8.4 MB)</span>
+                  </>
+                )}
+              </button>
+            </div>
+
+            {/* Revit 3D BIM */}
+            <div className="bg-[#14161C] border border-[#1E2128] p-4 space-y-3">
+              <div className="flex items-center justify-between">
+                <span className="font-bold text-[#FFFFFF]">REVIT BIM 3D (.RVT)</span>
+                <span className="text-[10px] text-[#0070F3]">LOD 400 Parametric</span>
+              </div>
+              <p className="text-[11px] text-[#707684] leading-relaxed">
+                Native parametric Revit families with MEP connector nodes, water supply rough-ins, and thermal properties.
+              </p>
+              <button
+                onClick={() => handleBimDownload("rvt")}
+                className="w-full py-2 bg-[#1E2128] hover:bg-[#272B36] text-[#EAE6DF] border border-[#2B2F38] text-[11px] font-semibold flex items-center justify-center gap-1.5 transition-colors"
+              >
+                {downloadingFormat === "rvt" ? (
+                  <span>GENERATING ARCHIVE...</span>
+                ) : downloadComplete === "rvt" ? (
+                  <span className="text-[#54B86A] flex items-center gap-1">
+                    <Check className="w-3.5 h-3.5" /> RVT FAMILY READY
+                  </span>
+                ) : (
+                  <>
+                    <Download className="w-3.5 h-3.5 text-[#0070F3]" />
+                    <span>DOWNLOAD RVT (14.2 MB)</span>
+                  </>
+                )}
+              </button>
+            </div>
+
+            {/* IFC OpenBIM */}
+            <div className="bg-[#14161C] border border-[#1E2128] p-4 space-y-3">
+              <div className="flex items-center justify-between">
+                <span className="font-bold text-[#FFFFFF]">OPEN BIM (.IFC)</span>
+                <span className="text-[10px] text-[#54B86A]">IFC4 Certified</span>
+              </div>
+              <p className="text-[11px] text-[#707684] leading-relaxed">
+                Vendor-neutral universal exchange format compatible with ArchiCAD, Vectorworks, and Solibri Model Checker.
+              </p>
+              <button
+                onClick={() => handleBimDownload("ifc")}
+                className="w-full py-2 bg-[#1E2128] hover:bg-[#272B36] text-[#EAE6DF] border border-[#2B2F38] text-[11px] font-semibold flex items-center justify-center gap-1.5 transition-colors"
+              >
+                {downloadingFormat === "ifc" ? (
+                  <span>GENERATING ARCHIVE...</span>
+                ) : downloadComplete === "ifc" ? (
+                  <span className="text-[#54B86A] flex items-center gap-1">
+                    <Check className="w-3.5 h-3.5" /> IFC READY
+                  </span>
+                ) : (
+                  <>
+                    <Download className="w-3.5 h-3.5 text-[#54B86A]" />
+                    <span>DOWNLOAD IFC (11.0 MB)</span>
+                  </>
+                )}
+              </button>
+            </div>
+
+            {/* Tender PDF & Factory Spec */}
+            <div className="bg-[#14161C] border border-[#1E2128] p-4 space-y-3">
+              <div className="flex items-center justify-between">
+                <span className="font-bold text-[#FFFFFF]">TENDER SPEC (.PDF)</span>
+                <span className="text-[10px] text-[#C5A059]">DIN EN 14516</span>
+              </div>
+              <p className="text-[11px] text-[#707684] leading-relaxed">
+                Comprehensive architectural tender specification text ready for bill-of-quantities insertion.
+              </p>
+              <button
+                onClick={() => handleBimDownload("pdf")}
+                className="w-full py-2 bg-[#1E2128] hover:bg-[#272B36] text-[#EAE6DF] border border-[#2B2F38] text-[11px] font-semibold flex items-center justify-center gap-1.5 transition-colors"
+              >
+                {downloadingFormat === "pdf" ? (
+                  <span>GENERATING ARCHIVE...</span>
+                ) : downloadComplete === "pdf" ? (
+                  <span className="text-[#54B86A] flex items-center gap-1">
+                    <Check className="w-3.5 h-3.5" /> SPECIFICATION READY
+                  </span>
+                ) : (
+                  <>
+                    <Download className="w-3.5 h-3.5 text-[#C5A059]" />
+                    <span>DOWNLOAD PDF (3.8 MB)</span>
+                  </>
+                )}
+              </button>
+            </div>
+
           </div>
         </section>
 
       </main>
 
-      {/* Slide-Out Architectural Specification & Commission Drawer */}
+      {/* Slide-Out Architectural Specification & Escrow Drawer */}
       {isDrawerOpen && (
         <div className="fixed inset-0 z-50 overflow-hidden">
           {/* Backdrop */}
           <div 
-            className="absolute inset-0 bg-[#0E0F11]/80 backdrop-blur-sm transition-opacity"
+            className="absolute inset-0 bg-[#0A0B0D]/80 backdrop-blur-sm transition-opacity"
             onClick={() => setIsDrawerOpen(false)}
           />
 
           <div className="fixed inset-y-0 right-0 max-w-full flex pl-10">
-            <div className="w-screen max-w-md bg-[#121317] border-l border-[#2B2F38] p-6 flex flex-col justify-between overflow-y-auto">
+            <div className="w-screen max-w-md bg-[#111318] border-l border-[#1E2128] p-6 flex flex-col justify-between overflow-y-auto">
               
               {/* Drawer Header */}
               <div className="space-y-6">
-                <div className="flex items-center justify-between border-b border-[#202229] pb-4">
+                <div className="flex items-center justify-between border-b border-[#1E2128] pb-4">
                   <div>
                     <span className="text-[10px] font-mono text-[#C5A059] uppercase tracking-widest">
                       [ARCHITECTURAL COMMISSION SPECIFIER]
@@ -948,7 +1358,7 @@ export default function KaldeweiShowcasePage() {
                   </div>
                   <button 
                     onClick={() => setIsDrawerOpen(false)}
-                    className="p-1.5 text-[#8C887F] hover:text-[#FFFFFF] transition-colors"
+                    className="p-1.5 text-[#707684] hover:text-[#FFFFFF] transition-colors"
                   >
                     <X className="w-5 h-5" />
                   </button>
@@ -956,69 +1366,122 @@ export default function KaldeweiShowcasePage() {
 
                 {orderConfirmed ? (
                   <div className="py-8 space-y-4 text-center">
-                    <div className="w-12 h-12 bg-[#1A261C] border border-[#54B86A] text-[#54B86A] rounded-full mx-auto flex items-center justify-center">
+                    <div className="w-12 h-12 bg-[#142319] border border-[#54B86A] text-[#54B86A] rounded-full mx-auto flex items-center justify-center">
                       <Check className="w-6 h-6" />
                     </div>
-                    <h4 className="text-lg font-light text-[#FFFFFF]">Commission Reservation Confirmed</h4>
-                    <p className="text-xs font-mono text-[#9E9B93] leading-relaxed">
-                      Factory production slot allocated at Kaldewei Werk I in Ahlen, Germany. Technical CAD/BIM drawing package and escrow invoice dispatched to your executive email.
+                    <h4 className="text-lg font-light text-[#FFFFFF]">Specification Confirmed</h4>
+                    <p className="text-xs font-mono text-[#9A9EA8] leading-relaxed">
+                      Factory production allocation assigned at Werk I in Ahlen, Germany. Digital specification dossier and refundable escrow receipt dispatched.
                     </p>
-                    <div className="p-3 bg-[#191B20] border border-[#282B34] text-xs font-mono text-left space-y-1">
+                    <div className="p-4 bg-[#14161C] border border-[#1E2128] text-xs font-mono text-left space-y-2">
                       <div className="flex justify-between">
-                        <span className="text-[#8C887F]">COMMISSION ID:</span>
-                        <span className="text-[#C5A059]">KW-2026-ARCH-8842</span>
+                        <span className="text-[#707684]">CERTIFICATE ID:</span>
+                        <span className="text-[#C5A059] font-bold">{confirmationSerial}</span>
                       </div>
                       <div className="flex justify-between">
-                        <span className="text-[#8C887F]">MODEL:</span>
+                        <span className="text-[#707684]">MODEL:</span>
                         <span className="text-[#FFFFFF]">{activeProduct.name}</span>
                       </div>
                       <div className="flex justify-between">
-                        <span className="text-[#8C887F]">ESCROW DEPOSIT:</span>
-                        <span className="text-[#FFFFFF]">€3,500.00</span>
+                        <span className="text-[#707684]">FINISH:</span>
+                        <span className="text-[#FFFFFF]">{selectedFinish}</span>
+                      </div>
+                      <div className="flex justify-between">
+                        <span className="text-[#707684]">PROJECT TIER:</span>
+                        <span className="text-[#C5A059]">{activeTier.name} ({activeTier.discountRate * 100}% Discount)</span>
+                      </div>
+                      <div className="flex justify-between border-t border-[#1E2128] pt-2">
+                        <span className="text-[#707684]">ESCROW DEPOSIT:</span>
+                        <span className="text-[#54B86A] font-bold">€{escrowDepositAmount.toLocaleString("de-DE")} (Refundable)</span>
                       </div>
                     </div>
                   </div>
                 ) : (
                   <>
                     {/* Active Selected Model Snapshot */}
-                    <div className="p-4 bg-[#181A20] border border-[#252830] space-y-3">
-                      <div className="flex items-start justify-between">
-                        <div>
-                          <p className="text-xs font-mono text-[#C5A059] uppercase tracking-wider">SELECTED VESSEL</p>
-                          <h4 className="text-base text-[#FFFFFF] font-normal">{activeProduct.name}</h4>
-                          <p className="text-[11px] font-mono text-[#8C887F]">{activeProduct.sku}</p>
-                        </div>
-                        <span className="text-sm font-mono text-[#FFFFFF] font-light">
-                          €{activeProduct.price.toLocaleString("de-DE")}
-                        </span>
+                    <div className="p-4 bg-[#14161C] border border-[#1E2128] space-y-2 font-mono text-xs">
+                      <div className="flex items-center justify-between">
+                        <span className="text-[#C5A059] font-bold">{activeProduct.name}</span>
+                        <span className="text-[#FFFFFF]">€{activeProduct.basePrice.toLocaleString("de-DE")}</span>
                       </div>
+                      <p className="text-[11px] text-[#707684]">{activeProduct.material}</p>
                     </div>
 
-                    {/* Finish Color Selection */}
-                    <div className="space-y-2">
-                      <label className="text-xs font-mono text-[#8C887F] uppercase tracking-wider">
-                        ENAMEL FINISH PALETTE:
-                      </label>
+                    {/* Finish Selector */}
+                    <div className="space-y-2 font-mono text-xs">
+                      <label className="text-[#707684]">SELECT COATING &amp; COLOR:</label>
                       <select
                         value={selectedFinish}
                         onChange={(e) => setSelectedFinish(e.target.value)}
-                        className="w-full bg-[#181A20] border border-[#282B34] p-2.5 text-xs font-mono text-[#FFFFFF] focus:outline-none focus:border-[#C5A059]"
+                        className="w-full p-2.5 bg-[#14161C] border border-[#1E2128] text-[#FFFFFF] focus:outline-none focus:border-[#C5A059]"
                       >
-                        <option value="Alpine White (High Gloss)">Alpine White 001 (High Gloss Reflective)</option>
-                        <option value="Lava Black Matte">Lava Black Matte 057 (Coordinated Architectural Slate)</option>
-                        <option value="Warm Oyster Matte">Warm Oyster Matte 060 (Natural Travertine Match)</option>
-                        <option value="Manhattan Grey Gloss">Manhattan Grey Gloss 022 (Industrial Mineral)</option>
+                        <option value="Alpine White (Vitreous Gloss)">Alpine White (Vitreous Gloss)</option>
+                        <option value="Lava Black Matte (Coordinated Colours)">Lava Black Matte (Coordinated Colours)</option>
+                        <option value="Warm Oyster Matte (Coordinated Colours)">Warm Oyster Matte (Coordinated Colours)</option>
+                        <option value="Manhattan Grey Matte (Architectural)">Manhattan Grey Matte (Architectural)</option>
                       </select>
                     </div>
 
-                    {/* Addon Toggles */}
-                    <div className="space-y-2.5">
-                      <label className="text-xs font-mono text-[#8C887F] uppercase tracking-wider">
-                        ARCHITECTURAL SPECIFICATION ADD-ONS:
+                    {/* Project Scale Selector */}
+                    <div className="space-y-2 font-mono text-xs">
+                      <label className="text-[#707684]">PROJECT ARCHITECTURAL TIER:</label>
+                      <select
+                        value={selectedProjectTierId}
+                        onChange={(e) => setSelectedProjectTierId(e.target.value)}
+                        className="w-full p-2.5 bg-[#14161C] border border-[#1E2128] text-[#FFFFFF] focus:outline-none focus:border-[#C5A059]"
+                      >
+                        {projectTiers.map(tier => (
+                          <option key={tier.id} value={tier.id}>
+                            {tier.name} — {tier.discountRate * 100}% Project Discount
+                          </option>
+                        ))}
+                      </select>
+                    </div>
+
+                    {/* Performance Add-ons */}
+                    <div className="space-y-2">
+                      <span className="text-xs font-mono text-[#707684]">ARCHITECTURAL ADD-ONS:</span>
+
+                      {/* Secure Plus */}
+                      <label className="flex items-start gap-3 p-3 bg-[#14161C] border border-[#1E2128] cursor-pointer hover:border-[#2E3340] transition-colors">
+                        <input
+                          type="checkbox"
+                          checked={securePlusAddon}
+                          onChange={(e) => setSecurePlusAddon(e.target.checked)}
+                          className="mt-0.5 accent-[#C5A059]"
+                        />
+                        <div className="flex-1 text-xs font-mono">
+                          <div className="flex justify-between">
+                            <span className="text-[#FFFFFF]">Secure Plus Anti-Slip Glaze</span>
+                            <span className="text-[#C5A059]">+€280</span>
+                          </div>
+                          <p className="text-[10px] text-[#707684] mt-0.5">
+                            Permanent microscopic mineral grain fused directly into enamel surface
+                          </p>
+                        </div>
+                      </label>
+
+                      {/* Easy Clean */}
+                      <label className="flex items-start gap-3 p-3 bg-[#14161C] border border-[#1E2128] cursor-pointer hover:border-[#2E3340] transition-colors">
+                        <input
+                          type="checkbox"
+                          checked={easyCleanAddon}
+                          onChange={(e) => setEasyCleanAddon(e.target.checked)}
+                          className="mt-0.5 accent-[#C5A059]"
+                        />
+                        <div className="flex-1 text-xs font-mono">
+                          <div className="flex justify-between">
+                            <span className="text-[#FFFFFF]">Easy-Clean Lotus Finish</span>
+                            <span className="text-[#C5A059]">+€190</span>
+                          </div>
+                          <p className="text-[10px] text-[#707684] mt-0.5">
+                            Hydrophobic glass seal causing water drops to sheet off without lime deposits
+                          </p>
+                        </div>
                       </label>
 
                       {/* Sound Wave */}
-                      <label className="flex items-start gap-3 p-3 bg-[#181A20] border border-[#252830] cursor-pointer hover:border-[#383C48] transition-colors">
+                      <label className="flex items-start gap-3 p-3 bg-[#14161C] border border-[#1E2128] cursor-pointer hover:border-[#2E3340] transition-colors">
                         <input
                           type="checkbox"
                           checked={soundWaveAddon}
@@ -1027,55 +1490,17 @@ export default function KaldeweiShowcasePage() {
                         />
                         <div className="flex-1 text-xs font-mono">
                           <div className="flex justify-between">
-                            <span className="text-[#FFFFFF]">Sound Wave Audio Transducer System</span>
+                            <span className="text-[#FFFFFF]">Sound Wave Acoustic Transducer System</span>
                             <span className="text-[#C5A059]">+€1,450</span>
                           </div>
-                          <p className="text-[10px] text-[#7A766F] mt-0.5">
-                            6 concealed Bluetooth exciter pads on steel outer shell
-                          </p>
-                        </div>
-                      </label>
-
-                      {/* Anti-Slip Glaze */}
-                      <label className="flex items-start gap-3 p-3 bg-[#181A20] border border-[#252830] cursor-pointer hover:border-[#383C48] transition-colors">
-                        <input
-                          type="checkbox"
-                          checked={antiSlipAddon}
-                          onChange={(e) => setAntiSlipAddon(e.target.checked)}
-                          className="mt-0.5 accent-[#C5A059]"
-                        />
-                        <div className="flex-1 text-xs font-mono">
-                          <div className="flex justify-between">
-                            <span className="text-[#FFFFFF]">Invisible Anti-Slip Vitreous Grip</span>
-                            <span className="text-[#C5A059]">+€280</span>
-                          </div>
-                          <p className="text-[10px] text-[#7A766F] mt-0.5">
-                            Microscopic structured quartz glaze DIN 51097 Class B
-                          </p>
-                        </div>
-                      </label>
-
-                      {/* Monogram Drain Cover */}
-                      <label className="flex items-start gap-3 p-3 bg-[#181A20] border border-[#252830] cursor-pointer hover:border-[#383C48] transition-colors">
-                        <input
-                          type="checkbox"
-                          checked={monogramCoverAddon}
-                          onChange={(e) => setMonogramCoverAddon(e.target.checked)}
-                          className="mt-0.5 accent-[#C5A059]"
-                        />
-                        <div className="flex-1 text-xs font-mono">
-                          <div className="flex justify-between">
-                            <span className="text-[#FFFFFF]">Monogrammed Enamel Waste Cover</span>
-                            <span className="text-[#C5A059]">+€190</span>
-                          </div>
-                          <p className="text-[10px] text-[#7A766F] mt-0.5">
-                            Custom laser-etched family crest or architect project seal
+                          <p className="text-[10px] text-[#707684] mt-0.5">
+                            6 concealed acoustic transducers bonded to reverse of steel shell
                           </p>
                         </div>
                       </label>
 
                       {/* Decoupling Kit */}
-                      <label className="flex items-start gap-3 p-3 bg-[#181A20] border border-[#252830] cursor-pointer hover:border-[#383C48] transition-colors">
+                      <label className="flex items-start gap-3 p-3 bg-[#14161C] border border-[#1E2128] cursor-pointer hover:border-[#2E3340] transition-colors">
                         <input
                           type="checkbox"
                           checked={decouplingKitAddon}
@@ -1084,11 +1509,11 @@ export default function KaldeweiShowcasePage() {
                         />
                         <div className="flex-1 text-xs font-mono">
                           <div className="flex justify-between">
-                            <span className="text-[#FFFFFF]">Acoustic Sub-Floor Decoupling Kit</span>
+                            <span className="text-[#FFFFFF]">Acoustic BWS Sub-Floor Decoupling Kit</span>
                             <span className="text-[#C5A059]">+€420</span>
                           </div>
-                          <p className="text-[10px] text-[#7A766F] mt-0.5">
-                            Heavy-duty elastomer isolation feet & flexible waste connection
+                          <p className="text-[10px] text-[#707684] mt-0.5">
+                            Heavy elastomer isolation feet &amp; sealing strip meeting Swiss SIA 181
                           </p>
                         </div>
                       </label>
@@ -1098,33 +1523,39 @@ export default function KaldeweiShowcasePage() {
               </div>
 
               {/* Drawer Footer & Escrow Confirmation */}
-              <div className="border-t border-[#202229] pt-4 space-y-3">
+              <div className="border-t border-[#1E2128] pt-4 space-y-3">
                 {!orderConfirmed ? (
                   <>
                     <div className="space-y-1 text-xs font-mono">
-                      <div className="flex justify-between text-[#8C887F]">
+                      <div className="flex justify-between text-[#707684]">
                         <span>BASE VESSEL:</span>
-                        <span>€{basePrice.toLocaleString("de-DE")}</span>
+                        <span>€{baseCost.toLocaleString("de-DE")}</span>
                       </div>
-                      <div className="flex justify-between text-[#8C887F]">
-                        <span>SPECIFICATION ADD-ONS:</span>
-                        <span>€{(configuredTotal - basePrice).toLocaleString("de-DE")}</span>
+                      <div className="flex justify-between text-[#707684]">
+                        <span>ADD-ONS:</span>
+                        <span>+€{(subtotal - baseCost).toLocaleString("de-DE")}</span>
                       </div>
-                      <div className="flex justify-between text-base font-bold text-[#FFFFFF] border-t border-[#202229] pt-2">
-                        <span>TOTAL SPECIFIED:</span>
-                        <span className="text-[#C5A059]">€{configuredTotal.toLocaleString("de-DE")}</span>
+                      {activeTier.discountRate > 0 && (
+                        <div className="flex justify-between text-[#54B86A]">
+                          <span>PROJECT DISCOUNT ({activeTier.discountRate * 100}%):</span>
+                          <span>-€{Math.round(discountAmount).toLocaleString("de-DE")}</span>
+                        </div>
+                      )}
+                      <div className="flex justify-between text-base font-bold text-[#FFFFFF] border-t border-[#1E2128] pt-2">
+                        <span>TOTAL SPECIFICATION:</span>
+                        <span className="text-[#C5A059]">€{finalPrice.toLocaleString("de-DE")}</span>
                       </div>
                     </div>
 
                     <button
-                      onClick={() => setOrderConfirmed(true)}
-                      className="w-full py-3.5 bg-[#C5A059] hover:bg-[#D4AF67] text-[#0E0F11] text-xs font-mono font-bold tracking-widest uppercase transition-colors"
+                      onClick={handleConfirmReservation}
+                      className="w-full py-3.5 bg-[#C5A059] hover:bg-[#D4AF67] text-[#0A0B0D] text-xs font-mono font-bold tracking-widest uppercase transition-colors"
                     >
-                      CONFIRM ARCHITECTURAL RESERVATION (€3,500 ESCROW)
+                      CONFIRM ARCHITECTURAL ALLOCATION (€{escrowDepositAmount.toLocaleString("de-DE")} ESCROW)
                     </button>
 
-                    <p className="text-[10px] text-center font-mono text-[#6A6660]">
-                      Protected by 30-year manufacturer warranty & direct factory production SLA
+                    <p className="text-[10px] text-center font-mono text-[#5A5F6B]">
+                      Protected by 30-year manufacturer warranty &amp; direct factory production SLA
                     </p>
                   </>
                 ) : (
@@ -1133,7 +1564,7 @@ export default function KaldeweiShowcasePage() {
                       setOrderConfirmed(false);
                       setIsDrawerOpen(false);
                     }}
-                    className="w-full py-3 bg-[#1B1D22] border border-[#2E313A] hover:bg-[#252830] text-[#FFFFFF] text-xs font-mono uppercase tracking-wider"
+                    className="w-full py-3 bg-[#14161C] border border-[#1E2128] hover:bg-[#1D2028] text-[#FFFFFF] text-xs font-mono uppercase tracking-wider"
                   >
                     RETURN TO SHOWCASE
                   </button>
@@ -1145,13 +1576,57 @@ export default function KaldeweiShowcasePage() {
         </div>
       )}
 
-      {/* Global Footer */}
-      <footer className="border-t border-[#24262B] bg-[#0A0B0D] py-8 text-center text-xs font-mono text-[#7A766F] space-y-2">
+      {/* BIM Modal */}
+      {isBimModalOpen && (
+        <div className="fixed inset-0 z-50 overflow-hidden flex items-center justify-center p-4">
+          <div 
+            className="absolute inset-0 bg-[#0A0B0D]/85 backdrop-blur-sm"
+            onClick={() => setIsBimModalOpen(false)}
+          />
+          <div className="relative bg-[#111318] border border-[#1E2128] max-w-lg w-full p-6 space-y-4 font-mono text-xs z-10">
+            <div className="flex items-center justify-between border-b border-[#1E2128] pb-3">
+              <span className="text-sm font-semibold text-[#FFFFFF]">Direct CAD / BIM Package Access</span>
+              <button onClick={() => setIsBimModalOpen(false)} className="text-[#707684] hover:text-[#FFFFFF]">
+                <X className="w-4 h-4" />
+              </button>
+            </div>
+            <p className="text-[#9A9EA8] leading-relaxed">
+              Kaldewei provides verified 2D/3D geometry packages for Revit, ArchiCAD, AutoCAD, and Vectorworks with DIN 4109 acoustic ratings embedded.
+            </p>
+            <div className="space-y-2 pt-2">
+              <button
+                onClick={() => handleBimDownload("dwg")}
+                className="w-full py-2.5 px-3 bg-[#14161C] hover:bg-[#1D2028] border border-[#1E2128] text-left flex justify-between items-center"
+              >
+                <span>AutoCAD 2024 (.DWG) Full Set</span>
+                <span className="text-[#C5A059]">8.4 MB</span>
+              </button>
+              <button
+                onClick={() => handleBimDownload("rvt")}
+                className="w-full py-2.5 px-3 bg-[#14161C] hover:bg-[#1D2028] border border-[#1E2128] text-left flex justify-between items-center"
+              >
+                <span>Revit 2024 BIM Family (.RVT) LOD 400</span>
+                <span className="text-[#0070F3]">14.2 MB</span>
+              </button>
+              <button
+                onClick={() => handleBimDownload("ifc")}
+                className="w-full py-2.5 px-3 bg-[#14161C] hover:bg-[#1D2028] border border-[#1E2128] text-left flex justify-between items-center"
+              >
+                <span>Universal OpenBIM (.IFC4)</span>
+                <span className="text-[#54B86A]">11.0 MB</span>
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Global Architectural Footer */}
+      <footer className="border-t border-[#1E2128] bg-[#07080A] py-8 text-center text-xs font-mono text-[#707684] space-y-2">
         <p>
           BILLY BENJAMIN CONSULTING // SOVEREIGN REVENUE ARCHITECT &amp; DESIGN SYSTEM (v15.0-SINGULARITY)
         </p>
-        <p className="text-[11px] text-[#5A5752]">
-          Target Reconnaissance 14: Franz Kaldewei GmbH &amp; Co. KG (Ahlen, Germany) • Direct routing: <a href="mailto:billybenjamin836@gmail.com" className="text-[#C5A059] hover:underline">billybenjamin836@gmail.com</a>
+        <p className="text-[11px] text-[#5A5F6B]">
+          Target Reconnaissance 20: Franz Kaldewei GmbH &amp; Co. KG (Ahlen, Germany) • Direct Executive Routing: <a href="mailto:billybenjamin836@gmail.com" className="text-[#C5A059] hover:underline">billybenjamin836@gmail.com</a>
         </p>
       </footer>
 
