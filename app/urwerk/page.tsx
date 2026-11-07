@@ -67,7 +67,7 @@ export default function UrwerkShowcasePage() {
       images: [
         {
           label: "UR-100V Lightspeed Architecture",
-          url: "/assets/urwerk/urwerk-ur100v-hero.jpg",
+          url: "/assets/urwerk/urwerk-ur100v-hero.webp",
           caption: "Black ceramic and DLC titanium aerodynamic case framing the three wandering-hour satellites."
         },
         {
@@ -126,7 +126,7 @@ export default function UrwerkShowcasePage() {
       images: [
         {
           label: "UR-220 Super-LumiNova Luminescent Night Glow",
-          url: "/assets/urwerk/urwerk-ur220-luminescent-night.jpg",
+          url: "/assets/urwerk/urwerk-super-luminova-uv-night.webp",
           caption: "Grade X1 Super-LumiNova glowing emerald green across the three-dimensional retrograde minute cage."
         },
         {
@@ -174,6 +174,7 @@ export default function UrwerkShowcasePage() {
   const [selectedPiece, setSelectedPiece] = useState<TimepieceModel>(timepieces[0]);
   const [timeMultiplier, setTimeMultiplier] = useState<number>(60); // 1x to 3600x
   const [isLumeMode, setIsLumeMode] = useState<boolean>(false);
+  const [orbitalViewMode, setOrbitalViewMode] = useState<"canvas" | "maltese" | "uv">("canvas");
   const [isAudioMuted, setIsAudioMuted] = useState<boolean>(true);
   const [activeDossierHotspot, setActiveDossierHotspot] = useState<number>(0);
 
@@ -413,14 +414,14 @@ export default function UrwerkShowcasePage() {
       id: 1,
       title: "Windfänger Planetary Turbine Rotor",
       spec: "Calibre UR-12.02 // Planetary Damper Ring",
-      image: "/assets/urwerk/urwerk-ur100v-exploded-caliber.jpg",
+      image: "/assets/urwerk/urwerk-windfanger-turbine-rotor.webp",
       description: "Felix Baumgartner's patented air-resistance winding brake. When violent wrist shocks accelerate the winding rotor, the planetary gear train spins miniature fan blades creating air turbulence that limits rotor speed and protects the winding arbor from friction damage."
     },
     {
       id: 2,
       title: "Maltese Cross Satellite Geneva Mechanism",
       spec: "Beryllium Bronze Geneva Crosses // 120° Indexing",
-      image: "/assets/urwerk/urwerk-ur100v-satellite-dial.png",
+      image: "/assets/urwerk/urwerk-satellite-maltese-macro.webp",
       description: "Three satellite discs mounted on a central carousel revolving on a fixed ring gear. Each satellite carries four hour numerals on distinct planar facets. As a satellite leaves the 60-minute mark, a Maltese cross pin strikes a star cam, rotating the satellite by 90 degrees to reveal its next hour numeral."
     },
     {
@@ -589,7 +590,7 @@ export default function UrwerkShowcasePage() {
             <div className="lg:col-span-6 relative min-h-[380px] lg:min-h-full bg-[#07090D] border-t lg:border-t-0 lg:border-l border-[#191F2C] flex items-center justify-center p-4 sm:p-6 overflow-hidden">
               <div className="relative w-full h-full min-h-[360px] lg:min-h-[520px] rounded-lg overflow-hidden border border-[#202738] bg-[#0A0D14]">
                 <img
-                  src="/assets/urwerk/urwerk-ur100v-hero.jpg"
+                  src="/assets/urwerk/urwerk-ur100v-hero.webp"
                   alt="URWERK UR-100V Lightspeed wandering hour satellite timepiece"
                   className="w-full h-full object-cover object-center transition-transform duration-700 hover:scale-105"
                 />
@@ -655,13 +656,98 @@ export default function UrwerkShowcasePage() {
                 </span>
               </div>
 
+              <div className="flex items-center gap-2 pb-1">
+                <button
+                  type="button"
+                  onClick={() => {
+                    setOrbitalViewMode("canvas");
+                    playMechanicalClick();
+                  }}
+                  className={`px-3 py-1 rounded text-xs font-mono transition-colors ${
+                    orbitalViewMode === "canvas"
+                      ? "bg-[#00E5FF] text-black font-bold"
+                      : "bg-[#101420] border border-[#1F2738] text-[#8A909F] hover:text-[#FFFFFF]"
+                  }`}
+                >
+                  60 FPS ORBITAL CANVAS
+                </button>
+                <button
+                  type="button"
+                  onClick={() => {
+                    setOrbitalViewMode("maltese");
+                    playMechanicalClick();
+                  }}
+                  className={`px-3 py-1 rounded text-xs font-mono transition-colors ${
+                    orbitalViewMode === "maltese"
+                      ? "bg-[#00E5FF] text-black font-bold"
+                      : "bg-[#101420] border border-[#1F2738] text-[#8A909F] hover:text-[#FFFFFF]"
+                  }`}
+                >
+                  OPTICAL MALTESE CROSS RIG
+                </button>
+                <button
+                  type="button"
+                  onClick={() => {
+                    setOrbitalViewMode("uv");
+                    playMechanicalClick();
+                  }}
+                  className={`px-3 py-1 rounded text-xs font-mono transition-colors ${
+                    orbitalViewMode === "uv"
+                      ? "bg-[#00FF66] text-black font-bold"
+                      : "bg-[#101420] border border-[#1F2738] text-[#8A909F] hover:text-[#FFFFFF]"
+                  }`}
+                >
+                  UV PHOSPHOR CHAMBER
+                </button>
+              </div>
+
               <div className="relative aspect-[16/11] w-full bg-[#040508] rounded overflow-hidden border border-[#141A26]">
-                <canvas
-                  ref={canvasRef}
-                  width={640}
-                  height={440}
-                  className="w-full h-full block"
-                />
+                {orbitalViewMode === "canvas" && (
+                  <canvas
+                    ref={canvasRef}
+                    width={640}
+                    height={440}
+                    className="w-full h-full block"
+                  />
+                )}
+                {orbitalViewMode === "maltese" && (
+                  <div className="relative w-full h-full">
+                    <img
+                      src="/assets/urwerk/urwerk-satellite-maltese-macro.webp"
+                      alt="Beryllium bronze Maltese cross and satellite minute index tracking"
+                      className="w-full h-full object-cover object-center"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent pointer-events-none"></div>
+                    <div className="absolute bottom-3 left-3 right-3 p-2.5 bg-black/80 border border-[#1F283B] backdrop-blur-md rounded flex items-center justify-between text-xs font-mono">
+                      <div>
+                        <span className="block text-[#00E5FF] font-bold">MALTESE CROSS ENGAGEMENT // MINUTE 42 INDEX</span>
+                        <span className="text-[#8A909F] text-[10px]">Hour prism numeral 8 aligned with 120° linear retrograde minute sector</span>
+                      </div>
+                      <span className="px-2 py-0.5 bg-[#121622] border border-[#27324A] rounded text-[10px] text-[#D4AF37]">
+                        MACRO OPTICAL
+                      </span>
+                    </div>
+                  </div>
+                )}
+                {orbitalViewMode === "uv" && (
+                  <div className="relative w-full h-full">
+                    <img
+                      src="/assets/urwerk/urwerk-super-luminova-uv-night.webp"
+                      alt="Super-LumiNova Grade X1 phosphorescence under 365nm UV illumination"
+                      className="w-full h-full object-cover object-center"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent pointer-events-none"></div>
+                    <div className="absolute bottom-3 left-3 right-3 p-2.5 bg-black/80 border border-[#1F283B] backdrop-blur-md rounded flex items-center justify-between text-xs font-mono">
+                      <div>
+                        <span className="block text-[#00FF66] font-bold">GRADE X1 SUPER-LUMINOVA // 365nm UV ACTIVATION</span>
+                        <span className="text-[#8A909F] text-[10px]">Emerald green & cyan phosphor emission across satellite numerals and minute track</span>
+                      </div>
+                      <span className="px-2 py-0.5 bg-[#061A10] border border-[#00FF66]/50 rounded text-[10px] text-[#00FF66]">
+                        DARKROOM TEST
+                      </span>
+                    </div>
+                  </div>
+                )}
               </div>
 
               <div className="grid grid-cols-3 gap-2 text-center text-xs font-mono pt-1">
