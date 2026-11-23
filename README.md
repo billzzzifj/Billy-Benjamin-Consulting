@@ -1,124 +1,78 @@
-# BILLY BENJAMIN CONSULTING (BBC) // REVENUE ARCHITECTURE & PORTFOLIO
-**Aesthetic Signature:** BBC Swiss-Grid Editorial Brutalism  
-**Principal:** Billy Benjamin — Founder & Principal Revenue Architect  
-**Domain:** [billybenjaminconsulting.online](https://billybenjaminconsulting.online)  
-**Coordinates:** Lagos // London // NYC  
+# BILLY BENJAMIN CONSULTING (BBC) // MASTER FLAGSHIP & SANDBOX MONOREPO
 
-[![Deploy to Render](https://render.com/images/deploy-to-render-button.svg)](https://render.com/deploy?repo=https://github.com/billzzzifj/Billy-Benjamin-Consulting)
+> **Live Interactive Production URL:** **[https://billy-benjamin-consulting.onrender.com](https://billy-benjamin-consulting.onrender.com)**  
+> **Custom Domain:** **[https://billybenjaminconsulting.online](https://billybenjaminconsulting.online)**  
+> **Architect:** Billy Benjamin — Product Design Engineer & Principal Revenue Architect
 
 ---
 
-## 1. ARCHITECTURAL OVERVIEW
-This application is the primary commercial portfolio and forensic lead acquisition engine for Billy Benjamin Consulting. Built with Next.js 15, React 19, and Tailwind CSS, it enforces the strict **BBC Swiss-Grid Editorial Brutalism** design standard:
+## ⚡ 60-Second Executive Summary
 
-- **Canvas & Palette:** Bone (`#F5F5F3`), Obsidian Ink (`#0A0A0A`), Lime Accent (`#CDE570`).
-- **Structural Grid:** Strict continuous `1px solid #0A0A0A` borders (`border-[#0A0A0A]`), zero rounded corners (`rounded-none`), flush touching compartments with zero margin gutters.
-- **Typography:** Massive ultra-condensed black display headers (`font-black uppercase tracking-tighter leading-[0.92]`) contrasted with monospaced metadata and data labels (`font-mono uppercase text-xs/sm`).
-- **Tactile Materiality:** Physical stone/marble mockups, raw editorial prints, and technical wireframe overlays with high-contrast grayscale filtering.
+Most luxury and D2C brands rely on generic, static Shopify themes that leak up to 34% of prospective customer revenue at the product detail page (PDP) and cart-drawer inflection points. 
+
+This repository houses the **BBC Swiss-Grid Editorial Brutalist Master Flagship** and **35+ bespoke interactive client sandboxes** engineered to replace flat imagery with living 60 FPS HTML5 Canvas physical simulators, tactile material switchers, and instantaneous slide-out checkout drawers that eliminate page reload friction entirely.
 
 ---
 
-## 2. CORE CONVERSION PHYSICS & UX LAWS
-1. **Speed & Payload:** Preloaded LCP hero asset (`/assets/founder-portrait.jpg`). Total visual asset payload: `~564 KB` (< 2.0MB Core Web Vitals threshold).
-2. **Mobile Constraint Parity:** 100% of interactive inputs, select menus, and CTA buttons enforce `>= 48px` touch target floors.
-3. **Above-the-Fold Proof:** Real-time verified metric badge (`+$44.9K / MO GMV LIFT`) and operating coordinates anchored directly adjacent to the value proposition.
-4. **Tri-Modal Engineering:** Designed to convert Explorers (atmosphere & tactile stone photography), Evaluators (quantitative funnel diagrams & drop-off telemetry), and Skeptics (256-bit encryption & 24h SLA guarantees).
+## 🏛️ Architecture & Tech Stack
+
+- **Framework:** Next.js 15 (App Router) + React 19 + TypeScript
+- **Styling:** Tailwind CSS + PostCSS + Strict Swiss 1px Hairline Border Architecture
+- **Interactive Physics:** HTML5 Canvas (60 FPS balance-wheel escapements, acoustic impulse wave reflection, material patina evolution)
+- **Animation & Motion:** Framer Motion + GSAP + Lenis Smooth Inertia Scroll
+- **Audio Synthesis:** Web Audio API (tactile mechanical clicks, acoustic resonance tests)
+- **Backend & APIs:** Next.js Server Route Handlers (`/api/lead`), Resend Email Dispatch, Webhook Automation
+- **Deployment & Edge:** Render.com Production Container + Zero Hydration Error Architecture
 
 ---
 
-## 3. SECTIONS & COMMERCIAL CAPABILITIES
+## 💎 Verified Live Sandboxes (Direct Links)
 
-- **00 // Global Telemetry Ticker:** Real-time status indicators, operational coordinates, and performance budgets.
-- **01 // Section 01: The Hero:** Asymmetrical 2-column split with commercial positioning and flush founder portrait.
-- **02 // Section 02: Forensic Diagnosis (The Bleed):** Quantitative audit ledger analyzing cart abandonment (`-64.2%`), mobile bounce metrics (`78.4%`), and the latency tax (`3.8s LCP`).
-- **03 // Section 03: The 3-Lever Compound Engine:** 3-column physical compartments mapping PDP retention, 1-tap checkout drawers, and brand equity pricing power.
-- **04 // Section 04: The Sandbox & Lead Acquisition:** High-visibility `#CDE570` lime block capturing founder name, work email, brand URL, and primary bottleneck.
-- **05 // Footer Telemetry:** Legal sovereignty, copyright, and global corridor anchors.
-
----
-
-## 4. LEAD CAPTURE & AUTOMATED FOLLOW-UP ENGINE
-
-### API Route: `/api/lead`
-- **Method:** `POST`
-- **Payload:** `{ founderName, email, storeUrl, primaryBottleneck, whatsapp? }`
-- **Features:**
-  - Automated ticket ID assignment (`BBC-TX-XXXX`).
-  - Thread-safe persistence to `data/leads.json`.
-  - Email notification trigger via Resend (configured via `RESEND_API_KEY`).
-  - Webhook dispatch to Slack / Zapier / Google Sheets (configured via `LEAD_WEBHOOK_URL`).
-
-### CLI Follow-Up Dispatcher
-Generate personalized 3-stage follow-up sequences for captured leads:
-```bash
-node scripts/followup-engine.mjs
-```
-- **Stage 01 (0h):** Immediate audit intake confirmation.
-- **Stage 02 (24h):** Dual-surface forensic teardown deliverable.
-- **Stage 03 (72h):** Interactive sandbox prototype offer.
+| Sandbox Client | Category & Tier | Interactive Engineering Feat | Direct Deployment Link |
+| :--- | :--- | :--- | :--- |
+| **URWERK Geneva** | Haute Horlogerie | 60 FPS Canvas escapement balance wheel + satellite wandering hours | [Launch URWERK](https://billy-benjamin-consulting.onrender.com/urwerk) |
+| **Bugatti Tourbillon** | Hypercar Commissioning | Cosworth V16 acoustic impulse simulator + allocation registry | [Launch Bugatti](https://billy-benjamin-consulting.onrender.com/bugatti) |
+| **Buben & Zorweg** | Horological High-Security Vaults | Dual backlit biometric meters + ballistic needle deflection | [Launch Vault](https://billy-benjamin-consulting.onrender.com/bubenzorweg) |
+| **Kaldewei** | Architectural Steel Sanitaryware | Titanium steel enamel material stress test + waterflow dynamics | [Launch Kaldewei](https://billy-benjamin-consulting.onrender.com/kaldewei) |
+| **Wally Yachts** | Naval Architecture (Monaco) | 21:9 letterboxed spatial hull review + hydrodynamic deck layout | [Launch Wally](https://billy-benjamin-consulting.onrender.com/wally) |
+| **Orox Leather Co.** | 4th-Gen Leathercraft (Portland) | Horween 5-year patina evolution lab + carry capacity caliper | [Launch Orox](https://billy-benjamin-consulting.onrender.com/oroxleather) |
+| **East Fork** | Ceramic Dinnerware (Asheville) | Interactive tabletop dinner party layout simulator | [Launch East Fork](https://billy-benjamin-consulting.onrender.com/eastfork) |
+| **Brew Watch Co.** | Industrial Horology (NYC) | 25-35s espresso extraction chronograph timing simulator | [Launch Brew](https://billy-benjamin-consulting.onrender.com/brew) |
 
 ---
 
-## 5. LOCAL DEVELOPMENT & PRODUCTION COMMANDS
+## 📊 Core Conversion Physics & UX Laws Enforced
+
+1. **Sub-2.0s Largest Contentful Paint (LCP):** Preloaded critical assets, optimized local WebP/PNG pipelines, zero external CDN dependencies.
+2. **Mobile Tap Target Floor (UX Law 01):** 100% of interactive selectors, variant chips, and CTAs enforce `min-width: 48px; min-height: 48px`.
+3. **Tri-Modal Engineering:** Paces content for Explorers (cinematic imagery), Evaluators (precise engineering metrics), and Skeptics (security and warranty disclosures).
+4. **Instant Slide-Out Checkout Drawer (UX Law 07):** Replaces multi-step cart redirect pages with zero-reload purchase drawers.
+
+---
+
+## 🛠️ Local Development
 
 ```bash
+# Clone the repository
+git clone https://github.com/billzzzifj/Billy-Benjamin-Consulting.git
+
+# Enter project root
+cd Billy-Benjamin-Consulting
+
 # Install dependencies
 npm install
 
-# Run development server
+# Start local development server
 npm run dev
-
-# Build production bundle
-npm run build
-
-# Start production server
-npm run start -p 3000
-
-# Run follow-up sequence generator
-node scripts/followup-engine.mjs
 ```
+
+Open [http://localhost:3000](http://localhost:3000) in your browser.
 
 ---
 
-## 6. RENDER DEPLOYMENT SPECIFICATION
+## 📬 Contact & Commercial Inquiries
 
-This repository includes a native [`render.yaml`](render.yaml) Blueprint configuration for 1-click zero-config deployment to Render:
-
-### Method A: 1-Click Deploy to Render
-Click the badge at the top of this repository or navigate to:
-```
-https://render.com/deploy?repo=https://github.com/billzzzifj/Billy-Benjamin-Consulting
-```
-
-### Method B: Manual Render Web Service Setup
-1. Log into your Render dashboard at [dashboard.render.com](https://dashboard.render.com).
-2. Click **New +** -> **Web Service**.
-3. Select **Build and deploy from a Git repository** and connect `billzzzifj/Billy-Benjamin-Consulting`.
-4. Configure service settings:
-   - **Name:** `billy-benjamin-consulting`
-   - **Region:** Frankfurt (EU) or Oregon (US)
-   - **Branch:** `main`
-   - **Root Directory:** *(leave blank / default)*
-   - **Runtime:** `Node`
-   - **Build Command:** `npm install && npm run build`
-   - **Start Command:** `npm start`
-   - **Instance Type:** `Free`
-5. In **Environment Variables**, add:
-   - `NODE_VERSION`: `20.18.0`
-   - `NOTIFICATION_EMAIL`: `billy@billybenjaminconsulting.online`
-   - `RESEND_API_KEY`: *(optional Resend API key for automated email delivery)*
-   - `LEAD_WEBHOOK_URL`: *(optional webhook for real-time lead telemetry)*
-6. Click **Create Web Service**. Render will automatically clone, build, and deploy the application to your `onrender.com` subdomain with automated HTTPS.
-
----
-
-## 7. ENVIRONMENT VARIABLES (OPTIONAL)
-Create `.env.local` to configure live email dispatch and webhooks:
-```env
-RESEND_API_KEY=re_your_api_key_here
-NOTIFICATION_EMAIL=billy@billybenjaminconsulting.online
-LEAD_WEBHOOK_URL=https://your-webhook-endpoint.com
-```
-
----
-© 2026 Billy Benjamin Consulting. All rights reserved.
+- **Lead Engineer:** Billy Benjamin
+- **Email:** [billybenjamin836@gmail.com](mailto:billybenjamin836@gmail.com)
+- **LinkedIn:** [linkedin.com/in/billy-benjamin-b02265315](https://www.linkedin.com/in/billy-benjamin-b02265315)
+- **Headquarters:** Lagos, Nigeria (WAT / UTC+1 · Seamless overlap with UK, Central Europe, and MENA)
